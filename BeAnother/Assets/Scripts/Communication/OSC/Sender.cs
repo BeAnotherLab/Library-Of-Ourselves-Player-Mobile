@@ -29,7 +29,12 @@ public class Sender : MonoBehaviour {
 		
 		var message = new OSCMessage(address);
 		message.AddValue(OSCValue.String(msg));
-		transmitter.Send(message);
+		if(transmitter)
+			transmitter.Send(message);
+		else if(verbose){
+			print("Dummy sent on " + address + ": " + msg);
+			return;
+		}
 		
 		if(verbose) print("Sent on " + address + ": " + msg);
 		

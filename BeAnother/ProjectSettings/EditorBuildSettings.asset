@@ -8,16 +8,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/InitialScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/VRAutoconnect.unity
     guid: 8fe7e7b62f1eebf4d8ca0475e25a4b3b
   - enabled: 1
     path: Assets/Scenes/VR.unity
     guid: ab8a80c5bf980ef4bbc99cab4079ea99
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/GuideAutoconnect.unity
     guid: af56022592ddd2e40bce000e33ce603b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide.unity
     guid: 17d06a771240e344098ded8162a4b82a
   m_configObjects: {}
