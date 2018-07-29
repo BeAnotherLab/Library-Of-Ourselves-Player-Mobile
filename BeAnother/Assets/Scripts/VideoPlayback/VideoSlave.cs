@@ -22,12 +22,16 @@ public class VideoSlave : MonoBehaviour {
 		get{ return m_currentPlayer; }
 		set{
 			if(m_currentPlayer != null){
+				m_currentPlayer.loopPointReached -= OnVideoEnd;
 				m_currentPlayer.gameObject.SetActive(false);
 				if(!bypassBinauralAudio)
 					m_currentPlayer.GetComponent<BinauralAudio>().Stop();
 			}
 			if(value != null){
 				value.gameObject.SetActive(true);
+				value.loopPointReached += OnVideoEnd;
+			}else{
+				currentSettings = null;
 			}
 			m_currentPlayer = value;
 		}
@@ -81,6 +85,11 @@ public class VideoSlave : MonoBehaviour {
 			}
 		}
 		
+		public void applyRotations(VideoPlayer current){
+			if(current != null)
+				current.GetComponent<PlayerRotations>().Correct(pitch, yaw, roll);
+		}
+		
 		void write(){
 			PlayerPrefs.SetFloat(name+"x", pitch);
 			PlayerPrefs.SetFloat(name+"y", yaw);
@@ -123,28 +132,38 @@ public class VideoSlave : MonoBehaviour {
 		//load the audio:
 		if(!bypassBinauralAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Load(audioPath);
+		
+		//recalibrate
+		Calibrate();
+		currentSettings.applyRotations(CurrentPlayer);
 	}
 	
 	void Play(){
+		if(CurrentPlayer == null) return;
 		CurrentPlayer.Play();
 		if(!bypassBinauralAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Play();
 	}
 	
 	void Pause(){
+		if(CurrentPlayer == null) return;
 		CurrentPlayer.Pause();
 		if(!bypassBinauralAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Pause();
 	}
 	
+	void Stop(){
+		CurrentPlayer = null;
+	}
+	
 	void Calibrate(){
-		
+		if(CurrentPlayer != null) CurrentPlayer.GetComponent<PlayerRotations>().Calibrate();
 	}
 	
 	public void OnReceived(string data){
 		string[] dat = data.Split(' ');
 		
-		if(dat.Length <= 1) return;
+		if(dat.Length < 1) return;
 		
 		if(dat[0] == "select"){//Load a video; argument 1 is filename, 2 is either "360" or "235"
 			if(dat.Length > 2)
@@ -156,22 +175,30 @@ public class VideoSlave : MonoBehaviour {
 		}else if(dat[0] == "pause"){//Pauses
 			Pause();
 		}else if(dat[0] == "stop"){//Unloads the video
-			CurrentPlayer = null;
+			Stop();
 		}else if(dat[0] == "calibrate"){//Recenters sphere
 			Calibrate();
 		}else if(dat[0] == "rotate"){//changes default pitch-yaw-roll (args 1 2 and 3)
+			if(currentSettings == null) return;
 			if(dat.Length > 3){
 				currentSettings.Pitch = (float)Convert.ToDouble(dat[1]);
 				currentSettings.Yaw = (float)Convert.ToDouble(dat[2]);
 				currentSettings.Roll = (float)Convert.ToDouble(dat[3]);
+				currentSettings.applyRotations(CurrentPlayer);
 			}else{
 				print("Expecting 3 arguments in rotate");
 			}
+		}else if(dat[0] == "logs"){//sends back console contents
+			respond.Send(UIConsole.Logs());
 		}else{
 			print("Unrecognized message: " + data);
 			respond.Send("unknownerror unrecognized message " + data);
 		}
 		
+	}
+	
+	void OnVideoEnd(VideoPlayer unused){
+		Stop();
 	}
 	
 }

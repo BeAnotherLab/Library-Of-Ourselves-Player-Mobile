@@ -12,7 +12,8 @@ public class UIConsole : MonoBehaviour {
 	
 	void Start(){
 		text = GetComponent<Text>();
-		text.text = t;
+		if(text)
+			text.text = t;
 	}
 	
 	void OnEnable(){
@@ -33,6 +34,10 @@ public class UIConsole : MonoBehaviour {
 		
 		t += message + "\n";
 		if(text) text.text = t;
+	}
+	
+	public static string Logs(){
+		return instance.t;
 	}
 	
 }
