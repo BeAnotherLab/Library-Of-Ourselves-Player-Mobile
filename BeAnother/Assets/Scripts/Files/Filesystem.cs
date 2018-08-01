@@ -19,7 +19,7 @@ public class Filesystem {
 	}
 	
 	static string getSDCardPath(){
-		#if UNITY_ANDROID
+		#if UNITY_ANDROID && !UNITY_EDITOR
 		using(AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")){
 			using(AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")){
 				AndroidJavaObject[] externalFilesDirs = context.Call<AndroidJavaObject[]>("getExternalFilesDirs", null);

@@ -9,8 +9,10 @@ using UnityEditor;
 public class NextScene : MonoBehaviour {
 	
 	[SerializeField] SceneField scene;
+	[SerializeField] bool verbose = false;
 	
 	public void Next(){
+		if(verbose) print("Going to scene " + scene);
 		SceneManager.LoadScene(scene);
 	}
 	

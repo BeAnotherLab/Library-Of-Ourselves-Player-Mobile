@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene:
     m_SceneAsset: {fileID: 102900000, guid: 17d06a771240e344098ded8162a4b82a, type: 3}
-    m_SceneName: Guide
+    m_SceneName: GuideMainMenu
 --- !u!1 &629522944
 GameObject:
   m_ObjectHideFlags: 0

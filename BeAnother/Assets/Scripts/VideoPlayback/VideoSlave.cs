@@ -40,7 +40,8 @@ public class VideoSlave : MonoBehaviour {
 	class VideoSettings{
 		private string name;
 		private float pitch = 0, yaw = 0, roll = 0;
-		public bool is360;
+		private bool is360 = false;
+		private bool is360Set = false;
 		
 		public VideoSettings(string n){
 			name = n;
@@ -50,6 +51,10 @@ public class VideoSlave : MonoBehaviour {
 				yaw = PlayerPrefs.GetFloat(name+"y");
 			if(PlayerPrefs.HasKey(name+"z"))
 				roll = PlayerPrefs.GetFloat(name+"z");
+			if(PlayerPrefs.HasKey(name+"i")){
+				is360 = PlayerPrefs.GetInt(name+"i") == 1;
+				is360Set = true;
+			}
 		}
 		
 		public float Pitch{
@@ -85,6 +90,25 @@ public class VideoSlave : MonoBehaviour {
 			}
 		}
 		
+		public bool Is360{
+			get{
+				return is360;
+			}
+			set{
+				if(is360 == value) return;
+				is360 = value;
+				write();
+			}
+		}
+		
+		public bool Is360Set{//whether this video's 360v235 is overriden
+			get{ return is360Set; }
+		}
+		
+		public string Name{
+			get{ return name; }
+		}
+		
 		public void applyRotations(VideoPlayer current){
 			if(current != null)
 				current.GetComponent<PlayerRotations>().Correct(pitch, yaw, roll);
@@ -94,6 +118,7 @@ public class VideoSlave : MonoBehaviour {
 			PlayerPrefs.SetFloat(name+"x", pitch);
 			PlayerPrefs.SetFloat(name+"y", yaw);
 			PlayerPrefs.SetFloat(name+"z", roll);
+			PlayerPrefs.SetInt(name+"i", is360? 1 : 0);
 		}
 	}
 	
@@ -122,10 +147,11 @@ public class VideoSlave : MonoBehaviour {
 		
 		//get settings
 		currentSettings = new VideoSettings(name);
-		currentSettings.is360 = mode == "360";
+		if(!currentSettings.Is360Set)
+			currentSettings.Is360 = mode == "360";
 		
 		//load the video into the correct player
-		CurrentPlayer = currentSettings.is360 ? spherePlayer : semispherePlayer;
+		CurrentPlayer = currentSettings.Is360 ? spherePlayer : semispherePlayer;
 		CurrentPlayer.url = path;
 		CurrentPlayer.Prepare();
 		
@@ -187,6 +213,15 @@ public class VideoSlave : MonoBehaviour {
 				currentSettings.applyRotations(CurrentPlayer);
 			}else{
 				print("Expecting 3 arguments in rotate");
+			}
+		}else if(dat[0] == "mode"){//changes default mode for this video's playback (arg 1 is either "360" or "235") -- WARNING: reloads video
+			if(currentSettings == null) return;
+			if(dat.Length > 1){
+				currentSettings.Is360 = dat[1] == "360";
+				//reload video
+				LoadVideo(currentSettings.Name, dat[1]);
+			}else{
+				print("Expecting 1 argument in mode");
 			}
 		}else if(dat[0] == "logs"){//sends back console contents
 			respond.Send(UIConsole.Logs());
