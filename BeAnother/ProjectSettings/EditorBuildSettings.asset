@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Guide/GuideDescriptionMenu.unity
     guid: dfe8eddc3674ef74eb7f41433a18999b
+  - enabled: 1
+    path: Assets/Scenes/Guide/GuideConfirmationMenu.unity
+    guid: 28b761c22eee58145a33594b230a152a
+  - enabled: 1
+    path: Assets/Scenes/Guide/GuidePlaybackMenu.unity
+    guid: b9e8c081759424640afacd0f81f72964
   m_configObjects: {}

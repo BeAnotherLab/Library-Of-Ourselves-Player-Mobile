@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class ShowVideoName : MonoBehaviour {
 	
+	[SerializeField] Text objects = null;
+	
 	void Start(){
 		GetComponent<Text>().text = CurrentSelection.Name;
+		if(objects != null)
+			objects.text = CurrentSelection.Objects;
 	}
 	
 }

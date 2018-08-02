@@ -16,6 +16,7 @@ public class VideoSlave : MonoBehaviour {
 	
 	VideoSettings currentSettings = null;
 	VideoPlayer m_currentPlayer = null;
+	bool bypassAudio = false;//for the current video only
 	
 	//The VideoPlayer we're currently using, or null if no video is playing.
 	VideoPlayer CurrentPlayer{
@@ -24,7 +25,7 @@ public class VideoSlave : MonoBehaviour {
 			if(m_currentPlayer != null){
 				m_currentPlayer.loopPointReached -= OnVideoEnd;
 				m_currentPlayer.gameObject.SetActive(false);
-				if(!bypassBinauralAudio)
+				if(!bypassAudio)
 					m_currentPlayer.GetComponent<BinauralAudio>().Stop();
 			}
 			if(value != null){
@@ -140,9 +141,11 @@ public class VideoSlave : MonoBehaviour {
 		
 		//find audio files:
 		string audioPath = Filesystem.SDCardRoot + name;
-		if(!bypassBinauralAudio && !BinauralAudio.Exists(audioPath)){
-			respond.Send("filenotfound "+audioPath);
-			return;
+		if(bypassBinauralAudio || !BinauralAudio.Exists(audioPath)){
+			//didn't find the audio, bypass it then
+			bypassAudio = true;
+		}else{
+			bypassAudio = false;
 		}
 		
 		//get settings
@@ -156,8 +159,12 @@ public class VideoSlave : MonoBehaviour {
 		CurrentPlayer.Prepare();
 		
 		//load the audio:
-		if(!bypassBinauralAudio)
+		if(bypassAudio){
+			CurrentPlayer.audioOutputMode = VideoAudioOutputMode.Direct;//play from mp4
+		}else{
 			CurrentPlayer.GetComponent<BinauralAudio>().Load(audioPath);
+			CurrentPlayer.audioOutputMode = VideoAudioOutputMode.None;//only play binaural
+		}
 		
 		//recalibrate
 		Calibrate();
@@ -167,14 +174,14 @@ public class VideoSlave : MonoBehaviour {
 	void Play(){
 		if(CurrentPlayer == null) return;
 		CurrentPlayer.Play();
-		if(!bypassBinauralAudio)
+		if(!bypassAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Play();
 	}
 	
 	void Pause(){
 		if(CurrentPlayer == null) return;
 		CurrentPlayer.Pause();
-		if(!bypassBinauralAudio)
+		if(!bypassAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Pause();
 	}
 	

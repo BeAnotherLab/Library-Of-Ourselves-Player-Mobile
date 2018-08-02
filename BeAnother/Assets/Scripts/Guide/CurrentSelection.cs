@@ -9,6 +9,7 @@ public class CurrentSelection : MonoBehaviour {
 	[SerializeField] new string name;
 	[SerializeField] string path;
 	[SerializeField] bool is360;
+	[SerializeField] string objects = "";
 	
 	public static string Name{
 		get{
@@ -40,6 +41,17 @@ public class CurrentSelection : MonoBehaviour {
 		set{
 			if(instance == null) return;
 			instance.is360 = value;
+		}
+	}
+	
+	public static string Objects{
+		get{
+			if(instance == null) return "";
+			return instance.objects;
+		}
+		set{
+			if(instance == null) return;
+			instance.objects = value;
 		}
 	}
 	
