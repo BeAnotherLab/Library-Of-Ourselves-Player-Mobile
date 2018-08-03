@@ -131,6 +131,8 @@ public class VideoSlave : MonoBehaviour {
 	}
 	
 	void LoadVideo(string name, string mode){
+		CurrentPlayer = null;
+		
 		//find mp4 file:
 		string path = Filesystem.SDCardRoot + name + ".mp4";
 		print("Fetching " + path);

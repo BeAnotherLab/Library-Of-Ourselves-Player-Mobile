@@ -13,7 +13,8 @@ public class Filesystem {
 			
 			sdroot = getSDCardPath();
 			//remove any appended "Android/data/sco.forgotten.beanother/files"
-			sdroot = sdroot.Split(new string[]{"Android/data"}, StringSplitOptions.None)[0];
+			sdroot = sdroot.Split(new string[]{"/Android/data"}, StringSplitOptions.None)[0];
+			sdroot += "/";
 			return sdroot;
 		}
 	}

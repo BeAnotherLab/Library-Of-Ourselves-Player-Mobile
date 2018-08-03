@@ -37,6 +37,7 @@ public class Lang : MonoBehaviour {
 	static Language getLang(string l){
 		string path = pathFromName(l);
 		if(File.Exists(path)){
+			print(path + " read.");
 			string data = File.ReadAllText(path);
 			Language lan = JsonUtility.FromJson<Language>(data);
 			return lan;
@@ -44,6 +45,7 @@ public class Lang : MonoBehaviour {
 			//we dont have that language yet, create an empty json file for it that should then be filled manually outside the app
 			Language lan = new Language();
 			string data = JsonUtility.ToJson(lan);
+			print("Writing json to " + path);
 			StreamWriter sw = new StreamWriter(path, false);
 			sw.WriteLine(data);
 			sw.Close();
