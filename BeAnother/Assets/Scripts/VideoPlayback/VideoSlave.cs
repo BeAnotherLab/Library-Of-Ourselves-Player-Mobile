@@ -11,6 +11,7 @@ public class VideoSlave : MonoBehaviour {
 	[SerializeField] VideoPlayer spherePlayer;
 	[SerializeField] VideoPlayer semispherePlayer;
 	[SerializeField] bool bypassBinauralAudio = false;
+	[SerializeField] DriftCorrection driftCorrection;
 	
 	Sender respond;
 	
@@ -173,6 +174,7 @@ public class VideoSlave : MonoBehaviour {
 	
 	void Play(){
 		if(CurrentPlayer == null) return;
+		print("Playing.");
 		CurrentPlayer.Play();
 		if(!bypassAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Play();
@@ -229,6 +231,17 @@ public class VideoSlave : MonoBehaviour {
 				LoadVideo(currentSettings.Name, dat[1]);
 			}else{
 				print("Expecting 1 argument in mode");
+			}
+		}else if(dat[0] == "insideout"){//turn on or off drift correction, arg 1 is either "on" or "off"
+			if(dat.Length > 1){
+				if(dat[1] == "on"){
+					driftCorrection.enabled = true;
+					driftCorrection.CorrectDrift = true;
+				}else{
+					driftCorrection.CorrectDrift = false;
+				}
+			}else{
+				print("Expecting 1 argument in insideout");
 			}
 		}else if(dat[0] == "logs"){//sends back console contents
 			respond.Send(UIConsole.Logs());
