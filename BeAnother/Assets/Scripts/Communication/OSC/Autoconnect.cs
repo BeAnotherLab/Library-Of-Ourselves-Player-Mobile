@@ -14,6 +14,7 @@ public class Autoconnect : MonoBehaviour {
 	Sender sender;
 	
 	bool receivedPong;
+	bool sentPong;
 	
 	IEnumerator Start(){
 		
@@ -40,9 +41,10 @@ public class Autoconnect : MonoBehaviour {
 		transmitter.Connect();
 		
 		receivedPong = false;
+		sentPong = false;
 		
-		//broadcast "PING <ip>" over and over until it reaches
-		while(!receivedPong){
+		//broadcast "ping <ip>" over and over until it reaches
+		while(!receivedPong || !sentPong){
 			sender.Send("ping " + localHost);
 			yield return new WaitForSeconds(0.5f);
 		}
@@ -68,6 +70,7 @@ public class Autoconnect : MonoBehaviour {
 					transmitter.RemoteHost = subs[1];
 					//send PONG
 					sender.Send("pong");
+					sentPong = true;
 				}
 			}
 		}

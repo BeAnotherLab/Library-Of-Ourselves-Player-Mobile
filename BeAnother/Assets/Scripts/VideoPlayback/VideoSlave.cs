@@ -12,6 +12,8 @@ public class VideoSlave : MonoBehaviour {
 	[SerializeField] VideoPlayer semispherePlayer;
 	[SerializeField] bool bypassBinauralAudio = false;
 	[SerializeField] DriftCorrection driftCorrection;
+	[SerializeField] AutocalibrationRecorder autocalibrationRecorder;
+	[SerializeField] AutocalibrateApplier autocalibrationApplier;
 	
 	Sender respond;
 	
@@ -23,6 +25,7 @@ public class VideoSlave : MonoBehaviour {
 	VideoPlayer CurrentPlayer{
 		get{ return m_currentPlayer; }
 		set{
+			autocalibrationApplier.Pause();
 			if(m_currentPlayer != null){
 				m_currentPlayer.loopPointReached -= OnVideoEnd;
 				m_currentPlayer.gameObject.SetActive(false);
@@ -150,11 +153,14 @@ public class VideoSlave : MonoBehaviour {
 		}else{
 			bypassAudio = false;
 		}
+		print("Bypassing binaural audio: " + bypassAudio);
 		
 		//get settings
 		currentSettings = new VideoSettings(name);
 		if(!currentSettings.Is360Set)
 			currentSettings.Is360 = mode == "360";
+		
+		print("Video is 360: " + currentSettings.Is360);
 		
 		//load the video into the correct player
 		CurrentPlayer = currentSettings.Is360 ? spherePlayer : semispherePlayer;
@@ -175,8 +181,12 @@ public class VideoSlave : MonoBehaviour {
 	}
 	
 	void Play(){
-		if(CurrentPlayer == null) return;
+		if(CurrentPlayer == null){
+			print("Can't play: currentplayer is null.");
+			return;
+		}
 		print("Playing.");
+		autocalibrationApplier.Play();
 		CurrentPlayer.Play();
 		if(!bypassAudio)
 			CurrentPlayer.GetComponent<BinauralAudio>().Play();
@@ -195,6 +205,7 @@ public class VideoSlave : MonoBehaviour {
 	
 	void Calibrate(){
 		if(CurrentPlayer != null) CurrentPlayer.GetComponent<PlayerRotations>().Calibrate();
+		autocalibrationApplier.Recenter();
 	}
 	
 	public void OnReceived(string data){
@@ -245,6 +256,10 @@ public class VideoSlave : MonoBehaviour {
 			}else{
 				print("Expecting 1 argument in insideout");
 			}
+		}else if(dat[0] == "autocalibrate"){//
+			if(dat.Length > 1){
+				autocalibrationRecorder.OnReceiveCommand(dat[1]);
+			}else Debug.LogError("Expecting 1 argument in autocalibrate!");
 		}else if(dat[0] == "logs"){//sends back console contents
 			respond.Send(UIConsole.Logs());
 		}else{

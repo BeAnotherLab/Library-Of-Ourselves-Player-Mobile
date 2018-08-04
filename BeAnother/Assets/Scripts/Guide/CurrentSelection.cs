@@ -10,6 +10,7 @@ public class CurrentSelection : MonoBehaviour {
 	[SerializeField] string path;
 	[SerializeField] bool is360;
 	[SerializeField] string objects = "";
+	[SerializeField] Vector3 angles;
 	
 	public static string Name{
 		get{
