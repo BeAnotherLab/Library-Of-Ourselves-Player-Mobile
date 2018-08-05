@@ -9,6 +9,7 @@ public class CurrentSelection : MonoBehaviour {
 	[SerializeField] new string name;
 	[SerializeField] string path;
 	[SerializeField] bool is360;
+	[SerializeField] string description = "";
 	[SerializeField] string objects = "";
 	[SerializeField] Vector3 angles;
 	
@@ -45,6 +46,17 @@ public class CurrentSelection : MonoBehaviour {
 		}
 	}
 	
+	public static string Description{
+		get{
+			if(instance == null) return "";
+			return instance.description;
+		}
+		set{
+			if(instance == null) return;
+			instance.description = value;
+		}
+	}
+	
 	public static string Objects{
 		get{
 			if(instance == null) return "";
@@ -53,6 +65,17 @@ public class CurrentSelection : MonoBehaviour {
 		set{
 			if(instance == null) return;
 			instance.objects = value;
+		}
+	}
+	
+	public static Vector3 Angles{
+		get{
+			if(instance == null) return Vector3.zero;
+			return instance.angles;
+		}
+		set{
+			if(instance == null) return;
+			instance.angles = value;
 		}
 	}
 	

@@ -7,6 +7,7 @@ public class PngToSprite {
 	
 	public static Sprite LoadSprite(string path, float pixelsPerUnit = 100.0f){
 		Texture2D spriteTexture = LoadTexture(path);
+		if(spriteTexture == null) return null;
 		return Sprite.Create(spriteTexture, new Rect(0, 0, spriteTexture.width, spriteTexture.height), Vector2.zero, pixelsPerUnit);
 	}
 	
@@ -17,7 +18,7 @@ public class PngToSprite {
 			if(tex2d.LoadImage(data))
 				return tex2d;
 		}
-		Debug.LogError("Cannot load texture from file " + path);
+		Debug.Log("Cannot load texture from file " + path);
 		return null;
 	}
 	

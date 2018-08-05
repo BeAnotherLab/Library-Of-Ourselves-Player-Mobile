@@ -27,15 +27,15 @@ public class GuideSpherePlayer : MonoBehaviour {
 	}
 	
 	public void Play(){
-		vp.Play();
+		if(vp != null)vp.Play();
 	}
 	
 	public void Pause(){
-		vp.Pause();
+		if(vp != null)vp.Pause();
 	}
 	
 	public void Stop(){
-		vp.Stop();
+		if(vp != null)vp.Stop();
 	}
 	
 }

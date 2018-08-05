@@ -2,21 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
+using System.Reflection;
 
 public class Lang : MonoBehaviour {
 	
 	public class Language{
-		string hello = "Hello";
+		public string title = "Library of [Ourselves]";
+		public string back = "Back";
+		public string choose = "Choose";
+		public string start = "Start the VR film";
+		public string play = "Play";
+		public string pause = "Pause";
+		public string stop = "Stop";
+		public string recenter = "Recenter";
+		public string fps = "FPS: ";
+		public string battery = "Battery: ";
+		public string pitch = "Pitch";
+		public string yaw = "Yaw";
+		public string roll = "Roll";
+		public string save = "Save";
+		public string reset = "Reset";
+		public string chooseAVRFilm = "Choose a VR film from the list below to read its synopsis";
+		public string advancedSettings = "Advanced Settings";
+		public string enterAdvancedSettingsCode = "Please enter the code to access advanced settings.";
+		public string typeCode = "Type code";
+		public string youWillNeed = "To perform this experience, the guide will need the following objects: ";
+		public string youWillPlay = "You are going to play the VR film ";
+		public string instructions = "There must be One Guide, with the tablet, and One User with the VR headset. The guide must follow the instructions below:";
+		public string instruction1 = "1. Place the following objects nearby: ";
+		public string instruction2 = "2. Help the user to sit down and properly adjust the User's VR headset and headphones.";
+		public string instruction3 = "3. Put the Guide's earplugs on.";
+		public string instruction4 = "4. Follow all the instructions that will be given to you.";
+		public string instruction5 = "5. IMPORTANT: take you role seriously, the safety of the user relies on you.";
+		public string instruction6 = "6. Make sure the user is looking straight and press Start.";
+		public string typeDescription = "Type description";
+		public string typeListOfObjects = "Type list of objects";
 	}
 	
 	static Lang instance = null;
 	
-	[SerializeField] string language = "en"; 
+	[SerializeField] string language = "en";
 	
 	Language current;
 	
 	//usage, anywhere in the code: string hello = Lang.Uage.hello;
-	static Language Uage{
+	public static Language Uage{
 		get{
 			return instance.current;
 		}
@@ -51,6 +82,13 @@ public class Lang : MonoBehaviour {
 			sw.Close();
 			return lan;//for now, use this
 		}
+	}
+	
+	public static string GetText(string key){
+		Type language = typeof(Language);
+		FieldInfo field = language.GetField(key);
+		Language currentLanguage = Uage;
+		return (string)field.GetValue(currentLanguage);
 	}
 	
 }

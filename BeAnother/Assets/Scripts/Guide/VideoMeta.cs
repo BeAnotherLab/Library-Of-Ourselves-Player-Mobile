@@ -6,11 +6,17 @@ using System.IO;
 public class VideoMeta {
 	
 	public string description = "";//300 characters description
-	public string[] objects = new string[]{};//a few objects that the guide will need
-	public string imagePath = "";//relative path to an image to represent this video
+	public string objects = "";//a few objects that the guide will need
+	public float pitch = 0;
+	public float yaw = 0;
+	public float roll = 0;
 	
 	static string pathFromName(string videoName){
 		return Filesystem.SDCardRoot + videoName + ".json";
+	}
+	
+	public static bool HasMeta(string videoName){
+		return File.Exists(pathFromName(videoName));
 	}
 	
 	public static VideoMeta LoadMeta(string videoName){
@@ -20,7 +26,9 @@ public class VideoMeta {
 			VideoMeta vm = JsonUtility.FromJson<VideoMeta>(data);
 			return vm;
 		}else{
-			return new VideoMeta();//don't have that yet :3
+			VideoMeta vm = new VideoMeta();
+			//SaveMeta(videoName, vm);
+			return vm;//don't have that yet :3
 		}
 	}
 	

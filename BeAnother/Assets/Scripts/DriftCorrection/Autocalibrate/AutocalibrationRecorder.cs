@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class AutocalibrationRecorder : MonoBehaviour {
 	
-	static float driftPerSecond = 0;
-	
 	public static float DriftPerSecond{
-		get{ return driftPerSecond; }
+		get{
+			if(PlayerPrefs.HasKey("autocorrectdrift")){
+				return PlayerPrefs.GetFloat("autocorrectdrift");
+			}else return 0;
+		}
+		private set{
+			PlayerPrefs.SetFloat("autocorrectdrift", value);
+		}
 	}
 	
 	Transform t;
@@ -22,7 +27,7 @@ public class AutocalibrationRecorder : MonoBehaviour {
 		}else if(data == "off"){//stop calibration
 			stopCalibration = true;
 		}else if(data == "reset"){
-			driftPerSecond = 0;
+			DriftPerSecond = 0;
 		}
 	}
 	
@@ -49,8 +54,8 @@ public class AutocalibrationRecorder : MonoBehaviour {
 		}
 		
 		//calibration over - compute how much we drifted per second
-		driftPerSecond = yawDrift / elapsed;
-		print("Calibration result: " + driftPerSecond + " (drifted " + yawDrift + " in " + elapsed + " seconds)");
+		DriftPerSecond = yawDrift / elapsed;
+		print("Calibration result: " + DriftPerSecond + " (drifted " + yawDrift + " in " + elapsed + " seconds)");
 		
 	}
 	
