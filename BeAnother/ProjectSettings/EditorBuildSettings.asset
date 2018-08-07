@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VR/VRAutoconnect.unity
     guid: 8fe7e7b62f1eebf4d8ca0475e25a4b3b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VR/VR.unity
     guid: a0143e1c8fa0b91489e24e3660eb573a
   - enabled: 1
