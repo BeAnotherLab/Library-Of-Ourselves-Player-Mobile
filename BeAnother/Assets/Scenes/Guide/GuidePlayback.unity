@@ -639,7 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   address: /beanother/video
-  defaultMessage: stop
+  defaultMessage: rewind
   transmitter: {fileID: 0}
   verbose: 0
 --- !u!1 &389606201

@@ -25,7 +25,6 @@ public class VideoSlave : MonoBehaviour {
 	VideoPlayer CurrentPlayer{
 		get{ return m_currentPlayer; }
 		set{
-			autocalibrationApplier.Pause();
 			if(m_currentPlayer != null){
 				m_currentPlayer.loopPointReached -= OnVideoEnd;
 				m_currentPlayer.gameObject.SetActive(false);
@@ -195,12 +194,20 @@ public class VideoSlave : MonoBehaviour {
 	void Pause(){
 		if(CurrentPlayer == null) return;
 		CurrentPlayer.Pause();
-		if(!bypassAudio)
-			CurrentPlayer.GetComponent<BinauralAudio>().Pause();
+		autocalibrationApplier.Pause();
+		if(!bypassAudio) CurrentPlayer.GetComponent<BinauralAudio>().Pause();
 	}
 	
 	void Stop(){
 		CurrentPlayer = null;
+		autocalibrationApplier.Pause();
+	}
+	
+	void Rewind(){
+		CurrentPlayer.Stop();
+		if(!bypassAudio) CurrentPlayer.GetComponent<BinauralAudio>().Stop();
+		autocalibrationApplier.Pause();
+		
 	}
 	
 	void Calibrate(){
@@ -224,6 +231,8 @@ public class VideoSlave : MonoBehaviour {
 			Pause();
 		}else if(dat[0] == "stop"){//Unloads the video
 			Stop();
+		}else if(dat[0] == "rewind"){//rewinds the video but keeps it loaded in
+			Rewind();
 		}else if(dat[0] == "calibrate"){//Recenters sphere
 			Calibrate();
 		}else if(dat[0] == "rotate"){//changes default pitch-yaw-roll (args 1 2 and 3)
