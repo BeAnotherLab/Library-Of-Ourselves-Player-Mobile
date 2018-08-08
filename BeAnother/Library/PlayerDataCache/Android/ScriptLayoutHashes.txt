@@ -1,12 +1,9 @@
 Android
 PlayerPath?
-C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Build/Android/guide.apk
+C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Build/Android/vr.apk
 SceneListBegin?
-Assets/Scenes/GuideAutoconnect.unity
-Assets/Scenes/Guide/GuideMainMenu.unity
-Assets/Scenes/Guide/GuideDescriptionMenu.unity
-Assets/Scenes/Guide/GuidePlayback.unity
-Assets/Scenes/Guide/GuideAdvancedSettings.unity
+Assets/Scenes/VR/VRAutoconnect.unity
+Assets/Scenes/VR/VR.unity
 SceneListEnd?
 c422dd62785a6d0afa870fbd111886ce Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
 22c89fc123967468bfbc8a70ce41837f Assembly-CSharp.dll:.MainMenuUIVideoPlacer

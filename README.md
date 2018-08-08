@@ -9,7 +9,7 @@ Mobile version of Library of ourselves app
 + Use a GearVR-compatible phone ([list here](https://www.unlockunit.com/blog/samsung-gear-vr-compatible-phones/)).
 + Make sure GearVR service is installed and enabled, as described [here](https://support.oculus.com/guides/gear-vr/latest/concepts/gsg-b-sw-software-setup/).
 + Place Oculus Signature file, which you can generate for your phone [here](https://dashboard.oculus.com/tools/osig-generator/), in BeAnother/Assets/Plugins/Android/Assets/ right next to the `PLACE_OSIG_HERE` file.
-+ For each VR video <XXX> that you want to try with, place the 235- or 360-degrees video file <XXX>.mp4 on the phone's SD card's root. Note that if the phone has two SD cards, you should place it onto the first one.
++ For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the phone's SD card's root. Note that if the phone has two SD cards, you should place it onto the first one.
 + In Unity's Player Settings (Edit/Project Settings/Player/Android), enable _Virtual Reality Supported_.
 + In Unity's Build Settings, select scenes _Scenes/VR/VRAutoconnect_ and _Scenes/VR/VR_.
 + Build the .apk and install it onto the phone.
@@ -17,7 +17,7 @@ Mobile version of Library of ourselves app
 + The first time running BeAnother, make sure to accept all requested permissions (should only be write and read external storage).
 
 ### Settings up the tablet
-+ For each video <XXX>, place the guide video <XXX>Guide.mp4 or 360_<XXX>Guide.mp4 (if the video is 360-degrees), as well as a thumbnail <XXX>.jpg onto the tablet's SD card's root.
++ For each video XXX, place the guide video XXXGuide.mp4 or 360_XXXGuide.mp4 (if the video is 360-degrees), as well as a thumbnail XXX.jpg onto the tablet's SD card's root.
 + In Unity's Player Settings, disable _Virtual Reality Supported_.
 + In Unity's Build Settings, select scenes _Scenes/GuideAutoconnect_ and everything that starts with _Scenes/Guide/_.
 + Build the .apk and install it onto the tablet.
