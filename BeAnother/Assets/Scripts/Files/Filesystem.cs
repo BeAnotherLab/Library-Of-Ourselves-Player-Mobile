@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 
 public class Filesystem {
 	
-	static string sdroot = "";
+	static Exception latestException = null;
+	public static Exception LastException{
+		get{ return latestException; }
+	}
 	
+	static string sdroot = "";
 	public static string SDCardRoot{
 		get{
 			if(sdroot != "") return sdroot;
@@ -16,6 +21,31 @@ public class Filesystem {
 			sdroot = sdroot.Split(new string[]{"/Android/data"}, StringSplitOptions.None)[0];
 			sdroot += "/";
 			return sdroot;
+		}
+	}
+	
+	public static string PersistentDataPath{
+		get{
+			return Application.persistentDataPath + "/";
+		}
+	}
+	
+	public static bool WriteFile(string path, string contents){
+		try{
+			File.WriteAllText(path, contents);
+			return true;
+		}catch(Exception e){
+			latestException = e;
+			return false;
+		}
+	}
+	
+	public static string ReadFile(string path){
+		try{
+			return File.ReadAllText(path);
+		}catch(Exception e){
+			latestException = e;
+			return null;
 		}
 	}
 	

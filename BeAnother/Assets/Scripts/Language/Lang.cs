@@ -61,7 +61,8 @@ public class Lang : MonoBehaviour {
 	}
 	
 	static string pathFromName(string l){
-		return Filesystem.SDCardRoot + l + ".json";
+		//return Filesystem.SDCardRoot + l + ".json";
+		return Filesystem.PersistentDataPath + l + ".json";
 	}
 	
 	//load from .json
@@ -69,7 +70,7 @@ public class Lang : MonoBehaviour {
 		string path = pathFromName(l);
 		if(File.Exists(path)){
 			print(path + " read.");
-			string data = File.ReadAllText(path);
+			string data = Filesystem.ReadFile(path);
 			Language lan = JsonUtility.FromJson<Language>(data);
 			return lan;
 		}else{
@@ -77,9 +78,11 @@ public class Lang : MonoBehaviour {
 			Language lan = new Language();
 			string data = JsonUtility.ToJson(lan);
 			print("Writing json to " + path);
-			StreamWriter sw = new StreamWriter(path, false);
-			sw.WriteLine(data);
-			sw.Close();
+			//StreamWriter sw = new StreamWriter(path, false);
+			//sw.WriteLine(data);
+			//sw.Close();
+			if(!Filesystem.WriteFile(path, data))
+				Debug.LogError(Filesystem.LastException);
 			return lan;//for now, use this
 		}
 	}

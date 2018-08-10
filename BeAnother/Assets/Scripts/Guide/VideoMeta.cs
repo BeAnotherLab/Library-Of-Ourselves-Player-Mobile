@@ -12,7 +12,8 @@ public class VideoMeta {
 	public float roll = 0;
 	
 	static string pathFromName(string videoName){
-		return Filesystem.SDCardRoot + videoName + ".json";
+		//return Filesystem.SDCardRoot + videoName + ".json";
+		return Filesystem.PersistentDataPath + videoName + ".json";
 	}
 	
 	public static bool HasMeta(string videoName){
@@ -22,7 +23,7 @@ public class VideoMeta {
 	public static VideoMeta LoadMeta(string videoName){
 		string path = pathFromName(videoName);
 		if(File.Exists(path)){
-			string data = File.ReadAllText(path);
+			string data = Filesystem.ReadFile(path);
 			VideoMeta vm = JsonUtility.FromJson<VideoMeta>(data);
 			return vm;
 		}else{
@@ -35,9 +36,11 @@ public class VideoMeta {
 	public static void SaveMeta(string videoName, VideoMeta vm){
 		string data = JsonUtility.ToJson(vm);
 		string path = pathFromName(videoName);
-		StreamWriter sw = new StreamWriter(path, false);
-		sw.WriteLine(data);
-		sw.Close();
+		//StreamWriter sw = new StreamWriter(path, false);
+		//sw.WriteLine(data);
+		//sw.Close();
+		if(!Filesystem.WriteFile(path, data))
+			Debug.LogError(Filesystem.LastException);
 	}
 	
 }

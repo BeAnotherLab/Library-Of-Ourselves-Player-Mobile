@@ -135,7 +135,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 11
+  controlID: 78
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 12
+  controlID: 79
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 13
+  controlID: 80
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -200,7 +200,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 245
+    width: 243
     height: 676
   m_MinSize: {x: 204, y: 221}
   m_MaxSize: {x: 4004, y: 4021}
@@ -223,9 +223,9 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-    x: 245
+    x: 243
     y: 0
-    width: 1398
+    width: 1400
     height: 676
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
@@ -643,9 +643,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 524
+    x: 522
     y: 92
-    width: 1396
+    width: 1398
     height: 655
   m_PersistentViewDataDictionary: {fileID: 0}
   m_MaximizeOnPlay: 0
@@ -679,25 +679,25 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 17
-      width: 1396
+      width: 1398
       height: 638
     m_Scale: {x: 0.80625004, y: 0.80625}
-    m_Translation: {x: 698, y: 319}
+    m_Translation: {x: 699, y: 319}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -865.7364
+      x: -866.9767
       y: -395.65894
-      width: 1731.4728
+      width: 1733.9534
       height: 791.3179
     m_MinimalGUI: 1
   m_defaultScale: 0.7975
   m_TargetTexture: {fileID: 0}
   m_CurrentColorSpace: 0
-  m_LastWindowPixelSize: {x: 1396, y: 655}
+  m_LastWindowPixelSize: {x: 1398, y: 655}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000001000100000100
@@ -790,14 +790,14 @@ MonoBehaviour:
     serializedVersion: 2
     x: 279
     y: 92
-    width: 241
+    width: 239
     height: 655
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 8cc6ffff8ec6ffff68e5ffffecefffff42f2ffffe6fbffff00000000da340000ba390000c6390000d8390000
+    m_ExpandedIDs: 72c4feff92c5feff6ec6feffa8c8feffc6c8fefff0c8feff20c9feff30c9feffc4ccffffdacdffffb2ceffff4ed1ffff8ed1ffffccddffffecdeffffc8dfffff02e2ffff20e2ffff4ae2ffff7ae2ffff8ae2ffffe6fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -816,7 +816,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 9}
     m_SearchString: 
   m_ExpandedScenes:
-  - VR
+  - GuideAutoconnect
   m_CurrenRootInstanceID: 0
   m_LockTracker:
     m_IsLocked: 0
@@ -945,8 +945,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 279
-    y: 768
+    x: 2
+    y: 695
     width: 1641
     height: 250
   m_PersistentViewDataDictionary: {fileID: 0}
@@ -962,19 +962,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts/Files
   m_ViewMode: 1
   m_StartGridSize: 78
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts/Files
   m_LastFoldersGridSize: 78
   m_LastProjectPath: C:\Users\jking\Desktop\Workspace\Unity\VR\BeAnotherApp\WIP-Player\BeAnother
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 1271}
-    m_SelectedIDs: 9e2f0000
-    m_LastClickedID: 12190
+    scrollPos: {x: 0, y: 1447}
+    m_SelectedIDs: 32310000
+    m_LastClickedID: 12594
     m_ExpandedIDs: 00000000e42d0000f62d00001e2e00005a2e0000902e00002a2f0000382f0000642f0000662f0000882f00009e2f0000c62f0000cc2f0000d22f0000f62f0000fe2f00002230000028300000403000000431000036310000863100001c3200008e3200000c33000016330000263300002e330000383500003a3500003c3500003e3500004035000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
