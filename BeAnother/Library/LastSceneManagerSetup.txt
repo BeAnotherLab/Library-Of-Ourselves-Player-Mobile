@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/GuideAutoconnect.unity
+- path: Assets/Scenes/Guide/GuidePlayback.unity
   isLoaded: 1
   isActive: 1

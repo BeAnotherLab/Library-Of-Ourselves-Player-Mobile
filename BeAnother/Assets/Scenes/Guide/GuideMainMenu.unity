@@ -649,7 +649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -590, y: 0}
+  m_AnchoredPosition: {x: -668.49915, y: 0}
   m_SizeDelta: {x: 60, y: -40}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &829162894
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Spacing: 20
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 1
 --- !u!114 &829162895
 MonoBehaviour:
@@ -1475,6 +1475,7 @@ MonoBehaviour:
   name: 
   path: 
   is360: 0
+  description: 
   objects: 
   angles: {x: 0, y: 0, z: 0}
 --- !u!1001 &1892926146
