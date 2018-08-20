@@ -1,7 +1,9 @@
 Android
 PlayerPath?
-C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Builds/guide.apk
+C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Builds/vr.apk
 SceneListBegin?
+Assets/Scenes/VR/VRAutoconnect.unity
+Assets/Scenes/VR/VR.unity
 Assets/Scenes/GuideAutoconnect.unity
 Assets/Scenes/Guide/GuideMainMenu.unity
 Assets/Scenes/Guide/GuideDescriptionMenu.unity

@@ -46,6 +46,7 @@ public class Autoconnect : MonoBehaviour {
 		//broadcast "ping <ip>" over and over until it reaches
 		while(!receivedPong || !sentPong){
 			sender.Send("ping " + localHost);
+			print("Received pong: " + receivedPong + ", sent pong: " + sentPong);
 			yield return new WaitForSeconds(0.5f);
 		}
 		
@@ -71,7 +72,11 @@ public class Autoconnect : MonoBehaviour {
 					//send PONG
 					sender.Send("pong");
 					sentPong = true;
+				}else{
+					Debug.LogError("Should have received ping with an ip but received " + msg + " instead..");
 				}
+			}else{
+				Debug.LogError("Should have received ping with an ip but received " + msg + " instead..");
 			}
 		}
 	}
