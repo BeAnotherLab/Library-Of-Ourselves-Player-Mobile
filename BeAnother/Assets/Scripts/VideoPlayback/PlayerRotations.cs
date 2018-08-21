@@ -19,16 +19,29 @@ public class PlayerRotations : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(firstTap > 0){//we've tapped a first time!
-			if(Input.GetMouseButtonDown(0)){
-				//that's it, double-tapped.
-				Calibrate();
-				firstTap = 0;
+		if(VRDevice.GearVR){//On GearVR, double-tap to recalibrate
+			if(firstTap > 0){//we've tapped a first time!
+				if(Input.GetMouseButtonDown(0)){
+					//that's it, double-tapped.
+					Calibrate();
+					firstTap = 0;
+				}
+				firstTap -= Time.deltaTime;
+			}else if(Input.GetMouseButtonUp(0)){
+				firstTap = 0.3f;//you have .3 seconds to tap once more for double tap!
 			}
-			firstTap -= Time.deltaTime;
-		}else if(Input.GetMouseButtonUp(0)){
-			firstTap = 0.3f;//you have .3 seconds to tap once more for double tap!
+		}else if(VRDevice.OculusGo){
+			//something else?
+			OVRInput.Update();
+			if(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger)){
+				Calibrate();
+			}
 		}
+	}
+	
+	void FixedUpdate(){
+		if(VRDevice.OculusGo)
+			OVRInput.FixedUpdate();
 	}
 	
 }
