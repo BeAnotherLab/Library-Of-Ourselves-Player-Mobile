@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainMenuUIVideoPlacer : MonoBehaviour {
 	
 	const string PREFIX_360 = "360_";//any file that starts with this name on the guide app will be considered a 360 video
-	static readonly string[] SUFFIXES = new string[]{"_guide", "Guide", "guide"};//will strip these out from the end of the displayed name
+	static readonly string[] SUFFIXES = new string[]{"_g", "_G", "_guide", "_Guide", "Guide", "guide", "GUIDE", "_GUIDE"};//will only consider filenames that end with one of those
 	
 	[SerializeField] GameObject prefabVideoUI;
 	[SerializeField] Transform videoRoot;

@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spherePlayer: {fileID: 881606006}
   semispherePlayer: {fileID: 788648602}
-  bypassBinauralAudio: 1
+  bypassBinauralAudio: 0
   driftCorrection: {fileID: 1183401916}
   autocalibrationRecorder: {fileID: 1538069382}
   autocalibrationApplier: {fileID: 1183401917}
