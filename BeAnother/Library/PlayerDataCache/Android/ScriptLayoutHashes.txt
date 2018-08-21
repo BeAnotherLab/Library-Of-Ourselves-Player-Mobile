@@ -1,9 +1,7 @@
 Android
 PlayerPath?
-C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Builds/vr.apk
+C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Builds/guide.apk
 SceneListBegin?
-Assets/Scenes/VR/VRAutoconnect.unity
-Assets/Scenes/VR/VR.unity
 Assets/Scenes/GuideAutoconnect.unity
 Assets/Scenes/Guide/GuideMainMenu.unity
 Assets/Scenes/Guide/GuideDescriptionMenu.unity
@@ -331,3 +329,4 @@ aa1079b4341d23b75ac07f2444a9627f Assembly-CSharp-firstpass.dll:extOSC.Components
 82cb39d3b9d038a08379135be55a0ce1 Assembly-CSharp-firstpass.dll:extOSC.Examples.MatchPatternExample
 7beca1ef3e36ef80648aad0182f41232 Assembly-CSharp-firstpass.dll:extOSC.Components.ReceiverReflections.OSCReceiverReflectionColor
 44d2e4ad252f3a7d2fb964cc605c3d8c Assembly-CSharp-firstpass.dll:extOSC.Examples.ArrayExample
+486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.FPSDisplay
