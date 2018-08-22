@@ -8,6 +8,8 @@ using System.Reflection;
 public class Lang : MonoBehaviour {
 	
 	public class Language{
+		public string searching = "Searching for user device...";
+		public string userDisconnected = "User device disconnected. Waiting for reconnection...";
 		public string title = "Library of [Ourselves]";
 		public string back = "Back";
 		public string choose = "Choose";
@@ -23,6 +25,8 @@ public class Lang : MonoBehaviour {
 		public string roll = "Roll";
 		public string save = "Save";
 		public string reset = "Reset";
+		public string cancel = "Cancel";
+		public string hanged = "User app paused";
 		public string chooseAVRFilm = "Choose a VR film from the list below to read its synopsis";
 		public string advancedSettings = "Advanced Settings";
 		public string enterAdvancedSettingsCode = "Please enter the code to access advanced settings.";
@@ -38,6 +42,11 @@ public class Lang : MonoBehaviour {
 		public string instruction6 = "6. Make sure the user is looking straight and press Start.";
 		public string typeDescription = "Type description";
 		public string typeListOfObjects = "Type list of objects";
+		public string notSaved = "You haven't saved your changes. Do you want to save them?";
+		public string yesSave = "Save";
+		public string noBack = "Discard";
+		public string paired = "Paired to user device. Both devices can only connect to each other now.";
+		public string unpaired = "Unpaired from user device. Both devices will accept other devices now.";
 	}
 	
 	static Lang instance = null;
@@ -54,7 +63,10 @@ public class Lang : MonoBehaviour {
 	}
 	
 	void Start(){
-		if(instance != null) return;
+		if(instance != null){
+			Destroy(gameObject);
+			return;
+		}
 		DontDestroyOnLoad(this);
 		instance = this;
 		instance.current = getLang(language);

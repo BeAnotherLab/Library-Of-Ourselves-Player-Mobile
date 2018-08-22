@@ -10,7 +10,9 @@ public class PlayerRotations : MonoBehaviour {
 	
 	public void Calibrate(){
 		//match this gameobject's rotation with the camera's
-		transform.rotation = cam.rotation;
+		//transform.rotation = cam.rotation;
+		//only correct yaw:
+		transform.eulerAngles = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
 	}
 	
 	public void Correct(float pitch, float yaw, float roll){

@@ -11,6 +11,11 @@ public class Sender : MonoBehaviour {
 	[SerializeField] OSCTransmitter transmitter;
 	[SerializeField] bool verbose = false;
 	
+	public string Address{
+		get{ return address; }
+		set{ address = value; }
+	}
+	
 	void Start(){
 		if(transmitter == null)
 			transmitter = FindObjectOfType(typeof(OSCTransmitter)) as OSCTransmitter;

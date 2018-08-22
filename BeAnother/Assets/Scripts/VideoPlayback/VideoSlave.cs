@@ -14,6 +14,7 @@ public class VideoSlave : MonoBehaviour {
 	[SerializeField] DriftCorrection driftCorrection;
 	[SerializeField] AutocalibrationRecorder autocalibrationRecorder;
 	[SerializeField] AutocalibrateApplier autocalibrationApplier;
+	[SerializeField] GameObject readyText;
 	
 	Sender respond;
 	
@@ -34,8 +35,12 @@ public class VideoSlave : MonoBehaviour {
 			if(value != null){
 				value.gameObject.SetActive(true);
 				value.loopPointReached += OnVideoEnd;
+				//disable ready text
+				readyText.SetActive(false);
 			}else{
 				currentSettings = null;
+				//show "ready"
+				readyText.SetActive(true);
 			}
 			m_currentPlayer = value;
 		}

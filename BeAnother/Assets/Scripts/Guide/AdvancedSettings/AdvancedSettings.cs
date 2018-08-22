@@ -12,6 +12,8 @@ public class AdvancedSettings : MonoBehaviour {
 	[SerializeField] InputField yaw;
 	[SerializeField] InputField roll;
 	
+	bool saved = true;//no changes yet
+	
 	void Start(){
 		description.text = CurrentSelection.Description;
 		objects.text = CurrentSelection.Objects;
@@ -26,32 +28,38 @@ public class AdvancedSettings : MonoBehaviour {
 	
 	public void OnEndEditDescription(string d){
 		CurrentSelection.Description = d;
+		saved = false;
 	}
 	
 	public void OnEndEditObjects(string o){
 		CurrentSelection.Objects = o;
+		saved = false;
 	}
 	
 	public void OnEndEditPitch(string p){
 		Vector3 angles = CurrentSelection.Angles;
 		angles.x = f(p);
 		CurrentSelection.Angles = angles;
+		saved = false;
 	}
 	
 	public void OnEndEditYaw(string y){
 		Vector3 angles = CurrentSelection.Angles;
 		angles.y = f(y);
 		CurrentSelection.Angles = angles;
+		saved = false;
 	}
 	
 	public void OnEndEditRoll(string r){
 		Vector3 angles = CurrentSelection.Angles;
 		angles.z = f(r);
 		CurrentSelection.Angles = angles;
+		saved = false;
 	}
 	
 	public void OnSave(){
 		//if json file does not exist, save in meta, otherwise just playerprefs
+		if(saved) return;
 		if(VideoMeta.HasMeta(CurrentSelection.Name)){
 			//save current selection in playerprefs
 			PlayerPrefs.SetString(CurrentSelection.Name + "d", CurrentSelection.Description);
@@ -69,6 +77,7 @@ public class AdvancedSettings : MonoBehaviour {
 			vm.roll = CurrentSelection.Angles.z;
 			VideoMeta.SaveMeta(CurrentSelection.Name, vm);
 		}
+		saved = true;
 	}
 	
 	public void OnReset(){
@@ -83,6 +92,8 @@ public class AdvancedSettings : MonoBehaviour {
 		pitch.text = ""+CurrentSelection.Angles.x;
 		yaw.text = ""+CurrentSelection.Angles.y;
 		roll.text = ""+CurrentSelection.Angles.z;
+		
+		saved = true;
 	}
 	
 	public static bool LoadCurrentSelectionFromPlayerPrefs(){
@@ -96,6 +107,10 @@ public class AdvancedSettings : MonoBehaviour {
 			CurrentSelection.Angles = angles;
 			return true;
 		}else return false;
+	}
+	
+	public bool isSaved(){
+		return saved;
 	}
 	
 }

@@ -12,6 +12,7 @@ public class Autoconnect : MonoBehaviour {
 	[SerializeField] UnityEvent then = null;
 	
 	Sender sender;
+	Listener listener;
 	
 	bool receivedPong;
 	bool sentPong;
@@ -20,6 +21,16 @@ public class Autoconnect : MonoBehaviour {
 		
 		if(transmitter == null) transmitter = FindObjectOfType(typeof(OSCTransmitter)) as OSCTransmitter;
 		sender = GetComponent<Sender>();
+		listener = GetComponent<Listener>();
+		
+		//if we're currently paired to another device, let's connect on a different address.
+		//this way we'll only listen and send to the device we're paired to.
+		if(Pairing.Pair != null){
+			sender.Address = sender.Address + "/" + Pairing.Pair;
+			listener.Bind(listener.Address + "/" + Pairing.Pair);
+		}else{
+			listener.Bind();
+		}
 		
 		yield return Scan();
 	}
