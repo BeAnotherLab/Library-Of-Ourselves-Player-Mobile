@@ -1,6 +1,6 @@
 Android
 PlayerPath?
-C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Builds/vr.apk
+C:/Users/jking/Desktop/Workspace/Unity/VR/BeAnotherApp/WIP-Player/BeAnother/Builds/vrOculus.apk
 SceneListBegin?
 Assets/Scenes/VR/VRAutoconnect.unity
 Assets/Scenes/VR/VR.unity

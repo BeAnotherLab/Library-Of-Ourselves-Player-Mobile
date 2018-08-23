@@ -16,7 +16,11 @@ public class Filesystem {
 		get{
 			if(sdroot != "") return sdroot;
 			
-			sdroot = getSDCardPath();
+			if(VRDevice.OculusGo){
+				sdroot = Application.persistentDataPath;//will be the root of internal storage instead
+			}else{
+				sdroot = getSDCardPath();
+			}
 			//remove any appended "Android/data/sco.forgotten.beanother/files"
 			sdroot = sdroot.Split(new string[]{"/Android/data"}, StringSplitOptions.None)[0];
 			sdroot += "/";
