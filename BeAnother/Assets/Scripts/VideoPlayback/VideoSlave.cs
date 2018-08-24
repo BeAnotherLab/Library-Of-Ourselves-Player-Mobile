@@ -11,7 +11,7 @@ public class VideoSlave : MonoBehaviour {
 	[SerializeField] VideoPlayer spherePlayer;
 	[SerializeField] VideoPlayer semispherePlayer;
 	[SerializeField] bool bypassBinauralAudio = false;
-	[SerializeField] DriftCorrection driftCorrection;
+	//[SerializeField] DriftCorrection driftCorrection;
 	[SerializeField] AutocalibrationRecorder autocalibrationRecorder;
 	[SerializeField] AutocalibrateApplier autocalibrationApplier;
 	[SerializeField] GameObject readyText;
@@ -50,7 +50,6 @@ public class VideoSlave : MonoBehaviour {
 		private string name;
 		private float pitch = 0, yaw = 0, roll = 0;
 		private bool is360 = false;
-		private bool is360Set = false;
 		
 		public VideoSettings(string n){
 			name = n;
@@ -60,10 +59,6 @@ public class VideoSlave : MonoBehaviour {
 				yaw = PlayerPrefs.GetFloat(name+"y");
 			if(PlayerPrefs.HasKey(name+"z"))
 				roll = PlayerPrefs.GetFloat(name+"z");
-			if(PlayerPrefs.HasKey(name+"i")){
-				is360 = PlayerPrefs.GetInt(name+"i") == 1;
-				is360Set = true;
-			}
 		}
 		
 		public float Pitch{
@@ -106,12 +101,7 @@ public class VideoSlave : MonoBehaviour {
 			set{
 				if(is360 == value) return;
 				is360 = value;
-				write();
 			}
-		}
-		
-		public bool Is360Set{//whether this video's 360v235 is overriden
-			get{ return is360Set; }
 		}
 		
 		public string Name{
@@ -127,7 +117,6 @@ public class VideoSlave : MonoBehaviour {
 			PlayerPrefs.SetFloat(name+"x", pitch);
 			PlayerPrefs.SetFloat(name+"y", yaw);
 			PlayerPrefs.SetFloat(name+"z", roll);
-			PlayerPrefs.SetInt(name+"i", is360? 1 : 0);
 		}
 	}
 	
@@ -161,8 +150,7 @@ public class VideoSlave : MonoBehaviour {
 		
 		//get settings
 		currentSettings = new VideoSettings(name);
-		if(!currentSettings.Is360Set)
-			currentSettings.Is360 = mode == "360";
+		currentSettings.Is360 = mode == "360";
 		
 		print("Video is 360: " + currentSettings.Is360);
 		
@@ -259,7 +247,7 @@ public class VideoSlave : MonoBehaviour {
 			}else{
 				print("Expecting 1 argument in mode");
 			}
-		}else if(dat[0] == "insideout"){//turn on or off drift correction, arg 1 is either "on" or "off"
+		/*}else if(dat[0] == "insideout"){//turn on or off drift correction, arg 1 is either "on" or "off"
 			if(dat.Length > 1){
 				if(dat[1] == "on"){
 					driftCorrection.enabled = true;
@@ -269,7 +257,7 @@ public class VideoSlave : MonoBehaviour {
 				}
 			}else{
 				print("Expecting 1 argument in insideout");
-			}
+			}*/
 		}else if(dat[0] == "autocalibrate"){//
 			if(dat.Length > 1){
 				autocalibrationRecorder.OnReceiveCommand(dat[1]);

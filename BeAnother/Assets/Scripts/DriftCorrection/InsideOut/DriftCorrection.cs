@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GoogleARCore;
+/*using GoogleARCore;
 
 public class DriftCorrection : MonoBehaviour {
 	
@@ -22,7 +22,7 @@ public class DriftCorrection : MonoBehaviour {
 		}
 	}
 	
-	/** True if currently ARCore is reporting good tracking */
+	//** True if currently ARCore is reporting good tracking *
 	bool IsTrackingOk{
 		get{
 			if(Session.Status == SessionStatus.Tracking){
@@ -59,4 +59,4 @@ public class DriftCorrection : MonoBehaviour {
 		transform.Rotate(new Vector3(0, gearVrYaw + yawCorrection, 0), Space.World);
 	}
 	
-}
+}*/

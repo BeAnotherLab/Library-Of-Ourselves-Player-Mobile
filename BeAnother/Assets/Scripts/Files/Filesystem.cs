@@ -19,7 +19,7 @@ public class Filesystem {
 			if(VRDevice.OculusGo){
 				sdroot = Application.persistentDataPath;//will be the root of internal storage instead
 			}else{
-				sdroot = getSDCardPath();
+				sdroot = getSDCardPath();//sd card path on both GearVR and Mirage Solo
 			}
 			//remove any appended "Android/data/sco.forgotten.beanother/files"
 			sdroot = sdroot.Split(new string[]{"/Android/data"}, StringSplitOptions.None)[0];

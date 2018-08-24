@@ -6,7 +6,7 @@ using UnityEngine;
 public class VRCameraLock : MonoBehaviour {
 	
 	[SerializeField] bool lockRotation = false;
-	[SerializeField] Transform camera;
+	[SerializeField] new Transform camera;
 	
 	Transform t;
 	

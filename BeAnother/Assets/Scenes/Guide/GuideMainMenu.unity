@@ -146,6 +146,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 1
 --- !u!224 &100508122
 RectTransform:
@@ -1058,6 +1059,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 1
 --- !u!4 &1328160891
 Transform:
@@ -1642,6 +1644,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 0
 --- !u!114 &1943281096
 MonoBehaviour:
@@ -1670,7 +1673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sendEvery: 0.2
-  timeout: 1
+  timeout: 1.5
   verbose: 1
   onDisconnection:
     m_PersistentCalls:

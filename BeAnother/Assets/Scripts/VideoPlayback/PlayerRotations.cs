@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerRotations : MonoBehaviour {
 	
 	[SerializeField] Transform cam;//the main camera, to be able to calibrate
+	[SerializeField] OVRInput.Button oculusGoRecenterButton = OVRInput.Button.PrimaryIndexTrigger;//change this to change which button controls recenter on oculus go
+	[SerializeField] GvrControllerButton mirageRecenterButton = GvrControllerButton.TouchPadButton;//change this to change which button controls recenter on mirage solo
 	
 	float firstTap = 0;
 	
 	public void Calibrate(){
 		//match this gameobject's rotation with the camera's
-		//transform.rotation = cam.rotation;
 		//only correct yaw:
 		transform.eulerAngles = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
 	}
@@ -32,10 +33,13 @@ public class PlayerRotations : MonoBehaviour {
 			}else if(Input.GetMouseButtonUp(0)){
 				firstTap = 0.3f;//you have .3 seconds to tap once more for double tap!
 			}
-		}else if(VRDevice.OculusGo){
-			//something else?
+		}else if(VRDevice.OculusGo){//On OculusGo, use the controller's trigger to recalibrate
 			OVRInput.Update();
-			if(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger)){
+			if(OVRInput.Get(oculusGoRecenterButton)){
+				Calibrate();
+			}
+		}else if(VRDevice.MirageSolo){//On Mirage Solo, use the controller's click button
+			if(GvrControllerInput.GetDevice(GvrControllerHand.Dominant).GetButton(mirageRecenterButton)){
 				Calibrate();
 			}
 		}
