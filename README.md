@@ -26,7 +26,7 @@ Mobile version of Library of ourselves app
   + On the phone, go to Settings/Apps/Gear VR Service/Storage/Manage Storage/ and tap on _VR Service Version_ several times until the developper options turn up; turn on _Developper mode_ (this is not required for the app to run normally but running in developper mode provides a smoother experience for the user).
   + The first time running the app, make sure to accept all requested permissions (should only be write and read external storage).
 + OculusGo:
-  + Turn Developper Mode on the OculusGo ([instructions here](https://developer.oculus.com/documentation/mobilesdk/latest/concepts/mobile-device-setup-go/)).
+  + Turn on Developper Mode on the OculusGo ([instructions here](https://developer.oculus.com/documentation/mobilesdk/latest/concepts/mobile-device-setup-go/)).
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the OculusGo's internal storage root.
   + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
   + In Unity's Player Settings (Edit/Project Settings/Player/Android), enable _Virtual Reality Supported_.
