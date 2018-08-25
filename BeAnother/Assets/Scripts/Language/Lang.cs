@@ -69,6 +69,17 @@ public class Lang : MonoBehaviour {
 		}
 		DontDestroyOnLoad(this);
 		instance = this;
+		
+		//let's try to find if there's a file "LoO_language.txt" on the SD card root
+		string path = Filesystem.SDCardRoot + "LoO_language.txt";
+		if(File.Exists(path)){
+			string data = Filesystem.ReadFile(path);
+			string[] dat = data.Split(":");//should be a key-value pair ("language:en")
+			if(dat.Length == 2 && dat[0] == "language"){
+				language = dat[1];//override default
+			}
+		}
+		
 		instance.current = getLang(language);
 	}
 	
