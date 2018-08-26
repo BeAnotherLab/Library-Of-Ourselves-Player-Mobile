@@ -5,6 +5,7 @@ Mobile version of Library of ourselves app
 ### Setting up your computer
 + Download the latest version of Unity - tested with Unity 2018.2.2f1.
 + Make sure Unity is ready for Android development; see [this page](https://docs.unity3d.com/Manual/android-sdksetup.html) for more on this.
+  + You will need to download Android Studio and the latest version of the JDK from [Oracle's website](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 + Open Android Studio, go to File/Settings and make sure that you have both of the SDK platforms for Android 7 (APIs level 24 and 25); if not, install them now.
 + If you run into some problems during any of the build processes:
   + If the program is frozen, give it some time as it might just be working very slowly. Otherwise, you can try to empty your %TEMP% folder and reinstalling a clean Unity.

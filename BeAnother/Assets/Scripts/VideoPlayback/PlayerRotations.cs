@@ -22,7 +22,16 @@ public class PlayerRotations : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(VRDevice.GearVR){//On GearVR, double-tap to recalibrate
+		if(VRDevice.OculusGo){//On OculusGo, use the controller's trigger to recalibrate
+			OVRInput.Update();
+			if(OVRInput.Get(oculusGoRecenterButton)){
+				Calibrate();
+			}
+		}else if(VRDevice.MirageSolo){//On Mirage Solo, use the controller's click button
+			if(GvrControllerInput.GetDevice(GvrControllerHand.Dominant).GetButton(mirageRecenterButton)){
+				Calibrate();
+			}
+		}else if(VRDevice.GearVR){//On GearVR, double-tap to recalibrate
 			if(firstTap > 0){//we've tapped a first time!
 				if(Input.GetMouseButtonDown(0)){
 					//that's it, double-tapped.
@@ -32,15 +41,6 @@ public class PlayerRotations : MonoBehaviour {
 				firstTap -= Time.deltaTime;
 			}else if(Input.GetMouseButtonUp(0)){
 				firstTap = 0.3f;//you have .3 seconds to tap once more for double tap!
-			}
-		}else if(VRDevice.OculusGo){//On OculusGo, use the controller's trigger to recalibrate
-			OVRInput.Update();
-			if(OVRInput.Get(oculusGoRecenterButton)){
-				Calibrate();
-			}
-		}else if(VRDevice.MirageSolo){//On Mirage Solo, use the controller's click button
-			if(GvrControllerInput.GetDevice(GvrControllerHand.Dominant).GetButton(mirageRecenterButton)){
-				Calibrate();
 			}
 		}
 	}
