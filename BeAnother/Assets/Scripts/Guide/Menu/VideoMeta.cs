@@ -17,7 +17,7 @@ public class VideoMeta {
 	}
 	
 	public static bool HasMeta(string videoName){
-		return File.Exists(pathFromName(videoName, true) || File.Exists(pathFromName(videoName));
+		return File.Exists(pathFromName(videoName, true)) || File.Exists(pathFromName(videoName));
 	}
 	
 	public static VideoMeta LoadMeta(string videoName){
