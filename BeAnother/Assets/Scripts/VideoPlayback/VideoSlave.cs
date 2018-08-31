@@ -121,6 +121,7 @@ public class VideoSlave : MonoBehaviour {
 	}
 	
 	void Start(){
+		bypassBinauralAudio = true;
 		respond = GetComponent<Sender>();
 		spherePlayer.gameObject.SetActive(false);
 		semispherePlayer.gameObject.SetActive(false);
@@ -156,8 +157,6 @@ public class VideoSlave : MonoBehaviour {
 		
 		//load the video into the correct player
 		CurrentPlayer = currentSettings.Is360 ? spherePlayer : semispherePlayer;
-		CurrentPlayer.url = path;
-		CurrentPlayer.Prepare();
 		
 		//load the audio:
 		if(bypassAudio){
@@ -166,6 +165,10 @@ public class VideoSlave : MonoBehaviour {
 			CurrentPlayer.GetComponent<BinauralAudio>().Load(audioPath);
 			CurrentPlayer.audioOutputMode = VideoAudioOutputMode.None;//only play binaural
 		}
+		
+		//finalize preparations (necessary to do this after loading the audio in case of bypass)
+		CurrentPlayer.url = path;
+		CurrentPlayer.Prepare();
 		
 		//recalibrate
 		Calibrate();

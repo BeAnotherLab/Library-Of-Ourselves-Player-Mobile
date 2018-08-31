@@ -29,9 +29,6 @@ ExportedObj/
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
 
-# Builds
-*.apk
-
 # Video & Audio files
 *.mp4
 *.mp3
@@ -39,3 +36,6 @@ sysinfo.txt
 
 # Oculus signature files
 oculussig_*
+
+# Keep everything in standalone version
+![Ss]tandalone/
