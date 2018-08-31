@@ -58,7 +58,9 @@ Mobile version of Library of ourselves app
 ## Use
 + Connect both the phone and the tablet to the same Wi-Fi network.
 + Run both apps; the phone will first show pure white until the devices pair, at which point it will turn dark. The guide app will show the main menu then.
-+ To try the autocalibration feature, keep the phone still, then write 'autocalibrate on' in the guide app's main menu's input field (bottom of the screen). Wait a few minutes, then type 'autocalibrate off', then 'logs' to see the results.
++ To try the autocalibration feature:
+  + In the scene _Scenes/Guide/GuideMainMenu_, head to the _Canvas_ GameObject (in hierarchy), and select its first 2 children _Input_ & _Console_; toggle their checkboxes (top left of the inspector tab) to turn them on.
+  + Keep the phone still, then write 'autocalibrate on' in the guide app's main menu's input field (bottom of the screen). Wait a few minutes, then type 'autocalibrate off', then 'logs' to see the results.
 + Tap a video to show its description. From there, you can either play it or enter its Advanced Settings (pin for now is __000000__).
 + The first time you save a video's advanced settings, it will poop out a .json file on the tablet's SD card, with the same name as the video. To modify those settings, you can either delete that file to save them again, or open the file in any text editor to edit it manually if you know how to use JSON.
 + Note that the sound of the video will not play if you connect your headphones while the video is already loaded; it should be preferred to connect headphones prior to running the app to avoid any problems.

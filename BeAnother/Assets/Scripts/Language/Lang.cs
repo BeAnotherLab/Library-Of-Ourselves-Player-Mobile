@@ -74,7 +74,7 @@ public class Lang : MonoBehaviour {
 		string path = Filesystem.SDCardRoot + "LoO_language.txt";
 		if(File.Exists(path)){
 			string data = Filesystem.ReadFile(path);
-			string[] dat = data.Split(":");//should be a key-value pair ("language:en")
+			string[] dat = data.Split(new string[]{":"}, StringSplitOptions.None);//should be a key-value pair ("language:en")
 			if(dat.Length == 2 && dat[0] == "language"){
 				language = dat[1];//override default
 			}
@@ -83,14 +83,17 @@ public class Lang : MonoBehaviour {
 		instance.current = getLang(language);
 	}
 	
-	static string pathFromName(string l){
-		//return Filesystem.SDCardRoot + l + ".json";
+	static string pathFromName(string l, bool sd = false){
+		if(sd) return Filesystem.SDCardRoot + l + ".json";
 		return Filesystem.PersistentDataPath + l + ".json";
 	}
 	
 	//load from .json
 	static Language getLang(string l){
-		string path = pathFromName(l);
+		//first let's try on sd card root
+		string path = pathFromName(l, true);
+		if(!File.Exists(path))
+			path = pathFromName(l);//fallback to regular path
 		if(File.Exists(path)){
 			print(path + " read.");
 			string data = Filesystem.ReadFile(path);
@@ -101,9 +104,6 @@ public class Lang : MonoBehaviour {
 			Language lan = new Language();
 			string data = JsonUtility.ToJson(lan);
 			print("Writing json to " + path);
-			//StreamWriter sw = new StreamWriter(path, false);
-			//sw.WriteLine(data);
-			//sw.Close();
 			if(!Filesystem.WriteFile(path, data))
 				Debug.LogError(Filesystem.LastException);
 			return lan;//for now, use this

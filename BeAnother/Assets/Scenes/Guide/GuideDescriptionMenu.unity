@@ -1260,6 +1260,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 1
 --- !u!4 &599421649
 Transform:
@@ -1586,7 +1587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a05de85d9ea8f40a1f43111e48e1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  codeHash: 67-0B-14-72-8A-D9-90-2A-EC-BA-32-E2-2F-A4-F6-BD
+  codeHash: 04-FC-71-13-01-F3-C7-84-D6-69-55-D9-8D-39-9A-FB
   onPass:
     m_PersistentCalls:
       m_Calls:

@@ -67,6 +67,9 @@ class GvrBuildProcessor : IPreprocessBuild, IPostprocessBuild {
       // Do nothing when not building for Android or iOS.
       return;
     }
+	////4GOTTEN --- Returning here to prevent error popping up when building guide.
+	return;
+	////END 4GOTTEN
 
     // 'Player Settings > Virtual Reality Supported' must be enabled.
     if (!IsVRSupportEnabled()) {

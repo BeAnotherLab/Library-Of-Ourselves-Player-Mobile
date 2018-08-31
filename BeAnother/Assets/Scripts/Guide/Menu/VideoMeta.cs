@@ -11,17 +11,19 @@ public class VideoMeta {
 	public float yaw = 0;
 	public float roll = 0;
 	
-	static string pathFromName(string videoName){
-		//return Filesystem.SDCardRoot + videoName + ".json";
-		return Filesystem.PersistentDataPath + videoName + ".json";
+	static string pathFromName(string videoName, bool sd = false){
+		if(sd) return Filesystem.SDCardRoot + videoName + "Info.json";
+		return Filesystem.PersistentDataPath + videoName + "Info.json";
 	}
 	
 	public static bool HasMeta(string videoName){
-		return File.Exists(pathFromName(videoName));
+		return File.Exists(pathFromName(videoName, true) || File.Exists(pathFromName(videoName));
 	}
 	
 	public static VideoMeta LoadMeta(string videoName){
-		string path = pathFromName(videoName);
+		string path = pathFromName(videoName, true);//try sd root
+		if(!File.Exists(path))
+			path = pathFromName(videoName);//fallback to regular directory
 		if(File.Exists(path)){
 			string data = Filesystem.ReadFile(path);
 			VideoMeta vm = JsonUtility.FromJson<VideoMeta>(data);

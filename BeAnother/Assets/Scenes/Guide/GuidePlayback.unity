@@ -745,6 +745,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 1
 --- !u!4 &395022633
 Transform:
@@ -1454,6 +1455,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 0
 --- !u!114 &699976060
 MonoBehaviour:
@@ -1523,9 +1525,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
-    m_HighlightedColor: {r: 0.56287825, g: 0.81539947, b: 0.8584906, a: 1}
+    m_HighlightedColor: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 1}
     m_PressedColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.5647059, g: 0.8156863, b: 0.85882354, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
   m_SpriteState:
@@ -2423,8 +2425,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1635915086}
-        m_MethodName: Select
-        m_Mode: 1
+        m_MethodName: set_interactable
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2432,6 +2434,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709659194}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -2470,9 +2483,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
-    m_HighlightedColor: {r: 0.56287825, g: 0.81539947, b: 0.8584906, a: 1}
+    m_HighlightedColor: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 1}
     m_PressedColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.5647059, g: 0.8156863, b: 0.85882354, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
   m_SpriteState:
@@ -3029,9 +3042,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
-    m_HighlightedColor: {r: 0.56287825, g: 0.81539947, b: 0.8584906, a: 1}
+    m_HighlightedColor: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 1}
     m_PressedColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.5647059, g: 0.8156863, b: 0.85882354, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0
   m_SpriteState:
@@ -3069,6 +3082,28 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1709659194}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1635915086}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -3256,6 +3291,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 1
 --- !u!1 &1857392125
 GameObject:
@@ -3565,6 +3601,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 1
 --- !u!4 &1989461904
 Transform:
@@ -3712,6 +3749,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   receiver: {fileID: 0}
+  bindOnStart: 1
   verbose: 0
 --- !u!114 &2137605037
 MonoBehaviour:
