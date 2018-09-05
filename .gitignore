@@ -34,8 +34,5 @@ sysinfo.txt
 *.mp3
 *.wav
 
-# Oculus signature files
-oculussig_*
-
 # Keep everything in standalone version
-![Ss]tandalone/
+![Bb]uilds/

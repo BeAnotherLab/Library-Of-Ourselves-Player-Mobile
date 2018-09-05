@@ -1162,33 +1162,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 159718, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 2}
   m_PrefabInternal: {fileID: 1538069378}
---- !u!114 &1183401915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1183401914}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2867af976dc1fb3498d3129d278470f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockRotation: 1
-  camera: {fileID: 1538069379}
---- !u!114 &1183401916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1183401914}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc445aba22b57924a97c4c32022889f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arCore: {fileID: 0}
-  minTrackables: 5
-  influence: 0.1
 --- !u!114 &1183401917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1541,6 +1514,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 2}
   m_PrefabInternal: {fileID: 1538069378}
+--- !u!114 &1538069381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1538069380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7181a5fc8ce142c4088f690d7671ea88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  address: /beanother/autocalibrate
+  defaultMessage: 
+  transmitter: {fileID: 0}
+  verbose: 0
 --- !u!114 &1538069382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,6 +1540,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039710d1b8ca55b40af0d39fa23181ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1538069383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1538069380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd62573c175655641a83373d57d4b38c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  address: /beanother/autocalibrate
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1538069382}
+        m_MethodName: OnReceiveCommand
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  receiver: {fileID: 0}
+  bindOnStart: 1
+  verbose: 1
 --- !u!1 &1732621036
 GameObject:
   m_ObjectHideFlags: 0

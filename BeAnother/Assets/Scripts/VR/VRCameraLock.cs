@@ -6,7 +6,7 @@ using UnityEngine;
 public class VRCameraLock : MonoBehaviour {
 	
 	[SerializeField] bool lockRotation = false;
-	[SerializeField] new Transform camera;
+	[SerializeField] Transform cam;
 	
 	Transform t;
 	
@@ -17,7 +17,7 @@ public class VRCameraLock : MonoBehaviour {
 	void LateUpdate(){
 		if(lockRotation){
 			t.eulerAngles = Vector3.zero;
-			t.Rotate(-camera.eulerAngles);
+			t.Rotate(-cam.eulerAngles);
 		}
 	}
 	

@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc75a3b56ae771c428e25f4a43a6aad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: advancedSettings
+  key: playerSettings
 --- !u!1 &311974176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,7 +1156,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -100, y: -206}
+  m_SizeDelta: {x: -100, y: -241}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525460407
 MonoBehaviour:
@@ -1310,8 +1310,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -22}
-  m_SizeDelta: {x: 150, y: 44}
+  m_AnchoredPosition: {x: 92.5, y: -22}
+  m_SizeDelta: {x: 185, y: 44}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &615564476
 MonoBehaviour:
@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scene:
     m_SceneAsset: {fileID: 102900000, guid: d801fa05f632a0741ab645e58aae8188, type: 3}
-    m_SceneName: GuideAdvancedSettings
+    m_SceneName: GuidePlayerSettings
   verbose: 0
 --- !u!1 &757139236
 GameObject:
@@ -1885,7 +1885,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: -212, y: -100}
+  m_SizeDelta: {x: -375, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &900543564
 MonoBehaviour:
@@ -2230,7 +2230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc75a3b56ae771c428e25f4a43a6aad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: enterAdvancedSettingsCode
+  key: enterPlayerSettingsCode
 --- !u!114 &1847016256
 MonoBehaviour:
   m_ObjectHideFlags: 0

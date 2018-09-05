@@ -16,25 +16,35 @@ public class Filesystem {
 		get{
 			if(sdroot != "") return sdroot;
 			
+			#if UNITY_ANDROID || UNITY_EDITOR
 			if(VRDevice.OculusGo){
 				sdroot = Application.persistentDataPath;//will be the root of internal storage instead
 			}else{
 				try{
 					sdroot = getSDCardPath();//sd card path on both GearVR and Mirage Solo
-				}catch(Exception e){
+				}catch(Exception){
 					sdroot = Application.persistentDataPath;//fallback on persistent data path if there's no sd card
 				}
 			}
 			//remove any appended "Android/data/sco.forgotten.beanother/files"
 			sdroot = sdroot.Split(new string[]{"/Android/data"}, StringSplitOptions.None)[0];
 			sdroot += "/";
+			#else //windows standalone
+			sdroot = Application.dataPath.Split(new string[]{"Library of Ourselves_Data"}, StringSplitOptions.None)[0];
+			Debug.Log(sdroot);
+			#endif
+			
 			return sdroot;
 		}
 	}
 	
 	public static string PersistentDataPath{
 		get{
+			#if UNITY_ANDROID || UNITY_EDITOR
 			return Application.persistentDataPath + "/";
+			#else //windows standalone
+			return SDCardRoot;
+			#endif
 		}
 	}
 	

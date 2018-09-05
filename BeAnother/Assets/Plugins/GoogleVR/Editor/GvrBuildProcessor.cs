@@ -69,7 +69,7 @@ class GvrBuildProcessor : IPreprocessBuild, IPostprocessBuild {
     }
 	////4GOTTEN --- Returning here to prevent error popping up when building guide.
 	return;
-	////END 4GOTTEN
+	/*
 
     // 'Player Settings > Virtual Reality Supported' must be enabled.
     if (!IsVRSupportEnabled()) {
@@ -90,7 +90,8 @@ class GvrBuildProcessor : IPreprocessBuild, IPostprocessBuild {
       if (!IsSDKOtherThanNoneIncluded()) {
         Debug.LogError(IOS_MISSING_GVR_SDK_ERROR_MESSAGE);
       }
-    }
+    }*/
+	////END 4GOTTEN
   }
 
 #if UNITY_2018_1_OR_NEWER

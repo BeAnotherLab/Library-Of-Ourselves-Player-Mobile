@@ -250,17 +250,6 @@ public class VideoSlave : MonoBehaviour {
 			}else{
 				print("Expecting 1 argument in mode");
 			}
-		/*}else if(dat[0] == "insideout"){//turn on or off drift correction, arg 1 is either "on" or "off"
-			if(dat.Length > 1){
-				if(dat[1] == "on"){
-					driftCorrection.enabled = true;
-					driftCorrection.CorrectDrift = true;
-				}else{
-					driftCorrection.CorrectDrift = false;
-				}
-			}else{
-				print("Expecting 1 argument in insideout");
-			}*/
 		}else if(dat[0] == "autocalibrate"){//
 			if(dat.Length > 1){
 				autocalibrationRecorder.OnReceiveCommand(dat[1]);

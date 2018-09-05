@@ -29,7 +29,9 @@ public class Lang : MonoBehaviour {
 		public string hanged = "User app paused";
 		public string chooseAVRFilm = "Choose a VR film from the list below to read its synopsis";
 		public string advancedSettings = "Advanced Settings";
+		public string playerSettings = "Player Settings";
 		public string enterAdvancedSettingsCode = "Please enter the code to access advanced settings.";
+		public string enterPlayerSettingsCode = "Please enter the code to access player settings.";
 		public string typeCode = "Type code";
 		public string youWillNeed = "To perform this experience, the guide will need the following objects: ";
 		public string youWillPlay = "You are going to play the VR film ";
@@ -47,6 +49,9 @@ public class Lang : MonoBehaviour {
 		public string noBack = "Discard";
 		public string paired = "Paired to user device. Both devices can only connect to each other now.";
 		public string unpaired = "Unpaired from user device. Both devices will accept other devices now.";
+		public string autocalibrateOn = "Start calibration";
+		public string autocalibrateOff = "Stop calibration";
+		public string autocalibrateReset = "Reset calibration";
 	}
 	
 	static Lang instance = null;
