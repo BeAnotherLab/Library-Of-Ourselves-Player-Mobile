@@ -27,32 +27,28 @@ Mobile version of Library of ourselves app
   + Turn on Developper Mode on the OculusGo ([instructions here](https://developer.oculus.com/documentation/mobilesdk/latest/concepts/mobile-device-setup-go/)).
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the OculusGo's internal storage root.
   + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
-  + Tnstall _Builds/vr.apk_ onto the OculusGo.
-  + The first time running the app, make sure to accept all requested permissions (should only be write and read external storage).
+  + In _BeAnother/Builds/_, launch _push vr.bat_. Note that this expects the Android SDK to be in _C:/Users/%username%/AppData/Local/Android/Sdk_. The script will show an error if this is the first time installing the app on this device, this is normal and will work anyways.
 + Lenovo Mirage Solo:
   + Turn on Developper Mode on the Mirage Solo ([instructions here](https://developer.android.com/studio/debug/dev-options#enable)).
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on a micro SD card.
   + Put the SD card into the Mirage Solo (unlike most Android devices, it does not have any MTP drivers).
-  + Install _Builds/vr.apk_ onto the Mirage Solo.
-  + The first time running the app, make sure to accept all requested permissions (should only be write and read external storage).
+  + In _BeAnother/Builds/_, launch _push vr.bat_. Note that this expects the Android SDK to be in _C:/Users/%username%/AppData/Local/Android/Sdk_. The script will show an error if this is the first time installing the app on this device, this is normal and will work anyways.
 
 ### Settings up the guide device
 + Tablet:
   + For each video XXX, place the guide video XXXGuide.mp4 or 360_XXXGuide.mp4 (if the video is 360-degrees), as well as a square thumbnail XXX.jpg, onto the tablet's SD card's root.
-  + Install _Builds/guide.apk_ onto the tablet.
+  + Install _BeAnother/Builds/guide.apk_ onto the tablet.
   + The first time running it, make sure to accept all requested permissions.
 + Standalone (PC)
-  + For each video XXX, place the guide video XXXGuide.mp4 or 360_XXXGuide.mp4 (if the video is 360-degrees), as well as a square thumbnail XXX.jpg, into C:/Users/%USERNAME%/AppData/LocalLow/4gotten/Library of Ourselves/.
-  + Run _Builds/Standalone/Library of Ourselves.exe_; recommended settings when launching are Resolution @ 1280x600 (Windowed), and Graphics Quality @ Ultra.
+  + For each video XXX, place the guide video XXXGuide.mp4 or 360_XXXGuide.mp4 (if the video is 360-degrees), as well as a square thumbnail XXX.jpg, into the _BeAnother/Builds/Standalone/_ folder.
+  + Run _BeAnother/Builds/Standalone/Library of Ourselves.exe_.
 
 ## Use
 + Connect both user and guide device to the same Wi-Fi network.
 + Run both apps; they will pair together shortly. The guide app will show the main menu then.
-+ To try the autocalibration feature, in Unity:
-  + In the scene _Scenes/Guide/GuideMainMenu_, head to the _Canvas_ GameObject (in hierarchy), and select its first 2 children _Input_ & _Console_; toggle their checkboxes (top left of the inspector tab) to turn them on.
-  + Keep the phone still, then write 'autocalibrate on' in the guide app's main menu's input field (bottom of the screen). Wait a few minutes, then type 'autocalibrate off', then 'logs' to see the results.
-+ Tap a video to show its description. From there, you can either play it or enter its Advanced Settings (pin is __000001__).
-+ The first time you save a video's advanced settings, it will poop out a .json file on the tablet's SD card (or PC's Appdata), with the same name as the video. To modify those settings, you can either delete that file to save them again, or open the file in any text editor to edit it manually if you know how to use JSON.
++ Tap _Advanced Settings_ to pair the two devices together permanently or to use the autocalibration feature (pin is __000001__).
++ Tap a video to show its description. From there, you can either play it or enter its Player Settings (pin is __000001__).
++ The first time you save a video's advanced settings, it will poop out a .json file on the tablet's SD card (or in _Standalone/_), with the same name as the video. To modify those settings, you can either delete that file to save them again, or open the file in any text editor to edit it manually if you know how to use JSON.
 + Note that the sound of the video might not play if you connect your headphones while the video is already loaded; it should be preferred to connect headphones prior to running the app to avoid any problems.
 + To recenter the video, the user is provided with an input specific to their platform:
   + On GearVR, double-tap the touchpad on the right of the headset.
@@ -61,7 +57,7 @@ Mobile version of Library of ourselves app
 
 ## Translation
 For now, the guide app is only available in English; all of the different texts are in the en.json file on the tablet (generated upon first run of the guide app). To switch languages:
-+ Place a file called "LoO_language.txt" on the guide tablet's SD card root directory (or PC's Appdata); the file should contain exactly "language:X" (where X is the name of whatever language you need, for example Norwegian).
++ Place a file called "LoO_language.txt" on the guide tablet's SD card root directory (or in _Standalone/_); the file should contain exactly "language:X" (where X is the name of whatever language you need, for example Norwegian).
 + Run the guide app once, this will create a new .json file "X.json" (ie "Norwegian.json") on the SD card, filled with the default English text.
 + Locate that file, open it in any text editor and modify it to provide a translation (you might want to look up how to edit JSON data).
 + Once you have a translation file for a language, you can simply copy and paste it to use the same translation on a different tablet; note that it should remain in the same directory.
