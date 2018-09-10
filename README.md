@@ -19,6 +19,7 @@ Mobile version of Library of ourselves app
   + Make sure GearVR service is installed and enabled, as described [here](https://support.oculus.com/guides/gear-vr/latest/concepts/gsg-b-sw-software-setup/).
   + Place Oculus Signature file, which you can generate for your phone [here](https://dashboard.oculus.com/tools/osig-generator/), in BeAnother/Assets/Plugins/Android/Assets/ right next to the `PLACE_OSIG_HERE` file.
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the phone's SD card's root. Note that if the phone has two SD cards, you should place it onto the first one.
+    + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
   + In Unity's Player Settings (Edit/Project Settings/Player/Android), enable _Virtual Reality Supported_.
   + In Unity's Build Settings, select scenes _Scenes/VR/VRAutoconnect_ and _Scenes/VR/VR_.
   + Build the .apk and install it onto the phone, or select the Build And Run option (Ctrl+B on Windows).
@@ -31,6 +32,7 @@ Mobile version of Library of ourselves app
 + Lenovo Mirage Solo:
   + Turn on Developper Mode on the Mirage Solo ([instructions here](https://developer.android.com/studio/debug/dev-options#enable)).
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on a micro SD card.
+    + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
   + Put the SD card into the Mirage Solo (unlike most Android devices, it does not have any MTP drivers).
   + In _BeAnother/Builds/_, launch _push vr.bat_. Note that this expects the Android SDK to be in _C:/Users/%username%/AppData/Local/Android/Sdk_. The script will show an error if this is the first time installing the app on this device, this is normal and will work anyways.
 
