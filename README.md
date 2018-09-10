@@ -16,7 +16,12 @@ Mobile version of Library of ourselves app
       + If all else fails, try uninstalling Java and Android Studio and starting from scratch.
   + Use a GearVR-compatible phone ([list here](https://www.unlockunit.com/blog/samsung-gear-vr-compatible-phones/)).
   + Turn on Developper Mode on the phone ([instructions here](https://developer.android.com/studio/debug/dev-options#enable)).
-  + Make sure GearVR service is installed and enabled, as described [here](https://support.oculus.com/guides/gear-vr/latest/concepts/gsg-b-sw-software-setup/).
+  + Make sure GearVR service is installed and enabled, as described [here](https://support.oculus.com/guides/gear-vr/latest/concepts/gsg-b-sw-software-setup/):
+    + Turn off any apps that would be disabling the GearVR service from working (if you don't know what this means, you should be good to go).
+    + Put your phone into the GearVR until you hear an audio message asking to remove it.
+    + Once the phone is disconnected from the GearVR, tap next on the welcome screen, and follow the instructions. Then reconnect the phone to the GearVR.
+    + Wait until you see the safety warning, and then the Oculus home.
+    + Launch the Oculus app (without the GearVR) and log into an Oculus account.
   + Place Oculus Signature file, which you can generate for your phone [here](https://dashboard.oculus.com/tools/osig-generator/), in BeAnother/Assets/Plugins/Android/Assets/ right next to the `PLACE_OSIG_HERE` file.
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the phone's SD card's root. Note that if the phone has two SD cards, you should place it onto the first one.
   + In Unity's Player Settings (Edit/Project Settings/Player/Android), enable _Virtual Reality Supported_.
