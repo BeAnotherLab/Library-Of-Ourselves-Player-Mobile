@@ -32,7 +32,7 @@ Mobile version of Library of ourselves app
 + OculusGo:
   + Turn on Developper Mode on the OculusGo ([instructions here](https://developer.oculus.com/documentation/mobilesdk/latest/concepts/mobile-device-setup-go/)).
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the OculusGo's internal storage root.
-  + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
+    + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
   + In _BeAnother/Builds/_, launch _push vr.bat_. Note that this expects the Android SDK to be in _C:/Users/%username%/AppData/Local/Android/Sdk_. The script will show an error if this is the first time installing the app on this device, this is normal and will work anyways.
 + Lenovo Mirage Solo:
   + Turn on Developper Mode on the Mirage Solo ([instructions here](https://developer.android.com/studio/debug/dev-options#enable)).
