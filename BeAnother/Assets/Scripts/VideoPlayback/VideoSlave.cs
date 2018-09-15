@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using UnityEngine.Video;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Sender))]
 public class VideoSlave : MonoBehaviour {
@@ -15,6 +16,8 @@ public class VideoSlave : MonoBehaviour {
 	[SerializeField] AutocalibrationRecorder autocalibrationRecorder;
 	[SerializeField] AutocalibrateApplier autocalibrationApplier;
 	[SerializeField] GameObject readyText;
+	[SerializeField] UnityEvent onSelect;
+	[SerializeField] UnityEvent onStop;
 	
 	Sender respond;
 	
@@ -37,10 +40,12 @@ public class VideoSlave : MonoBehaviour {
 				value.loopPointReached += OnVideoEnd;
 				//disable ready text
 				readyText.SetActive(false);
+				onSelect.Invoke();
 			}else{
 				currentSettings = null;
 				//show "ready"
 				readyText.SetActive(true);
+				onStop.Invoke();
 			}
 			m_currentPlayer = value;
 		}

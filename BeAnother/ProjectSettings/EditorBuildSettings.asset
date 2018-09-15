@@ -5,28 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VR/VRAutoconnect.unity
     guid: 8fe7e7b62f1eebf4d8ca0475e25a4b3b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VR/VR.unity
     guid: a0143e1c8fa0b91489e24e3660eb573a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide/GuideAutoconnect.unity
     guid: af56022592ddd2e40bce000e33ce603b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide/GuideMainMenu.unity
     guid: 17d06a771240e344098ded8162a4b82a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide/GuideDescriptionMenu.unity
     guid: dfe8eddc3674ef74eb7f41433a18999b
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide/GuidePlayback.unity
     guid: 28b761c22eee58145a33594b230a152a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide/GuidePlayerSettings.unity
     guid: d801fa05f632a0741ab645e58aae8188
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Guide/GuideAdvancedSettings.unity
     guid: 4d0db0d272cfdb94c9d755a8321dbd8d
   m_configObjects: {}

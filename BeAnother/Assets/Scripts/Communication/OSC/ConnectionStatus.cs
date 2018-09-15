@@ -16,10 +16,15 @@ public class ConnectionStatus : MonoBehaviour {
 	[SerializeField] bool verbose = false;
 	[SerializeField] UnityEvent onDisconnection;
 	[SerializeField] UnityEvent onReconnection;
+	[SerializeField] bool active = true;//if false, don't mind querying connection status at all
 	
 	Sender sender;
 	float lastReceived;
 	bool disconnected = false;
+	
+	public bool Active{
+		set{ active = value; if(active) lastReceived = Time.time; }
+	}
 	
 	void onDisconnect(){
 		if(!disconnected){
@@ -43,18 +48,20 @@ public class ConnectionStatus : MonoBehaviour {
 	
 	IEnumerator Start(){
 		instance = this;
-		DontDestroyOnLoad(gameObject);
+		//DontDestroyOnLoad(gameObject);
 		sender = GetComponent<Sender>();
 		
 		lastReceived = Time.time;
 		
 		while(true){
 			yield return new WaitForSeconds(sendEvery);
-			if(Time.time - lastReceived > timeout){
-				//disconnected!
-				onDisconnect();
+			if(active){
+				if(Time.time - lastReceived > timeout){
+					//disconnected!
+					onDisconnect();
+				}
+				sender.Send("1");
 			}
-			sender.Send("1");
 		}
 	}
 	
