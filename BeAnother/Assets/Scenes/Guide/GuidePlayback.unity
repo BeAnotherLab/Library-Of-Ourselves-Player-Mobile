@@ -200,8 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1a3d13ce916df4c98caa6487e65b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sendEvery: 0.1
-  timeout: 2
+  sendEvery: 0.025
+  timeout: 0.5
   verbose: 1
   onDisconnection:
     m_PersistentCalls:
@@ -235,6 +235,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  active: 1
 --- !u!4 &118478381
 Transform:
   m_ObjectHideFlags: 0
