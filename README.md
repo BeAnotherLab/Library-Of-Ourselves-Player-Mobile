@@ -25,10 +25,7 @@ Mobile version of Library of ourselves app
   + Place Oculus Signature file, which you can generate for your phone [here](https://dashboard.oculus.com/tools/osig-generator/), in BeAnother/Assets/Plugins/Android/Assets/ right next to the `PLACE_OSIG_HERE` file.
   + For each VR video XXX that you want to try with, place the 235- or 360-degrees video file XXX.mp4 on the phone's SD card's root. Note that if the phone has two SD cards, you should place it onto the first one.
     + If you want to use the binaural audio feature for any video, place the .mp3 files XXX-l.mp3 and XXX-r.mp3 (left and right, respectively) in the same folder.
-  + In Unity's Player Settings (Edit/Project Settings/Player/Android):
-    + Enable _Virtual Reality Supported_ (in XR Settings);
-    + Edit _Product Name_ to "Library of Ourselves - User";
-    + Edit _Package Name_ (in Other Settings) to "sco.forgotten.beanother".
+  + In Unity's Player Settings (Edit/Project Settings/Player/Android), enable _Virtual Reality Supported_.
   + In Unity's Build Settings, select scenes _Scenes/VR/VRAutoconnect_ and _Scenes/VR/VR_.
   + Build the .apk and install it onto the phone, or select the Build And Run option (Ctrl+B on Windows).
   + Go to Settings/Apps/Library of Ourselves/Permissions and enable Storage.
@@ -52,13 +49,6 @@ Mobile version of Library of ourselves app
 + Standalone (PC)
   + For each video XXX, place the guide video XXXGuide.mp4 or 360_XXXGuide.mp4 (if the video is 360-degrees), as well as a square thumbnail XXX.jpg, into the _BeAnother/Builds/Standalone/_ folder.
   + Run _BeAnother/Builds/Standalone/Library of Ourselves.exe_.
-+ Notes on rebuilding the guide app in Unity:
-  + In Player Settings (Edit/Project Settings/Player/Android):
-    + Disable _Virtual Reality Supported_ (in XR Settings);
-    + Edit _Product Name_ to "Library of Ourselves - Guide";
-    + Edit _Package Name_ (in Other Settings) to "sco.forgotten.beanotherguide".
-  + In Build Settings, select all scenes in _Scenes/Guide_.
-  + Select your build target (either Standalone or Android) and build the app.
 
 ## Use
 + Connect both user and guide device to the same Wi-Fi network.
