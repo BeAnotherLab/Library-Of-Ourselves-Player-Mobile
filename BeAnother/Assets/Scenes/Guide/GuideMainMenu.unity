@@ -2435,7 +2435,7 @@ GameObject:
   - component: {fileID: 1943281098}
   m_Layer: 0
   m_Name: ConnectionStatus
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2531,6 +2531,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  active: 1
 --- !u!114 &1943281098
 MonoBehaviour:
   m_ObjectHideFlags: 0

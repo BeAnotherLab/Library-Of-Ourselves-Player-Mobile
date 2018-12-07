@@ -5,7 +5,9 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Sender))]
 public class ConnectionStatus : MonoBehaviour {
-	
+	/// Removed connection status mechanic - all ConnectionStatus objects have also been disabled and marked as EditorOnly.
+	/// TrashConnectionStatus.cs has also been altered.
+	/*
 	static ConnectionStatus instance = null;
 	public static ConnectionStatus Instance{
 		get{ return instance; }
@@ -78,5 +80,5 @@ public class ConnectionStatus : MonoBehaviour {
 		instance = null;
 		Object.Destroy(gameObject);
 	}
-	
+	*/
 }
