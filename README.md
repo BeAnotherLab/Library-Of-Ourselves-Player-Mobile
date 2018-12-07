@@ -71,6 +71,7 @@ Mobile version of Library of ourselves app
   + On GearVR, double-tap the touchpad on the right of the headset.
   + On OculusGo, press the controller's trigger.
   + On Mirage Solo, press the controller's main button.
++ To exit the VR application, you can use the controller's secondary trigger on OculusGo, or the controller's app button on Mirage Solo.
 
 ## Translation
 For now, the guide app is only available in English; all of the different texts are in the en.json file on the tablet (generated upon first run of the guide app). To switch languages:
