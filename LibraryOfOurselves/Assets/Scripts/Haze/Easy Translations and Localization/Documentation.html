@@ -1,0 +1,198 @@
+<!doctype html>
+<head>
+	<style>
+		body{ font-family: helvetica; width: 96%; position: relative; left: 2%; }
+		h1{ color: #a37; position: relative; left: -1%; }
+		h2{ margin-bottom: 0; color: #a37; position: relative; left: -1%; }
+		h3{ margin-bottom: 0; color: #a37; }
+		h4{ margin-bottom: 0; margin-top: 0; color: #b70; }
+		p{ margin-top: 5px; margin-bottom: 5px; }
+		a{ color: black; }
+		code{ font-size: 1.3em; color: #116; }
+		.grey{ color: gray; }
+		:target{ background-color: #bdf; }
+	</style>
+</head>
+<body>
+	<h1>Haze Easy Translations and Localization documentation</h1>
+	<a href="#intro">Introduction</a><br>
+	<a href="#use">How to use</a><br>
+	<a href="#unity2017">Using with Unity 2017 to 2018.1</a><br>
+	<a href="#enums">Enum reference</a><br>
+	<a href="#components">Components reference</a><br>
+	<a href="#classes">Class reference</a><br>
+	<a href="#bug">Bug reporting</a><br>
+	
+	<br>
+	<h2 id='intro'>Introduction</h2>
+	<p>Welcome to Haze Easy Translations and Localization!</p>
+	<p>This plugin aims to make your game jump from one language to a global market as easily and as lightly as possible!</p>
+	<p>Set it up for a new project or an existing one in a few clicks, review the translations or type them in yourself, throw in any localized versions of sprites, and you're good to go.</p>
+	<p>I sincerely hope your project gains from this plugin :)</p>
+	<p>Jonathan Kings</p>
+	
+	<br>
+	<h2 id='use'>How to use</h2>
+	<ol>
+		<li>First, create an asset of type Haze/Supported Languages in your project. It is very important that you only have one; you can however copy it around your different projects to keep the same settings.</li>
+		<li>Select the default language for your project; this is the language you type in your UI Text contents.</li>
+		<li>Add in as many other languages as you'd like; some of them have the option to automatically provide translations. You can also give some of them a custom font in case their characters don't look nice enough in your usual font.</li>
+		<li>To translate a UI Text or TextMesh element:
+			<ul>
+				<li>Add a TranslatedElement component to the same GameObject.</li>
+				<li>Fill in any translations that aren't filled automatically.</li>
+			</ul>
+		</li>
+		<li>To localize a UI Image's or SpriteRenderer's sprite:
+			<ul>
+				<li>Add a LocalizedSprite component to the same GameObject.</li>
+				<li>Select the different sprites for each language; note that if two languages should use the same sprite, you should set it for both.</li>
+			</ul>
+		</li>
+		<li>To test changing languages in the editor, add a LanguageSetter component to any GameObject; once in play mode, it will show buttons for each supported language.</li>
+		<li>To quickly create a language menu for your end user, place the LanguageSetter prefab in a UI Canvas in your scene and press the 'bake' button in its inspector. For details on how to customise such a menu, head over to <a href="#languagesetter">the documentation for <code>LanguageSetter</code></a>.</li>
+		<li>To change languages at runtime through scripting, add "<code>using Haze;</code>" at the top of your script, and use "<code>Languages.Current = Language.Norwegian;</code>" to switch to Norwegian, for example.</li>
+	</ol>
+	
+	<br>
+	<h2 id='unity2017'>Using with Unity 2017 to 2018.1</h2>
+	<p>If you want to use this asset in Unity 2017 (or 2018.1), you'll need to make a tiny fix. Unity changed the way prefabs are loaded and saved between the 2018.1 and 2018.2 releases, so if you open the plugin in any 2017 version you'll notice missing and broken prefabs.</p>
+	<p>Here's how to fix this :)</p>
+	<ol>
+		<li>Head over to Assets/Haze/Easy Translations and Localization/Components, and delete both prefabs that are in there.</li>
+		<li>Open the Example scene and expand the GameObject called "If you use Unity 2017."</li>
+		<li>Drag both of the child GameObjects into the Components/ folder to recreate both prefabs.</li>
+		<li>Find the "Missing Prefab" GameObject in the Example scene, and delete it; replace it with the new "Language setter" prefab you just created.</li>
+	</ol>
+	
+	<br>
+	<h2 id='enums'>Enum reference</h2>
+	<a href="#language">Language</a><br>
+	<!-- Language -->
+	<h3 id='language'>Language</h3>
+	<p class='grey'>Enum in Haze / Implemented in: Language.cs</p>
+	<h4>Description</h4>
+	<p>Lists the 144 languages available in this Haze plugin. If you need a template <code>switch</code> block to deal with all 144 options, one is provided at the very bottom of <code>Language.cs</code>. Also please let me know if a language you want to use in your project isn't included, I will gladly add it in an update.</p>
+	<h4>Enumerated fields</h4>
+	<p><b><code>Default</code></b>: A token for an unset language; usually means "user device default."</p>
+	<p><b><code>English, Afrikaans, Arabic, Basque, Belarusian, Bulgarian, Catalan, ChineseSimplified, ChineseTraditional, Czech, Danish, Dutch, Estonian, Faroese, Finnish, French, German, Greek, Hebrew, Hungarian, Icelandic, Indonesian, Italian, Japanese, Korean, Latvian, Lithuanian, Norwegian, Polish, Portuguese, Romanian, Russian, SerboCroatian, Slovak, Slovenian, Spanish, Swedish, Thai, Turkish, Ukrainian, Vietnamese</code></b>: The languages which will be detected at runtime from the user's device if no language is saved by this plugin.</p>
+	<p><b><code>Akan, Albanian, Amharic, Armenian, Assamese, Awadhi, Azerbaijani, Bengali, Balochi, Bhojpuri, Bosnian, Burmese, Cebuano, Chewa, Chhattisgarhi, Chittagonian, Corsican, Croatian, Deccan, Dhundhari, EasternMin, Esperanto, Frisian, Fula, Galician, GanChinese, Georgian, Gujarati, HaitianCreole, Hakka, Haryanvi, Hausa, Hawaiian, Hindi, Hmong, Igbo, Ilocano, Irish, Javanese, Jin, Kannada, Kazakh, Khmer, Kinyarwanda, Kirundi, Konkani, Kurdish, Kyrgyz, Lao, Latin, Luxembourgish, Macedonian, Madurese, Magahi, Maithili, Malagasy, Malay, Malayalam, Maltese, Maori, Marathi, Marwari, Mongolian, Mossi, Nepali, NorthernMin, Odia, Oromo, Pashto, Persian, Punjabi, Quechua, Samoan, Saraiki, ScottishGaelic, Serbian, Sesotho, Shona, Sindhi, Sinhalese, Somali, SouthernMin, Sundanese, Swahili, Sylheti, Tagalog, Tajik, Tamil, Telugu, Turkmen, Urdu, Uyghur, Uzbek, Visayan, Welsh, Wu, Xhosa, Xiang, Yiddish, Yoruba, Yue, Zhuang, Zulu</code></b>: The rest of the languages supported by this Haze plugin; these won't be detected from the user's device, but an option can be made for the user to select one of them.</p>
+	<h4>Public methods</h4>
+	<p><b><code>string ToString()</code></b>: Returns the name of a language; in most cases, returns the name of the enumerated type, but in some cases the name is formatted to be displayed nicely; for example, <code>ScottishGaelic</code> becomes "Scottish Gaelic" and <code>ChineseSimplified</code> becomes "Chinese (Simplified)".</p>
+	
+	<br>
+	<h2 id='components'>Components reference</h2>
+	<a href="#languageoption">LanguageOption</a><br>
+	<a href="#languagesetter">LanguageSetter</a><br>
+	<a href="#localizedsprite">LocalizedSprite</a><br>
+	<a href="#translatedelement">TranslatedElement</a><br>
+	<!-- LanguageOption -->
+	<h3 id='languageoption'>LanguageOption</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: LanguageOption.cs</p>
+	<h4>Decription</h4>
+	<p>An example to be used alongside <a href='#languagesetter'>LanguageSetter</a>. Call <code>OnClickButton()</code> (from a UI Button onClick event for example) to change the application's language permanently to the LanguageOption component's <code>language</code> field. See the LanguageSetter and LanguageOption prefabs for an example.</p>
+	<h4>Fields</h4>
+	<p><b><code>Language language</code></b>: The language this <code>LanguageOption</code> component switches to when calling <code>OnClickButton()</code>.</p>
+	<p><code>Text text</code> (Editor-only): A UI Text component that will show <code>language</code>'s name when <code>BakeLanguage()</code> is called on this component.</p>
+	<h4>Public methods</h4>
+	<p><b><code>void OnClickButton()</code></b>: Change the application's language permanently to <code>language</code>. If <code>language</code> is <code>Language.Default</code>, reverts to the default as defined by the user's device.</p>
+
+	<!-- LanguageSetter -->
+	<h3 id='languagesetter'>LanguageSetter</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: LanguageSetter.cs</p>
+	<h4>Description</h4>
+	<p><b>Editor-only component.</b></p>
+	<p>Press the 'bake' button in this behaviour's inspector to generate as many instances of its <code>prefab</code> field as there are supported languages defined in your project. Each prefab, once instantiated, receives a <code>BakeLanguage(Language)</code> callback. See the LanguageSetter and LanguageOption prefabs for an example. Place the LanguageSetter prefab in a UI Canvas for the demo.</p>
+	<h4>Fields</h4>
+	<p><code>GameObject prefab</code> (Editor-only): A prefab which will be instantiated for each supported language defined in the project; each instance receives a <code>BakeLanguage(Language)</code> callback.</p>
+	<h4>Public methods</h4>
+	<p><code>void Bake()</code> (Editor-only): Creates an instance of <code>prefab</code> for each supported language in the project as children of this <code>GameObject</code>, sends a <code>BakeLanguage(Language)</code> callback on those instances, then prompts the user to remove the <code>LanguageSetter</code> component as its only use is to generate the prefabs. Should be called each time there is a change in the supported languages.</p>
+
+	<!-- LocalizedSprite -->
+	<h3 id='localizedsprite'>LocalizedSprite</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: LocalizedSprite.cs</p>
+	<h4>Description</h4>
+	<p>Place this component on a <code>GameObject</code> with a UI Image or SpriteRenderer component to change its sprite according to the current language. For example, if at the end of your level you want to show a custom "Well done" image for which you have versions in different languages. It should be preferred that each of the sprites used be the same size.</p>
+	<h4>Public properties</h4>
+	<p><b><code>Sprite Contents</code></b> (Read-only): Returns the current <code>Sprite</code> shown by this <code>LocalizedSprite</code>.</p>
+	<h4>Public methods</h4>
+	<p><b><code>void OnLanguageChange()</code></b>: Translates the <code>LocalizedSprite</code> to the current languages; this is called automatically whenever <code>Languages.Current</code> changes value.</p>
+
+	<!-- TranslatedElement -->
+	<h3 id='translatedelement'>TranslatedElement</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: TranslatedElement.cs</p>
+	<h4>Description</h4>
+	<p>Place this component on a <code>GameObject</code> with a UI Text or TextMesh component to change its contents and font according to the current language. In the editor, will also automatically translate the UI Text or TextMesh contents to any languages that have Auto-translations enabled if Google Translate is available. If there is neither UI Text nor TextMesh component on this <code>GameObject</code>, will translate the object's <code>name</code> instead.</p>
+	<h4>Public properties</h4>
+	<p><b><code>string Contents</code></b> (Read-only): Returns the current text displayed by this <code>TranslatedElement</code>.</p>
+	<h4>Public methods</h4>
+	<p><b><code>void OnLanguageChange()</code></b>: Translates the <code>TranslatedElement</code> to the current languages; this is called automatically whenever <code>Languages.Current</code> changes value.</p>
+
+	<br>
+	<h2 id='classes'>Class reference</h2>
+	<a href="#autotranslation">AutoTranslation</a><br>
+	<a href="#languageevent">LanguageEvent</a><br>
+	<a href="#languages">Languages</a><br>
+	<a href="#languagesamples">LanguageSamples.Sample</a><br>
+	<a href="#supportedlanguages">SupportedLanguages</a><br>
+	<!-- AutoTranslation -->
+	<h3 id='autotranslation'>AutoTranslation</h3>
+	<p class='grey'>Class in Haze / Implemented in: AutoTranslation.cs</p>
+	<h4>Description</h4>
+	<p><b>Editor-only class</b></p>
+	<p>Provides automatic translations from and to some of the languages supported by this Haze plugin, using APIs from Google Translate.</p>
+	<h4>Constructors</h4>
+	<p><code>AutoTranslation(string, Language, Language, MonoBehaviour)</code> (Editor-only): Given an input text, its source language, a target language and any MonoBehaviour component, starts an automatic translation process; keep track of the <code>AutoTranslation</code> object to get its status and translation once (and if) they become available.</p>
+	<h4>Public properties</h4>
+	<p><code>bool Finished</code> (Editor-only, read-only): Returns true once the translation has completed or failed.</p>
+	<p><code>string Translated</code> (Editor-only, read-only): Returns the translation once it has completed, or an empty string if it failed (or isn't completed yet).</p>
+	<p><code>string Source</code> (Editor-only, read-only): Returns the source text which is being, or has been, translated; set through the constructor.</p>
+	<p><code>Language TargetLanguage</code> (Editor-only, read-only): Returns the <code>Language</code> to which this <code>AutoTranslation</code> is translating to.</p>
+	<p><code>Language SourceLanguage</code> (Editor-only, read-only): Returns the <code>Language</code> from which this <code>AutoTranslation</code> is translating.</p>
+	<h4>Public static functions</h4>
+	<p><code>string TranslationLanguageCode(Language)</code> (Editor-only): Given a <code>Language</code>, returns its Google Translate code; or an empty string if Google Translate does not support this language. Use this to check whether a language can be translated to/from.</p>
+	
+	<!-- LanguageEvent -->
+	<h3 id='languageevent'>LanguageEvent</h3>
+	<p class='grey'>Class in Haze / Inherits from: UnityEvent / Implemented in: Language.cs</p>
+	<h4>Description</h4>
+	<p>Serialized event with a <code>Language</code> parameter; use <code>[SerializeField] LanguageEvent event</code> to be able to fill the event in a component's inspector.</p>
+
+	<!-- Languages -->
+	<h3 id='languages'>Languages</h3>
+	<p class='grey'>Class in Haze / Implemented in: Language.cs</p>
+	<h4>Description</h4>
+	<p>Allows to get and set the current language used by the application.</p>
+	<h4>Public static properties</h4>
+	<p><b><code>Language Current</code></b>: Returns the current language used by the application (never returns <code>Default</code>); setting it to any language saves it as the persistent current language of the application until its value is changed; setting it to <code>Default</code> resets the application to the user device's default language, or English.</p>
+
+	<!-- LanguageSamples -->
+	<h3 id='languagesamples'>LanguagesSamples.Sample</h3>
+	<p class='grey'>Class in Haze / Implemented in: LanguageSamples.cs</p>
+	<h4>Description</h4>
+	<p><b>Editor-only class</b></p>
+	<p>Provides a way to display sample text for any number of languages with any font in custom Unity editors.<p>
+	<h4>Public methods</h4>
+	<p><code>void AddLanguage(Language, Font)</code> (Editor-only): Adds a language with an attributed font to this sample; using <code>null</code> as the font will display this language's sample in the default font.</p>
+	<p><code>void Prepare()</code> (Editor-only): Prepares this sample to display; only needs to be called once after all languages have been added.</p>
+	<p><code>void DisplayResults(Font, int)</code> (Editor-only): Given a default font and a font size, displays this sample. Must be called from an <code>OnGUI()</code>-type method.</p>
+
+	<!-- SupportedLanguages -->
+	<h3 id='supportedlanguages'>SupportedLanguages</h3>
+	<p class='grey'>Class in Haze / Inherits from: ScriptableObject / Implemented in: SupportedLanguages.cs</p>
+	<h4>Description</h4>
+	<p>To use this plugin, you should create exactly one instance of this asset (by going to assets, Create/Haze/Supported Languages); add it to your project's Preloaded Assets (in Player Settings, Other Settings). Fill the asset with all the languages you want your project to be available in.</p>
+	<h4>Public static properties</h4>
+	<p><b><code>SupportedLanguages Instance</code></b> (Read-only): Reference to the one <code>SupportedLanguages</code> asset your project should have, or <code>null</code>.</p>
+	<p><b><code>Language DefaultLanguage</code></b> (Read-only): The default language used by this project, as defined in the <code>SupportedLanguages</code> asset, or <code>Language.English</code> if there is no such asset.</p>
+	<h4>Public static functions</h4>
+	<p><b><code>bool IsLanguageSupported(Language)</code></b>: Whether the language is supported in this project.</p>
+	<p><code>void ShowSupportedLanguagesMenu()</code> (Editor-only): Opens the <code>SupportedLanguages</code> asset's inspector in the editor; creates the asset if none exists in the project.</p>
+	<h4>Public methods</h4>
+	<p><code>void MaintainIntegrity()</code> (Editor-only): Checks that the <code>SupportedLanguages</code> asset is set as a preloaded asset in the player settings. This is called automatically each editor update.</p>
+
+	<br>
+	<h2 id='bug'>Bug reporting</h2>
+	<p>If you spot a bug or need a new feature in the Haze Easy Translations and Localization plugin, please report it or ask for it by sending an email to <a href="mailto:jonathan-kings@hotmail.com">jonathan-kings@hotmail.com</a>.</p>
+	
+</body>
