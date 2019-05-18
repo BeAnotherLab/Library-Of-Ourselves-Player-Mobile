@@ -784,6 +784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1210354434}
   - component: {fileID: 1210354433}
+  - component: {fileID: 1210354435}
   m_Layer: 0
   m_Name: Host
   m_TagString: Untagged
@@ -804,6 +805,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   broadcaster: {fileID: 1334058103}
+  deviceType: 0
+  onNewConnection:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnNewConnection
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: NewConnectionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onMessageReception:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1210354435}
+        m_MethodName: OnMessageReception
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: MessageReceivedEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onConnectionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnConnectionEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ConnectionEndEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!4 &1210354434
 Transform:
   m_ObjectHideFlags: 0
@@ -817,6 +867,253 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1210354435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210354432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4a017b8753f11488667fe934c4f1cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guideLock:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GuideLockMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  guideUnlock:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: GuideLockMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  autopair:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveAutopair
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  guidePair:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  guideUnpair:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  pairConfirm:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceivePairConfirm
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: PairConfirmationMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  logsQuery:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  logs:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveLogs
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: LogsMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  hasVideo:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoNameMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  hasVideoResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveHasVideoResponse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoNameMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  isEmpty:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveIsEmpty
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  loadVideo:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoNameMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  loadVideoResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveLoadVideoResponse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: LoadVideoMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  playVideo:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoTimeStampMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  pauseVideo:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoTimeStampAndTimeMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  stopVideo:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoPlaybackMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sync:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoTimeStampAndTimeMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  calibrate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoPlaybackMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  startChoice:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ChoiceStartMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  selectOption:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveSelectOption
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ChoiceSelectMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  status:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveStatus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StatusMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+--- !u!1 &1243236688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1243236690}
+  - component: {fileID: 1243236689}
+  m_Layer: 0
+  m_Name: Adapter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1243236689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243236688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a074bc436d9a24298cba68eb7fe01f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1243236690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243236688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1334058102
 GameObject:

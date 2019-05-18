@@ -9,23 +9,86 @@ using System.Threading.Tasks;
 
 public class TCPClient : MonoBehaviour{
 
+	[SerializeField] TCPConnection.DeviceType deviceType = TCPConnection.DeviceType.VR;
+	[SerializeField] MessageReceivedEvent onMessageReception;
+	[SerializeField] ConnectionEndEvent onConnectionEnd;
+
 	List<TCPConnection> hosts = new List<TCPConnection>();
-    
+
+	public static TCPClient Instance { get; private set; }
+
+	public string LockedId {
+		get {
+			if(HazePrefs.HasKey("locked-id"))
+				return HazePrefs.GetString("locked-id");
+			else return "free";
+		}
+		set {
+			HazePrefs.SetString("locked-id", value);
+			HazePrefs.Save();
+		}
+	}
+
+	private void Start() {
+		Instance = this;
+	}
+
 	public async Task ConnectToHost(IPEndPoint endpoint, string uniqueId) {
 		TCPConnection connection = new TCPConnection();
 		connection.uniqueId = uniqueId;
+		connection.deviceType = TCPConnection.DeviceType.GUIDE;
 		connection.client = new TcpClient();
 		IPAddress ipv4 = endpoint.Address;
 		if(ipv4.AddressFamily != AddressFamily.InterNetwork)
 			ipv4 = ipv4.MapToIPv4();
 		Debug.Log("IPv4: " + ipv4);
 		await connection.client.ConnectAsync(ipv4, endpoint.Port);
-		Debug.Log("Connected. Sending data...");
-		connection.stream = connection.client.GetStream();
+		Debug.Log("Connected. Sending identification message...");
+
 		List<byte> data = new List<byte>();
-		data.WriteString("Hello there!");
+		data.WriteString("identification");
+		data.WriteByte((byte)deviceType);
+		data.WriteString(SystemInfo.deviceUniqueIdentifier);
+		data.WriteString(LockedId);
+
 		await connection.Send(data);
 		hosts.Add(connection);
+
+		Communicate(connection);
+	}
+
+	private async void Communicate(TCPConnection connection) {
+		while(connection.active) {
+			List<byte> data = await connection.Receive();
+			string channel = data.ReadString();
+			if(channel == "disconnection") {
+				connection.active = false;
+			} else {
+				//received a message from the host!
+				onMessageReception.Invoke(connection, channel, data);
+			}
+		}
+		onConnectionEnd.Invoke(connection);
+		hosts.Remove(connection);
+	}
+
+	public void BroadcastToAllGuides(List<byte> data) {
+		foreach(TCPConnection conn in hosts) {
+			if(conn.active && conn.deviceType == TCPConnection.DeviceType.GUIDE) {
+				conn.Send(data);
+			}
+		}
+	}
+
+	private void OnDestroy() {
+		Instance = null;
+		foreach(TCPConnection conn in hosts) {
+			if(conn.active) {
+				List<byte> data = new List<byte>();
+				data.WriteString("disconnection");
+				conn.Send(data);
+			}
+		}
 	}
 
 }

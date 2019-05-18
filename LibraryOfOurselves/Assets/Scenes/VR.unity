@@ -264,6 +264,49 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &732249987
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732249989}
+  - component: {fileID: 732249988}
+  m_Layer: 0
+  m_Name: Adapter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &732249988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732249987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98779a0c98493af488ccb26679fa259c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &732249989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732249987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &992511320
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +558,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1655649856}
   - component: {fileID: 1655649855}
+  - component: {fileID: 1655649857}
   m_Layer: 0
   m_Name: Client
   m_TagString: Untagged
@@ -534,6 +578,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cfe5a8d9682d24aaebc62b36cbf053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deviceType: 1
+  onMessageReception:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1655649857}
+        m_MethodName: OnMessageReception
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: MessageReceivedEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onConnectionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnConnectionEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ConnectionEndEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!4 &1655649856
 Transform:
   m_ObjectHideFlags: 0
@@ -548,3 +625,262 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1655649857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655649854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4a017b8753f11488667fe934c4f1cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guideLock:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveGuideLock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: GuideLockMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  guideUnlock:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveGuideUnlock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: GuideLockMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  autopair:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  guidePair:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveGuidePair
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  guideUnpair:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveGuideUnpair
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  pairConfirm:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PairConfirmationMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  logsQuery:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveLogsQuery
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  logs:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: LogsMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  hasVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveHasVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoNameMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  hasVideoResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: VideoNameMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  isEmpty:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: PairingMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  loadVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveLoadVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoNameMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  loadVideoResponse:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: LoadVideoMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  playVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceivePlayVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoTimeStampMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  pauseVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceivePauseVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoTimeStampAndTimeMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  stopVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveStopVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoPlaybackMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  sync:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveSync
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoTimeStampAndTimeMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  calibrate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveCalibrate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoPlaybackMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  startChoice:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: OnReceiveStartChoice
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ChoiceStartMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  selectOption:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ChoiceSelectMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  status:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StatusMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null

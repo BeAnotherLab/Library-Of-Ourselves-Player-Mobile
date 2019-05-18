@@ -10,12 +10,19 @@ using System.Threading.Tasks;
 public class TCPHost : MonoBehaviour{
 
 	[SerializeField] UDPBroadcaster broadcaster;
+	[SerializeField] TCPConnection.DeviceType deviceType = TCPConnection.DeviceType.GUIDE;
+	[SerializeField] NewConnectionEvent onNewConnection;
+	[SerializeField] MessageReceivedEvent onMessageReception;
+	[SerializeField] ConnectionEndEvent onConnectionEnd;
+
+	public static TCPHost Instance { get; private set; }
 
 	TcpListener listener = null;
 	bool stop = false;
 	List<TCPConnection> users = new List<TCPConnection>();
 
     async void Start(){
+		Instance = this;
 		if(broadcaster) {
 
 			string hostName = Dns.GetHostName();
@@ -48,10 +55,24 @@ public class TCPHost : MonoBehaviour{
 					Debug.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
 					TCPConnection connection = new TCPConnection();
 					connection.client = client;
-					connection.stream = client.GetStream();
+
+					//wait for identification message:
 					List<byte> data = await connection.Receive();
-					string message = data.ReadString();
-					Debug.Log("Received: " + message);
+					string channel = data.ReadString();
+					if(channel != "identification") {
+						Debug.LogWarning("Device at " + remoteEndpoint.Address + " has responded with an illegal channel: " + channel);
+					} else {
+						connection.deviceType = (TCPConnection.DeviceType)data.ReadByte();
+						connection.uniqueId = data.ReadString();
+						connection.lockedId = data.ReadString();
+
+						users.Add(connection);
+
+						onNewConnection.Invoke(connection);
+
+						Communicate(connection);
+					}
+
 				}catch(SocketException se) {
 					Debug.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se.ToString());
 				}catch(Exception e) {
@@ -64,7 +85,41 @@ public class TCPHost : MonoBehaviour{
 		}
     }
 
+	private async void Communicate(TCPConnection connection) {
+		while(connection.active) {
+			List<byte> data = await connection.Receive();
+			string channel = data.ReadString();
+			if(channel == "disconnection") {
+				connection.active = false;
+			} else {
+				//received a message from the host!
+				onMessageReception.Invoke(connection, channel, data);
+			}
+		}
+		onConnectionEnd.Invoke(connection);
+		users.Remove(connection);
+	}
+
+	public void BroadcastToPairedDevices(List<byte> data) {
+		foreach(TCPConnection conn in users) {
+			if(conn.active && conn.paired) {
+				conn.Send(data);
+			}
+		}
+	}
+
 	private void OnDestroy() {
+
+		Instance = null;
+
+		foreach(TCPConnection conn in users) {
+			if(conn.active) {
+				List<byte> data = new List<byte>();
+				data.WriteString("disconnection");
+				conn.Send(data);
+			}
+		}
+
 		stop = true;
 		if(listener != null) {
 			listener.Stop();
