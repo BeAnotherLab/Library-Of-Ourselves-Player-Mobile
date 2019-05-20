@@ -6,82 +6,65 @@ using System.Text;
 
 public static class NetworkMessages {
 
-	public static void WriteBool(this List<byte> data, bool b) {
-		data.Add(b ? (byte)1 : (byte)0);
-	}
-
-	public static bool ReadBool(this List<byte> data) {
-		byte b = data[0];
-		data.Remove(0);
-		return b == 0 ? false : true;
-	}
-
-	public static void WriteChar(this List<byte> data, char c) {
-		data.Add((byte)c);
-	}
-
-	public static char ReadChar(this List<byte> data) {
-		byte b = data[0];
-		data.RemoveAt(0);
-		return (char)b;
-	}
-
-	public static void WriteString(this List<byte> data, string s) {
-		for(int i = 0; i<s.Length; ++i) {
-			if(s[i] != '\0')
-				data.WriteChar(s[i]);
-		}
-		data.WriteChar('\0');
-	}
-
-	public static string ReadString(this List<byte> data) {
-		char c;
-		string s = "";
-		while(true) {
-			c = data.ReadChar();
-			if(c == '\0') return s;
-			s += c;
-		}
-	}
-
 	public static void WriteByte(this List<byte> data, byte b) {
 		data.Add(b);
 	}
 
 	public static byte ReadByte(this List<byte> data) {
 		byte b = data[0];
-		data.Remove(0);
+		data.RemoveAt(0);
 		return b;
 	}
 
+	public static void WriteBool(this List<byte> data, bool b) {
+		data.WriteByte(b ? (byte)1 : (byte)0);
+	}
+
+	public static bool ReadBool(this List<byte> data) {
+		byte b = data.ReadByte();
+		return b == 0 ? false : true;
+	}
+
+	public static void WriteChar(this List<byte> data, char c) {
+		data.WriteByte((byte)c);
+	}
+
+	public static char ReadChar(this List<byte> data) {
+		byte b = data.ReadByte();
+		return (char)b;
+	}
+
+	public static void WriteString(this List<byte> data, string s) {
+		byte[] bytes = Encoding.UTF8.GetBytes(s);
+		data.WriteShort((short)bytes.Length);
+		data.AddRange(bytes);
+	}
+
+	public static string ReadString(this List<byte> data) {
+		short strLength = data.ReadShort();
+		List<byte> readBytes = data.GetRange(0, strLength);
+		data.RemoveRange(0, strLength);
+		return Encoding.UTF8.GetString(readBytes.ToArray());
+	}
+
 	public static void WriteShort(this List<byte> data, short s) {
-		byte byte1, byte2;
-		byte2 = (byte)(s >> 8);
-		byte1 = (byte)(s & 255);
-		data.WriteByte(byte1);
-		data.WriteByte(byte2);
+		data.AddRange(BitConverter.GetBytes(s));
 	}
 
 	public static short ReadShort(this List<byte> data) {
-		byte byte1, byte2;
-		byte1 = data.ReadByte();
-		byte2 = data.ReadByte();
-		return (short)((byte2 << 8) + byte1);
+		List<byte> bytes = data.GetRange(0, 2);
+		data.RemoveRange(0, 2);
+		return BitConverter.ToInt16(bytes.ToArray(), 0);
 	}
 
 	public static void WriteInt(this List<byte> data, int i) {
-		short short1, short2;
-		short2 = (short)(i >> 16);
-		short1 = (short)(i & 0xFFFF);
-		data.WriteShort(short1);
-		data.WriteShort(short2);
+		data.AddRange(BitConverter.GetBytes(i));
 	}
 
 	public static int ReadInt(this List<byte> data) {
-		short short1, short2;
-		short1 = data.ReadShort();
-		short2 = data.ReadShort();
-		return (int)((short2 << 16) + short1);
+		List<byte> bytes = data.GetRange(0, 4);
+		data.RemoveRange(0, 4);
+		return BitConverter.ToInt32(bytes.ToArray(), 0);
 	}
 
 	public static void WriteFloat(this List<byte> data, float f) {
@@ -105,15 +88,39 @@ public static class NetworkMessages {
 	}
 
 	public static void WriteTimestamp(this List<byte> data, DateTime d) {
-		double seconds = d.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-		data.WriteDouble(seconds);
+		int min = d.Minute;
+		int sec = d.Second;
+		int millis = d.Millisecond;
+		data.WriteByte((byte)min);
+		data.WriteByte((byte)sec);
+		data.WriteShort((short)millis);
 	}
 
 	public static DateTime ReadTimestamp(this List<byte> data) {
-		double seconds = data.ReadDouble();
-		int milliseconds = (int)(seconds*1000) - (int)seconds*1000;
-		TimeSpan span = new TimeSpan(0, (int)seconds, milliseconds);
-		return new DateTime(1970, 1, 1).Add(span);
+		int min = data.ReadByte();
+		int sec = data.ReadByte();
+		int millis = data.ReadShort();
+		DateTime now = DateTime.Now;
+		int nowHr = now.Hour;
+		int nowDay = now.Day;
+		int nowMonth = now.Month;
+		int nowYear = now.Year;
+		if(now.Minute < min) {//sending a time one hour and receiving it the next
+			--nowHr;
+			if(nowHr < 0) {//sending a time one day and receiving it the next
+				nowHr = 24;
+				--nowDay;
+				if(nowDay < 0) {//sending a time one month and receiving it the next (lol)
+					--nowMonth;
+					if(nowMonth < 0) {//sending a time one year and receiving it the next (yeah no one is ever going to fire this code lmao)
+						nowMonth = 11;
+						--nowYear;
+					}
+					nowDay = DateTime.DaysInMonth(nowYear, nowMonth) - 1;
+				}
+			}
+		}
+		return new DateTime(nowYear, nowMonth, nowDay, nowHr, min, sec, millis);
 	}
 
 }

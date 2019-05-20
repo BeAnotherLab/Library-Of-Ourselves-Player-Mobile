@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 public class TCPClient : MonoBehaviour{
 
 	[SerializeField] TCPConnection.DeviceType deviceType = TCPConnection.DeviceType.VR;
+	[SerializeField] NewConnectionEvent onNewConnection;
 	[SerializeField] MessageReceivedEvent onMessageReception;
 	[SerializeField] ConnectionEndEvent onConnectionEnd;
 
@@ -28,6 +29,14 @@ public class TCPClient : MonoBehaviour{
 			HazePrefs.Save();
 		}
 	}
+
+	public bool HasAtLeastOneActiveConnection {
+		get {
+			return hosts.Count > 0;
+		}
+	}
+
+
 
 	private void Start() {
 		Instance = this;
@@ -53,6 +62,8 @@ public class TCPClient : MonoBehaviour{
 
 		await connection.Send(data);
 		hosts.Add(connection);
+
+		onNewConnection.Invoke(connection);
 
 		Communicate(connection);
 	}

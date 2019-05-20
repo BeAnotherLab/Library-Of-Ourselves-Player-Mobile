@@ -6,14 +6,29 @@ using UnityEngine;
 
 public class GuideAdapter : MonoBehaviour{
 
+	public static GuideAdapter Instance { get; private set; }
+
+	private void Start() {
+		Instance = this;
+	}
+
+	private void OnDestroy() {
+		Instance = null;
+	}
+
+
 	public void OnNewConnection(TCPConnection connection) {
 		Debug.Log(connection + " has been added as an option");
+		if(ConnectionsDisplayer.Instance)
+			ConnectionsDisplayer.Instance.AddConnection(connection);
 	}
 
 	public void OnConnectionEnd(TCPConnection connection) {
 		connection.active = false;
 		connection.paired = false;
 		Debug.Log(connection + " is no longer available");
+		if(ConnectionsDisplayer.Instance)
+			ConnectionsDisplayer.Instance.RemoveConnection(connection);
 	}
 
 	public async void SendGuideLock(TCPConnection connection) {
@@ -48,10 +63,17 @@ public class GuideAdapter : MonoBehaviour{
 	public void OnReceivePairConfirm(TCPConnection connection, string uniqueId) {
 		bool paired = uniqueId != "0";//string "0" means the device is unpaired now
 		if(uniqueId == SystemInfo.deviceUniqueIdentifier) {
-			Debug.Log("Paired to " + connection);
+			Debug.Log("Paired to " + connection + " (" + paired + ")");
 			connection.paired = paired;
 		} else {
 			//might want to take note that the device is available/unavailable now (depending on value of paired)
+			//although this is potentially a device we do not care about since it was never paired to us in this transaction
+		}
+		if(ConnectionsDisplayer.Instance) {
+			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
+			if(handle != null) {
+				handle.display.UpdateDisplay();
+			}
 		}
 	}
 
@@ -75,10 +97,12 @@ public class GuideAdapter : MonoBehaviour{
 
 	public void OnReceiveHasVideoResponse(TCPConnection connection, string videoName) {
 		Debug.Log(connection + " has video " + videoName);
+		//TODO: take note...
 	}
 
 	public void OnReceiveIsEmpty(TCPConnection connection) {
 		Debug.Log(connection + " is empty");
+		//TODO: take note...
 	}
 
 	public void SendLoadVideo(string videoName) {
@@ -92,8 +116,10 @@ public class GuideAdapter : MonoBehaviour{
 	public void OnReceiveLoadVideoResponse(TCPConnection connection, bool ok, string errorMessage) {
 		if(ok) {
 			Debug.Log(connection + " has successfully loaded video.");
+			//TODO: take note...
 		} else {
 			Debug.Log("Error: " + connection + " could not load video: " + errorMessage);
+			//TODO: display error message
 		}
 	}
 
@@ -153,7 +179,17 @@ public class GuideAdapter : MonoBehaviour{
 		int battery = (int)b_battery;
 		float fps = ((float)s_fps) * 0.1f;
 		int temperature = (int)b_temp;
-		Debug.Log(connection + " status; battery " + battery + " / fps " + fps + " / temperature " + temperature);
+		//Debug.Log(connection + " status; battery " + battery + " / fps " + fps + " / temperature " + temperature);
+		if(ConnectionsDisplayer.Instance) {
+			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
+			if(handle != null) {
+				handle.display.Battery = battery;
+				handle.display.FPS = fps;
+				handle.display.Temperature = temperature;
+			} else {
+				Debug.LogWarning("Received status from a non-existent connection, apparently...");
+			}
+		}
 	}
 
 }

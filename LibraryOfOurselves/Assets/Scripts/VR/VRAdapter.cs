@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 
 public class VRAdapter : MonoBehaviour{
+
+	[SerializeField] float sendStatusEvery = 0.75f;
 	
 	TCPConnection currentlyPaired = null;
 	string logs = "";
+	bool sendStatus = false;
 
 	void OnEnable() {
 		Application.logMessageReceived += HandleLog;
@@ -44,6 +48,19 @@ public class VRAdapter : MonoBehaviour{
 	}
 
 
+	private void OnDestroy() {
+		sendStatus = false;
+	}
+
+
+	public void OnNewConnection(TCPConnection connection) {
+		if(currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
+			//we're locked to this one so let's immediately request connection
+			SendAutopair(connection);
+		}
+		if(!sendStatus)
+			StartSendingStatusPeriodically();
+	}
 
 	public void OnConnectionEnd(TCPConnection connection) {
 		if(connection == currentlyPaired) {
@@ -55,7 +72,7 @@ public class VRAdapter : MonoBehaviour{
 	}
 
 	public void OnReceiveGuideLock(TCPConnection connection) {
-		if(currentlyPaired == null || currentlyPaired == connection) {
+		if(currentlyPaired != null || currentlyPaired == connection) {
 			if(TCPClient.Instance)
 				TCPClient.Instance.LockedId = connection.uniqueId;
 			Debug.Log("Locking to " + connection);
@@ -109,6 +126,7 @@ public class VRAdapter : MonoBehaviour{
 		data.WriteString(currentlyPaired != null ? currentlyPaired.uniqueId : "0");
 		if(TCPClient.Instance)
 			TCPClient.Instance.BroadcastToAllGuides(data);
+		if(currentlyPaired != null) SendIsEmpty();
 	}
 
 	public void OnReceiveLogsQuery(TCPConnection connection) {
@@ -129,8 +147,9 @@ public class VRAdapter : MonoBehaviour{
 
 	public void OnReceiveHasVideo(TCPConnection connection, string videoName) {
 		if(connection != null && connection == currentlyPaired) {
-			//TODO: do we have video?
-			SendHasVideoResponse(videoName);
+			if(VRVideoPlayer.IsVideoAvailable(videoName)) {
+				SendHasVideoResponse(videoName);
+			}
 		}
 	}
 
@@ -151,9 +170,12 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveLoadVideo(TCPConnection connection, string videoName) {
+	public async void OnReceiveLoadVideo(TCPConnection connection, string videoName) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: prepare video...
+			if(VRVideoPlayer.Instance) {
+				VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName);
+				SendLoadVideoResponse(response.ok, response.errorMessage);
+			}
 		}
 	}
 
@@ -169,37 +191,48 @@ public class VRAdapter : MonoBehaviour{
 
 	public void OnReceivePlayVideo(TCPConnection connection, DateTime timestamp) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: play video from 0 according to timestamp
+			if(VRVideoPlayer.Instance) {
+				VRVideoPlayer.Instance.PlayVideo(timestamp);
+			}
 		}
 	}
 
-	public void OnReceivePauseVideo(TCPConnection connection, DateTime timestamp, double videoTime) {
+	public void OnReceivePauseVideo(TCPConnection connection, DateTime unused, double videoTime) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: pause video and set video time to time
+			if(VRVideoPlayer.Instance) {
+				VRVideoPlayer.Instance.PauseVideo(videoTime);
+			}
 		}
 	}
 
-	public void OnReceiveStopVideo(TCPConnection connection) {
+	public async void OnReceiveStopVideo(TCPConnection connection) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: stop video then send IsEmpty message
+			if(VRVideoPlayer.Instance) {
+				await VRVideoPlayer.Instance.StopVideo();
+				SendIsEmpty();
+			}
 		}
 	}
 
 	public void OnReceiveSync(TCPConnection connection, DateTime timestamp, double videoTime) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: adjust playback speed to correct time drift
+			if(VRVideoPlayer.Instance) {
+				VRVideoPlayer.Instance.Sync(timestamp, videoTime);
+			}
 		}
 	}
 
 	public void OnReceiveCalibrate(TCPConnection connection) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: recenter
+			if(VRVideoPlayer.Instance)
+				VRVideoPlayer.Instance.Recenter();
 		}
 	}
 
-	public void OnReceiveStartChoice(TCPConnection connection, string choice1, string choice2) {
+	public async void OnReceiveStartChoice(TCPConnection connection, string choice1, string choice2) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			//TODO: display choices, then send SelectOption once an option has been chosen
+			Debug.Log("Dummy: displays choices \'" + choice1 + "\' and \'" + choice2 + "\'");
 		}
 	}
 
@@ -220,6 +253,17 @@ public class VRAdapter : MonoBehaviour{
 		data.WriteByte((byte)temperature);
 		if(TCPClient.Instance)
 			TCPClient.Instance.BroadcastToAllGuides(data);
+	}
+
+	async void StartSendingStatusPeriodically() {
+		sendStatus = true;
+		while(sendStatus && TCPClient.Instance && TCPClient.Instance.HasAtLeastOneActiveConnection && Status.Instance) {
+
+			SendStatus(Status.Instance.Battery, Status.Instance.FPS, Status.Instance.Temperature);
+
+			await Task.Delay((int)(sendStatusEvery * 1000));
+		}
+		sendStatus = false;
 	}
 
 }
