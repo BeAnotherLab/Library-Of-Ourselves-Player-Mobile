@@ -10,6 +10,7 @@ public class ConnectionDisplay : MonoBehaviour{
 	[SerializeField] Text temperatureDisplay;
 	[SerializeField] Text pairDisplay;
 	[SerializeField] Text lockDisplay;
+	[SerializeField] Image uniqueIdColourDisplay;
 
 	public TCPConnection Connection { get; private set; }
 
@@ -27,7 +28,26 @@ public class ConnectionDisplay : MonoBehaviour{
 
 	public int Temperature {
 		set {
-			temperatureDisplay.text = value + "°";
+			if(value == int.MaxValue) {
+				//unavailable
+				temperatureDisplay.text = "No temp";
+			} else {
+				temperatureDisplay.text = value + "°";
+			}
+		}
+	}
+
+	bool __available = true;
+	public bool Available {//True when it's possible for us to connect to this device
+		get {
+			if(Connection == null || Connection.active == false)
+				return false;//this device is not responding anymore... (this means we'll be getting rid of this display soon anyways)
+			if(Connection.paired)
+				return true;//in any case we're connected so...
+			return __available && (Connection.lockedId == SystemInfo.deviceUniqueIdentifier || Connection.lockedId == "free");
+		}
+		set {
+			__available = value;
 		}
 	}
 
@@ -40,6 +60,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		initialized = true;
 		Connection = connection;
 		UpdateDisplay();
+		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
 	}
 
 	public void OnClickCalibrate() {
@@ -73,8 +94,10 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void UpdateDisplay() {
-		pairDisplay.text = Connection.paired ? "Paired" : "Unpaired";
+		pairDisplay.text = Connection.paired ? "Paired" : "Unpaired (Available: " + Available + ")";
 		lockDisplay.text = Connection.lockedId == SystemInfo.deviceUniqueIdentifier ? "Locked to this one" : Connection.lockedId == "free" ? "Free" : "Locked to something else";
+		pairDisplay.color = Connection.responsive ? new Color(0, 0, 0) : new Color(0.5f, 0.5f, 0.5f);
+		lockDisplay.color = pairDisplay.color;
 	}
 
 }

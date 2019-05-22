@@ -11,6 +11,7 @@ using UnityEngine.Events;
 [Serializable] public class NewConnectionEvent : UnityEvent<TCPConnection> { }
 [Serializable] public class MessageReceivedEvent : UnityEvent<TCPConnection, string, List<byte>> { }
 [Serializable] public class ConnectionEndEvent : UnityEvent<TCPConnection> { }
+[Serializable] public class ResponsivenessEvent : UnityEvent<TCPConnection, bool> { }
 
 public class TCPConnection {
 
@@ -20,6 +21,15 @@ public class TCPConnection {
 	public bool active = true;//set to false once connection is closed and shouldn't be used anymore
 	public bool paired = false;//set to true for devices paired to this one
 	public string lockedId = "free";//for VR and AUDIO devices, either "free" or a guide's uniqueId to allow pairing with.
+	public bool responsive = true;//after not receiving anything for a while, will go to "unresponsive"
+
+	DateTime lastCommunication;
+
+	public float TimeSinceLastConnection {
+		get {
+			return (float)(DateTime.Now - lastCommunication).TotalSeconds;
+		}
+	}
 
 	public enum DeviceType {
 		GUIDE,
@@ -28,6 +38,10 @@ public class TCPConnection {
 	}
 
 	public NetworkStream Stream { get { return client.GetStream(); } }
+
+	public TCPConnection() {
+		lastCommunication = DateTime.Now;
+	}
 
 	public async Task Send(List<byte> bytes) {
 		if(!active) {
@@ -45,7 +59,7 @@ public class TCPConnection {
 				data[i + 2] = bytes[i];
 			}
 			await Stream.WriteAsync(data, 0, data.Length);
-		}catch(Exception e) {
+		} catch(Exception e) {
 			Debug.Log("Could not send bytes. Connection failed.");
 			active = false;//this will notify client or host to disconnect from this connection.
 		}
@@ -70,6 +84,7 @@ public class TCPConnection {
 				short length = ToShort(len1, len2);
 				byte[] buffer = new byte[length];
 				await Stream.ReadAsync(buffer, 0, length);
+				lastCommunication = DateTime.Now;
 				return new List<byte>(buffer);
 			}
 		}catch(Exception e) {

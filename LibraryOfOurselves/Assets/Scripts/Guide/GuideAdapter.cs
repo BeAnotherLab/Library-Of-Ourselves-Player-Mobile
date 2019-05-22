@@ -31,16 +31,25 @@ public class GuideAdapter : MonoBehaviour{
 			ConnectionsDisplayer.Instance.RemoveConnection(connection);
 	}
 
-	public async void SendGuideLock(TCPConnection connection) {
-		List<byte> data = new List<byte>();
-		data.WriteString("guide-lock");
-		await connection.Send(data);
+	public void OnConnectionResponsivenessChanged(TCPConnection connection, bool isResponsive) {
+		ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
+		if(ConnectionsDisplayer.Instance) {
+			handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
+			if(handle != null)
+				handle.display.UpdateDisplay();
+		}
 	}
 
-	public async void SendGuideUnlock(TCPConnection connection) {
+	public void SendGuideLock(TCPConnection connection) {
+		List<byte> data = new List<byte>();
+		data.WriteString("guide-lock");
+		connection.Send(data);
+	}
+
+	public void SendGuideUnlock(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-unlock");
-		await connection.Send(data);
+		connection.Send(data);
 	}
 
 	public void OnReceiveAutopair(TCPConnection connection) {
@@ -48,39 +57,50 @@ public class GuideAdapter : MonoBehaviour{
 		SendGuidePair(connection);
 	}
 
-	public async void SendGuidePair(TCPConnection connection) {
+	public void SendGuidePair(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-pair");
-		await connection.Send(data);
+		connection.Send(data);
 	}
 
-	public async void SendGuideUnpair(TCPConnection connection) {
+	public void SendGuideUnpair(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-unpair");
-		await connection.Send(data);
+		connection.Send(data);
 	}
 
-	public void OnReceivePairConfirm(TCPConnection connection, string uniqueId) {
-		bool paired = uniqueId != "0";//string "0" means the device is unpaired now
-		if(uniqueId == SystemInfo.deviceUniqueIdentifier) {
-			Debug.Log("Paired to " + connection + " (" + paired + ")");
-			connection.paired = paired;
-		} else {
-			//might want to take note that the device is available/unavailable now (depending on value of paired)
-			//although this is potentially a device we do not care about since it was never paired to us in this transaction
-		}
+	public void OnReceivePairConfirm(TCPConnection connection, string pairedId, string lockedId) {
+
+		ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
 		if(ConnectionsDisplayer.Instance) {
-			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
-			if(handle != null) {
-				handle.display.UpdateDisplay();
-			}
+			handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
 		}
+
+		bool paired = pairedId != "0";//string "0" means the device is unpaired now
+		if(pairedId == SystemInfo.deviceUniqueIdentifier) {
+			Debug.Log("Paired to " + connection);
+			connection.paired = true;
+			if(handle != null) handle.display.Available = true;
+		} else {
+			if(connection.paired) {
+				connection.paired = false;
+				Debug.Log("Unpaired from " + connection);
+			}
+			if(handle != null) handle.display.Available = !paired;
+		}
+		
+		connection.lockedId = lockedId;
+
+		if(handle != null) {
+			handle.display.UpdateDisplay();
+		}
+		
 	}
 
-	public async void SendLogsQuery(TCPConnection connection) {
+	public void SendLogsQuery(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("logs-query");
-		await connection.Send(data);
+		connection.Send(data);
 	}
 
 	public void OnReceiveLogs(TCPConnection connection, string log) {
@@ -105,10 +125,11 @@ public class GuideAdapter : MonoBehaviour{
 		//TODO: take note...
 	}
 
-	public void SendLoadVideo(string videoName) {
+	public void SendLoadVideo(string videoName, string mode) {
 		List<byte> data = new List<byte>();
 		data.WriteString("load-video");
 		data.WriteString(videoName);
+		data.WriteString(mode);
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
@@ -156,10 +177,10 @@ public class GuideAdapter : MonoBehaviour{
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
-	public async void SendCalibrate(TCPConnection connection) {
+	public void SendCalibrate(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("calibrate");
-		await connection.Send(data);
+		connection.Send(data);
 	}
 
 	public void SendStartChoice(string choice1, string choice2) {

@@ -6,10 +6,11 @@ using UnityEngine.Events;
 
 [Serializable] class GuideLockMessage : UnityEvent<TCPConnection> { }
 [Serializable] class PairingMessage : UnityEvent<TCPConnection> { }
-[Serializable] class PairConfirmationMessage : UnityEvent<TCPConnection, string> { }
+[Serializable] class PairConfirmationMessage : UnityEvent<TCPConnection, string, string> { }
 [Serializable] class LogsMessage : UnityEvent<TCPConnection, string> { }
 [Serializable] class VideoNameMessage : UnityEvent<TCPConnection, string> { }
-[Serializable] class LoadVideoMessage : UnityEvent<TCPConnection, bool, string> { }
+[Serializable] class LoadVideoMessage : UnityEvent<TCPConnection, string, string> { }
+[Serializable] class LoadVideoResponseMessage : UnityEvent<TCPConnection, bool, string> { }
 [Serializable] class VideoTimeStampMessage : UnityEvent<TCPConnection, DateTime> { }
 [Serializable] class VideoTimeStampAndTimeMessage : UnityEvent<TCPConnection, DateTime, double> { }
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
@@ -30,8 +31,8 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] VideoNameMessage hasVideo;
 	[SerializeField] VideoNameMessage hasVideoResponse;
 	[SerializeField] PairingMessage isEmpty;
-	[SerializeField] VideoNameMessage loadVideo;
-	[SerializeField] LoadVideoMessage loadVideoResponse;
+	[SerializeField] LoadVideoMessage loadVideo;
+	[SerializeField] LoadVideoResponseMessage loadVideoResponse;
 	[SerializeField] VideoTimeStampMessage playVideo;
 	[SerializeField] VideoTimeStampAndTimeMessage pauseVideo;
 	[SerializeField] VideoPlaybackMessage stopVideo;
@@ -66,8 +67,9 @@ public class MessageDispatcher : MonoBehaviour{
 				guideUnpair.Invoke(connection);
 				break;
 			case "pair-confirm":
+				string pairedId = data.ReadString();
 				string lockedId = data.ReadString();
-				pairConfirm.Invoke(connection, lockedId);
+				pairConfirm.Invoke(connection, pairedId, lockedId);
 				break;
 			case "logs-query":
 				logsQuery.Invoke(connection);
@@ -92,7 +94,8 @@ public class MessageDispatcher : MonoBehaviour{
 				break;
 			case "load-video": {
 					string videoName = data.ReadString();
-					loadVideo.Invoke(connection, videoName);
+					string mode = data.ReadString();
+					loadVideo.Invoke(connection, videoName, mode);
 				}
 				break;
 			case "load-video-response": {

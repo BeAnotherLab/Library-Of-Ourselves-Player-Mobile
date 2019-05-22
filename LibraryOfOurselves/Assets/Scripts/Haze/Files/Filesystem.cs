@@ -15,11 +15,15 @@ public class Filesystem {
 	public static string SDCardRoot{
 		get{
 			if(sdroot != "") return sdroot;
-			
+
+#if UNITY_ANDROID
 			sdroot = getSDCardPath();
-			//remove any appended "Android/data/sco.forgotten.beanother/files"
-			sdroot = sdroot.Split(new string[]{"/Android/data"}, StringSplitOptions.None)[0];
+			//remove any appended "Android/data/sco.haze.xxxx/files"
+			sdroot = sdroot.Split(new string[]{"/Android/data/"}, StringSplitOptions.None)[0];
 			sdroot += "/";
+#else
+			sdroot = Application.dataPath.Split(new string[] { Application.productName + "_Data" }, StringSplitOptions.None)[0];
+#endif
 			return sdroot;
 		}
 	}
@@ -50,35 +54,13 @@ public class Filesystem {
 	}
 	
 	static string getSDCardPath(){
-		#if UNITY_ANDROID && !UNITY_EDITOR
-		/*using(AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer")){
-			using(AndroidJavaObject context = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity")){
-				AndroidJavaObject[] externalFilesDirs = context.Call<AndroidJavaObject[]>("getExternalFilesDirs", null);
-				AndroidJavaObject emulated = null, sd = null;
-				
-				for(int i = 0; i<externalFilesDirs.Length; ++i){
-					AndroidJavaObject dir = externalFilesDirs[i];
-					using(AndroidJavaClass environment = new AndroidJavaClass("android.os.Environment")){
-						if(environment.CallStatic<bool>("isExternalStorageEmulated", dir))
-							emulated = dir;
-						else if(environment.CallStatic<bool>("isExternalStorageRemovable", dir))
-							sd = dir;
-					}
-				}
-				
-				//return sd card in priority
-				if(sd != null)
-					return sd.Call<string>("getAbsolutePath");
-				else if(emulated != null)
-					return sd.Call<string>("getAbsolutePath");
-				else
-					return Application.persistentDataPath;
-			}
-		}*/
+#if UNITY_ANDROID && !UNITY_EDITOR
+		string path = VrPlayerBindings.Instance.GetSDCardPath();
+		if(path != null) return path;
 		return Application.persistentDataPath;
-		#else
+#else
 		return Application.persistentDataPath;
-		#endif
+#endif
 	}
 	
 }

@@ -17,21 +17,27 @@ public class UDPBroadcaster : MonoBehaviour{
 	byte[] requestData;
 	bool stop = false;
 
-	public async void StartBroadcasting(string ip, int port) {
+	public void StartBroadcasting(string ip, int port) {
+		StartCoroutine(broadcast(ip, port));
+	}
+
+	IEnumerator broadcast(string ip, int port) {
 		stop = false;
 		server = new UdpClient(broadcastPort);
-		requestData = Encoding.ASCII.GetBytes("guide-broadcast>"+ip+">"+port+">"+SystemInfo.deviceUniqueIdentifier);
+		requestData = Encoding.ASCII.GetBytes("guide-broadcast>" + ip + ">" + port + ">" + SystemInfo.deviceUniqueIdentifier);
 		IPEndPoint broadcastEndpoint = new IPEndPoint(IPAddress.Broadcast, broadcastPort);
 		server.EnableBroadcast = true;
 		while(!stop) {
 			try {
-				await server.SendAsync(requestData, requestData.Length, broadcastEndpoint);
-				await Task.Delay(1000);
-			}catch(SocketException se) {
+				server.Send(requestData, requestData.Length, broadcastEndpoint);
+			} catch(SocketException se) {
 				Debug.LogWarning("Socket error (" + se.ErrorCode + "), could not broadcast: " + se.ToString());
-			}catch(Exception e) {
+			} catch(Exception e) {
 				Debug.LogWarning("Error, could not broadcast: " + e.ToString());
 			}
+
+			yield return new WaitForSeconds(1);
+			//await Task.Delay(1000);
 		}
 		server.Close();
 	}

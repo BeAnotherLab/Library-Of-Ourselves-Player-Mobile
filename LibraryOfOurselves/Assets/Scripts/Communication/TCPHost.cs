@@ -14,6 +14,8 @@ public class TCPHost : MonoBehaviour{
 	[SerializeField] NewConnectionEvent onNewConnection;
 	[SerializeField] MessageReceivedEvent onMessageReception;
 	[SerializeField] ConnectionEndEvent onConnectionEnd;
+	[SerializeField] float unresponsiveThreshold = 2;//After this amount of time, device will be shown as unresponsive
+	[SerializeField] ResponsivenessEvent onResponsivenessChanged;
 
 	public static TCPHost Instance { get; private set; }
 
@@ -21,19 +23,27 @@ public class TCPHost : MonoBehaviour{
 	bool stop = false;
 	List<TCPConnection> users = new List<TCPConnection>();
 
-    async void Start(){
+    async void Start() {
 		Instance = this;
 		if(broadcaster) {
 
 			string hostName = Dns.GetHostName();
 			IPHostEntry hostEntry = await Dns.GetHostEntryAsync(hostName);
-			int ipIndex = 0;
+			int ipIndex = -1;
 			for(int i = 0; i<hostEntry.AddressList.Length; ++i) {
-				Debug.Log("Address " + i + " = " + hostEntry.AddressList[i]);
-				if(hostEntry.AddressList[i].GetAddressBytes()[0] == (byte)192 && hostEntry.AddressList[i].GetAddressBytes()[1] == (byte)168)
+				IPAddress thisOne = hostEntry.AddressList[i];
+				if(thisOne.AddressFamily != AddressFamily.InterNetwork && thisOne.IsIPv4MappedToIPv6) {
+					thisOne = thisOne.MapToIPv4();
+				}
+				Debug.Log("Address " + i + " = " + thisOne);
+				if(thisOne.GetAddressBytes()[0] == (byte)192 && thisOne.GetAddressBytes()[1] == (byte)168)
 					ipIndex = i;
 			}
-			IPAddress ip = hostEntry.AddressList[ipIndex];
+			IPAddress ip;
+			if(ipIndex > -1)
+				ip = hostEntry.AddressList[ipIndex];
+			else
+				ip = IPAddress.Any;
 			
 			if(ip.AddressFamily != AddressFamily.InterNetwork) {
 				ip = ip.MapToIPv4();
@@ -49,7 +59,9 @@ public class TCPHost : MonoBehaviour{
 
 			while(!stop) {
 				try {
+
 					TcpClient client = await listener.AcceptTcpClientAsync();
+					client.NoDelay = true;
 					IPEndPoint localEndpoint = (IPEndPoint)client.Client.LocalEndPoint;
 					IPEndPoint remoteEndpoint = (IPEndPoint)client.Client.RemoteEndPoint;
 					Debug.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
@@ -84,6 +96,20 @@ public class TCPHost : MonoBehaviour{
 			Debug.LogError("No broadcaster...");
 		}
     }
+
+	private void Update() {
+		foreach(TCPConnection conn in users) {
+			if(conn.active) {
+				if(conn.responsive && conn.TimeSinceLastConnection > unresponsiveThreshold) {
+					conn.responsive = false;
+					onResponsivenessChanged.Invoke(conn, false);
+				} else if(!conn.responsive && conn.TimeSinceLastConnection < unresponsiveThreshold) {
+					conn.responsive = true;
+					onResponsivenessChanged.Invoke(conn, true);
+				}
+			}
+		}
+	}
 
 	private async void Communicate(TCPConnection connection) {
 		while(connection.active) {

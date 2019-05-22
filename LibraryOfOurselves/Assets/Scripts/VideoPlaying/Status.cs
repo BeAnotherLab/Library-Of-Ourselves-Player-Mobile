@@ -8,29 +8,47 @@ public class Status : MonoBehaviour{
 
 	public int Battery {
 		get {
-			return 0;//TODO
+			return (int)(SystemInfo.batteryLevel * 100);
 		}
 	}
 
+	int framesCounted = 0;
+	float elapsedSinceFPSEpoch = 0;
 	public float FPS {
-		get {
-			return 0;//TODO
-		}
+		get; private set;
 	}
 
 	public int Temperature {
 		get {
-			return 0;//TODO
+#if UNITY_ANDROID
+			float temp = VrPlayerBindings.Instance.GetTemperature();
+			if(temp == float.NegativeInfinity) {
+				return int.MaxValue;//Temperature is unavailable
+			}
+			return (int)temp;
+#endif
+			return int.MaxValue;
 		}
 	}
 
 
 	private void Start() {
 		Instance = this;
+		FPS = 60;
 	}
 
 	private void OnDestroy() {
 		Instance = null;
+	}
+
+	private void Update() {
+		elapsedSinceFPSEpoch += Time.deltaTime;
+		++framesCounted;
+		if(elapsedSinceFPSEpoch > 0.5f) {
+			FPS = (float)framesCounted * 2;
+			elapsedSinceFPSEpoch -= 0.5f;
+			framesCounted = 0;
+		}
 	}
 
 }

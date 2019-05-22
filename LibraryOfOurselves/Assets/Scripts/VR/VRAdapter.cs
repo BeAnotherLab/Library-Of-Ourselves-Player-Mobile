@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using UnityEngine.Events;
 
 public class VRAdapter : MonoBehaviour{
 
 	[SerializeField] float sendStatusEvery = 0.75f;
+	[SerializeField] UnityEvent onPair;
+	[SerializeField] UnityEvent onUnpair;
 	
 	TCPConnection currentlyPaired = null;
 	string logs = "";
@@ -47,52 +50,64 @@ public class VRAdapter : MonoBehaviour{
 		logs += message;
 	}
 
+	public static VRAdapter Instance { get; private set; }
+
+	private void Start() {
+		Instance = this;
+	}
 
 	private void OnDestroy() {
+		Instance = null;
 		sendStatus = false;
 	}
 
 
 	public void OnNewConnection(TCPConnection connection) {
+		SendPairConfirm();//give them our current pairing state
 		if(currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
 			//we're locked to this one so let's immediately request connection
 			SendAutopair(connection);
 		}
 		if(!sendStatus)
-			StartSendingStatusPeriodically();
+			StartCoroutine(sendStatusPeriodically());
 	}
 
 	public void OnConnectionEnd(TCPConnection connection) {
 		if(connection == currentlyPaired) {
 			connection.paired = false;
 			currentlyPaired = null;
+			onUnpair.Invoke();
 			SendPairConfirm();//advertise as available to all guides
 		}
 		connection.active = false;
 	}
 
 	public void OnReceiveGuideLock(TCPConnection connection) {
-		if(currentlyPaired != null || currentlyPaired == connection) {
-			if(TCPClient.Instance)
-				TCPClient.Instance.LockedId = connection.uniqueId;
+		if(currentlyPaired != null && currentlyPaired == connection && TCPClient.Instance && TCPClient.Instance.LockedId != connection.uniqueId) {
+			TCPClient.Instance.LockedId = connection.uniqueId;
 			Debug.Log("Locking to " + connection);
+			SendPairConfirm();
 		} else {
 			Debug.LogWarning("Cannot lock " + connection + ": currently paired with " + currentlyPaired);
 		}
 	}
 
 	public void OnReceiveGuideUnlock(TCPConnection connection) {
-		if(TCPClient.Instance)
-			TCPClient.Instance.LockedId = "free";
-		Debug.Log("Unlocking.");
+		if(TCPClient.Instance) {
+			if(TCPClient.Instance.LockedId != "free") {
+				TCPClient.Instance.LockedId = "free";
+				Debug.Log("Unlocking.");
+				SendPairConfirm();
+			}
+		}
 	}
 
-	public async void SendAutopair(TCPConnection connection) {
+	public void SendAutopair(TCPConnection connection) {
 		if(currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
 			List<byte> data = new List<byte>();
 			data.WriteString("autopair");
 			Debug.Log("Sending autopair request");
-			await connection.Send(data);
+			connection.Send(data);
 		} else {
 			Debug.LogWarning("Not allowed to send autopair to " + connection + "...");
 		}
@@ -103,6 +118,7 @@ public class VRAdapter : MonoBehaviour{
 			currentlyPaired = connection;
 			connection.paired = true;
 			Debug.Log("Paired to " + connection);
+			onPair.Invoke();
 			SendPairConfirm();
 		} else {
 			Debug.LogWarning("Cannot pair to " + connection);
@@ -114,6 +130,7 @@ public class VRAdapter : MonoBehaviour{
 			currentlyPaired = null;
 			connection.paired = false;
 			Debug.Log("Unpaired.");
+			onUnpair.Invoke();
 			SendPairConfirm();
 		} else {
 			Debug.LogWarning("Cannot unpair.");
@@ -125,6 +142,10 @@ public class VRAdapter : MonoBehaviour{
 		data.WriteString("pair-confirm");
 		data.WriteString(currentlyPaired != null ? currentlyPaired.uniqueId : "0");
 		if(TCPClient.Instance)
+			data.WriteString(TCPClient.Instance.LockedId);
+		else
+			data.WriteString("free");
+		if(TCPClient.Instance)
 			TCPClient.Instance.BroadcastToAllGuides(data);
 		if(currentlyPaired != null) SendIsEmpty();
 	}
@@ -135,13 +156,13 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void SendLogs() {
+	public void SendLogs() {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("logs");
 			data.WriteString(logs);
 			logs = "";
-			await currentlyPaired.Send(data);
+			currentlyPaired.Send(data);
 		}
 	}
 
@@ -153,39 +174,39 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void SendHasVideoResponse(string videoName) {
+	public void SendHasVideoResponse(string videoName) {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("has-video-response");
 			data.WriteString(videoName);
-			await currentlyPaired.Send(data);
+			currentlyPaired.Send(data);
 		}
 	}
 
-	public async void SendIsEmpty() {
+	public void SendIsEmpty() {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("is-empty");
-			await currentlyPaired.Send(data);
+			currentlyPaired.Send(data);
 		}
 	}
 
-	public async void OnReceiveLoadVideo(TCPConnection connection, string videoName) {
+	public async void OnReceiveLoadVideo(TCPConnection connection, string videoName, string mode) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			if(VRVideoPlayer.Instance) {
-				VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName);
+				VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, mode);
 				SendLoadVideoResponse(response.ok, response.errorMessage);
 			}
 		}
 	}
 
-	public async void SendLoadVideoResponse(bool ok, string errorMessage) {
+	public void SendLoadVideoResponse(bool ok, string errorMessage) {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("load-video-response");
 			data.WriteBool(ok);
 			data.WriteString(errorMessage);
-			await currentlyPaired.Send(data);
+			currentlyPaired.Send(data);
 		}
 	}
 
@@ -205,11 +226,10 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void OnReceiveStopVideo(TCPConnection connection) {
+	public void OnReceiveStopVideo(TCPConnection connection) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			if(VRVideoPlayer.Instance) {
-				await VRVideoPlayer.Instance.StopVideo();
-				SendIsEmpty();
+				VRVideoPlayer.Instance.StopVideo();
 			}
 		}
 	}
@@ -236,12 +256,12 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void SendSelectOption(byte option) {
+	public void SendSelectOption(byte option) {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("select-option");
 			data.WriteByte(option);
-			await currentlyPaired.Send(data);
+			currentlyPaired.Send(data);
 		}
 	}
 
@@ -255,13 +275,13 @@ public class VRAdapter : MonoBehaviour{
 			TCPClient.Instance.BroadcastToAllGuides(data);
 	}
 
-	async void StartSendingStatusPeriodically() {
+	IEnumerator sendStatusPeriodically() {
 		sendStatus = true;
 		while(sendStatus && TCPClient.Instance && TCPClient.Instance.HasAtLeastOneActiveConnection && Status.Instance) {
 
 			SendStatus(Status.Instance.Battery, Status.Instance.FPS, Status.Instance.Temperature);
 
-			await Task.Delay((int)(sendStatusEvery * 1000));
+			yield return new WaitForSeconds(sendStatusEvery);
 		}
 		sendStatus = false;
 	}

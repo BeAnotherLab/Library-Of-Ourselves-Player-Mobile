@@ -18,6 +18,10 @@ public class TCPClient : MonoBehaviour{
 
 	public static TCPClient Instance { get; private set; }
 
+	public TCPConnection.DeviceType DeviceType {
+		get { return deviceType; }
+	}
+
 	public string LockedId {
 		get {
 			if(HazePrefs.HasKey("locked-id"))
@@ -47,6 +51,7 @@ public class TCPClient : MonoBehaviour{
 		connection.uniqueId = uniqueId;
 		connection.deviceType = TCPConnection.DeviceType.GUIDE;
 		connection.client = new TcpClient();
+		connection.client.NoDelay = true;
 		IPAddress ipv4 = endpoint.Address;
 		if(ipv4.AddressFamily != AddressFamily.InterNetwork)
 			ipv4 = ipv4.MapToIPv4();

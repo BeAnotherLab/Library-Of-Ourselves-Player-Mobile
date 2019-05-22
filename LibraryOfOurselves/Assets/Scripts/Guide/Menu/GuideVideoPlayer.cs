@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using UnityEngine.Events;
 
 public class GuideVideoPlayer : MonoBehaviour{
 
@@ -25,12 +26,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public void ___HasDummy___() {
 		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendHasVideo("dummy_video_name");
+			GuideAdapter.Instance.SendHasVideo("DalvaEN");//("Atelier1");
 	}
 
 	public void ___LoadDummy___() {
 		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendLoadVideo("dummy_video_name");
+			GuideAdapter.Instance.SendLoadVideo("DalvaEN", "235");//("Atelier1", "360");
 	}
 
 	public void Play() {
