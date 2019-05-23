@@ -13,6 +13,8 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] GameObject semispherePlayer;
 	[SerializeField] GameObject spherePlayer;
 	[SerializeField] UnityEvent onVideoEnds;
+	[SerializeField] UnityEvent onPause;
+	[SerializeField] UnityEvent onPlay;
 	[SerializeField] OVRInput.Button oculusGoRecenterButton = OVRInput.Button.PrimaryIndexTrigger;//change this to change which button controls recenter on oculus go
 	[SerializeField] GvrControllerButton mirageRecenterButton = GvrControllerButton.TouchPadButton;//change this to change which button controls recenter on mirage solo
 
@@ -22,6 +24,9 @@ public class VRVideoPlayer : MonoBehaviour{
 	Camera mainCamera;
 	bool errorWhileLoading = false;
 	float firstTap = 0;
+	bool is360;//whether the current video is 360 degrees
+
+	float timeDifference = 0;//How much difference there is between the guide and the user app when we start playing the video.
 
 	public struct VideoLoadingResponse { public bool ok;public string errorMessage; }
 
@@ -38,7 +43,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			endOfVideo();
 		};
 		player.loopPointReached += delegate (VideoPlayer player) {
-			endOfVideo();
+			//do nothing, otherwise it results in a bug. let the Stop from the guide stop the video naturally
 		};
 	}
 
@@ -75,7 +80,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			return response;
 		}
 
-		bool is360 = false;
+		is360 = false;
 		if(mode.Length >= 3 && mode[0] == '3' && mode[1] == '6' && mode[2] == '0') {
 			//360 video.
 			is360 = true;
@@ -98,9 +103,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		TimeSpan took = DateTime.Now - before;
 		Debug.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
 
-		if(is360) spherePlayer.SetActive(true);
-		else semispherePlayer.SetActive(true);
-
 		return response;
 	}
 
@@ -110,13 +112,48 @@ public class VRVideoPlayer : MonoBehaviour{
 		TimeSpan difference = DateTime.Now - timestamp;
 		Debug.Log("Started playing video " + difference.TotalSeconds + " s ago.");
 
-		//player.time = difference.TotalSeconds;
+		timeDifference = (float)difference.TotalSeconds;
+		if(timeDifference > 0) {
+			player.time = timeDifference;
+			timeDifference = 0;
+		}
+		
 		player.Play();
+		
+		if(is360) spherePlayer.SetActive(true);
+		else semispherePlayer.SetActive(true);
+
+		onPlay.Invoke();
 	}
 
 	public void Sync(DateTime timestamp, double videoTime) {
-		//TODO: assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
-		//player.time = videoTime;
+		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
+		TimeSpan difference = DateTime.Now - timestamp;
+		float secondsDiff = (float)difference.TotalSeconds - timeDifference;
+		float targetTime = (float)videoTime + secondsDiff;
+		float actualTime = (float)player.time;
+		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
+
+		//Shall we speed up or slow down?
+		if(Mathf.Abs(delta) < 0.5f) {
+			player.playbackSpeed = 1;
+		}else if(Mathf.Abs(delta) > 3) {//too much difference, let's just pop back to the right point
+			player.time = targetTime;
+			player.playbackSpeed = 1;
+		}else if(delta < 0) {// actualTime < targetTime -> go faster
+			delta = Mathf.Abs(delta) - 0.5f;//0 when the difference is 0.5, 1 at 1.5 and higher
+			if(delta > 1) delta = 1;
+			player.playbackSpeed = 1 + delta * 0.3f;
+		} else {// actualTime > targetTime -> go slower
+			delta = delta - 0.5f;//0 when difference is 0.5, 1 at 1.5 and higher
+			if(delta > 1) delta = 1;
+			player.playbackSpeed = 1 - delta * 0.3f;
+		}
+
+		if(!player.isPlaying) {
+			Debug.LogWarning("Player stopped all of a sudden...");
+			player.Play();
+		}
 	}
 
 	//Toggles between playing and paused.
@@ -125,9 +162,11 @@ public class VRVideoPlayer : MonoBehaviour{
 			player.time = videoTime;
 			player.playbackSpeed = 1;
 			player.Play();
+			onPlay.Invoke();
 		} else {
 			player.Pause();
 			player.time = videoTime;
+			onPause.Invoke();
 		}
 	}
 

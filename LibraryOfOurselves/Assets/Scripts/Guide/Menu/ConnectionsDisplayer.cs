@@ -14,6 +14,7 @@ public class ConnectionsDisplayer : MonoBehaviour{
 	}
 
 	List<DisplayedConnectionHandle> handles = new List<DisplayedConnectionHandle>();
+	public List<DisplayedConnectionHandle> Handles { get { return handles; } }
 
 	private void Start() {
 		Instance = this;

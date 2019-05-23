@@ -37,6 +37,12 @@ public class ConnectionDisplay : MonoBehaviour{
 		}
 	}
 
+	List<string> __videosAvailable = new List<string>();
+	public List<string> VideosAvailable { get { return __videosAvailable; } }
+
+	public bool IsVideoReady { get; set; }
+
+
 	bool __available = true;
 	public bool Available {//True when it's possible for us to connect to this device
 		get {
@@ -61,6 +67,10 @@ public class ConnectionDisplay : MonoBehaviour{
 		Connection = connection;
 		UpdateDisplay();
 		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
+	}
+
+	public void AddAvailableVideo(string videoName) {
+		VideosAvailable.Add(videoName);
 	}
 
 	public void OnClickCalibrate() {

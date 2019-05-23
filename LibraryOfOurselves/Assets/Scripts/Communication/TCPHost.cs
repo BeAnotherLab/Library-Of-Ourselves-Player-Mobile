@@ -23,6 +23,17 @@ public class TCPHost : MonoBehaviour{
 	bool stop = false;
 	List<TCPConnection> users = new List<TCPConnection>();
 
+	public int NumberOfPairedDevices {
+		get {
+			int i = 0;
+			foreach(TCPConnection conn in users) {
+				if(conn.active && conn.paired)
+					++i;
+			}
+			return i;
+		}
+	}
+
     async void Start() {
 		Instance = this;
 		if(broadcaster) {

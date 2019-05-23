@@ -16,11 +16,13 @@ public class Filesystem {
 		get{
 			if(sdroot != "") return sdroot;
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
 			sdroot = getSDCardPath();
 			//remove any appended "Android/data/sco.haze.xxxx/files"
 			sdroot = sdroot.Split(new string[]{"/Android/data/"}, StringSplitOptions.None)[0];
 			sdroot += "/";
+#elif UNITY_EDITOR
+			sdroot = Application.dataPath.Split(new string[] { Application.productName.Replace(" ", "") + "/Assets" }, StringSplitOptions.None)[0];
 #else
 			sdroot = Application.dataPath.Split(new string[] { Application.productName + "_Data" }, StringSplitOptions.None)[0];
 #endif

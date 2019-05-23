@@ -81,6 +81,10 @@ public class GuideAdapter : MonoBehaviour{
 			Debug.Log("Paired to " + connection);
 			connection.paired = true;
 			if(handle != null) handle.display.Available = true;
+			//Give an update to the VideosDisplayer
+			if(VideosDisplayer.Instance) {
+				VideosDisplayer.Instance.OnPairConnection(connection);
+			}
 		} else {
 			if(connection.paired) {
 				connection.paired = false;
@@ -107,22 +111,29 @@ public class GuideAdapter : MonoBehaviour{
 		Debug.Log("Received logs from "+connection+":\n" + log);
 	}
 
-	public void SendHasVideo(string videoName) {
+	public void SendHasVideo(TCPConnection connection, string videoName) {
 		List<byte> data = new List<byte>();
 		data.WriteString("has-video");
 		data.WriteString(videoName);
-		if(TCPHost.Instance)
-			TCPHost.Instance.BroadcastToPairedDevices(data);
+		//if(TCPHost.Instance)
+		//	TCPHost.Instance.BroadcastToPairedDevices(data);
+		connection.Send(data);
 	}
 
 	public void OnReceiveHasVideoResponse(TCPConnection connection, string videoName) {
 		Debug.Log(connection + " has video " + videoName);
-		//TODO: take note...
+		ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
+		if(ConnectionsDisplayer.Instance) {
+			handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
+			if(handle != null) {
+				handle.display.AddAvailableVideo(videoName);
+			}
+		}
 	}
 
 	public void OnReceiveIsEmpty(TCPConnection connection) {
-		Debug.Log(connection + " is empty");
-		//TODO: take note...
+		//Debug.Log(connection + " is empty");
+		// should we take note?
 	}
 
 	public void SendLoadVideo(string videoName, string mode) {
@@ -132,14 +143,24 @@ public class GuideAdapter : MonoBehaviour{
 		data.WriteString(mode);
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
+		if(ConnectionsDisplayer.Instance) {
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+				handle.display.IsVideoReady = false;
+			}
+		}
 	}
 
 	public void OnReceiveLoadVideoResponse(TCPConnection connection, bool ok, string errorMessage) {
 		if(ok) {
 			Debug.Log(connection + " has successfully loaded video.");
-			//TODO: take note...
+			ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
+			if(ConnectionsDisplayer.Instance) {
+				handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
+				if(handle != null)
+					handle.display.IsVideoReady = true;
+			}
 		} else {
-			Debug.Log("Error: " + connection + " could not load video: " + errorMessage);
+			Debug.LogWarning("Error: " + connection + " could not load video: " + errorMessage);
 			//TODO: display error message
 		}
 	}
@@ -200,7 +221,6 @@ public class GuideAdapter : MonoBehaviour{
 		int battery = (int)b_battery;
 		float fps = ((float)s_fps) * 0.1f;
 		int temperature = (int)b_temp;
-		//Debug.Log(connection + " status; battery " + battery + " / fps " + fps + " / temperature " + temperature);
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
 			if(handle != null) {
