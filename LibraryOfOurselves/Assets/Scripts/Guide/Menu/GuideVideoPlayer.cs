@@ -5,14 +5,17 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.Events;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class GuideVideoPlayer : MonoBehaviour{
 
 	[SerializeField] float timeBetweenSyncs = 0.75f;
+	[SerializeField] Slider timeSlider;
 	[SerializeField] VideoPlayer videoPlayer;
 	[SerializeField] UnityEvent onLoad;
 	[SerializeField] UnityEvent onStop;
 	[SerializeField] UnityEvent onAllDevicesReady;
+	[SerializeField] UnityEvent onFirstFrameReady;
 
 	public static GuideVideoPlayer Instance { get; private set; }
 
@@ -20,16 +23,34 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public bool Playing { get; private set; }
 
+	float TotalVideoTime { get { return (float)(videoPlayer.frameCount / videoPlayer.frameRate); } }
+
 	bool displaying = false;//switched to true as soon as we're displaying something.
 	bool allDevicesReady = false;
 	bool startedPlayback = false;//switched to true when we press Play the first time.
+
+	float lastTimeShown = 0;
 
 	private void Start() {
 		Instance = this;
 		onStop.Invoke();
 
+		timeSlider.onValueChanged.AddListener(delegate (float val) {
+			float time = val * TotalVideoTime;
+			videoPlayer.time = time;
+		});
+
 		videoPlayer.loopPointReached += delegate (VideoPlayer player) {
 			Stop();
+		};
+
+		videoPlayer.sendFrameReadyEvents = true;
+		videoPlayer.frameReady += delegate (VideoPlayer player, long frame) {
+			if(frame == 1) {
+				lastTimeShown = (float)player.time;
+				player.time = timeSlider.value * TotalVideoTime;
+				onFirstFrameReady.Invoke();
+			}
 		};
 	}
 
@@ -44,8 +65,11 @@ public class GuideVideoPlayer : MonoBehaviour{
 			displaying = true;
 			allDevicesReady = false;
 			startedPlayback = false;
+			lastTimeShown = 0;
 
 			videoPlayer.url = videoDisplay.FullPath;
+
+			timeSlider.SetValueWithoutNotify(0);
 
 			onLoad.Invoke();
 		}
@@ -57,13 +81,15 @@ public class GuideVideoPlayer : MonoBehaviour{
 			return;
 		}
 
+		videoPlayer.Play();
+
 		startedPlayback = true;
-		if(GuideAdapter.Instance)
+		if(GuideAdapter.Instance) {
 			GuideAdapter.Instance.SendPlayVideo();
+			GuideAdapter.Instance.SendSync(videoPlayer.time);
+		}
 		Playing = true;
 		SendSyncMessages();
-
-		videoPlayer.Play();
 	}
 
 	void Pause() {
@@ -111,6 +137,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 				if(allDevicesReady) {
 					onAllDevicesReady.Invoke();
 				}
+			}
+
+			//show time on slider
+			if(!Mathf.Approximately((float)videoPlayer.time, lastTimeShown) && videoPlayer.isPlaying) {
+				lastTimeShown = (float)videoPlayer.time;
+				timeSlider.SetValueWithoutNotify((float)videoPlayer.time / TotalVideoTime);
 			}
 
 			//if no one is paired anymore, just stop.

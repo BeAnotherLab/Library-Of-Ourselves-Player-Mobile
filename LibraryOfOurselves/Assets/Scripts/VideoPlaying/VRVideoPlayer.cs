@@ -43,7 +43,8 @@ public class VRVideoPlayer : MonoBehaviour{
 			endOfVideo();
 		};
 		player.loopPointReached += delegate (VideoPlayer player) {
-			//do nothing, otherwise it results in a bug. let the Stop from the guide stop the video naturally
+			//as long as we havent received the Stop message, we can simply keep on playing.
+			player.Play();
 		};
 	}
 
@@ -151,7 +152,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 
 		if(!player.isPlaying) {
-			Debug.LogWarning("Player stopped all of a sudden...");
+			Debug.LogWarning("Player was stopped when we received Sync message");
 			player.Play();
 		}
 	}

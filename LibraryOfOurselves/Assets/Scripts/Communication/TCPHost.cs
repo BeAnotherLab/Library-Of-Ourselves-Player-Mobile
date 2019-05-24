@@ -99,7 +99,9 @@ public class TCPHost : MonoBehaviour{
 				}catch(SocketException se) {
 					Debug.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se.ToString());
 				}catch(Exception e) {
-					Debug.LogWarning("Error, could not accept connection: " + e.ToString());
+					if(listener != null)
+						Debug.LogWarning("Error, could not accept connection: " + e.ToString());
+					//else just means that we're exiting Unity.
 				}
 				
 			}
@@ -164,6 +166,7 @@ public class TCPHost : MonoBehaviour{
 		stop = true;
 		if(listener != null) {
 			listener.Stop();
+			listener = null;
 		}
 	}
 }

@@ -27,6 +27,7 @@ public class VideosDisplayer : MonoBehaviour {
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
 
 	public void AddVideo(string path) {
+		Debug.Log("Adding video file: " + path + "...");
 		try {
 			//Extract filename
 			string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
@@ -56,27 +57,42 @@ public class VideosDisplayer : MonoBehaviour {
 					string json = File.ReadAllText(settingsPath);
 					settings = JsonUtility.FromJson<VideoSettings>(json);
 				} else {
-					//no settings for this video yet.
-					settings = new VideoSettings();
-					SaveVideoSettings(path, videoName, settings);
+					//try to find it in the persistent data path instead of the sd card root then maybe?
+					settingsPath = Application.persistentDataPath + videoName + "_Settings.json";
+					if(File.Exists(settingsPath)) {
+						string json = File.ReadAllText(settingsPath);
+						settings = JsonUtility.FromJson<VideoSettings>(json);
+					} else {
+						//no settings for this video yet.
+						settings = new VideoSettings();
+						Debug.Log("Saving settings...");
+						SaveVideoSettings(path, videoName, settings);
+					}
 				}
 
+				Debug.Log("Displaying video: " + videoName);
 				displayedVideos.Add(Instantiate(videoDisplayPrefab, transform).GetComponent<VideoDisplay>().Init(path, videoName, settings));
 
 			} else {
 				//Not a guide. ignore it.
 			}
 		}catch(Exception e) {
-			//silently ignore this one
+			//could silently ignore, probably
+			Debug.LogWarning("Video " + path + " cannot be added: " + e);
 		}
 	}
 
 	public void SaveVideoSettings(string videoPath, string videoName, VideoSettings settings) {
-		//find directory
+#if UNITY_ANDROID && !UNITY_EDITOR
+		//save directory is persistent data path
+		string directory = Application.persistentDataPath;
+#else
+		//save directory is sd card root
 		string[] split = videoPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 		string directory = "";
 		for(int i = 0; i<split.Length-1; ++i)
 			directory += split[i] + "/";
+#endif
 
 		//Save settings to json file
 		string json = JsonUtility.ToJson(settings);
