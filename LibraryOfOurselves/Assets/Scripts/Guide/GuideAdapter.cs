@@ -66,6 +66,7 @@ public class GuideAdapter : MonoBehaviour{
 	public void SendGuideUnpair(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-unpair");
+		OnReceivePairConfirm(connection, "0", connection.lockedId);//simulate receiving an immediate response when unpairing.
 		connection.Send(data);
 	}
 

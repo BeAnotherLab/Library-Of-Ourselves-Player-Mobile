@@ -19,7 +19,7 @@ public class Interpolation : MonoBehaviour {
 	[SerializeField] UnityEvent onMiddle;
 	[SerializeField] UnityEvent onEnd;
 	
-	enum EasingFunction{
+	public enum EasingFunction{
 		Linear,
 		EaseInQuad,
 		EaseOutQuad,
@@ -68,7 +68,7 @@ public class Interpolation : MonoBehaviour {
 		get{ return interpolating; }
 	}
 	
-	delegate float Ease(float input);
+	public delegate float Ease(float input);
 	Ease ease = null;
 	
 	void Awake(){
@@ -82,8 +82,13 @@ public class Interpolation : MonoBehaviour {
 	void OnEnable(){
 		if(onEnable) Interpolate();
 	}
+
+	public static float EaseSingle(float val, EasingFunction easingFunction) {
+		Ease ease = assignEasingFunction(easingFunction);
+		return ease(val);
+	}
 	
-	Ease assignEasingFunction(EasingFunction easingFunction){
+	public static Ease assignEasingFunction(EasingFunction easingFunction){
 		switch(easingFunction){
 			case EasingFunction.Linear: return delegate(float t){ return t; };
 			case EasingFunction.EaseInQuad: return delegate(float t){ return t*t; };

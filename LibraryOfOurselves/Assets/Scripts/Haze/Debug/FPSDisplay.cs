@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class FPSDisplay : MonoBehaviour {
 	
 	Text text;
+	[SerializeField] float showFPSOnlyUnderneath = 1000;
 	
 	void Start(){
 		text = GetComponent<Text>();
@@ -20,7 +21,10 @@ public class FPSDisplay : MonoBehaviour {
 			elapsed += Time.unscaledDeltaTime;
 			++frames;
 			if(elapsed >= 1.0f){
-				text.text = "FPS: " + frames;
+				if(frames < showFPSOnlyUnderneath) {
+					text.text = "FPS: " + frames;
+				} else
+					text.text = "";
 				elapsed -= 1.0f;
 				frames = 0;
 			}

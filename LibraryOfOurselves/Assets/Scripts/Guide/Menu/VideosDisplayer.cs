@@ -7,7 +7,9 @@ using UnityEngine.Events;
 
 public class VideosDisplayer : MonoBehaviour {
 
+	[SerializeField] GameObject videoShelfPrefab;
 	[SerializeField] GameObject videoDisplayPrefab;
+	[SerializeField] UnityEvent onFoundOneVideo;
 
 	[Serializable]
 	public class VideoSettings {
@@ -25,6 +27,7 @@ public class VideosDisplayer : MonoBehaviour {
 
 
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
+	GameObject lastVideoShelf = null;
 
 	public void AddVideo(string path) {
 		Debug.Log("Adding video file: " + path + "...");
@@ -71,7 +74,14 @@ public class VideosDisplayer : MonoBehaviour {
 				}
 
 				Debug.Log("Displaying video: " + videoName);
-				displayedVideos.Add(Instantiate(videoDisplayPrefab, transform).GetComponent<VideoDisplay>().Init(path, videoName, settings));
+
+				if(lastVideoShelf == null || lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1).childCount >= 3) {
+					lastVideoShelf = Instantiate(videoShelfPrefab, transform);//add a shelf
+				}
+				displayedVideos.Add(Instantiate(videoDisplayPrefab, lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1)).GetComponent<VideoDisplay>().Init(path, videoName, settings));
+
+				if(displayedVideos.Count == 1)
+					onFoundOneVideo.Invoke();
 
 			} else {
 				//Not a guide. ignore it.
@@ -129,6 +139,8 @@ public class VideosDisplayer : MonoBehaviour {
 						++numberOfConnectedDevices;
 						if(!handle.display.VideosAvailable.Contains(videoName)) {
 							allConnectedDevicesHaveIt = false;
+							if(videoDisplay == VideoDisplay.expandedDisplay)
+								videoDisplay.contract();//no longer available.
 							break;
 						}
 					}

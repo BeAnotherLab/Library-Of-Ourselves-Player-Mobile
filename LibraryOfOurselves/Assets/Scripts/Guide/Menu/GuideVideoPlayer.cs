@@ -16,6 +16,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onStop;
 	[SerializeField] UnityEvent onAllDevicesReady;
 	[SerializeField] UnityEvent onFirstFrameReady;
+	[SerializeField] UnityEvent onPlay;
+	[SerializeField] UnityEvent onPause;
 
 	public static GuideVideoPlayer Instance { get; private set; }
 
@@ -72,6 +74,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			timeSlider.SetValueWithoutNotify(0);
 
 			onLoad.Invoke();
+			onPause.Invoke();
 		}
 	}
 
@@ -80,6 +83,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 			Pause();
 			return;
 		}
+
+		onPlay.Invoke();
 
 		videoPlayer.Play();
 
@@ -98,8 +103,10 @@ public class GuideVideoPlayer : MonoBehaviour{
 		Playing = !Playing;
 		if(Playing) {
 			videoPlayer.Play();
+			onPlay.Invoke();
 		} else {
 			videoPlayer.Pause();
+			onPause.Invoke();
 		}
 	}
 
