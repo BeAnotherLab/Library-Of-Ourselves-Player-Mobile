@@ -16,6 +16,7 @@ using UnityEngine.Events;
 public class TCPConnection {
 
 	public string uniqueId;//the unique id of the device on the other end
+	public string xrDeviceModel = "unknown";//the XR device model name
 	public TcpClient client;//the TCP client used to communicate with the other end
 	public DeviceType deviceType;//whichever device type it is on the other end
 	public bool active = true;//set to false once connection is closed and shouldn't be used anymore

@@ -3,13 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GuideAdapter : MonoBehaviour{
+
+	[SerializeField] UnityEvent onZeroConnections;
+	[SerializeField] UnityEvent onFirstConnection;
 
 	public static GuideAdapter Instance { get; private set; }
 
 	private void Start() {
 		Instance = this;
+		onZeroConnections.Invoke();
 	}
 
 	private void OnDestroy() {
@@ -19,16 +24,23 @@ public class GuideAdapter : MonoBehaviour{
 
 	public void OnNewConnection(TCPConnection connection) {
 		Debug.Log(connection + " has been added as an option");
-		if(ConnectionsDisplayer.Instance)
+		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.Instance.AddConnection(connection);
+			if(ConnectionsDisplayer.Instance.Handles.Count == 1)
+				onFirstConnection.Invoke();
+		}
 	}
 
 	public void OnConnectionEnd(TCPConnection connection) {
 		connection.active = false;
 		connection.paired = false;
 		Debug.Log(connection + " is no longer available");
-		if(ConnectionsDisplayer.Instance)
+		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.Instance.RemoveConnection(connection);
+			if(ConnectionsDisplayer.Instance.Handles.Count <= 0) {
+				onZeroConnections.Invoke();
+			}
+		}
 	}
 
 	public void OnConnectionResponsivenessChanged(TCPConnection connection, bool isResponsive) {

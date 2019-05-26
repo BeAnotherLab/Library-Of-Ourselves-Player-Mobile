@@ -88,6 +88,7 @@ public class TCPHost : MonoBehaviour{
 						connection.deviceType = (TCPConnection.DeviceType)data.ReadByte();
 						connection.uniqueId = data.ReadString();
 						connection.lockedId = data.ReadString();
+						connection.xrDeviceModel = data.ReadString();
 
 						users.Add(connection);
 

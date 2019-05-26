@@ -6,6 +6,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using UnityEngine.XR;
 
 public class TCPClient : MonoBehaviour{
 
@@ -64,6 +65,7 @@ public class TCPClient : MonoBehaviour{
 		data.WriteByte((byte)deviceType);
 		data.WriteString(SystemInfo.deviceUniqueIdentifier);
 		data.WriteString(LockedId);
+		data.WriteString(XRDevice.model);
 
 		await connection.Send(data);
 		hosts.Add(connection);

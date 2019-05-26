@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class ConnectionDisplay : MonoBehaviour{
 
+	[SerializeField] Text modelNameDisplay;
 	[SerializeField] Text batteryDisplay;
 	[SerializeField] Text fpsDisplay;
 	[SerializeField] Text temperatureDisplay;
-	[SerializeField] Text pairDisplay;
-	[SerializeField] Text lockDisplay;
 	[SerializeField] Image uniqueIdColourDisplay;
+	[SerializeField] Image statusDisplay;
+	[SerializeField] Color pairedColour;
+	[SerializeField] Color availableColour;
+	[SerializeField] Color unavailableColour;
+	[SerializeField] Interpolation lockDisplay;
 
 	public TCPConnection Connection { get; private set; }
 
@@ -30,7 +34,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		set {
 			if(value == int.MaxValue) {
 				//unavailable
-				temperatureDisplay.text = "No temp";
+				temperatureDisplay.text = "";
 			} else {
 				temperatureDisplay.text = value + "°";
 			}
@@ -41,6 +45,8 @@ public class ConnectionDisplay : MonoBehaviour{
 	public List<string> VideosAvailable { get { return __videosAvailable; } }
 
 	public bool IsVideoReady { get; set; }
+
+	bool hasClosedLock = false;
 
 
 	bool __available = true;
@@ -67,6 +73,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		Connection = connection;
 		UpdateDisplay();
 		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
+		modelNameDisplay.text = Connection.xrDeviceModel;
 	}
 
 	public void AddAvailableVideo(string videoName) {
@@ -104,10 +111,36 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void UpdateDisplay() {
-		pairDisplay.text = Connection.paired ? "Paired" : "Unpaired (Available: " + Available + ")";
-		lockDisplay.text = Connection.lockedId == SystemInfo.deviceUniqueIdentifier ? "Locked to this one" : Connection.lockedId == "free" ? "Free" : "Locked to something else";
-		pairDisplay.color = Connection.responsive ? new Color(0, 0, 0) : new Color(0.5f, 0.5f, 0.5f);
-		lockDisplay.color = pairDisplay.color;
+
+		Color statusColor = statusDisplay.color;
+		Color uniqueIdColor = uniqueIdColourDisplay.color;
+
+		if(Connection.paired) {
+			statusColor = pairedColour;
+		}else if(Available) {
+			statusColor = availableColour;
+		} else {
+			statusColor = unavailableColour;
+		}
+
+		if(Connection.responsive) {
+			statusColor.a = 1;
+			uniqueIdColor.a = 1;
+		} else {
+			statusColor.a = 0.3f;
+			uniqueIdColor.a = 0.3f;
+		}
+
+		statusDisplay.color = statusColor;
+		uniqueIdColourDisplay.color = uniqueIdColor;
+
+		if(hasClosedLock && Connection.lockedId != SystemInfo.deviceUniqueIdentifier) {
+			hasClosedLock = false;
+			lockDisplay.InterpolateBackward();//open lock
+		}else if(!hasClosedLock && Connection.lockedId == SystemInfo.deviceUniqueIdentifier) {
+			hasClosedLock = true;
+			lockDisplay.Interpolate();//close lock
+		}
 	}
 
 }

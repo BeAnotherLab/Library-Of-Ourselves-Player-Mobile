@@ -70,6 +70,8 @@ public class Interpolation : MonoBehaviour {
 	
 	public delegate float Ease(float input);
 	Ease ease = null;
+
+	bool previousDirection = false;//false = Backward, true = Forward
 	
 	void Awake(){
 		ease = assignEasingFunction(easingFunction);
@@ -113,6 +115,7 @@ public class Interpolation : MonoBehaviour {
 	public void Interpolate(){
 		Stop();
 		interpolating = true;
+		previousDirection = true;
 		onBegin.Invoke();
 		StartCoroutine(interpolate());
 	}
@@ -120,8 +123,14 @@ public class Interpolation : MonoBehaviour {
 	public void InterpolateBackward(){
 		Stop();
 		interpolating = true;
+		previousDirection = false;
 		onBegin.Invoke();
 		StartCoroutine(interpolate(true));
+	}
+
+	public void InterpolateToggle() {
+		if(previousDirection) InterpolateBackward();
+		else Interpolate();
 	}
 	
 	public void Stop(){
