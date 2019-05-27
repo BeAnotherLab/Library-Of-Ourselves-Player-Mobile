@@ -1,0 +1,162 @@
+<!doctype html>
+<head>
+	<style>
+		body{ font-family: helvetica; width: 96%; position: relative; left: 2%; }
+		h1{ color: #33a; position: relative; left: -1%; }
+		h2{ margin-bottom: 0; color: #33a; position: relative; left: -1%; }
+		h3{ margin-bottom: 0; color: #33a; }
+		h4{ margin-bottom: 0; margin-top: 0; color: #b07; }
+		p{ margin-top: 5px; margin-bottom: 5px; }
+		a{ color: black; }
+		code{ font-size: 1.3em; color: #116; }
+		.grey{ color: gray; }
+		:target{ background-color: #bdf; }
+	</style>
+</head>
+<body>
+	<h1>Haze Enhanced Camera Movements documentation</h1>
+	<a href="#intro">Introduction</a><br>
+	<a href="#use">How to use</a><br>
+	<a href="#components">Components reference</a><br>
+	<a href="#bug">Bug reporting</a><br>
+	
+	<br>
+	<h2 id='intro'>Introduction</h2>
+	<p>Welcome to Haze Enhanced Camera Movements!</p>
+	<p>This plugin aims to add some "juice" to your game, as easily and as lightly as possible!</p>
+	<p>Please read through the "How to use" section below to get started and create your own camera shakes or dolly zooms as quickly as possible!</p>
+	<p>I sincerely hope your project gains from this plugin :)</p>
+	<p>Jonathan Kings</p>
+	
+	<br>
+	<h2 id='use'>How to use</h2>
+	<h3>Dolly zooms (also called Vertigo zooms)</h3>
+	<p>The easiest way to use dolly zooms is to attach the DollyZoom component to your main camera. The component has a number of settings that you can use to tweak the effect:</p>
+	<ul>
+		<li>On Enable: tick this for the effect to start as soon as the component is enabled, which can be done from an event for example; or when the GameObject itself is enabled. If you choose not to tick this, you can start the effect by calling the Play method from an event.</li>
+		<li>Target: the object in the scene that your camera will zoom onto (or out of). While the effect is active, this component will visually keep the same on-screen height.</li>
+		<li>Use Collider Distance: if the target has a collider attached, tick this to achieve better precision in the effect; you might want to experiment with this to see what looks best with your scene.</li>
+		<li>Modify Depth Of Field: ticking this is the same as adding the Focus component on the camera by focusing on the target; please refer to the section down below.</li>
+		<li>Look At: ticking this is the same as adding the LookAt component on the camera by keeping the camera centered on the target.</li>
+		<li>Infinite: tick this to achieve a continuous effect rather than an animation, by moving the camera yourself through other means; ticking this renders the parameters below useless.</li>
+		<li>Distance: how many units the camera should zoom out of or into the target; a positive number means zooming onto the target.</li>
+		<li>Time: how long the effect should take, in seconds.</li>
+		<li>Use Fixed Delta Time: whether the effect should happen regardless of Time.timeScale; for example, if you want the animation to continue while the game is otherwise paused, tick this.</li>
+		<li>Easing: the easing function to use for the effect; change this to have easing in or out.</li>
+		<li>On End (): an event triggered when the animation ends.</li>
+		<li>Preview (single) button: only available in play mode; allows to preview the effect in real time to tweak its parameters.</li>
+		<li>Preview (back and forth) button: similar to the Preview (single) button, except the distance is reversed at each click to allow to zoom in and out when used a lot, rather than just keeping going farther and farther.</li>
+	</ul>
+	<br>
+	<h3>Shaking the camera (or other objects)</h3>
+	<p>One way to shake the camera is to attach the Shake component to your main camera, tweak its parameters then either enable it or call its Play method. However, if you need your camera to shake differently within the scene, it might be preferable to attach the Shaker component to another object and use it instead: for example, if you have several explosion particle effects with different intensities, attach one Shaker to each explosion prefab, this way when you instantiate the explosion the effect can play trough. The parameters for Shake and Shaker are very similar:</p>
+	<ul>
+		<li>On Enable: tick this so that the effect plays when enabling the component (or GameObject it's attached to); if you choose not to tick this, you can play the effect by calling the Play method (from an event for example).</li>
+		<li>To Shake (Shaker-only): use this to specify which object should the Shaker shake; if left empty, the effect will be used on the main camera in the scene.</li>
+		<li>Intensity: how intense the shake should be, 0 being no displacement.</li>
+		<li>Angular Intensity: how intensely the object should rotate; you can choose to only shake by moving the object, by setting Angular Intensity to 0, or to only shake by rotating, by setting Intensity to 0; I find setting Angular Intensity approximately as 10 times the intensity yields good results.</li>
+		<li>Duration: how long the shaking should last, in seconds.</li>
+		<li>Damping: the lower this value, the more movements will happen; using a high value results in a slow shaking. You might want to experiment with this.</li>
+		<li>Use Fixed Delta Time: whether the effect should happen regardless of Time.timeScale; for example, if you want the animation to continue while the game is otherwise paused, tick this.</li>
+		<li>Easing: the easing function to use for the effect; change this to have easing in or out. If using a custom curve, note that 0 is full intensity and 1 is least intensity.</li>
+		<li>On End (): an event triggered when the animation ends.</li>
+		<li>Preview button: only available in play mode; allows to preview the effect in real time to tweak its parameters.</li>
+	</ul>
+	<br>
+	<h3>Following an object</h3>
+	<p>To keep an object centered on-screen, simply add the LookAt component to your camera. There are a couple parameters for you to tweak on the component.</p>
+	<ul>
+		<li>Target: the object that the camera should track.</li>
+		<li>Minimum Distance: the minimum distance that the camera should attempt to keep with the target; you can set this to 0.</li>
+		<li>Use Collider Distance: if the target has a collider attached, tick this to achieve better precision with the minimum distance used; rather than compute the distance to the object's center, this will compute the smallest distance to the object's collider instead.</li>
+		<li>Modify Depth Of Field: ticking this is the same as adding the Focus component on the camera by focusing on the target; please refer to the section down below.</li>
+	</ul>
+	<br>
+	<h3>Auto focusing on an object</h3>
+	<p>This requires the Unity Post-Processing Stack to work, and the Depth of Field to be active on your camera's Post-Processing Profile; if you wish to use the feature, you need to go into your project's Player Settings and add the scripting define HAZE_POSTPROCESSING. Otherwise, you can just ignore this effect. If you do intend to use it, simply attach the Focus component to your camera; the component has two parameters:</p>
+	<ul>
+		<li>Target: the object that the camera should focus onto.</li>
+		<li>Use Collider Distance: if the target has a collider attached, tick this to focus on the point closest to the camera on the collider, rather than the center of the object.</li>
+	</ul>
+	<p>Note that the DollyZoom and LookAt components already offer an option to Modify Depth of Field; in which case you do not need to use the Focus component.</p>
+	
+	<br>
+	<h2 id='components'>Components reference</h2>
+	<a href="#dollyzoom">DollyZoom</a><br>
+	<a href="#focus">Focus</a><br>
+	<a href="#lookat">LookAt</a><br>
+	<a href="#shake">Shake</a><br>
+	<a href="#shaker">Shaker</a><br>
+	
+	<!-- DollyZoom -->
+	<h3 id='dollyzoom'>DollyZoom</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: DollyZoom.cs</p>
+	<h4>Description</h4>
+	<p>Allows dolly zoom effects, either animated or indefinite. If you only want to use dolly zooms as a component, please see the Dolly zooms section above within How to use. However, if you want to use the feature through code, you do not need the DollyZoom component, but you can rather use the static functions instead.</p>
+	<h4>Properties</h4>
+	<p><b><code>Transform Target</code></b>: The target used by this DollyZoom component.</p>
+	<p><b><code>float Distance</code></b>: How much the DollyZoom component will zoom onto or out of the target; same as the Distance field in the inspector.</p>
+	<p><b><code>float Duration</code></b>: How long the animation lasts; same as the Duration field in the inspector.</p>
+	<p><b><code>bool UseColliderDistance</code></b>: Whether to use collider distance or transform distance; same as the Use Collider Distance field in the inspector.</p>
+	<p><b><code>bool ModifyDepthOfField</code></b>: Whether this DollyZoom component should also act as a Focus component; same as the Modify Depth Of Field field in the inspector.</p>
+	<p><b><code>bool Look</code></b>: Whether this DollyZoom component should also act as a LookAt component; same as the Look At field in the inspector.</p>
+	<h4>Public methods</h4>
+	<p><b><code>void Play()</code></b>: Call this to manually start this DollyZoom effect.</p>
+	<p><b><code>void Stop()</code></b>: Call this to manually stop this DollyZoom effect.</p>
+	<h4>Public static functions</h4>
+	<p><b><code>IEnumerator play(Camera cam = Camera.main, Transform target, float distance, Easing easing = Easing.Linear, float time = 1, bool useColliderDistance = false, bool useFixedDeltaTime = false, bool modifyDepthOfField = false, bool lookAt = false, UnityEvent onEnd = null)</code></b>: Static version of the dolly zoom effect; either use as <code>StartCoroutine(DollyZoom.play(...))</code> from another MonoBehaviour, or within a couroutine as <code>yield return DollyZoom.play(...)</code>. The parameters are the same as the DollyZoom component's.</p>
+	<p><b><code>IEnumerator playNoMovement(Camera cam = Camera.main, Transform target, bool useColliderDistance = false, bool modifyDepthOfField = false, bool lookAt = false)</code></b>: The same thing as above, except the effect is infinite (yields the same results as the Infinite toggle on the DollyZoom component). This coroutine is infinite unless you use <code>StopCoroutine()</code>. Don't <code>yield return DollyZoom.playNoMovement(...)</code> as this statement will never exit within your coroutine.</p>
+	
+	<!-- Focus -->
+	<h3 id='focus'>Focus</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: Focus.cs</p>
+	<h4>Description</h4>
+	<p>A component that allows to keep focused on a particular target by modifying the Depth of Field distance of the camera's Post Processing Profile; doesn't do anything if HAZE_POSTPROCESSING is undefined. You can use the static function Autofocus() rather than attach the component if you wish.</p>
+	<h4>Properties</h4>
+	<p><b><code>Transform Target</code></b>: The Focus component's current target. Same as the Target field in the inspector.</p>
+	<p><b><code>bool UseColliderDistance</code></b>: Whether to use collider distance or transform distance; same as the Use Collider Distance field in the inspector.</p>
+	<h4>Public static functions</h4>
+	<p><b><code>void Autofocus(Camera cam = Camera.main, Transform target, bool useColliderDistance = true)</code></b>: Focuses onto the target; call this function each frame for a continuous effect. No result if HAZE_POSTPROCESSING is not defined.</p>
+	
+	<!-- LookAt -->
+	<h3 id='lookat'>LookAt</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: LookAt.cs</p>
+	<h4>Description</h4>
+	<p>A component that allows to keep the camera trained onto a particular target; you can use the static functions rather than attach the component if you wish.</p>
+	<h4>Properties</h4>
+	<p><b><code>Transform Target</code></b>: The LookAt component's current target. Same as the Target field in the inspector.</p>
+	<p><b><code>float MinimumDistance</code></b>: The minimum distance kept by the LookAt component. Same as the Minimum Distance field in the inspector.</p>
+	<p><b><code>bool UseColliderDistance</code></b>: Whether to use collider distance or transform distance; same as the Use Collider Distance field in the inspector.</p>
+	<p><b><code>bool ModifyDepthOfField</code></b>: Whether this LookAt component should also act as a Focus component; same as the Modify Depth Of Field field in the inspector.</p>
+	<h4>Public static functions</h4>
+	<p><b><code>IEnumerator look(Camera cam, Transform target, float minimumDistance = 0, bool useColliderDistance = false, bool modifyDepthOfField = false)</code></b>: Start looking continuously at the target; interrupt with <code>StopCoroutine()</code>. This never returns to your coroutine, so do not use as a <code>yield</code> statement.</p>
+	<p><b><code>void Look(Camera cam, Transform target, float minimumDistance = 0, useColliderDistance = false, bool modifyDepthOfField = false)</code></b>: Looks at the specified target for the frame. Call in <code>Update()</code> to achieve a continuous effect. Note that if the cam parameter is null, this applies to the main camera.</p>
+	
+	<!-- Shake -->
+	<h3 id='shake'>Shake</h3>
+	<p class='grey'>Class in Haze / Inherits from: MonoBehaviour / Implemented in: Shake.cs</p>
+	<h4>Description</h4>
+	<p>Allows shake effects by placing the component on the camera; you can also use the features through code only, by using the static functions.</p>
+	<h4>Properties</h4>
+	<p><b><code>float Intensity</code></b>: Corresponds to the Intensity field in the inspector.</p>
+	<p><b><code>float AngularIntensity</code></b>: Corresponds to the Angular Intensity field in the inspector.</p>
+	<p><b><code>float Duration</code></b>: How long the effect should last. Corresponds to the Duration field in the inspector.</p>
+	<h4>Public methods</h4>
+	<p><b><code>void Play()</code></b>: Plays the effect from this Shake component.</p>
+	<p><b><code>void Stop()</code></b>: Stops the effect manually.</p>
+	<h4>Public static functions</h4>
+	<p><b><code>IEnumerator play(Transform t = Camera.main.transform, float intensity = 1, float angularIntensity = 10, float duration = 0.3f, Easing easing = Easing.Linear, bool useFixedDeltaTime = false, float damping = 0.05f, UnityEvent onEnd = null)</code></b>: Static version to shake the camera (or a different object). Use this as <code>StartCoroutine(Shake.play(...))</code> from a MonoBehaviour, or as a <code>yield</code> statement. The parameters are the same as the ones you have access to in the Shake component's inspector.</p>
+
+	<!-- Shaker -->
+	<h3 id='shaker'>Shaker</h3>
+	<p class='grey'>Class in Haze / Inherits from MonoBehaviour / Implemented in: Shaker.cs</p>
+	<h4>Description</h4>
+	<p>A helper component that allows shaking the camera from a different object or a prefab, for example.</p>
+	<h4>Public methods</h4>
+	<p><b><code>void DoShake()</code></b>: Executes the shake described by this component. Call this if On Enable is set to false.</p>
+	
+	<br>
+	<h2 id='bug'>Bug reporting</h2>
+	<p>If you spot a bug or need a new feature in the Haze Enhanced Camera Movements plugin, please report it or ask for it by sending an email to <a href="mailto:jonathan-kings@hotmail.com">jonathan-kings@hotmail.com</a>.</p>
+	
+</body>
