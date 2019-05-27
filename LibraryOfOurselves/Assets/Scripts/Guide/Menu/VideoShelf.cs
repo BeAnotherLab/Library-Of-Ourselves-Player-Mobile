@@ -18,6 +18,7 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] Toggle is360Toggle;
 	[SerializeField] GameObject noDescriptionTranslation;
 	[SerializeField] GameObject noObjectNeededTranslation;
+	[SerializeField] Button editButton;
 
 	VideoDisplay current = null;
 
@@ -87,6 +88,8 @@ public class VideoShelf : MonoBehaviour {
 		enableSave = false;
 		EditMode = false;
 		enableSave = true;
+
+		editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
 
 	}
 

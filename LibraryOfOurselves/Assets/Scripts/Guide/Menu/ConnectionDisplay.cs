@@ -15,6 +15,18 @@ public class ConnectionDisplay : MonoBehaviour{
 	[SerializeField] Color availableColour;
 	[SerializeField] Color unavailableColour;
 	[SerializeField] Interpolation lockDisplay;
+	[SerializeField] Text textPair;
+	[SerializeField] Text textUnpair;
+	[SerializeField] Button pairButton;
+	[SerializeField] Text textLock;
+	[SerializeField] Text textUnlock;
+	[SerializeField] Button lockButton;
+	[SerializeField] ColorDynamicModifier lockColourModifier;
+	[SerializeField] Color lockAvailableColour;
+	[SerializeField] Color lockUnavailableColour;
+	[SerializeField] Button recenterButton;
+	[SerializeField] Button editDeviceNameButton;
+	[SerializeField] InputField editDeviceNameField;
 
 	public TCPConnection Connection { get; private set; }
 
@@ -37,6 +49,28 @@ public class ConnectionDisplay : MonoBehaviour{
 				temperatureDisplay.text = "";
 			} else {
 				temperatureDisplay.text = value + "°";
+			}
+		}
+	}
+
+	string DeviceAlias {
+		get {
+			string alias = "";
+			if(HazePrefs.HasKey("alias-" + Connection.uniqueId)) {
+				alias = HazePrefs.GetString("alias-" + Connection.uniqueId);
+			}
+			if(alias == "")
+				return Connection.xrDeviceModel;
+			else
+				return alias;
+		}
+		set {
+			if(value == "" || value == Connection.xrDeviceModel) {
+				if(HazePrefs.HasKey("alias-" + Connection.uniqueId)) {
+					HazePrefs.DeleteKey("alias-" + Connection.uniqueId);
+				}
+			} else {
+				HazePrefs.SetString("alias-" + Connection.uniqueId, value);
 			}
 		}
 	}
@@ -73,7 +107,9 @@ public class ConnectionDisplay : MonoBehaviour{
 		Connection = connection;
 		UpdateDisplay();
 		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
-		modelNameDisplay.text = Connection.xrDeviceModel;
+		modelNameDisplay.text = DeviceAlias;
+
+		editDeviceNameField.gameObject.SetActive(false);
 	}
 
 	public void AddAvailableVideo(string videoName) {
@@ -86,23 +122,27 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void OnClickLock() {
-		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendGuideLock(Connection);
-	}
-
-	public void OnClickUnlock() {
-		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendGuideUnlock(Connection);
+		if(GuideAdapter.Instance) {
+			if(Connection.lockedId == "free") {
+				//lock it to us
+				GuideAdapter.Instance.SendGuideLock(Connection);
+			} else {
+				//unlock it
+				GuideAdapter.Instance.SendGuideUnlock(Connection);
+			}
+		}
 	}
 
 	public void OnClickPair() {
-		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendGuidePair(Connection);
-	}
-
-	public void OnClickUnpair() {
-		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendGuideUnpair(Connection);
+		if(GuideAdapter.Instance) {
+			if(!Connection.paired) {
+				Debug.Log("Sending pair");
+				GuideAdapter.Instance.SendGuidePair(Connection);
+			} else {
+				Debug.Log("Sending unpair");
+				GuideAdapter.Instance.SendGuideUnpair(Connection);
+			}
+		}
 	}
 
 	public void OnClickLogs() {
@@ -117,10 +157,29 @@ public class ConnectionDisplay : MonoBehaviour{
 
 		if(Connection.paired) {
 			statusColor = pairedColour;
+			textPair.gameObject.SetActive(false);
+			textUnpair.gameObject.SetActive(true);
+			pairButton.gameObject.SetActive(true);
+			lockButton.gameObject.SetActive(true);
+			recenterButton.gameObject.SetActive(true);
 		}else if(Available) {
 			statusColor = availableColour;
+			textPair.gameObject.SetActive(true);
+			textUnpair.gameObject.SetActive(false);
+			lockButton.gameObject.SetActive(false);
+			recenterButton.gameObject.SetActive(false);
+			if(GuideVideoPlayer.Instance.HasVideoLoaded) {//can't pair with a device while a video is loaded up.
+				pairButton.gameObject.SetActive(false);
+			} else {
+				pairButton.gameObject.SetActive(true);
+			}
+			StartCoroutine(enableUnlockButtonAfterABit());
 		} else {
 			statusColor = unavailableColour;
+			pairButton.gameObject.SetActive(false);
+			lockButton.gameObject.SetActive(false);
+			recenterButton.gameObject.SetActive(false);
+			StartCoroutine(enableUnlockButtonAfterABit());
 		}
 
 		if(Connection.responsive) {
@@ -134,13 +193,57 @@ public class ConnectionDisplay : MonoBehaviour{
 		statusDisplay.color = statusColor;
 		uniqueIdColourDisplay.color = uniqueIdColor;
 
-		if(hasClosedLock && Connection.lockedId != SystemInfo.deviceUniqueIdentifier) {
+		//the lock is closed and the device is unlocked:
+		if(hasClosedLock && Connection.lockedId == "free") {
 			hasClosedLock = false;
+			textLock.gameObject.SetActive(true);
+			textUnlock.gameObject.SetActive(false);
 			lockDisplay.InterpolateBackward();//open lock
-		}else if(!hasClosedLock && Connection.lockedId == SystemInfo.deviceUniqueIdentifier) {
+			lockColourModifier.DefaultColor = lockUnavailableColour;
+		}else if(!hasClosedLock && Connection.lockedId != "free") {
 			hasClosedLock = true;
+			textLock.gameObject.SetActive(false);
+			textUnlock.gameObject.SetActive(true);
 			lockDisplay.Interpolate();//close lock
+			//Should the lock be green or grey?
+			if(Connection.lockedId == SystemInfo.deviceUniqueIdentifier) {
+				//green lock
+				lockColourModifier.DefaultColor = lockAvailableColour;
+			} else {
+				//grey lock
+				lockColourModifier.DefaultColor = lockUnavailableColour;
+			}
 		}
+
+
+		//If we don't have Admin Access, disable lock button and edit device name abilities.
+		if(!SettingsAuth.TemporalUnlock) {
+			editDeviceNameButton.enabled = false;
+			lockButton.gameObject.SetActive(false);
+		} else {
+			editDeviceNameButton.enabled = true;
+		}
+	}
+
+	IEnumerator enableUnlockButtonAfterABit() {
+		yield return new WaitForSeconds(3);
+		if(!Connection.paired) {
+			//are we allowed to show the unlock button?
+			if(Connection.lockedId != "free") {
+				lockButton.gameObject.SetActive(true);
+			}
+		}
+	}
+
+	public void OnClickEditDeviceName() {
+		editDeviceNameField.gameObject.SetActive(true);
+		editDeviceNameField.text = DeviceAlias;
+	}
+
+	public void OnSubmitNewDeviceName() {
+		editDeviceNameField.gameObject.SetActive(false);
+		DeviceAlias = editDeviceNameField.text;
+		modelNameDisplay.text = DeviceAlias;
 	}
 
 }

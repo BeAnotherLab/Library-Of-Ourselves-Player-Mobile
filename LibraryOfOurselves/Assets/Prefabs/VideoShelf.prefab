@@ -910,8 +910,8 @@ RectTransform:
   m_Father: {fileID: 1874776337717189187}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0}
-  m_AnchorMax: {x: 1, y: 0.3}
+  m_AnchorMin: {x: 0.85, y: 0}
+  m_AnchorMax: {x: 1, y: 0.25}
   m_AnchoredPosition: {x: 0, y: 2.5}
   m_SizeDelta: {x: -10, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1599,7 +1599,7 @@ RectTransform:
   m_Father: {fileID: 1874776337717189187}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.85, y: 0.7}
+  m_AnchorMin: {x: 0.9, y: 0.8}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -2.5}
   m_SizeDelta: {x: -10, y: -5}
@@ -1895,7 +1895,6 @@ GameObject:
   - component: {fileID: 8017664878787395106}
   - component: {fileID: 8017664878787395107}
   - component: {fileID: 6044835455857392124}
-  - component: {fileID: 8017664878787395116}
   - component: {fileID: 8017664878787395117}
   - component: {fileID: 3354034285623759365}
   - component: {fileID: 7934957338743056125}
@@ -1988,19 +1987,7 @@ MonoBehaviour:
   is360Toggle: {fileID: 8027152278823113948}
   noDescriptionTranslation: {fileID: 5159144283676405424}
   noObjectNeededTranslation: {fileID: 451338182300849974}
---- !u!114 &8017664878787395116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8017664878787395105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a33ad5e6e80d2041b0b46bd9bd7bb2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  notes: Transition from aspect ratio = 3.1 to 1.9 to reveal the content underneath
+  editButton: {fileID: 8559046139795923908}
 --- !u!114 &8017664878787395117
 MonoBehaviour:
   m_ObjectHideFlags: 0

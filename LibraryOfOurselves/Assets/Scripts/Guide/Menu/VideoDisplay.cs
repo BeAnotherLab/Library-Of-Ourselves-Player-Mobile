@@ -86,17 +86,25 @@ public class VideoDisplay : MonoBehaviour{
 	//Display this video's settings and such.
 	public void expand() {
 		VideoDisplay previouslyExpanded = expandedDisplay;
-		if(previouslyExpanded != null) {
-			previouslyExpanded.contract();
+
+		if(previouslyExpanded == this) {
+			//we're already expanded; just update the display then.
+			VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
+			if(shelf != null) shelf.DisplayCurrentVideo();
+		} else {
+
+			if(previouslyExpanded != null) {
+				previouslyExpanded.contract();
+			}
+			expandedDisplay = this;
+
+			VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
+			if(shelf != null) shelf.DisplayCurrentVideo();
+			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
+			if(expanding != null) expanding.Interpolate();
+
+			StartCoroutine(scrollDown());
 		}
-		expandedDisplay = this;
-
-		VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
-		if(shelf != null) shelf.DisplayCurrentVideo();
-		Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
-		if(expanding != null) expanding.Interpolate();
-
-		StartCoroutine(scrollDown());
 
 	}
 

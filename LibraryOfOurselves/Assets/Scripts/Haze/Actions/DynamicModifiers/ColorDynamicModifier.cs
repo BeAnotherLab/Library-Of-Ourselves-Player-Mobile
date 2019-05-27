@@ -17,6 +17,18 @@ public class ColorDynamicModifier : MonoBehaviour {
 	[SerializeField] float outputMin = 0;
 	[SerializeField] float outputMax = 1;
 	[SerializeField] ColorEvent output;
+
+	public Color DefaultColor {
+		get {
+			return new Color(constantR, constantG, constantB, constantA);
+		}
+		set {
+			constantR = value.r;
+			constantG = value.g;
+			constantB = value.b;
+			constantA = value.a;
+		}
+	}
 	
 	public void Modify(float f){
 		f = Utilities.Map(inputMin, inputMax, outputMin, outputMax, f);

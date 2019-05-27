@@ -25,6 +25,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public bool Playing { get; private set; }
 
+	public bool HasVideoLoaded { get; private set; }
+
 	float TotalVideoTime { get { return (float)(videoPlayer.frameCount / videoPlayer.frameRate); } }
 
 	bool displaying = false;//switched to true as soon as we're displaying something.
@@ -36,6 +38,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 	private void Start() {
 		Instance = this;
 		onStop.Invoke();
+
+		HasVideoLoaded = false;
 
 		timeSlider.onValueChanged.AddListener(delegate (float val) {
 			float time = val * TotalVideoTime;
@@ -75,6 +79,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 			onLoad.Invoke();
 			onPause.Invoke();
+
+			HasVideoLoaded = true;
+			ConnectionsDisplayer.UpdateAllDisplays();
 		}
 	}
 
@@ -116,6 +123,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 		Playing = false;
 		displaying = false;
 		onStop.Invoke();
+
+		HasVideoLoaded = false;
 	}
 
 	async void SendSyncMessages() {
