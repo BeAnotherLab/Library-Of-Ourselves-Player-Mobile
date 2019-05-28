@@ -249,10 +249,12 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void OnReceiveStartChoice(TCPConnection connection, string choice1, string choice2) {
+	public async void OnReceiveStartChoice(TCPConnection connection, string question, string choice1, string choice2) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			//TODO: display choices, then send SelectOption once an option has been chosen
-			Debug.Log("Dummy: displays choices \'" + choice1 + "\' and \'" + choice2 + "\'");
+			Debug.Log("Display choices \'" + choice1 + "\' and \'" + choice2 + "\'");
+			if(VRVideoPlayer.Instance) {
+				VRVideoPlayer.Instance.DisplayChoice(question, choice1, choice2);
+			}
 		}
 	}
 

@@ -12,11 +12,21 @@ public class VideosDisplayer : MonoBehaviour {
 	[SerializeField] UnityEvent onFoundOneVideo;
 
 	[Serializable]
+	public class VideoChoice {
+		public string question = "Question";
+		public string option1 = "Option 1";
+		public string option2 = "Option 2";
+		public string video1 = "";
+		public string video2 = "";
+	}
+
+	[Serializable]
 	public class VideoSettings {
 		public bool is360 = false;
 		public string description = "";
 		public string objectsNeeded = "";
 		public Vector3[] deltaAngles = new Vector3[0];
+		public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
 
 		public override string ToString() {
 			return "[VideoSettings: is360=" + is360 + " | description=" + description + " | objectsNeeded=" + objectsNeeded + " | deltaAngles=" + deltaAngles + "]";
@@ -118,6 +128,14 @@ public class VideosDisplayer : MonoBehaviour {
 		}
 	}
 
+	public VideoDisplay FindVideo(string videoName) {
+		foreach(VideoDisplay v in displayedVideos) {
+			if(v.VideoName == videoName)
+				return v;
+		}
+		return null;
+	}
+
 	private void Start() {
 		Instance = this;
 	}
@@ -146,7 +164,17 @@ public class VideosDisplayer : MonoBehaviour {
 					}
 				}
 			}
+
 			videoDisplay.Available = numberOfConnectedDevices > 0 && allConnectedDevicesHaveIt;
+
+			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Length > 0) {
+				videoDisplay.Available = false;//Cannot display a video with choices if there's more than one device connected yet!
+			}
+
+			//Close the expanded display if its no longer available...
+			if(VideoDisplay.expandedDisplay == videoDisplay && !videoDisplay.Available) {
+				videoDisplay.contract();
+			}
 		}
 	}
 

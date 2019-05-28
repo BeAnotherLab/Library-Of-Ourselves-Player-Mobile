@@ -48,46 +48,58 @@ public class TCPClient : MonoBehaviour{
 	}
 
 	public async Task ConnectToHost(IPEndPoint endpoint, string uniqueId) {
-		TCPConnection connection = new TCPConnection();
-		connection.uniqueId = uniqueId;
-		connection.deviceType = TCPConnection.DeviceType.GUIDE;
-		connection.client = new TcpClient();
-		connection.client.NoDelay = true;
-		IPAddress ipv4 = endpoint.Address;
-		if(ipv4.AddressFamily != AddressFamily.InterNetwork)
-			ipv4 = ipv4.MapToIPv4();
-		Debug.Log("IPv4: " + ipv4);
-		await connection.client.ConnectAsync(ipv4, endpoint.Port);
-		Debug.Log("Connected. Sending identification message...");
+		try {
+			TCPConnection connection = new TCPConnection();
+			connection.uniqueId = uniqueId;
+			connection.deviceType = TCPConnection.DeviceType.GUIDE;
+			connection.client = new TcpClient();
+			connection.client.NoDelay = true;
+			IPAddress ipv4 = endpoint.Address;
+			if(ipv4.AddressFamily != AddressFamily.InterNetwork)
+				ipv4 = ipv4.MapToIPv4();
+			Debug.Log("IPv4: " + ipv4);
+			await connection.client.ConnectAsync(ipv4, endpoint.Port);
+			Debug.Log("Connected. Sending identification message...");
 
-		List<byte> data = new List<byte>();
-		data.WriteString("identification");
-		data.WriteByte((byte)deviceType);
-		data.WriteString(SystemInfo.deviceUniqueIdentifier);
-		data.WriteString(LockedId);
-		data.WriteString(XRDevice.model);
+			List<byte> data = new List<byte>();
+			data.WriteString("identification");
+			data.WriteByte((byte)deviceType);
+			data.WriteString(SystemInfo.deviceUniqueIdentifier);
+			data.WriteString(LockedId);
+			data.WriteString(XRDevice.model);
 
-		await connection.Send(data);
-		hosts.Add(connection);
+			await connection.Send(data);
+			hosts.Add(connection);
 
-		onNewConnection.Invoke(connection);
+			onNewConnection.Invoke(connection);
 
-		Communicate(connection);
+			Communicate(connection);
+		}catch(SocketException se) {
+			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot connect to host: " + se.ToString(), this);
+		}catch(Exception e) {
+			Debug.LogError("[TCPClient] Error, cannot connect to host: " + e.ToString(), this);
+		}
 	}
 
 	private async void Communicate(TCPConnection connection) {
-		while(connection.active) {
-			List<byte> data = await connection.Receive();
-			string channel = data.ReadString();
-			if(channel == "disconnection") {
-				connection.active = false;
-			} else {
-				//received a message from the host!
-				onMessageReception.Invoke(connection, channel, data);
+		try {
+			while(connection.active) {
+				List<byte> data = await connection.Receive();
+				string channel = data.ReadString();
+				if(channel == "disconnection") {
+					connection.active = false;
+				} else {
+					//received a message from the host!
+					onMessageReception.Invoke(connection, channel, data);
+				}
 			}
+			onConnectionEnd.Invoke(connection);
+			hosts.Remove(connection);
+		}catch(SocketException se) {
+			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot communicate with host: " + se.ToString(), this);
+		}catch(Exception e) {
+			Debug.LogError("[TCPClient] Error, cannot communicate with host: " + e.ToString(), this);
 		}
-		onConnectionEnd.Invoke(connection);
-		hosts.Remove(connection);
 	}
 
 	public void BroadcastToAllGuides(List<byte> data) {

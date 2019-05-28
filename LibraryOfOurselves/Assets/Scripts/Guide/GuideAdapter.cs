@@ -217,9 +217,10 @@ public class GuideAdapter : MonoBehaviour{
 		connection.Send(data);
 	}
 
-	public void SendStartChoice(string choice1, string choice2) {
+	public void SendStartChoice(string question, string choice1, string choice2) {
 		List<byte> data = new List<byte>();
 		data.WriteString("start-choice");
+		data.WriteString(question);
 		data.WriteString(choice1);
 		data.WriteString(choice2);
 		if(TCPHost.Instance)
@@ -227,7 +228,8 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void OnReceiveSelectOption(TCPConnection connection, byte option) {
-		Debug.Log(connection + " has selected option " + option);
+		if(GuideVideoPlayer.Instance != null)
+			GuideVideoPlayer.Instance.OnReceiveChoiceConfirmation(connection, (int)option - 1);
 	}
 
 	public void OnReceiveStatus(TCPConnection connection, byte b_battery, short s_fps, byte b_temp) {

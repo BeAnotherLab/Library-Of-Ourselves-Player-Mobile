@@ -35,6 +35,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	float lastTimeShown = 0;
 
+	VideoDisplay currentVideo = null;
+
 	private void Start() {
 		Instance = this;
 		onStop.Invoke();
@@ -47,7 +49,15 @@ public class GuideVideoPlayer : MonoBehaviour{
 		});
 
 		videoPlayer.loopPointReached += delegate (VideoPlayer player) {
-			Stop();
+			//Display a choice?
+			if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
+				VideosDisplayer.VideoChoice choice = currentVideo.Settings.choices[0];
+				Debug.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
+				GuideAdapter.Instance.SendStartChoice(choice.question, choice.option1, choice.option2);
+				Playing = false;
+			} else {
+				Stop();
+			}
 		};
 
 		videoPlayer.sendFrameReadyEvents = true;
@@ -66,6 +76,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	public void LoadVideo(VideoDisplay videoDisplay) {
+
+		currentVideo = videoDisplay;
+
 		if(GuideAdapter.Instance) {
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
 			displaying = true;
@@ -125,6 +138,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 		onStop.Invoke();
 
 		HasVideoLoaded = false;
+
+		currentVideo = null;
 	}
 
 	async void SendSyncMessages() {
@@ -166,6 +181,20 @@ public class GuideVideoPlayer : MonoBehaviour{
 				Stop();
 			}
 
+		}
+	}
+
+	public void OnReceiveChoiceConfirmation(TCPConnection connection, int choiceIndex) {
+		//choice index is either 0 or 1
+		if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
+			string nextVideo = choiceIndex == 0 ? currentVideo.Settings.choices[0].video1 : currentVideo.Settings.choices[0].video2;
+			VideoDisplay nextVideoDisplay = VideosDisplayer.Instance.FindVideo(nextVideo);
+			if(nextVideoDisplay != null) {
+				LoadVideo(nextVideoDisplay);
+			} else {
+				Debug.LogError("Doesn't have video: " + nextVideo);
+				Stop();
+			}
 		}
 	}
 

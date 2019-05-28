@@ -113,19 +113,23 @@ public class Interpolation : MonoBehaviour {
 	}
 	
 	public void Interpolate(){
-		Stop();
-		interpolating = true;
-		previousDirection = true;
-		onBegin.Invoke();
-		StartCoroutine(interpolate());
+		if(gameObject.activeInHierarchy) {
+			Stop();
+			interpolating = true;
+			previousDirection = true;
+			onBegin.Invoke();
+			StartCoroutine(interpolate());
+		}
 	}
 	
 	public void InterpolateBackward(){
-		Stop();
-		interpolating = true;
-		previousDirection = false;
-		onBegin.Invoke();
-		StartCoroutine(interpolate(true));
+		if(gameObject.activeInHierarchy) {
+			Stop();
+			interpolating = true;
+			previousDirection = false;
+			onBegin.Invoke();
+			StartCoroutine(interpolate(true));
+		}
 	}
 
 	public void InterpolateToggle() {

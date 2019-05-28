@@ -17,6 +17,10 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onPlay;
 	[SerializeField] OVRInput.Button oculusGoRecenterButton = OVRInput.Button.PrimaryIndexTrigger;//change this to change which button controls recenter on oculus go
 	[SerializeField] GvrControllerButton mirageRecenterButton = GvrControllerButton.TouchPadButton;//change this to change which button controls recenter on mirage solo
+	[SerializeField] GameObject choiceContainer;
+	[SerializeField] TextMesh questionMesh;
+	[SerializeField] TextMesh option1Mesh;
+	[SerializeField] TextMesh option2Mesh;
 
 	public static VRVideoPlayer Instance { get; private set; }
 
@@ -36,6 +40,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		Instance = this;
 		mainCamera = Camera.main;
 		player = GetComponent<VideoPlayer>();
+
+		choiceContainer.SetActive(false);
+
 
 		player.errorReceived += delegate (VideoPlayer player, string message) {
 			Debug.LogError("VideoPlayer error: " + message);
@@ -225,6 +232,26 @@ public class VRVideoPlayer : MonoBehaviour{
 	void FixedUpdate() {
 		if(VRDevice.OculusGo)
 			OVRInput.FixedUpdate();
+	}
+
+	public void DisplayChoice(string question, string choice1, string choice2) {
+		//display the last frame:
+		player.time = player.length;
+		player.Pause();
+
+		questionMesh.text = question;
+		option1Mesh.text = choice1;
+		option2Mesh.text = choice2;
+
+		choiceContainer.SetActive(true);
+	}
+
+	public void OnSelectOption(int whichOption) {
+		choiceContainer.SetActive(false);
+		StopVideo();
+		VRAdapter.Instance.SendSelectOption((byte)whichOption);
+		Debug.Log("Selecting option " + whichOption);
+		//Should we display something while we wait for the next video to load and show up?... maybe.
 	}
 
 }

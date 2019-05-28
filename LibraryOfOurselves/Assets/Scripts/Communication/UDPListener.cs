@@ -22,7 +22,7 @@ public class UDPListener : MonoBehaviour{
 				UdpReceiveResult serverData = await client.ReceiveAsync();
 				string message = Encoding.ASCII.GetString(serverData.Buffer);
 				//Extract IP and port from message
-				string[] splitMessage = message.Split(new char[]{'>'});
+				string[] splitMessage = message.Split(new char[] { '>' });
 				if(splitMessage.Length > 3) {
 					string ip = splitMessage[1];
 					int port = int.Parse(splitMessage[2]);
@@ -35,8 +35,10 @@ public class UDPListener : MonoBehaviour{
 						await tcpClient.ConnectToHost(endpoint, uniqueId);
 					}
 				}
+			}catch(SocketException se) {
+				Debug.LogError("Socket Exception (" + se.ErrorCode + "), cannot receive client data from host: " + se.ToString());
 			}catch(Exception e) {
-				Debug.Log("Error: " + e.ToString());
+				Debug.Log("Error, cannot receive client data from host: " + e.ToString());
 			}
 		}
     }

@@ -7,6 +7,7 @@ public class Do : MonoBehaviour {
 	
 	[SerializeField] bool onStart = false;
 	[SerializeField] bool onEnable = false;
+	[SerializeField] bool onDisable = false;
 	[SerializeField] UnityEvent action;
 	
 	void Start(){
@@ -15,6 +16,10 @@ public class Do : MonoBehaviour {
 
 	private void OnEnable() {
 		if(onEnable) Go();
+	}
+
+	private void OnDisable() {
+		if(onDisable) Go();
 	}
 
 	public void Go(){

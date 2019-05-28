@@ -20,7 +20,7 @@ public class VideoDisplay : MonoBehaviour{
 
 	bool __available = true;
 	public bool Available {
-		get { return Available; }
+		get { return __available; }
 		set {
 			if(__available != value) {
 				__available = value;

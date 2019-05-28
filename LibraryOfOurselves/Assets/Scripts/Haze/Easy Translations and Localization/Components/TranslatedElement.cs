@@ -115,7 +115,11 @@ namespace Haze{
 			translated = false;
 			Translate();
 		}
-		
+
+		private void OnEnable() {
+			OnLanguageChange();
+		}
+
 	}
 
 	#if UNITY_EDITOR
