@@ -29,10 +29,14 @@ public class UDPListener : MonoBehaviour{
 					string uniqueId = splitMessage[3];
 					IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
 					if(!encounteredIPs.Contains(endpoint)) {
-						encounteredIPs.Add(endpoint);
 						Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port);
 						//Start connection with this guide
-						await tcpClient.ConnectToHost(endpoint, uniqueId);
+						if(await tcpClient.ConnectToHost(endpoint, uniqueId)) {
+							encounteredIPs.Add(endpoint);
+							Debug.Log("Successfully connected to " + endpoint.Address + ".");
+						} else {
+							Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", will try again upon receiving UDP message.");
+						}
 					}
 				}
 			}catch(SocketException se) {

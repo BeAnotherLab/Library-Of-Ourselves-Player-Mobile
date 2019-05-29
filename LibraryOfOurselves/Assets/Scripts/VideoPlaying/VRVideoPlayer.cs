@@ -21,6 +21,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] TextMesh questionMesh;
 	[SerializeField] TextMesh option1Mesh;
 	[SerializeField] TextMesh option2Mesh;
+	[SerializeField] GameObject blackScreen;
 
 	public static VRVideoPlayer Instance { get; private set; }
 
@@ -42,6 +43,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		player = GetComponent<VideoPlayer>();
 
 		choiceContainer.SetActive(false);
+		blackScreen.SetActive(false);
 
 
 		player.errorReceived += delegate (VideoPlayer player, string message) {
@@ -115,7 +117,9 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	public void PlayVideo(DateTime timestamp) {
-		
+
+		blackScreen.SetActive(false);
+
 		//figure out difference in time between now and timestamp
 		TimeSpan difference = DateTime.Now - timestamp;
 		Debug.Log("Started playing video " + difference.TotalSeconds + " s ago.");
@@ -194,6 +198,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		if(VRAdapter.Instance != null)
 			VRAdapter.Instance.SendIsEmpty();
 		onVideoEnds.Invoke();
+		blackScreen.SetActive(false);
 	}
 
 
@@ -249,6 +254,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	public void OnSelectOption(int whichOption) {
 		choiceContainer.SetActive(false);
 		StopVideo();
+		blackScreen.SetActive(true);//Set up the black screen until the follow-up video starts playing.
 		VRAdapter.Instance.SendSelectOption((byte)whichOption);
 		Debug.Log("Selecting option " + whichOption);
 		//Should we display something while we wait for the next video to load and show up?... maybe.

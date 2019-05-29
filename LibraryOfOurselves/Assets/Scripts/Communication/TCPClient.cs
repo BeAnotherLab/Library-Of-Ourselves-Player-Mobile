@@ -47,7 +47,7 @@ public class TCPClient : MonoBehaviour{
 		Instance = this;
 	}
 
-	public async Task ConnectToHost(IPEndPoint endpoint, string uniqueId) {
+	public async Task<bool> ConnectToHost(IPEndPoint endpoint, string uniqueId) {
 		try {
 			TCPConnection connection = new TCPConnection();
 			connection.uniqueId = uniqueId;
@@ -74,11 +74,14 @@ public class TCPClient : MonoBehaviour{
 			onNewConnection.Invoke(connection);
 
 			Communicate(connection);
+
+			return true;
 		}catch(SocketException se) {
 			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot connect to host: " + se.ToString(), this);
 		}catch(Exception e) {
 			Debug.LogError("[TCPClient] Error, cannot connect to host: " + e.ToString(), this);
 		}
+		return false;//Something went wrong
 	}
 
 	private async void Communicate(TCPConnection connection) {

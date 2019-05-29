@@ -18,6 +18,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onFirstFrameReady;
 	[SerializeField] UnityEvent onPlay;
 	[SerializeField] UnityEvent onPause;
+	[SerializeField] UnityEvent onNextVideoIsUnavailable;
 
 	public static GuideVideoPlayer Instance { get; private set; }
 
@@ -29,11 +30,15 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	float TotalVideoTime { get { return (float)(videoPlayer.frameCount / videoPlayer.frameRate); } }
 
+	public VideoDisplay CurrentVideo { get { return currentVideo; } }
+
+
 	bool displaying = false;//switched to true as soon as we're displaying something.
 	bool allDevicesReady = false;
 	bool startedPlayback = false;//switched to true when we press Play the first time.
 
 	float lastTimeShown = 0;
+	bool playImmediately = false;//when true, will play the next video loaded immediately once it's loaded.
 
 	VideoDisplay currentVideo = null;
 
@@ -167,6 +172,10 @@ public class GuideVideoPlayer : MonoBehaviour{
 				//if it's still true it means they're all ready now :)
 				if(allDevicesReady) {
 					onAllDevicesReady.Invoke();
+					if(playImmediately) {
+						Play();
+						playImmediately = false;
+					}
 				}
 			}
 
@@ -189,10 +198,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 		if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
 			string nextVideo = choiceIndex == 0 ? currentVideo.Settings.choices[0].video1 : currentVideo.Settings.choices[0].video2;
 			VideoDisplay nextVideoDisplay = VideosDisplayer.Instance.FindVideo(nextVideo);
-			if(nextVideoDisplay != null) {
+			if(nextVideoDisplay != null && nextVideoDisplay.Available) {
+				playImmediately = true;
 				LoadVideo(nextVideoDisplay);
 			} else {
 				Debug.LogError("Doesn't have video: " + nextVideo);
+				onNextVideoIsUnavailable.Invoke();
 				Stop();
 			}
 		}

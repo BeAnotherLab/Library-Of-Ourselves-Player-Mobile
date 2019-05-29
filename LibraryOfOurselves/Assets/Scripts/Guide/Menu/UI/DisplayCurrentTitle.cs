@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class DisplayCurrentTitle : MonoBehaviour{
 
 	private void OnEnable() {
-		GetComponent<Text>().text = VideoDisplay.expandedDisplay.VideoName;
+		if(GuideVideoPlayer.Instance && GuideVideoPlayer.Instance.CurrentVideo != null) {
+			GetComponent<Text>().text = GuideVideoPlayer.Instance.CurrentVideo.VideoName;
+		} else {
+			GetComponent<Text>().text = VideoDisplay.expandedDisplay.VideoName;
+		}
 	}
 
 }
