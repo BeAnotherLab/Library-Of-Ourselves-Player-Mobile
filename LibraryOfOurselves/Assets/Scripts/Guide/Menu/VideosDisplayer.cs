@@ -35,6 +35,7 @@ public class VideosDisplayer : MonoBehaviour {
 
 	public static VideosDisplayer Instance { get; private set; }
 
+	public List<VideoDisplay> Displays { get { return displayedVideos; } }
 
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
 	GameObject lastVideoShelf = null;
@@ -165,7 +166,7 @@ public class VideosDisplayer : MonoBehaviour {
 				}
 			}
 
-			videoDisplay.Available = numberOfConnectedDevices > 0 && allConnectedDevicesHaveIt;
+			videoDisplay.Available = allConnectedDevicesHaveIt;
 
 			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Length > 0) {
 				videoDisplay.Available = false;//Cannot display a video with choices if there's more than one device connected yet!
