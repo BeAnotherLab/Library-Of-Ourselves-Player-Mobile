@@ -59,5 +59,17 @@ public class VrPlayerBindings{
 		} else return "Message unavailable.";
 	}
 
+	public bool isExternalStoragePermissionEnabled() {
+		if(JavaObject != null) {
+			return JavaObject.Call<bool>("isExternalStoragePermissionEnabled");
+		} else return true;//Assume it is
+	}
+
+	public void requestExternalStoragePermission(GameObject callbackObject, string callbackMethodName) {
+		if(JavaObject != null) {
+			JavaObject.Call("requestExternalStoragePermission", callbackObject.name, callbackMethodName);
+		}
+	}
+
 }
 #endif

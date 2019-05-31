@@ -1,15 +1,23 @@
 package sco.haze.vpb;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.*;
 import android.os.Build;
 import android.os.Environment;
-import android.os.StrictMode;
+import android.support.v4.content.ContextCompat;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
+
+import com.unity3d.player.UnityPlayer;
 
 public class VrPlayerBindings implements SensorEventListener {
 
@@ -30,6 +38,8 @@ public class VrPlayerBindings implements SensorEventListener {
     float temperatureFromSensor = Float.NEGATIVE_INFINITY;
 
     public String message = "";
+    public String callbackGameObject;
+    public String callbackMethod;
 
 
 
@@ -59,6 +69,32 @@ public class VrPlayerBindings implements SensorEventListener {
         if(externalFilesDirs.length > 0)//fallback on just sending the first one
             return externalFilesDirs[0].getAbsolutePath();
         return null;
+    }
+
+    public boolean isExternalStoragePermissionEnabled(){
+        if(ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        return false;
+    }
+
+    public void requestExternalStoragePermission(String callbackGameObject, String callbackMethod) {
+        this.callbackGameObject = callbackGameObject;
+        this.callbackMethod = callbackMethod;
+        if (Build.VERSION.SDK_INT >= 23) {
+            //ActivityCompat.requestPermissions(currentActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            try {
+                final FragmentManager fragmentManager = UnityPlayer.currentActivity.getFragmentManager();
+                final Fragment request = new RequestFragment();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(0, request);
+                fragmentTransaction.commit();
+            } catch (Exception e) {
+                UnityPlayer.UnitySendMessage(callbackGameObject, callbackMethod, "Could not request external storage permissions: " + e.getMessage());
+            }
+        }else{
+            UnityPlayer.UnitySendMessage(callbackGameObject, callbackMethod, "Cannot request permissions on Android versions < 23");
+        }
     }
 
 
@@ -107,6 +143,29 @@ public class VrPlayerBindings implements SensorEventListener {
         } catch (Exception e) {
             e.printStackTrace();
             return 0.0f;
+        }
+    }
+
+    @TargetApi(23)
+    public static class RequestFragment extends Fragment{
+        @Override
+        public void onStart() {
+            super.onStart();
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+            String result = "PERMISSION:";
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                result+="GRANTED";
+            }else{
+                result+="DENIED";
+            }
+            UnityPlayer.UnitySendMessage(VrPlayerBindings.instance.callbackGameObject, VrPlayerBindings.instance.callbackMethod, result);
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.remove(this);
+            fragmentTransaction.commit();
         }
     }
 }
