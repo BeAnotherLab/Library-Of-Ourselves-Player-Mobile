@@ -20,16 +20,21 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] GameObject noObjectNeededTranslation;
 	[SerializeField] Button editButton;
 	[SerializeField] Button chooseButton;
-	[SerializeField] Text editChoice;
-	[SerializeField] GameObject addChoiceTranslation;
 
 	[Header("Choice editor")]
+	[SerializeField] Text editChoice;
+	[SerializeField] GameObject addChoiceTranslation;
 	[SerializeField] GameObject choiceEditionPanel;
 	[SerializeField] InputField questionField;
 	[SerializeField] InputField option1Field;
 	[SerializeField] InputField option2Field;
 	[SerializeField] VideoNamesDropdown option1Dropdown;
 	[SerializeField] VideoNamesDropdown option2Dropdown;
+
+	[Header("Orientation editor")]
+	[SerializeField] Text editOrientation;
+	[SerializeField] GameObject orientationEditionPanel;
+	[SerializeField] OrientationEditor orientationEditor;
 
 	VideoDisplay current = null;
 
@@ -61,6 +66,8 @@ public class VideoShelf : MonoBehaviour {
 						editChoice.text = addChoiceTranslation.name;
 					}
 
+					editOrientation.gameObject.SetActive(true);
+
 				} else {//save and quit Edit Mode
 					editDisplay.gameObject.SetActive(true);
 					saveDisplay.gameObject.SetActive(false);
@@ -70,6 +77,7 @@ public class VideoShelf : MonoBehaviour {
 					is360Display.gameObject.SetActive(true);
 
 					editChoice.gameObject.SetActive(false);
+					editOrientation.gameObject.SetActive(false);
 
 					if(enableSave) {
 						current.Settings.description = descriptionInputField.text;
@@ -179,6 +187,34 @@ public class VideoShelf : MonoBehaviour {
 		if(settings.choices.Length > 0) {
 			settings.choices = new VideosDisplayer.VideoChoice[0];
 		}
+
+		VideoDisplay.expandedDisplay.Settings = settings;
+
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideoDisplay.expandedDisplay.expand();
+	}
+
+
+	public void OnClickEditOrientation() {
+		orientationEditionPanel.SetActive(true);
+
+		Vector4[] deltas = VideoDisplay.expandedDisplay.Settings.deltaAngles;
+		if(deltas.Length == 0)
+			orientationEditor.ResetOrientations(true);
+		else {
+			orientationEditor.ResetOrientations(false);
+			foreach(Vector4 delta in deltas) {
+				orientationEditor.AddOrientation(delta);
+			}
+		}
+	}
+
+	public void OnClickSaveOrientation() {
+		orientationEditionPanel.SetActive(false);
+
+		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+
+		settings.deltaAngles = orientationEditor.GetValues().ToArray();
 
 		VideoDisplay.expandedDisplay.Settings = settings;
 

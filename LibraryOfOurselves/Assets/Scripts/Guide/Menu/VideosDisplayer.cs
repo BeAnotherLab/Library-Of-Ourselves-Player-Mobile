@@ -25,7 +25,7 @@ public class VideosDisplayer : MonoBehaviour {
 		public bool is360 = false;
 		public string description = "";
 		public string objectsNeeded = "";
-		public Vector3[] deltaAngles = new Vector3[0];
+		public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
 		public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
 
 		public override string ToString() {

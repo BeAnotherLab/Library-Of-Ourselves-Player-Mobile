@@ -19,7 +19,8 @@ public class WaitThen : MonoBehaviour {
 	}
 
 	public void Run(){
-		StartCoroutine (run ());
+		if(enabled && gameObject.activeInHierarchy)
+			StartCoroutine (run ());
 	}
 
 	IEnumerator run(){

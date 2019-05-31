@@ -249,7 +249,7 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void OnReceiveStartChoice(TCPConnection connection, string question, string choice1, string choice2) {
+	public void OnReceiveStartChoice(TCPConnection connection, string question, string choice1, string choice2) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			Debug.Log("Display choices \'" + choice1 + "\' and \'" + choice2 + "\'");
 			if(VRVideoPlayer.Instance) {
@@ -286,6 +286,14 @@ public class VRAdapter : MonoBehaviour{
 			yield return new WaitForSeconds(sendStatusEvery);
 		}
 		sendStatus = false;
+	}
+
+	public void OnReceiveReorient(TCPConnection connection, Vector3 angles) {
+		if(connection == currentlyPaired && connection != null) {
+			if(VRVideoPlayer.Instance) {
+				VRVideoPlayer.Instance.Reorient(angles);
+			}
+		}
 	}
 
 }

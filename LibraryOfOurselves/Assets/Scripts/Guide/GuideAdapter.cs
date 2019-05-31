@@ -232,6 +232,14 @@ public class GuideAdapter : MonoBehaviour{
 			GuideVideoPlayer.Instance.OnReceiveChoiceConfirmation(connection, (int)option - 1);
 	}
 
+	public void SendReorient(Vector3 angles) {
+		List<byte> data = new List<byte>();
+		data.WriteString("reorient");
+		data.WriteVector3(angles);
+		if(TCPHost.Instance)
+			TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+
 	public void OnReceiveStatus(TCPConnection connection, byte b_battery, short s_fps, byte b_temp) {
 		int battery = (int)b_battery;
 		float fps = ((float)s_fps) * 0.1f;

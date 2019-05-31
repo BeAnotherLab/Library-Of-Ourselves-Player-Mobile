@@ -22,6 +22,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] TextMesh option1Mesh;
 	[SerializeField] TextMesh option2Mesh;
 	[SerializeField] GameObject blackScreen;
+	[SerializeField] Transform rotator;
 
 	public static VRVideoPlayer Instance { get; private set; }
 
@@ -112,6 +113,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		TimeSpan took = DateTime.Now - before;
 		Debug.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
+
+		Reorient(Vector3.zero);//reset orientation
 
 		return response;
 	}
@@ -258,6 +261,10 @@ public class VRVideoPlayer : MonoBehaviour{
 		VRAdapter.Instance.SendSelectOption((byte)whichOption);
 		Debug.Log("Selecting option " + whichOption);
 		//Should we display something while we wait for the next video to load and show up?... maybe.
+	}
+
+	public void Reorient(Vector3 eulerAngles) {
+		rotator.localEulerAngles = eulerAngles;
 	}
 
 }

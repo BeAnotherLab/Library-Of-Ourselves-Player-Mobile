@@ -123,4 +123,18 @@ public static class NetworkMessages {
 		return new DateTime(nowYear, nowMonth, nowDay, nowHr, min, sec, millis);
 	}
 
+	public static void WriteVector3(this List<byte> data, Vector3 v) {
+		data.WriteFloat(v.x);
+		data.WriteFloat(v.y);
+		data.WriteFloat(v.z);
+	}
+
+	public static Vector3 ReadVector3(this List<byte> data) {
+		Vector3 ret = new Vector3();
+		ret.x = data.ReadFloat();
+		ret.y = data.ReadFloat();
+		ret.z = data.ReadFloat();
+		return ret;
+	}
+
 }

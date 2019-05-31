@@ -16,6 +16,7 @@ using UnityEngine.Events;
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
 [Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
+[Serializable] class ReorientMessage : UnityEvent<TCPConnection, Vector3> { }
 [Serializable] class StatusMessage : UnityEvent<TCPConnection, byte, short, byte> { }
 
 public class MessageDispatcher : MonoBehaviour{
@@ -40,6 +41,7 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] VideoPlaybackMessage calibrate;
 	[SerializeField] ChoiceStartMessage startChoice;
 	[SerializeField] ChoiceSelectMessage selectOption;
+	[SerializeField] ReorientMessage reorient;
 	[SerializeField] StatusMessage status;
 
 	public void OnMessageReception(TCPConnection connection, string channel, List<byte> data) {
@@ -137,6 +139,11 @@ public class MessageDispatcher : MonoBehaviour{
 			case "select-option": {
 					byte option = data.ReadByte();
 					selectOption.Invoke(connection, option);
+				}
+				break;
+			case "reorient": {
+					Vector3 angles = data.ReadVector3();
+					reorient.Invoke(connection, angles);
 				}
 				break;
 			default:

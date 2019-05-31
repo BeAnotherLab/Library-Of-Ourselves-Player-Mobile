@@ -185,6 +185,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 				timeSlider.SetValueWithoutNotify((float)videoPlayer.time / TotalVideoTime);
 			}
 
+			//check whether it's time to send a reorient?
+			sendAnyRequiredReorient();
+
 			//if no one is paired anymore, just stop.
 			if(TCPHost.Instance != null && TCPHost.Instance.NumberOfPairedDevices <= 0) {
 				Stop();
@@ -205,6 +208,32 @@ public class GuideVideoPlayer : MonoBehaviour{
 				Debug.LogError("Doesn't have video: " + nextVideo);
 				onNextVideoIsUnavailable.Invoke();
 				Stop();
+			}
+		}
+	}
+
+	Vector4 deltaAnglesPreviouslySent = Vector4.zero;
+	void sendAnyRequiredReorient() {
+		if(currentVideo == null) return;
+		//check which reorient is the closest to the current video player time (without overstepping at all)
+		float currentTime = (float)VideoTime;
+		float closestTime = -1;
+		Vector4 closestDeltaAngles = Vector4.zero;
+		foreach(Vector4 deltaAngles in currentVideo.Settings.deltaAngles) {
+			if(deltaAngles.w <= currentTime && deltaAngles.w > closestTime) {
+				closestDeltaAngles = deltaAngles;
+			}
+		}
+		//did we find one
+		if(closestTime >= 0) {
+			//have we already sent that one?
+			if(deltaAnglesPreviouslySent != closestDeltaAngles) {
+				//nope, alright lets send it then
+				deltaAnglesPreviouslySent = closestDeltaAngles;
+				if(GuideAdapter.Instance != null) {
+					//and fire it off!
+					GuideAdapter.Instance.SendReorient(new Vector3(closestDeltaAngles.x, closestDeltaAngles.y, closestDeltaAngles.z));
+				}
 			}
 		}
 	}
