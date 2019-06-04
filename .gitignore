@@ -41,7 +41,7 @@ sysinfo.txt
 # ===================================== Android ignores =====================================
 
 # Built application files
-*.apk
+#*.apk
 *.ap_
 *.aab
 

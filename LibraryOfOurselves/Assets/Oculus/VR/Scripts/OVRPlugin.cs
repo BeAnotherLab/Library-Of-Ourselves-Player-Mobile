@@ -35,7 +35,7 @@ public static class OVRPlugin
 #if OVRPLUGIN_UNSUPPORTED_PLATFORM
 	public static readonly System.Version wrapperVersion = _versionZero;
 #else
-	public static readonly System.Version wrapperVersion = OVRP_1_36_0.version;
+	public static readonly System.Version wrapperVersion = OVRP_1_37_0.version;
 #endif
 
 #if !OVRPLUGIN_UNSUPPORTED_PLATFORM
@@ -297,6 +297,8 @@ public static class OVRPlugin
 		Rift_DK1 = 0x1000,
 		Rift_DK2,
 		Rift_CV1,
+		Rift_CB,
+		Rift_S,
 	}
 
 	public enum OverlayShape
@@ -3985,6 +3987,11 @@ public static class OVRPlugin
 	private static class OVRP_1_36_0
 	{
 		public static readonly System.Version version = new System.Version(1, 36, 0);
+	}
+
+	private static class OVRP_1_37_0
+	{
+		public static readonly System.Version version = new System.Version(1, 37, 0);
 	}
 
 #endif // !OVRPLUGIN_UNSUPPORTED_PLATFORM

@@ -23,3 +23,12 @@ MonoBehaviour:
   - language: 36
     font: {fileID: 0}
     translate: 1
+  - language: 30
+    font: {fileID: 0}
+    translate: 1
+  - language: 24
+    font: {fileID: 0}
+    translate: 1
+  - language: 8
+    font: {fileID: 0}
+    translate: 1

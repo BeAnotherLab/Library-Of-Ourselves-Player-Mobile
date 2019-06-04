@@ -69,23 +69,38 @@ public class OVRControllerHelper : MonoBehaviour
 
 	void Start()
 	{
+		OVRPlugin.SystemHeadset headset = OVRPlugin.GetSystemHeadsetType();
+		switch (headset)
+		{
+			case OVRPlugin.SystemHeadset.Oculus_Go:
+				activeControllerType = ControllerType.Go;
+				break;
+			case OVRPlugin.SystemHeadset.Oculus_Quest:
+				activeControllerType = ControllerType.QuestAndRiftS;
+				break;
+			case OVRPlugin.SystemHeadset.Rift_CV1:
+				activeControllerType = ControllerType.Rift;
+				break;
+			case OVRPlugin.SystemHeadset.Rift_S:
+				activeControllerType = ControllerType.QuestAndRiftS;
+				break;
+			case OVRPlugin.SystemHeadset.GearVR_R320:
+			case OVRPlugin.SystemHeadset.GearVR_R321:
+			case OVRPlugin.SystemHeadset.GearVR_R322:
+			case OVRPlugin.SystemHeadset.GearVR_R323:
+			case OVRPlugin.SystemHeadset.GearVR_R324:
+			case OVRPlugin.SystemHeadset.GearVR_R325:
+				activeControllerType = ControllerType.GearVR;
+				break;
+			default:
 #if UNITY_EDITOR || !UNITY_ANDROID
-		// to do: handle Rift S after SDK update
-		activeControllerType = ControllerType.Rift;
+				activeControllerType = ControllerType.Rift;
 #else
-		if (OVRPlugin.productName == "Oculus Go")
-		{
-			activeControllerType = ControllerType.Go;
-		}
-		else if (OVRPlugin.productName == "Oculus Quest")
-		{
-			activeControllerType = ControllerType.QuestAndRiftS;
-		}
-		else
-		{
-			activeControllerType = ControllerType.GearVR;
-		}
+				activeControllerType = ControllerType.GearVR;
 #endif
+				break;
+		}
+
 		Debug.LogFormat("OVRControllerHelp: Active controller type: {0} for product {1}", activeControllerType, OVRPlugin.productName);
 		if ((activeControllerType != ControllerType.GearVR) && (activeControllerType != ControllerType.Go))
 		{

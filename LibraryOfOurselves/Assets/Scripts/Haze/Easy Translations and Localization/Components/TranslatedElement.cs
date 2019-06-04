@@ -181,7 +181,27 @@ namespace Haze{
 								if(language.translate && t.contents == ""){
 									if(autoTranslation == null && defaultContents(elem) != ""){
 										//let's start auto-translating this!
-										autoTranslation = new AutoTranslation(defaultContents(elem), SupportedLanguages.Instance.defaultLanguage, t.language, elem);
+										//Attempt to find an active monobehaviour in the scene to handle the coroutine.
+										Transform coroutineElem = elem.transform;
+										while(!coroutineElem.gameObject.activeInHierarchy) {
+											if(coroutineElem.parent == null)
+												break;
+											coroutineElem = coroutineElem.parent;
+										}
+										while(coroutineElem.GetComponent<MonoBehaviour>() == null) {
+											//find the first active child with a monobehaviour
+											if(coroutineElem.childCount <= 0)
+												break;//no luck :'(
+											foreach(Transform child in coroutineElem) {
+												if(child.gameObject.activeInHierarchy) {
+													if(child.GetComponent<MonoBehaviour>() != null) {
+														coroutineElem = child;
+														break;
+													}
+												}
+											}
+										}
+										autoTranslation = new AutoTranslation(defaultContents(elem), SupportedLanguages.Instance.defaultLanguage, t.language, coroutineElem.GetComponent<MonoBehaviour>());
 									}else if(autoTranslation.Finished && autoTranslation.TargetLanguage == t.language){
 										//done translating this language!
 										t.contents = autoTranslation.Translated;

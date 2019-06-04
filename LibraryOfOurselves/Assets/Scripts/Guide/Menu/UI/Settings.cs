@@ -9,6 +9,12 @@ public class Settings : MonoBehaviour {
 	[SerializeField] InputField newPinField;
 	[SerializeField] UnityEvent onChangePin;
 
+	public static bool SendSyncMessages { get; private set; }
+
+	public void OnToggleSyncPackets(bool toggle) {
+		SendSyncMessages = toggle;
+	}
+
 	public void OnClickChangePin() {
 		SettingsAuth.CurrentPIN = newPinField.text.Length > 0 ? newPinField.text : "0000";
 		onChangePin.Invoke();

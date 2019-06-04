@@ -32,8 +32,6 @@ public class VRVideoPlayer : MonoBehaviour{
 	float firstTap = 0;
 	bool is360;//whether the current video is 360 degrees
 
-	float timeDifference = 0;//How much difference there is between the guide and the user app when we start playing the video.
-
 	public struct VideoLoadingResponse { public bool ok;public string errorMessage; }
 
 
@@ -127,12 +125,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		TimeSpan difference = DateTime.Now - timestamp;
 		Debug.Log("Started playing video " + difference.TotalSeconds + " s ago.");
 
-		timeDifference = (float)difference.TotalSeconds;
-		if(timeDifference > 0) {
-			player.time = timeDifference;
-			timeDifference = 0;
-		}
-		
+		player.time = 0;
 		player.Play();
 		
 		if(is360) spherePlayer.SetActive(true);
@@ -143,9 +136,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	public void Sync(DateTime timestamp, double videoTime) {
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
-		TimeSpan difference = DateTime.Now - timestamp;
-		float secondsDiff = (float)difference.TotalSeconds - timeDifference;
-		float targetTime = (float)videoTime + secondsDiff;
+		float targetTime = (float)videoTime;
 		float actualTime = (float)player.time;
 		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
 

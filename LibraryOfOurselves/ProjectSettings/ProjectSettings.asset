@@ -139,7 +139,7 @@ PlayerSettings:
       enableVideoLayer: 0
       useProtectedVideoMemory: 0
       minimumSupportedHeadTracking: 0
-      maximumSupportedHeadTracking: 1
+      maximumSupportedHeadTracking: 0
     hololens:
       depthFormat: 1
       depthBufferSharingEnabled: 1
@@ -428,9 +428,9 @@ PlayerSettings:
     - Oculus
     - OpenVR
   - m_BuildTarget: Android
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices:
-    - Oculus
+    - daydream
   m_BuildTargetEnableVuforiaSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0

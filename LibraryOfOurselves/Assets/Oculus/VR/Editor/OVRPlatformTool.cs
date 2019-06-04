@@ -71,15 +71,20 @@ namespace Assets.Oculus.VR.Editor
 			// Get existing open window or if none, make a new one:
 			EditorWindow.GetWindow(typeof(OVRPlatformTool));
 
-			if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.None)
-			{
+			// Populate initial target platform value based on OVRDeviceSelector
 #if UNITY_ANDROID
-				OVRPlatformToolSettings.TargetPlatform = TargetPlatform.OculusGoGearVR;
-#else
-				OVRPlatformToolSettings.TargetPlatform = TargetPlatform.Rift;
-#endif
-				EditorUtility.SetDirty(OVRPlatformToolSettings.Instance);
+			if (OVRDeviceSelector.isTargetDeviceQuest)
+			{
+				OVRPlatformToolSettings.TargetPlatform = TargetPlatform.Quest;
 			}
+			else
+			{
+				OVRPlatformToolSettings.TargetPlatform = TargetPlatform.OculusGoGearVR;
+			}
+#else
+			OVRPlatformToolSettings.TargetPlatform = TargetPlatform.Rift;
+#endif
+			EditorUtility.SetDirty(OVRPlatformToolSettings.Instance);
 
 			// If we are starting from a fresh instance of platform tool settings, load redist packages by calling list-redists in the CLI
 			if (OVRPlatformToolSettings.RiftRedistPackages.Count == 0)
@@ -109,6 +114,7 @@ namespace Assets.Oculus.VR.Editor
 
 			GUIContent TargetPlatformLabel = new GUIContent("Target Oculus Platform");
 			OVRPlatformToolSettings.TargetPlatform = (TargetPlatform)MakePopup(TargetPlatformLabel, (int)OVRPlatformToolSettings.TargetPlatform, platformOptions);
+			SetOVRProjectConfig(OVRPlatformToolSettings.TargetPlatform);
 			SetDirtyOnGUIChange();
 
 			commandMenuScroll = EditorGUILayout.BeginScrollView(commandMenuScroll, GUILayout.Height(Screen.height / 2));
@@ -351,6 +357,30 @@ namespace Assets.Oculus.VR.Editor
 			EditorGUILayout.EndScrollView();
 		}
 
+		private void SetOVRProjectConfig(TargetPlatform targetPlatform)
+		{
+#if UNITY_ANDROID
+
+			var targetDeviceTypes = new List<OVRProjectConfig.DeviceType>();
+
+			if (targetPlatform == TargetPlatform.Quest && !OVRDeviceSelector.isTargetDeviceQuest)
+			{
+				targetDeviceTypes.Add(OVRProjectConfig.DeviceType.Quest);
+			}
+			else if (targetPlatform == TargetPlatform.OculusGoGearVR && !OVRDeviceSelector.isTargetDeviceGearVrOrGo)
+			{
+				targetDeviceTypes.Add(OVRProjectConfig.DeviceType.GearVrOrGo);
+			}
+
+			if (targetDeviceTypes.Count != 0)
+			{
+				OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
+				projectConfig.targetDeviceTypes = targetDeviceTypes;
+				OVRProjectConfig.CommitProjectConfig(projectConfig);
+			}
+#endif
+		}
+
 		private void IncrementIndent()
 		{
 			EditorGUI.indentLevel++;
@@ -480,7 +510,7 @@ namespace Assets.Oculus.VR.Editor
 			ovrPlatUtilProcess.OutputDataReceived += new DataReceivedEventHandler(
 				(s, e) =>
 				{
-					if (e.Data.Length != 0 && !e.Data.Contains("\u001b") && !e.Data.Contains("ID"))
+					if (e.Data != null && e.Data.Length != 0 && !e.Data.Contains("\u001b") && !e.Data.Contains("ID"))
 					{
 						// Get the name / ID pair from the CLI and create a redist package instance
 						string[] terms = e.Data.Split('|');
