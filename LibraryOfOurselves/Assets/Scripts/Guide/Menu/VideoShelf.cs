@@ -10,7 +10,7 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] Image thumbnailDisplay;
 	[SerializeField] Text descriptionDisplay;
 	[SerializeField] Text objectsDisplay;
-	[SerializeField] Text is360Display;
+	[SerializeField] GameObject is360Display;
 	[SerializeField] Text editDisplay;
 	[SerializeField] Text saveDisplay;
 	[SerializeField] InputField descriptionInputField;
@@ -74,7 +74,7 @@ public class VideoShelf : MonoBehaviour {
 					descriptionInputField.gameObject.SetActive(false);
 					objectsInputField.gameObject.SetActive(false);
 					is360Toggle.gameObject.SetActive(false);
-					is360Display.gameObject.SetActive(true);
+					is360Display.gameObject.SetActive(current.Settings.is360);
 
 					editChoice.gameObject.SetActive(false);
 					editOrientation.gameObject.SetActive(false);
@@ -111,7 +111,7 @@ public class VideoShelf : MonoBehaviour {
 			objectsDisplay.text = current.Settings.objectsNeeded;
 		else
 			objectsDisplay.text = noObjectNeededTranslation.name;
-		is360Display.gameObject.SetActive(current.Settings.is360);
+		is360Display.SetActive(current.Settings.is360);
 
 		enableSave = false;
 		EditMode = false;

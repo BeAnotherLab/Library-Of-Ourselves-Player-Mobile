@@ -18,6 +18,7 @@ public class VrPlayerBindings{
 	AndroidJavaObject __ajo = null;
 	AndroidJavaObject JavaObject {
 		get {
+#if UNITY_ANDROID && !UNITY_EDITOR
 			if(__ajo == null) {
 				try {
 					AndroidJavaClass unityActivity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -31,6 +32,7 @@ public class VrPlayerBindings{
 					Debug.LogError("Cannot access VrPlayerBindings native Android code.\n" + e);
 				}
 			}
+#endif
 			return __ajo;
 		}
 	}
