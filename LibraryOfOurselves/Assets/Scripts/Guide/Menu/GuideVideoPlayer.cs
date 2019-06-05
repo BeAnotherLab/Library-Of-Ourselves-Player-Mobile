@@ -150,6 +150,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 	async void SendSyncMessages() {
 		while(Playing && GuideAdapter.Instance) {
 			if(Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
+				Debug.Log("Sent sync to " + VideoTime);
 				GuideAdapter.Instance.SendSync(VideoTime);
 			}
 			await Task.Delay((int)(timeBetweenSyncs * 1000));

@@ -47,8 +47,10 @@ public class TCPHost : MonoBehaviour{
 					thisOne = thisOne.MapToIPv4();
 				}
 				Debug.Log("Address " + i + " = " + thisOne);
-				if(thisOne.GetAddressBytes()[0] == (byte)192 && thisOne.GetAddressBytes()[1] == (byte)168)
+				if(thisOne.GetAddressBytes()[0] == (byte)192 && thisOne.GetAddressBytes()[1] == (byte)168) {
 					ipIndex = i;
+					break;
+				}
 			}
 			IPAddress ip;
 			if(ipIndex > -1)

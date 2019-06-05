@@ -6,9 +6,11 @@ using UnityEngine.UI;
 public class UIConsole : MonoBehaviour {
 	
 	static UIConsole instance = null;
+
+	[SerializeField] bool bottomToTop = true;
 	
 	Text text;
-	string t = "Console:\n";
+	string t = "";
 	
 	void Start(){
 		text = GetComponent<Text>();
@@ -31,9 +33,13 @@ public class UIConsole : MonoBehaviour {
 	
 	void HandleLog (string message, string stackTrace, LogType type){
 		if(!enabled) return;
-		
-		t += message + "\n";
-		if(text) text.text = t;
+
+		if(bottomToTop)
+			t = message + "\n" + t;
+		else
+			t = t + "\n" + message;
+
+		if(text) text.text = "Console:\n"+t;
 	}
 	
 	public static string Logs(){

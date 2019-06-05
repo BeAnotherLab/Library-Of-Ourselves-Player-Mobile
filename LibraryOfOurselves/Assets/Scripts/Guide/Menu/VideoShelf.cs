@@ -62,7 +62,6 @@ public class VideoShelf : MonoBehaviour {
 					editChoice.gameObject.SetActive(true);
 					//Change the displayed text to "Add Choice" if there's no choices available yet
 					if(current.Settings.choices.Length == 0) {
-						Debug.Log("Settings edit choice to: " + addChoiceTranslation.name);
 						editChoice.text = addChoiceTranslation.name;
 					}
 

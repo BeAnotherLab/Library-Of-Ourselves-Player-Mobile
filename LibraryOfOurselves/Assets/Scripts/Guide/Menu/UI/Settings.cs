@@ -9,7 +9,7 @@ public class Settings : MonoBehaviour {
 	[SerializeField] InputField newPinField;
 	[SerializeField] UnityEvent onChangePin;
 
-	public static bool SendSyncMessages { get; private set; }
+	public static bool SendSyncMessages { get; private set; } = true;
 
 	public void OnToggleSyncPackets(bool toggle) {
 		SendSyncMessages = toggle;
