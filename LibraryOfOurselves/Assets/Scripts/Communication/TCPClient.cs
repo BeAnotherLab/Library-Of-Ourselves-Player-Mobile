@@ -5,8 +5,10 @@ using System;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine.XR;
+using System.Linq;
 
 public class TCPClient : MonoBehaviour{
 
@@ -14,6 +16,7 @@ public class TCPClient : MonoBehaviour{
 	[SerializeField] NewConnectionEvent onNewConnection;
 	[SerializeField] MessageReceivedEvent onMessageReception;
 	[SerializeField] ConnectionEndEvent onConnectionEnd;
+	[SerializeField] bool allowUdp = true;//allow setting up a UDP connection when TCP isn't available
 
 	List<TCPConnection> hosts = new List<TCPConnection>();
 
@@ -47,20 +50,77 @@ public class TCPClient : MonoBehaviour{
 		Instance = this;
 	}
 
-	public async Task<bool> ConnectToHost(IPEndPoint endpoint, string uniqueId) {
-		try {
-			TCPConnection connection = new TCPConnection();
-			connection.uniqueId = uniqueId;
-			connection.deviceType = TCPConnection.DeviceType.GUIDE;
-			connection.client = new TcpClient();
-			connection.client.NoDelay = true;
-			IPAddress ipv4 = endpoint.Address;
-			if(ipv4.AddressFamily != AddressFamily.InterNetwork)
-				ipv4 = ipv4.MapToIPv4();
-			Debug.Log("IPv4: " + ipv4);
-			await connection.client.ConnectAsync(ipv4, endpoint.Port);
-			Debug.Log("Connected. Sending identification message...");
+	// If we're connected over UDP to the remote endpoint specified, returns true and reads the data.
+	public bool ReceiveFakeTCPMessage(IPEndPoint udpRemote, byte[] data) {
+		foreach(TCPConnection host in hosts) {
+			if(host.UDP && sameEndpoint(host.udpEndpoint, udpRemote)) {
+				host.ReceiveUDPPacket(data.ToList());
+				return true;
+			}
+		}
+		return false;
+	}
 
+	bool sameEndpoint(IPEndPoint one, IPEndPoint two) {
+		if(one.Port != two.Port) return false;
+		byte[] bytesOne = one.Address.GetAddressBytes();
+		byte[] bytesTwo = two.Address.GetAddressBytes();
+		if(bytesOne.Length == bytesTwo.Length) {
+			for(int i = 0; i<bytesOne.Length; ++i) {
+				if(bytesOne[i] != bytesTwo[i]) {
+					return false;
+				}
+			}
+			//got here means all the bytes are the same!
+			return true;
+		}
+		return false;
+	}
+
+	public async Task<bool> ConnectToHost(IPEndPoint endpoint, string uniqueId, IPEndPoint udpEndpoint) {
+
+		TCPConnection connection = new TCPConnection();
+		connection.uniqueId = uniqueId;
+		connection.deviceType = TCPConnection.DeviceType.GUIDE;
+		connection.client = new TcpClient();
+		connection.client.NoDelay = true;
+		IPAddress ipv4 = endpoint.Address;
+		if(ipv4.AddressFamily != AddressFamily.InterNetwork)
+			ipv4 = ipv4.MapToIPv4();
+		Debug.Log("IPv4: " + ipv4);
+
+		bool tcp = false;
+
+		try {
+			CancellationTokenSource cts = new CancellationTokenSource();
+			cts.CancelAfter(3000);//Cancel after 3 seconds
+			TaskCompletionSource<bool> cancellationCompletionSource = new TaskCompletionSource<bool>();
+
+			var connectAsync = connection.client.Client.ConnectAsync(ipv4, endpoint.Port);
+
+			using(cts.Token.Register(() => cancellationCompletionSource.TrySetResult(true))) {
+				if(connectAsync != await Task.WhenAny(connectAsync, cancellationCompletionSource.Task)) {
+					throw new OperationCanceledException(cts.Token);
+				}
+			}
+
+			Debug.Log("Connected through TCP. Sending identification message...");
+			tcp = true;
+		} catch(SocketException se) {
+			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot connect to host: " + se.ToString(), this);
+		} catch(Exception e) {
+			Debug.LogError("[TCPClient] Error, cannot connect to host: " + e.ToString(), this);
+		}
+
+		if(!tcp) {
+			if(!allowUdp) return false;//nope, not allowed...
+			//Something went wrong and TCP was unavailable. Fallback to UDP
+			Debug.Log("Attempting to fall back to UDP with " + udpEndpoint);
+			connection.client = null;
+			connection.udpEndpoint = udpEndpoint;
+		}
+
+		try {
 			List<byte> data = new List<byte>();
 			data.WriteString("identification");
 			data.WriteByte((byte)deviceType);
@@ -72,16 +132,16 @@ public class TCPClient : MonoBehaviour{
 			hosts.Add(connection);
 
 			onNewConnection.Invoke(connection);
-
 			Communicate(connection);
 
 			return true;
-		}catch(SocketException se) {
-			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot connect to host: " + se.ToString(), this);
-		}catch(Exception e) {
-			Debug.LogError("[TCPClient] Error, cannot connect to host: " + e.ToString(), this);
+		} catch(SocketException se) {
+			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot send identification message to host: " + se.ToString(), this);
+		} catch(Exception e) {
+			Debug.LogError("[TCPClient] Error, cannot send identification message to host: " + e.ToString(), this);
 		}
-		return false;//Something went wrong
+
+		return false;
 	}
 
 	private async void Communicate(TCPConnection connection) {

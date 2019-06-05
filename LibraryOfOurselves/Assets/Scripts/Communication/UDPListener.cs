@@ -15,30 +15,35 @@ public class UDPListener : MonoBehaviour{
 	UdpClient client = null;
 	List<IPEndPoint> encounteredIPs = new List<IPEndPoint>();
 
+	public static UDPListener Instance { get; private set; }
+
 	async void Start(){
+		Instance = this;
 		client = new UdpClient(listeningPort);
 		client.DontFragment = true;
 		while(client != null) {
 			try {
 				UdpReceiveResult serverData = await client.ReceiveAsync();
-				string message = Encoding.ASCII.GetString(serverData.Buffer);
-				//Extract IP and port from message
-				string[] splitMessage = message.Split(new char[] { '>' });
-				if(splitMessage.Length > 3) {
-					string ip = splitMessage[1];
-					int port = int.Parse(splitMessage[2]);
-					Debug.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
-					string uniqueId = splitMessage[3];
-					IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
-					if(!encounteredIPs.Contains(endpoint)) {
-						Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port);
-						//Start connection with this guide
-						if(await tcpClient.ConnectToHost(endpoint, uniqueId)) {
-							encounteredIPs.Add(endpoint);
-							Debug.Log("Successfully connected to " + endpoint.Address + ".");
-						} else {
-							Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", fallback to UDP.");
+				if(!tcpClient.ReceiveFakeTCPMessage(serverData.RemoteEndPoint, serverData.Buffer)) {//might want to use this as part of a pre-established UDP connection
+					string message = Encoding.ASCII.GetString(serverData.Buffer);
+					//Extract IP and port from message
+					string[] splitMessage = message.Split(new char[] { '>' });
+					if(splitMessage.Length > 3) {
+						string ip = splitMessage[1];
+						int port = int.Parse(splitMessage[2]);
+						Debug.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
+						string uniqueId = splitMessage[3];
+						IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
+						if(!encounteredIPs.Contains(endpoint)) {
+							Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port);
+							//Start connection with this guide
+							if(await tcpClient.ConnectToHost(endpoint, uniqueId, serverData.RemoteEndPoint)) {
+								encounteredIPs.Add(endpoint);
+								Debug.Log("Successfully connected to " + endpoint.Address + ".");
+							} else {
+								Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", will retry upon receiving UDP message.");
 
+							}
 						}
 					}
 				}
@@ -50,10 +55,10 @@ public class UDPListener : MonoBehaviour{
 		}
     }
 
-	async void SendUDPMessage(IPEndPoint remote, List<byte> data) {
-		for(int i = 0; i < 10; ++i) {
+	public async Task SendUDPMessage(IPEndPoint remote, byte[] data) {
+		for(int i = 0; i < 2; ++i) {//send the message twice to be certain it reaches.
 			try {
-				await client.SendAsync(data.ToArray(), data.Count, remote);
+				await client.SendAsync(data, data.Length, remote);
 			} catch(SocketException se) {
 				Debug.LogWarning("[UDPListener] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
 			} catch(Exception e) {
@@ -63,6 +68,7 @@ public class UDPListener : MonoBehaviour{
 	}
 
 	private void OnDestroy() {
+		Instance = null;
 		client.Close();
 		client = null;
 	}

@@ -127,6 +127,35 @@ public class TCPHost : MonoBehaviour{
 		}
 	}
 
+	public void ReceiveUDPPacket(IPEndPoint remote, List<byte> data) {
+		foreach(TCPConnection conn in users) {//is this addressed to one of our local connections?
+			if(conn.UDP) {
+				conn.ReceiveUDPPacket(data);
+				return;
+			}
+		}
+		//it hasn't found a receiver, if this is an identification message then we can start a connection with them over udp
+		//wait for identification message:
+		string channel = data.ReadString();
+		if(channel == "identification") {
+			Debug.Log("Accepted [UDP] connection from " + remote.Address + " (port " + remote.Port + ")");
+
+			TCPConnection connection = new TCPConnection();
+			connection.udpEndpoint = remote;//set it up as UDP
+
+			connection.deviceType = (TCPConnection.DeviceType)data.ReadByte();
+			connection.uniqueId = data.ReadString();
+			connection.lockedId = data.ReadString();
+			connection.xrDeviceModel = data.ReadString();
+
+			users.Add(connection);
+
+			onNewConnection.Invoke(connection);
+
+			Communicate(connection);
+		}
+	}
+
 	private async void Communicate(TCPConnection connection) {
 		while(connection.active) {
 			List<byte> data = await connection.Receive();
@@ -142,8 +171,23 @@ public class TCPHost : MonoBehaviour{
 				connection.active = false;
 			}
 		}
+
+		//Attempt to send a "disconnection" message before closing
+		{
+			List<byte> data = new List<byte>();
+			data.WriteString("disconnection");
+			try {
+				await connection.Send(data);
+			} catch(Exception e) {
+				//nevermind.
+			}
+		}
+
 		onConnectionEnd.Invoke(connection);
 		users.Remove(connection);
+		if(!connection.UDP) {
+			connection.client.Close();
+		}
 	}
 
 	public void BroadcastToPairedDevices(List<byte> data) {

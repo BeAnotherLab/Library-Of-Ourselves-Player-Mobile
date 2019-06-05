@@ -43,6 +43,7 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] ChoiceSelectMessage selectOption;
 	[SerializeField] ReorientMessage reorient;
 	[SerializeField] StatusMessage status;
+	[SerializeField] bool ignoreIncorrectChannels = true;
 
 	public void OnMessageReception(TCPConnection connection, string channel, List<byte> data) {
 		switch(channel) {
@@ -147,7 +148,8 @@ public class MessageDispatcher : MonoBehaviour{
 				}
 				break;
 			default:
-				Debug.LogWarning("Received message on illegal channel: " + channel);
+				if(!ignoreIncorrectChannels)
+					Debug.LogWarning("Received message on illegal channel: " + channel);
 				break;
 		}
 	}

@@ -20,6 +20,12 @@ public class UDPBroadcaster : MonoBehaviour{
 	byte[] requestData;
 	bool stop = false;
 
+	public static UDPBroadcaster Instance { get; private set; }
+
+	private void Start() {
+		Instance = this;
+	}
+
 	public void StartBroadcasting(string ip, int port) {
 		StartCoroutine(broadcast(ip, port));
 	}
@@ -50,11 +56,24 @@ public class UDPBroadcaster : MonoBehaviour{
 		server.Close();
 	}
 
+	public async Task SendUDPMessage(IPEndPoint remote, byte[] data) {
+		for(int i = 0; i < 2; ++i) {//send the message twice to be certain it reaches.
+			try {
+				await server.SendAsync(data, data.Length, remote);
+			} catch(SocketException se) {
+				Debug.LogWarning("[UDPBrodcaster] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
+			} catch(Exception e) {
+				Debug.LogWarning("[UDPBroadcaster] Error, cannot send UDP packet: " + e.ToString());
+			}
+		}
+	}
+
 	public void StopBroadcasting() {
 		stop = true;
 	}
 
 	private void OnDestroy() {
+		Instance = null;
 		StopBroadcasting();
 	}
 
@@ -62,10 +81,10 @@ public class UDPBroadcaster : MonoBehaviour{
 		while(!stop) {
 			try {
 				UdpReceiveResult result = await server.ReceiveAsync();
-				if(server.Client.LocalEndPoint != result.RemoteEndPoint) {
-					List<byte> data = result.Buffer.ToList();
-					string message = data.ReadString();
-					Debug.Log("Received from " + result.RemoteEndPoint + ": " + message);
+				List<byte> data = result.Buffer.ToList();
+				TCPHost host = TCPHost.Instance;
+				if(host != null) {
+					host.ReceiveUDPPacket(result.RemoteEndPoint, data);
 				}
 			}catch(SocketException se) {
 				Debug.LogWarning("[UDPBroadcaster] Socket error " + se.ErrorCode + ", cannot receive UDP packet: " + se.ToString());

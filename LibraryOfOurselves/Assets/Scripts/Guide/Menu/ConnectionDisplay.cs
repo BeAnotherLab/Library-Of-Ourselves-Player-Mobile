@@ -27,6 +27,7 @@ public class ConnectionDisplay : MonoBehaviour{
 	[SerializeField] Button recenterButton;
 	[SerializeField] Button editDeviceNameButton;
 	[SerializeField] InputField editDeviceNameField;
+	[SerializeField] GameObject udpDisplay;
 
 	public TCPConnection Connection { get; private set; }
 
@@ -108,6 +109,8 @@ public class ConnectionDisplay : MonoBehaviour{
 		UpdateDisplay();
 		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
 		modelNameDisplay.text = DeviceAlias;
+
+		udpDisplay.SetActive(connection.UDP);
 
 		editDeviceNameField.gameObject.SetActive(false);
 	}
@@ -244,6 +247,10 @@ public class ConnectionDisplay : MonoBehaviour{
 		editDeviceNameField.gameObject.SetActive(false);
 		DeviceAlias = editDeviceNameField.text;
 		modelNameDisplay.text = DeviceAlias;
+	}
+
+	public void OnClickCloseButton() {
+		Connection.active = false;
 	}
 
 }
