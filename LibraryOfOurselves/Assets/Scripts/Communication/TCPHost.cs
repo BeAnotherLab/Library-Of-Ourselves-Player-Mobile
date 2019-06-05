@@ -59,6 +59,7 @@ public class TCPHost : MonoBehaviour{
 			if(ip.AddressFamily != AddressFamily.InterNetwork) {
 				ip = ip.MapToIPv4();
 			}
+			
 			Debug.Log("Ip: " + ip);
 
 			listener = new TcpListener(ip, 0);
@@ -71,6 +72,7 @@ public class TCPHost : MonoBehaviour{
 			while(!stop) {
 				try {
 
+					Debug.Log("Awaiting a connection request...");
 					TcpClient client = await listener.AcceptTcpClientAsync();
 					client.NoDelay = true;
 					IPEndPoint localEndpoint = (IPEndPoint)client.Client.LocalEndPoint;

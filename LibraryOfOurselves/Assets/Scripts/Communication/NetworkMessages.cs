@@ -42,6 +42,8 @@ public static class NetworkMessages {
 
 	public static string ReadString(this List<byte> data) {
 		short strLength = data.ReadShort();
+		if(strLength > data.Count)
+			strLength = (short)data.Count;
 		List<byte> readBytes = data.GetRange(0, strLength);
 		data.RemoveRange(0, strLength);
 		return Encoding.UTF8.GetString(readBytes.ToArray());

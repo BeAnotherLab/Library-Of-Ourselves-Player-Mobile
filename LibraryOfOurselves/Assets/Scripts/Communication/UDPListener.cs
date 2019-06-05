@@ -17,6 +17,7 @@ public class UDPListener : MonoBehaviour{
 
 	async void Start(){
 		client = new UdpClient(listeningPort);
+		client.DontFragment = true;
 		while(client != null) {
 			try {
 				UdpReceiveResult serverData = await client.ReceiveAsync();
@@ -26,6 +27,7 @@ public class UDPListener : MonoBehaviour{
 				if(splitMessage.Length > 3) {
 					string ip = splitMessage[1];
 					int port = int.Parse(splitMessage[2]);
+					Debug.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
 					string uniqueId = splitMessage[3];
 					IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
 					if(!encounteredIPs.Contains(endpoint)) {
@@ -35,7 +37,8 @@ public class UDPListener : MonoBehaviour{
 							encounteredIPs.Add(endpoint);
 							Debug.Log("Successfully connected to " + endpoint.Address + ".");
 						} else {
-							Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", will try again upon receiving UDP message.");
+							Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", fallback to UDP.");
+
 						}
 					}
 				}
@@ -46,6 +49,18 @@ public class UDPListener : MonoBehaviour{
 			}
 		}
     }
+
+	async void SendUDPMessage(IPEndPoint remote, List<byte> data) {
+		for(int i = 0; i < 10; ++i) {
+			try {
+				await client.SendAsync(data.ToArray(), data.Count, remote);
+			} catch(SocketException se) {
+				Debug.LogWarning("[UDPListener] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
+			} catch(Exception e) {
+				Debug.LogWarning("[UDPListener] Error, cannot send UDP packet: " + e.ToString());
+			}
+		}
+	}
 
 	private void OnDestroy() {
 		client.Close();
