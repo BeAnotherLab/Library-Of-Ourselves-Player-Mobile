@@ -1004,6 +1004,10 @@ MonoBehaviour:
   option2Mesh: {fileID: 1757211909}
   blackScreen: {fileID: 1569996673}
   rotator: {fileID: 1252721254}
+  allowedErrorForSyncedPlayback: 0.1
+  maximumAllowedErrorBeforeResync: 0.3
+  maximumPlaybackSpeed: 1.4
+  minimumPlaybackSpeed: 0.71428573
 --- !u!4 &645322548
 Transform:
   m_ObjectHideFlags: 0
@@ -2138,7 +2142,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1340132405
@@ -2629,6 +2633,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: ConnectionEndEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  allowUdp: 1
 --- !u!4 &1655649856
 Transform:
   m_ObjectHideFlags: 0
@@ -2826,7 +2831,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: VideoTimeStampAndTimeMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+    m_TypeName: VideoTimeStampTimeBoolMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   stopVideo:
     m_PersistentCalls:
@@ -2918,6 +2923,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StatusMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  ignoreIncorrectChannels: 1
 --- !u!1 &1724388415
 GameObject:
   m_ObjectHideFlags: 0

@@ -127,8 +127,5 @@ lint/tmp/
 
 # ===================================== General =====================================
 
-# Discard video files
-*.mp4
-
 # Keep everything in standalone version
 ![Bb]uilds/

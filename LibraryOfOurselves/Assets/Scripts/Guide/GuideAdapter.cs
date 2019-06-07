@@ -186,11 +186,12 @@ public class GuideAdapter : MonoBehaviour{
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
-	public void SendPauseVideo(double videoTime) {
+	public void SendPauseVideo(double videoTime, bool pause) {
 		List<byte> data = new List<byte>();
 		data.WriteString("pause-video");
 		data.WriteTimestamp(DateTime.Now);
 		data.WriteDouble(videoTime);
+		data.WriteBool(pause);
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}

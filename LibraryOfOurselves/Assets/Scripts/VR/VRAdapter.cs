@@ -218,10 +218,10 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceivePauseVideo(TCPConnection connection, DateTime unused, double videoTime) {
+	public void OnReceivePauseVideo(TCPConnection connection, DateTime unused, double videoTime, bool pause) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			if(VRVideoPlayer.Instance) {
-				VRVideoPlayer.Instance.PauseVideo(videoTime);
+				VRVideoPlayer.Instance.PauseVideo(videoTime, pause);
 			}
 		}
 	}

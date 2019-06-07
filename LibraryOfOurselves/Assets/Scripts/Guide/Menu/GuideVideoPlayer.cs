@@ -49,8 +49,14 @@ public class GuideVideoPlayer : MonoBehaviour{
 		HasVideoLoaded = false;
 
 		timeSlider.onValueChanged.AddListener(delegate (float val) {
+			if(!AllowedToChangeTimeOrPause) {
+				timeSlider.SetValueWithoutNotify((float)VideoTime/TotalVideoTime);
+				return;
+			}
 			float time = val * TotalVideoTime;
 			videoPlayer.time = time;
+			if(Playing)
+				Pause(true);//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
 		});
 
 		videoPlayer.loopPointReached += delegate (VideoPlayer player) {
@@ -120,15 +126,31 @@ public class GuideVideoPlayer : MonoBehaviour{
 		}
 		Playing = true;
 		SendSyncMessages();
+		sendImmediateSync();
 	}
 
-	void Pause() {
+	DateTime __lastPauseSent;
+	bool AllowedToChangeTimeOrPause {
+		get {
+			if((DateTime.Now - __lastPauseSent).TotalSeconds < 1)
+				return false;
+			__lastPauseSent = DateTime.Now;
+			return true;
+		}
+	}
+
+	void Pause(bool bypassTimeCheck = false) {//if we've already checked AllowedToChangeTimeOrPause, set to true.
+
+		if(!AllowedToChangeTimeOrPause && !bypassTimeCheck) return;
+
 		if(GuideAdapter.Instance)
-			GuideAdapter.Instance.SendPauseVideo(VideoTime);
+			GuideAdapter.Instance.SendPauseVideo(VideoTime, Playing);//true if we should pause, false if we should play
 		Playing = !Playing;
 		if(Playing) {
 			videoPlayer.Play();
 			onPlay.Invoke();
+			sendImmediateSync();
+			SlowStart();
 		} else {
 			videoPlayer.Pause();
 			onPause.Invoke();
@@ -148,13 +170,17 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	async void SendSyncMessages() {
-		while(Playing && GuideAdapter.Instance) {
-			if(Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
-				Debug.Log("Sent sync to " + VideoTime);
-				GuideAdapter.Instance.SendSync(VideoTime);
+		while(HasVideoLoaded && GuideAdapter.Instance) {
+			if(Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
+				sendImmediateSync();
 			}
 			await Task.Delay((int)(timeBetweenSyncs * 1000));
 		}
+	}
+
+	void sendImmediateSync() {
+		GuideAdapter.Instance.SendSync(VideoTime);
+		Debug.Log("Sync: " + VideoTime);
 	}
 
 	private void Update() {
@@ -238,6 +264,24 @@ public class GuideVideoPlayer : MonoBehaviour{
 					GuideAdapter.Instance.SendReorient(new Vector3(closestDeltaAngles.x, closestDeltaAngles.y, closestDeltaAngles.z));
 				}
 			}
+		}
+	}
+
+	Coroutine __slowStartRoutine = null;
+	void SlowStart() {
+		if(__slowStartRoutine != null)
+			StopCoroutine(__slowStartRoutine);
+		__slowStartRoutine = StartCoroutine(__slowStart());
+	}
+	IEnumerator __slowStart() {
+		float speed = 0.1f;
+		videoPlayer.playbackSpeed = speed;
+		while(speed < 1) {
+			speed += Time.deltaTime * 0.2f;
+			if(speed > 1)
+				speed = 1;
+			videoPlayer.playbackSpeed = speed;
+			yield return null;
 		}
 	}
 
