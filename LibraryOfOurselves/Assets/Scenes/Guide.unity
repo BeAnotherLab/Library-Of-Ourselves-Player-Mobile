@@ -10504,6 +10504,27 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StatusMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  autocalibration:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: AutocalibrationMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  autocalibrationResult:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveAutocalibrationResult
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: AutocalibrationResultMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   ignoreIncorrectChannels: 1
 --- !u!1 &1234002057
 GameObject:

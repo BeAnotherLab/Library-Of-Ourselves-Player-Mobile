@@ -19,6 +19,8 @@ using UnityEngine.Events;
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
 [Serializable] class ReorientMessage : UnityEvent<TCPConnection, Vector3> { }
 [Serializable] class StatusMessage : UnityEvent<TCPConnection, byte, short, byte> { }
+[Serializable] class AutocalibrationMessage : UnityEvent<TCPConnection, byte> { }
+[Serializable] class AutocalibrationResultMessage : UnityEvent<TCPConnection, byte, float> { }
 
 public class MessageDispatcher : MonoBehaviour{
 
@@ -44,6 +46,8 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] ChoiceSelectMessage selectOption;
 	[SerializeField] ReorientMessage reorient;
 	[SerializeField] StatusMessage status;
+	[SerializeField] AutocalibrationMessage autocalibration;
+	[SerializeField] AutocalibrationResultMessage autocalibrationResult;
 	[SerializeField] bool ignoreIncorrectChannels = true;
 
 	public void OnMessageReception(TCPConnection connection, string channel, List<byte> data) {
@@ -147,6 +151,17 @@ public class MessageDispatcher : MonoBehaviour{
 			case "reorient": {
 					Vector3 angles = data.ReadVector3();
 					reorient.Invoke(connection, angles);
+				}
+				break;
+			case "autocalibration": {
+					byte command = data.ReadByte();
+					autocalibration.Invoke(connection, command);
+				}
+				break;
+			case "autocalibration-result": {
+					byte command = data.ReadByte();
+					float drift = data.ReadFloat();
+					autocalibrationResult.Invoke(connection, command, drift);
 				}
 				break;
 			default:

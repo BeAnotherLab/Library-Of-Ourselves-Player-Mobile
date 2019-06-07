@@ -29,6 +29,16 @@ public class ConnectionDisplay : MonoBehaviour{
 	[SerializeField] InputField editDeviceNameField;
 	[SerializeField] GameObject udpDisplay;
 
+	[Header("Autocalibration")]
+	[SerializeField] GameObject autocalibrationButton;
+	[SerializeField] GameObject autocalibrationEditor;
+	[SerializeField] Text driftDisplay;
+	[SerializeField] GameObject acStartButton;
+	[SerializeField] GameObject acStopButton;
+	[SerializeField] GameObject acResetButton;
+	[SerializeField] Slider acLoadingBar;
+	[SerializeField] GameObject acLoadingCircle;
+
 	public TCPConnection Connection { get; private set; }
 
 	public int Battery {
@@ -109,6 +119,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		UpdateDisplay();
 		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
 		modelNameDisplay.text = DeviceAlias;
+		autocalibrationEditor.SetActive(false);
 
 		udpDisplay.SetActive(connection.UDP);
 
@@ -165,12 +176,14 @@ public class ConnectionDisplay : MonoBehaviour{
 			pairButton.gameObject.SetActive(true);
 			lockButton.gameObject.SetActive(true);
 			recenterButton.gameObject.SetActive(true);
-		}else if(Available) {
+			autocalibrationButton.gameObject.SetActive(true);
+		} else if(Available) {
 			statusColor = availableColour;
 			textPair.gameObject.SetActive(true);
 			textUnpair.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
 			recenterButton.gameObject.SetActive(false);
+			autocalibrationButton.gameObject.SetActive(false);
 			if(GuideVideoPlayer.Instance.HasVideoLoaded) {//can't pair with a device while a video is loaded up.
 				pairButton.gameObject.SetActive(false);
 			} else {
@@ -182,6 +195,7 @@ public class ConnectionDisplay : MonoBehaviour{
 			pairButton.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
 			recenterButton.gameObject.SetActive(false);
+			autocalibrationButton.gameObject.SetActive(false);
 			StartCoroutine(enableUnlockButtonAfterABit());
 		}
 
@@ -223,6 +237,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		if(!SettingsAuth.TemporalUnlock) {
 			editDeviceNameButton.enabled = false;
 			lockButton.gameObject.SetActive(false);
+			autocalibrationButton.gameObject.SetActive(false);
 		} else {
 			editDeviceNameButton.enabled = true;
 		}
@@ -251,6 +266,61 @@ public class ConnectionDisplay : MonoBehaviour{
 
 	public void OnClickCloseButton() {
 		Connection.active = false;
+	}
+
+	public void OnClickAutocalibration() {
+		GuideAdapter.Instance.SendAutocalibration(Connection, 0);
+		driftDisplay.gameObject.SetActive(false);
+		acLoadingBar.gameObject.SetActive(false);
+		acLoadingCircle.gameObject.SetActive(true);
+		acResetButton.gameObject.SetActive(false);
+		acStopButton.gameObject.SetActive(true);
+		acStartButton.gameObject.SetActive(false);
+	}
+
+	public void OnClickStopAutocalibration() {
+		GuideAdapter.Instance.SendAutocalibration(Connection, 1);
+		driftDisplay.gameObject.SetActive(false);
+		acLoadingBar.gameObject.SetActive(false);
+		acLoadingCircle.gameObject.SetActive(false);
+		acResetButton.gameObject.SetActive(true);
+		acStopButton.gameObject.SetActive(false);
+		acStartButton.gameObject.SetActive(true);
+	}
+
+	public void OnClickResetAutocalibration() {
+		GuideAdapter.Instance.SendAutocalibration(Connection, 2);
+	}
+
+	public void OnReceiveAutocalibrationResult(byte command, float drift) {
+		//Debug.Log("Received autocalibration result (" + command + "): drift = " + drift);
+		switch(command) {
+			case 0:
+				acLoadingCircle.gameObject.SetActive(false);
+				StartCoroutine(showACLoading());
+				break;
+			case 1:
+				driftDisplay.text = string.Format("{0:0.#}°/s", drift);
+				StopAllCoroutines();
+				driftDisplay.gameObject.SetActive(true);
+				acLoadingBar.gameObject.SetActive(false);
+				acLoadingCircle.gameObject.SetActive(false);
+				acResetButton.gameObject.SetActive(true);
+				acStopButton.gameObject.SetActive(false);
+				acStartButton.gameObject.SetActive(true);
+				break;
+		}
+	}
+
+	IEnumerator showACLoading() {
+		acLoadingBar.gameObject.SetActive(true);
+
+		float elapsed = 0;
+		while(elapsed < 5 * 60) {// 5 minutes
+			elapsed += Time.deltaTime;
+			acLoadingBar.value = elapsed / 5.0f / 60.0f;
+			yield return null;
+		}
 	}
 
 }
