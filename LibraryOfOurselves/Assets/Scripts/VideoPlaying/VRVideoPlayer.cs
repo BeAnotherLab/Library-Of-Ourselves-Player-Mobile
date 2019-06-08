@@ -12,6 +12,8 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	[SerializeField] GameObject semispherePlayer;
 	[SerializeField] GameObject spherePlayer;
+	[SerializeField] AudioSource leftAudio;
+	[SerializeField] AudioSource rightAudio;
 	[SerializeField] UnityEvent onVideoEnds;
 	[SerializeField] UnityEvent onPause;
 	[SerializeField] UnityEvent onPlay;
@@ -39,6 +41,37 @@ public class VRVideoPlayer : MonoBehaviour{
 	float firstTap = 0;
 	bool is360;//whether the current video is 360 degrees
 
+	bool __binauralAudio = false;
+	bool BinauralAudio {
+		get { return __binauralAudio; }
+		set {
+			__binauralAudio = value;
+			leftAudio.gameObject.SetActive(value);
+			rightAudio.gameObject.SetActive(value);
+			player.audioOutputMode = value ? VideoAudioOutputMode.None : VideoAudioOutputMode.Direct;
+		}
+	}
+
+	double VideoTime {
+		set {
+			player.time = value;
+			if(BinauralAudio) {
+				leftAudio.time = (float)value;
+				rightAudio.time = (float)value;
+			}
+		}
+	}
+
+	float PlaybackSpeed {
+		set {
+			player.playbackSpeed = value;
+			if(BinauralAudio) {
+				leftAudio.pitch = value;
+				rightAudio.pitch = value;
+			}
+		}
+	}
+
 	public struct VideoLoadingResponse { public bool ok;public string errorMessage; }
 
 
@@ -51,6 +84,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		choiceContainer.SetActive(false);
 		blackScreen.SetActive(false);
 
+		BinauralAudio = false;
 
 		player.errorReceived += delegate (VideoPlayer player, string message) {
 			Debug.LogError("VideoPlayer error: " + message);
@@ -59,7 +93,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		};
 		player.loopPointReached += delegate (VideoPlayer player) {
 			//as long as we havent received the Stop message, we can simply keep on playing.
-			player.Play();
+			play();
 		};
 	}
 
@@ -69,6 +103,10 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	static string getPath(string videoName) {
 		return Filesystem.SDCardRoot + videoName + ".mp4";
+	}
+
+	static string getAudioPath(string videoName, bool left) {
+		return Filesystem.SDCardRoot + videoName + "-" + (left ? "l" : "r") + ".mp3";
 	}
 
 	public static bool IsVideoAvailable(string videoName) {
@@ -101,12 +139,29 @@ public class VRVideoPlayer : MonoBehaviour{
 			//360 video.
 			is360 = true;
 		}
+
+		//Check if we need to play binaural audio
+		string leftAudioFile = getAudioPath(videoName, true);
+		string rightAudioFile = getAudioPath(videoName, false);
+		WWW leftWWW = null;
+		WWW rightWWW = null;
+		if(File.Exists(leftAudioFile) && File.Exists(rightAudioFile)) {
+			BinauralAudio = true;
+			//load the sound into the audio sources
+			leftWWW = new WWW("file://" + leftAudioFile.Replace('\\', '/'));
+			rightWWW = new WWW("file://" + rightAudioFile.Replace('\\', '/'));
+		} else {
+			BinauralAudio = false;
+		}
+		Debug.Log("Binaural audio: " + (BinauralAudio ? "on" : "off"));
 		
+		//Prepare video player
 		player.url = getPath(videoName);
-		player.playbackSpeed = 1;
+		PlaybackSpeed = 1;
 		player.Prepare();
 		Debug.Log("Preparing player: CanSetTime=" + player.canSetTime + ", CanSetPlaybackSpeed=" + player.canSetPlaybackSpeed);
 
+		//Load the video into the player...
 		DateTime before = DateTime.Now;
 		while(!player.isPrepared && !errorWhileLoading) {
 			await Task.Delay(20);
@@ -119,9 +174,43 @@ public class VRVideoPlayer : MonoBehaviour{
 		TimeSpan took = DateTime.Now - before;
 		Debug.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
 
+		//Wait for the audio sources to load
+		if(BinauralAudio) {
+			Debug.Log("Waiting for audio files to load...");
+			while(!leftWWW.isDone || !rightWWW.isDone)
+				await Task.Delay(20);
+			leftAudio.clip = leftWWW.GetAudioClip();
+			rightAudio.clip = rightWWW.GetAudioClip();
+			Debug.Log("Audio loaded!");
+		}
+
 		Reorient(Vector3.zero);//reset orientation
 
 		return response;
+	}
+
+	void play() {
+		player.Play();
+		if(BinauralAudio) {
+			leftAudio.Play();
+			rightAudio.Play();
+		}
+	}
+
+	void pausePlayback() {
+		player.Pause();
+		if(BinauralAudio) {
+			leftAudio.Pause();
+			rightAudio.Pause();
+		}
+	}
+
+	void stop() {
+		player.Stop();
+		if(BinauralAudio) {
+			leftAudio.Stop();
+			rightAudio.Stop();
+		}
 	}
 
 	public void PlayVideo(DateTime timestamp) {
@@ -132,8 +221,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		TimeSpan difference = DateTime.Now - timestamp;
 		Debug.Log("Started playing video " + difference.TotalSeconds + " s ago.");
 
-		player.time = 0;
-		player.Play();
+		VideoTime = 0;
+		play();
 		
 		if(is360) spherePlayer.SetActive(true);
 		else semispherePlayer.SetActive(true);
@@ -149,45 +238,46 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		//Shall we speed up or slow down?
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
-			player.playbackSpeed = 1;
+			PlaybackSpeed = 1;
 		}else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
 			Debug.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
-			player.time = targetTime;
-			player.playbackSpeed = 1;
+			VideoTime = targetTime;
+			PlaybackSpeed = 1;
 		}else if(delta < 0) {// actualTime < targetTime -> go faster
 			delta = Mathf.Abs(delta) - allowedErrorForSyncedPlayback;//0 when the difference is the allowed range
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
 			//and remap from 0..1 to 1..max playback speed
-			player.playbackSpeed = Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta);
+			PlaybackSpeed = Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta);
 		} else {// actualTime > targetTime -> go slower
 			delta = delta - allowedErrorForSyncedPlayback;//0 when difference is 0.5, 1 at 1.5 and higher
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
 			//and remap from 0..1 to 1..min playback speed
-			player.playbackSpeed = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
+			PlaybackSpeed = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
 		}
 
 		if(!player.isPlaying) {
 			Debug.LogWarning("Player was stopped when we received Sync message");
-			player.Play();
+			play();
+			VideoTime = targetTime;
 		}
 	}
 
 	//Toggles between playing and paused.
 	public async void PauseVideo(double videoTime, bool pause) {
 		if(!pause) {
-			player.time = videoTime;
-			player.playbackSpeed = 1;
-			player.Play();
-			player.time = videoTime;
+			VideoTime = videoTime;
+			PlaybackSpeed = 1;
+			play();
+			VideoTime = videoTime;
 			onPlay.Invoke();
 		} else {
-			player.time = videoTime;
+			VideoTime = videoTime;
 			onPause.Invoke();
 			await Task.Delay(250);//give it some time to catch up before we trigger the Pause
-			player.time = videoTime;
-			player.Pause();
+			VideoTime = videoTime;
+			pausePlayback();
 		}
 	}
 
@@ -201,13 +291,14 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	void endOfVideo() {
-		player.Stop();
+		stop();
 		semispherePlayer.SetActive(false);
 		spherePlayer.SetActive(false);
 		if(VRAdapter.Instance != null)
 			VRAdapter.Instance.SendIsEmpty();
 		onVideoEnds.Invoke();
 		blackScreen.SetActive(false);
+		BinauralAudio = false;
 	}
 
 
@@ -250,8 +341,8 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	public void DisplayChoice(string question, string choice1, string choice2) {
 		//display the last frame:
-		player.time = player.length;
-		player.Pause();
+		VideoTime = player.length;
+		pausePlayback();
 
 		questionMesh.text = question;
 		option1Mesh.text = choice1;
