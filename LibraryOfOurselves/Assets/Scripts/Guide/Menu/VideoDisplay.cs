@@ -11,6 +11,8 @@ public class VideoDisplay : MonoBehaviour{
 	[SerializeField] Image videoThumbnail;
 	[SerializeField] UnityEvent onBecomesAvailable;
 	[SerializeField] UnityEvent onBecomesUnavailable;
+	[Header("Set to false to use the video shelf underneath each video")]
+	[SerializeField] bool UseFullscreenVideoShelf = true;
 
 	public string FullPath { get; private set; }//path to guide video
 	public string VideoName { get; private set; }
@@ -86,32 +88,45 @@ public class VideoDisplay : MonoBehaviour{
 	//Display this video's settings and such.
 	public void expand() {
 		VideoDisplay previouslyExpanded = expandedDisplay;
+		expandedDisplay = this;
 
-		if(previouslyExpanded == this) {
-			//we're already expanded; just update the display then.
-			VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
-			if(shelf != null) shelf.DisplayCurrentVideo();
+		if(UseFullscreenVideoShelf) {
+			Singleton videoShelf = Singleton.GetInstance("videoshelf");
+			videoShelf.gameObject.SetActive(true);
+			videoShelf.GetComponentInChildren<VideoShelf>().DisplayCurrentVideo();
+
 		} else {
 
-			if(previouslyExpanded != null) {
-				previouslyExpanded.contract();
+			if(previouslyExpanded == this) {
+				//we're already expanded; just update the display then.
+				VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
+				if(shelf != null) shelf.DisplayCurrentVideo();
+			} else {
+
+				if(previouslyExpanded != null) {
+					previouslyExpanded.contract();
+				}
+
+				VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
+				if(shelf != null) shelf.DisplayCurrentVideo();
+				Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
+				if(expanding != null) expanding.Interpolate();
+
+				StartCoroutine(scrollDown());
 			}
-			expandedDisplay = this;
-
-			VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
-			if(shelf != null) shelf.DisplayCurrentVideo();
-			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
-			if(expanding != null) expanding.Interpolate();
-
-			StartCoroutine(scrollDown());
 		}
 
 	}
 
 	public void contract() {
 		expandedDisplay = null;
-		Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
-		expanding.InterpolateBackward();
+		if(UseFullscreenVideoShelf) {
+			//just expand again, actually
+			expand();
+		} else {
+			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
+			expanding.InterpolateBackward();
+		}
 	}
 
 	IEnumerator scrollDown() {

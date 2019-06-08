@@ -25,8 +25,9 @@ public class Singleton : MonoBehaviour {
 		}
 	}
 	
-	void Start(){
+	void Awake(){
 		if(map == null) map = new Dictionary<string, Singleton>();
+		Debug.Log("Creating Singleton: " + id);
 		
 		if(GetInstance(id) == null){
 			SetInstance(id, this);

@@ -123,7 +123,7 @@ public class VideoShelf : MonoBehaviour {
 			if(handle.connection.active && handle.connection.paired)
 				++currentlyPaired;
 		}
-		chooseButton.gameObject.SetActive(currentlyPaired > 0);//if there's no connections, cannot play any videos.
+		chooseButton.gameObject.SetActive(currentlyPaired > 0 && current.Available);//if there's no connections (or some of them don't have the video), cannot play any videos.
 
 	}
 
