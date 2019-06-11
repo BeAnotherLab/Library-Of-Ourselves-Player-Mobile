@@ -1134,10 +1134,10 @@ MonoBehaviour:
   option2Mesh: {fileID: 1757211909}
   blackScreen: {fileID: 1569996673}
   rotator: {fileID: 1252721254}
-  allowedErrorForSyncedPlayback: 0.1
-  maximumAllowedErrorBeforeResync: 0.3
-  maximumPlaybackSpeed: 1.4
-  minimumPlaybackSpeed: 0.71428573
+  allowedErrorForSyncedPlayback: 0.4
+  maximumAllowedErrorBeforeResync: 0.8
+  maximumPlaybackSpeed: 1.2
+  minimumPlaybackSpeed: 0.8333333
 --- !u!4 &645322548
 Transform:
   m_ObjectHideFlags: 0
