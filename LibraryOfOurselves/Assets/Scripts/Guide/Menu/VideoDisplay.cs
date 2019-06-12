@@ -94,6 +94,7 @@ public class VideoDisplay : MonoBehaviour{
 			Singleton videoShelf = Singleton.GetInstance("videoshelf");
 			videoShelf.gameObject.SetActive(true);
 			videoShelf.GetComponentInChildren<VideoShelf>().DisplayCurrentVideo();
+			Debug.Log("Expanding.");
 
 		} else {
 

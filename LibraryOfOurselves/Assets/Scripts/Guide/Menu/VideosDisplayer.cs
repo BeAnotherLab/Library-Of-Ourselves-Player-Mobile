@@ -173,9 +173,9 @@ public class VideosDisplayer : MonoBehaviour {
 			}
 
 			//Close the expanded display if its no longer available...
-			if(VideoDisplay.expandedDisplay == videoDisplay && !videoDisplay.Available) {
+			/*if(VideoDisplay.expandedDisplay == videoDisplay && !videoDisplay.Available) {
 				videoDisplay.contract();
-			}
+			}*/
 		}
 	}
 

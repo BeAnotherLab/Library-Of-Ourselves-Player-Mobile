@@ -235,6 +235,15 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
+	public void SendSync(double videoTime) {
+		if(currentlyPaired != null) {
+			List<byte> data = new List<byte>();
+			data.WriteTimestamp(DateTime.Now);
+			data.WriteDouble(videoTime);
+			currentlyPaired.Send(data);
+		}
+	}
+
 	public void OnReceiveSync(TCPConnection connection, DateTime timestamp, double videoTime) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			if(VRVideoPlayer.Instance) {

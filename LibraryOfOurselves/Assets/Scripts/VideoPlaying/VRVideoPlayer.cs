@@ -10,6 +10,7 @@ using UnityEngine.Events;
 
 public class VRVideoPlayer : MonoBehaviour{
 
+	[SerializeField] float timeBetweenSyncs = 0.75f;
 	[SerializeField] GameObject semispherePlayer;
 	[SerializeField] GameObject spherePlayer;
 	[SerializeField] AudioSource leftAudio;
@@ -40,6 +41,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	bool errorWhileLoading = false;
 	float firstTap = 0;
 	bool is360;//whether the current video is 360 degrees
+	bool hasVideoPlaying = false;
 
 	bool __binauralAudio = false;
 	bool BinauralAudio {
@@ -53,6 +55,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	double VideoTime {
+		get { return player.time; }
 		set {
 			player.time = value;
 			if(BinauralAudio) {
@@ -195,6 +198,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			leftAudio.Play();
 			rightAudio.Play();
 		}
+		hasVideoPlaying = true;
 	}
 
 	void pausePlayback() {
@@ -211,6 +215,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			leftAudio.Stop();
 			rightAudio.Stop();
 		}
+		hasVideoPlaying = false;
 	}
 
 	public void PlayVideo(DateTime timestamp) {
@@ -228,6 +233,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		else semispherePlayer.SetActive(true);
 
 		onPlay.Invoke();
+
+		SendSyncMessages();
+		sendImmediateSync();
 	}
 
 	public void Sync(DateTime unused, double videoTime) {
@@ -262,6 +270,9 @@ public class VRVideoPlayer : MonoBehaviour{
 			play();
 			VideoTime = targetTime;
 		}
+
+		//Respond
+		sendImmediateSync();
 	}
 
 	//Toggles between playing and paused.
@@ -279,6 +290,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			VideoTime = videoTime;
 			pausePlayback();
 		}
+		sendImmediateSync();
 	}
 
 	public void StopVideo() {
@@ -288,6 +300,19 @@ public class VRVideoPlayer : MonoBehaviour{
 	public void Recenter() {
 		if(mainCamera == null) mainCamera = Camera.main;
 		transform.eulerAngles = new Vector3(transform.eulerAngles.x, mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
+	}
+
+	async void SendSyncMessages() {
+		while(hasVideoPlaying && VRAdapter.Instance) {
+			if(player.isPlaying) {
+				sendImmediateSync();
+			}
+			await Task.Delay((int)(timeBetweenSyncs * 1000));
+		}
+	}
+
+	void sendImmediateSync() {
+		VRAdapter.Instance.SendSync(VideoTime);
 	}
 
 	void endOfVideo() {

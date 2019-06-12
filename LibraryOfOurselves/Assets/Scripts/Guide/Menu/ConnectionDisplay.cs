@@ -187,7 +187,16 @@ public class ConnectionDisplay : MonoBehaviour{
 			if(GuideVideoPlayer.Instance.HasVideoLoaded) {//can't pair with a device while a video is loaded up.
 				pairButton.gameObject.SetActive(false);
 			} else {
-				pairButton.gameObject.SetActive(true);
+				if(SettingsAuth.TemporalUnlock)
+					pairButton.gameObject.SetActive(true);
+				else {
+					int pairedDevices = 0;
+					foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+						if(handle.connection.paired)
+							++pairedDevices;
+					}
+					pairButton.gameObject.SetActive(pairedDevices <= 0);//Only show if we're not connected to a device yet
+				}
 			}
 			StartCoroutine(enableUnlockButtonAfterABit());
 		} else {
@@ -293,7 +302,6 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void OnReceiveAutocalibrationResult(byte command, float drift) {
-		//Debug.Log("Received autocalibration result (" + command + "): drift = " + drift);
 		switch(command) {
 			case 0:
 				acLoadingCircle.gameObject.SetActive(false);

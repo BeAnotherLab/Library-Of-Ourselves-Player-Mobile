@@ -20,6 +20,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onPause;
 	[SerializeField] UnityEvent onNextVideoIsUnavailable;
 
+	[Header("Sync settings")]
+	[SerializeField] float allowedErrorForSyncedPlayback = 0.5f;
+	[SerializeField] float maximumAllowedErrorBeforeResync = 3.0f;
+	[SerializeField] float maximumPlaybackSpeed = 1.5f;
+	[SerializeField] float minimumPlaybackSpeed = 0.75f;
+
 	public static GuideVideoPlayer Instance { get; private set; }
 
 	double VideoTime { get { return videoPlayer.time; } }
@@ -170,17 +176,24 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	async void SendSyncMessages() {
-		while(HasVideoLoaded && GuideAdapter.Instance) {
-			if(Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
-				sendImmediateSync();
+		int pairedDevices = 0;
+		foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+			if(handle.connection.active && handle.connection.paired) {
+				++pairedDevices;
 			}
-			await Task.Delay((int)(timeBetweenSyncs * 1000));
+		}
+		if(pairedDevices > 1) {//only send sync packets if there's more than one device paired atm
+			while(HasVideoLoaded && GuideAdapter.Instance) {
+				if(Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
+					sendImmediateSync();
+				}
+				await Task.Delay((int)(timeBetweenSyncs * 1000));
+			}
 		}
 	}
 
 	void sendImmediateSync() {
 		GuideAdapter.Instance.SendSync(VideoTime);
-		Debug.Log("Sync: " + VideoTime);
 	}
 
 	private void Update() {
@@ -282,6 +295,39 @@ public class GuideVideoPlayer : MonoBehaviour{
 				speed = 1;
 			videoPlayer.playbackSpeed = speed;
 			yield return null;
+		}
+	}
+
+
+	public void Sync(DateTime unused, double targetTimeD) {
+		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
+		float targetTime = (float)targetTimeD;
+		float actualTime = (float)VideoTime;
+		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
+
+		//Shall we speed up or slow down?
+		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
+			videoPlayer.playbackSpeed = 1;
+		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
+			Debug.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
+			videoPlayer.time = targetTime;
+			videoPlayer.playbackSpeed = 1;
+		} else if(delta < 0) {// actualTime < targetTime -> go faster
+			delta = Mathf.Abs(delta) - allowedErrorForSyncedPlayback;//0 when the difference is the allowed range
+			//remap delta to 0..1
+			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
+			//and remap from 0..1 to 1..max playback speed
+			videoPlayer.playbackSpeed = Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta);
+		} else {// actualTime > targetTime -> go slower
+			delta = delta - allowedErrorForSyncedPlayback;//0 when difference is 0.5, 1 at 1.5 and higher
+			//remap delta to 0..1
+			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
+			//and remap from 0..1 to 1..min playback speed
+			videoPlayer.playbackSpeed = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
+		}
+
+		if(!videoPlayer.isPlaying) {
+			Debug.LogWarning("Player was stopped when we received Sync message");
 		}
 	}
 

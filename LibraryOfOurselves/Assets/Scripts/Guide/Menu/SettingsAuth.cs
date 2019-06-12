@@ -67,6 +67,10 @@ public class SettingsAuth : MonoBehaviour{
 		if(CurrentPIN == pinInput.text) {
 			IsAppUnlocked = true;
 			TemporalUnlock = true;
+			//Update all device displays
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
+				h.display.UpdateDisplay();
+			}
 			//Ok!
 			if(shouldOpenSettings) {
 				openSettingsPanel.Invoke();

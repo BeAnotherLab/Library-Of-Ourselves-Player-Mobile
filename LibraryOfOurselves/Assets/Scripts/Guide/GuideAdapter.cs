@@ -108,8 +108,9 @@ public class GuideAdapter : MonoBehaviour{
 		
 		connection.lockedId = lockedId;
 
-		if(handle != null) {
-			handle.display.UpdateDisplay();
+		//Update all device displays
+		foreach(ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
+			h.display.UpdateDisplay();
 		}
 		
 	}
@@ -210,6 +211,23 @@ public class GuideAdapter : MonoBehaviour{
 		data.WriteDouble(videoTime);
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+
+	public void OnReceiveSync(TCPConnection connection, DateTime timestamp, double videoTime) {
+		if(!Settings.SendSyncMessages) return;//Ignore this packet if Sync is disabled.
+		//only take it into account if it's the only device we're paired with
+		if(connection != null && connection.paired) {
+			int pairedDevices = 0;
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+				if(handle.connection.active && handle.connection.paired) {
+					++pairedDevices;
+				}
+			}
+			if(pairedDevices == 1) {
+				//ok, we can pass that on to the video player.
+				GuideVideoPlayer.Instance.Sync(timestamp, videoTime);
+			}
+		}
 	}
 
 	public void SendCalibrate(TCPConnection connection) {
