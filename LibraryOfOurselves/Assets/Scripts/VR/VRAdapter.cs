@@ -238,6 +238,7 @@ public class VRAdapter : MonoBehaviour{
 	public void SendSync(double videoTime) {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
+			data.WriteString("sync");
 			data.WriteTimestamp(DateTime.Now);
 			data.WriteDouble(videoTime);
 			currentlyPaired.Send(data);

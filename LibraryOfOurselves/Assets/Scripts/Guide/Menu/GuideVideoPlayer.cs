@@ -300,6 +300,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 
 	public void Sync(DateTime unused, double targetTimeD) {
+		Debug.Log("Received sync for: " + targetTimeD);
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)targetTimeD;
 		float actualTime = (float)VideoTime;
