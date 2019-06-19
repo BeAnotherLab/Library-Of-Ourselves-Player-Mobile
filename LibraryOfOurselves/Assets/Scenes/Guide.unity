@@ -8246,7 +8246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0.509434, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: 1}
+  m_EffectDistance: {x: 0.5, y: 0.5}
   m_UseGraphicAlpha: 1
 --- !u!1 &981394064
 GameObject:
@@ -14067,6 +14067,10 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  allowedErrorForSyncedPlayback: 0.25
+  maximumAllowedErrorBeforeResync: 1
+  maximumPlaybackSpeed: 1.5
+  minimumPlaybackSpeed: 0.75
 --- !u!4 &1641151808
 Transform:
   m_ObjectHideFlags: 0

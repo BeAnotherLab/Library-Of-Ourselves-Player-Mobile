@@ -46,6 +46,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 	float lastTimeShown = 0;
 	bool playImmediately = false;//when true, will play the next video loaded immediately once it's loaded.
 
+	bool onlyOneDevice;
+
 	VideoDisplay currentVideo = null;
 
 	private void Start() {
@@ -55,7 +57,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		HasVideoLoaded = false;
 
 		timeSlider.onValueChanged.AddListener(delegate (float val) {
-			if(!AllowedToChangeTimeOrPause) {
+			if(onlyOneDevice || !AllowedToChangeTimeOrPause) {
 				timeSlider.SetValueWithoutNotify((float)VideoTime/TotalVideoTime);
 				return;
 			}
@@ -128,7 +130,6 @@ public class GuideVideoPlayer : MonoBehaviour{
 		startedPlayback = true;
 		if(GuideAdapter.Instance) {
 			GuideAdapter.Instance.SendPlayVideo();
-			GuideAdapter.Instance.SendSync(videoPlayer.time);
 		}
 		Playing = true;
 		SendSyncMessages();
@@ -182,7 +183,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 				++pairedDevices;
 			}
 		}
-		if(pairedDevices > 1) {//only send sync packets if there's more than one device paired atm
+		onlyOneDevice = pairedDevices <= 1;
+		if(!onlyOneDevice) {//only send sync packets if there's more than one device paired atm
 			while(HasVideoLoaded && GuideAdapter.Instance) {
 				if(Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
 					sendImmediateSync();
@@ -287,6 +289,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		__slowStartRoutine = StartCoroutine(__slowStart());
 	}
 	IEnumerator __slowStart() {
+		if(onlyOneDevice) yield break;
 		float speed = 0.1f;
 		videoPlayer.playbackSpeed = speed;
 		while(speed < 1) {
