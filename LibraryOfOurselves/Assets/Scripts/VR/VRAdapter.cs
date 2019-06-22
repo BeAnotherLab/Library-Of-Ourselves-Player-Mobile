@@ -324,4 +324,11 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
+	public void ReceiveGotoTime(TCPConnection connection, double time) {
+		if(currentlyPaired != null && currentlyPaired == connection) {
+			if(VRVideoPlayer.Instance != null)
+				VRVideoPlayer.Instance.Goto(time);
+		}
+	}
+
 }

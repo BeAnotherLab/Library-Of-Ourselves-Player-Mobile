@@ -50,21 +50,39 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	VideoDisplay currentVideo = null;
 
+	public void RetrieveSyncSettings() {
+		allowedErrorForSyncedPlayback = Settings.AllowedErrorForSyncedPlayback;
+		maximumAllowedErrorBeforeResync = Settings.MaximumErrorForSyncedPlayback;
+		maximumPlaybackSpeed = Settings.SyncedPlaybackMaximumTimeDilation;
+		minimumPlaybackSpeed = 1.0f / Settings.SyncedPlaybackMaximumTimeDilation;
+	}
+
 	private void Start() {
 		Instance = this;
 		onStop.Invoke();
 
+
+
+		//Retrieve the sync settings from saved settings on the device!
+		RetrieveSyncSettings();
+		//End retrieve sync settings
+
+
+
+
 		HasVideoLoaded = false;
 
 		timeSlider.onValueChanged.AddListener(delegate (float val) {
-			if(onlyOneDevice || !AllowedToChangeTimeOrPause) {
+			/*if(onlyOneDevice || !AllowedToChangeTimeOrPause) {
 				timeSlider.SetValueWithoutNotify((float)VideoTime/TotalVideoTime);
 				return;
-			}
+			}*/					//<- this code, if uncommented, prevents the time slider from being modified when playing back video for a single device
 			float time = val * TotalVideoTime;
-			videoPlayer.time = time;
+			videoPlayer.time = time;//set guide video time
+			//send packet to force user device to reach selected time
+			GuideAdapter.Instance.SendGotoTime(videoPlayer.time);
 			if(Playing)
-				Pause(true);//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
+				Pause();//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
 		});
 
 		videoPlayer.loopPointReached += delegate (VideoPlayer player) {
@@ -224,9 +242,11 @@ public class GuideVideoPlayer : MonoBehaviour{
 			}
 
 			//show time on slider
-			if(!Mathf.Approximately((float)videoPlayer.time, lastTimeShown) && videoPlayer.isPlaying) {
-				lastTimeShown = (float)videoPlayer.time;
-				timeSlider.SetValueWithoutNotify((float)videoPlayer.time / TotalVideoTime);
+			if(!Input.GetMouseButton(0)) {// <- only if we're not currently clicking/tapping
+				if(!Mathf.Approximately((float)videoPlayer.time, lastTimeShown) && videoPlayer.isPlaying) {
+					lastTimeShown = (float)videoPlayer.time;
+					timeSlider.SetValueWithoutNotify((float)videoPlayer.time / TotalVideoTime);
+				}
 			}
 
 			//check whether it's time to send a reorient?
@@ -303,6 +323,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 
 	public void Sync(DateTime unused, double targetTimeD) {
+
+		if(!videoPlayer.isPlaying) {
+			Debug.LogWarning("Player was stopped when we received Sync message for " + targetTimeD);
+			return;
+		}
+
 		Debug.Log("Received sync for: " + targetTimeD);
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)targetTimeD;
@@ -329,9 +355,13 @@ public class GuideVideoPlayer : MonoBehaviour{
 			//and remap from 0..1 to 1..min playback speed
 			videoPlayer.playbackSpeed = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
 		}
+	}
 
-		if(!videoPlayer.isPlaying) {
-			Debug.LogWarning("Player was stopped when we received Sync message");
+	public void RecenterAll() {
+		foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+			if(handle.connection.active && handle.connection.paired) {
+				GuideAdapter.Instance.SendCalibrate(handle.connection);
+			}
 		}
 	}
 

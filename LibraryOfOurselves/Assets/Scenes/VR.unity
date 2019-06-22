@@ -656,6 +656,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0.8
   to: 1.1
   easingFunction: 5
@@ -1074,6 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f627d94b6f8a2bc4f957ab66515c812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeBetweenSyncs: 0.75
   semispherePlayer: {fileID: 1214038000}
   spherePlayer: {fileID: 956452550}
   leftAudio: {fileID: 677621426}
@@ -1993,6 +1995,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 0
@@ -2399,6 +2402,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 4
@@ -2613,6 +2617,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 0
@@ -3180,6 +3185,22 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: AutocalibrationResultMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  gotoTime:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_MethodName: ReceiveGotoTime
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: VideoTimeMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   ignoreIncorrectChannels: 1
 --- !u!1 &1724388415
 GameObject:
@@ -3499,6 +3520,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0.8
   to: 1.1
   easingFunction: 5

@@ -24,6 +24,7 @@ public class TCPConnection {
 	public string lockedId = "free";//for VR and AUDIO devices, either "free" or a guide's uniqueId to allow pairing with.
 	public bool responsive = true;//after not receiving anything for a while, will go to "unresponsive"
 	public IPEndPoint udpEndpoint = null;//if this is non-null, the connection has been established over udp rather than tcp
+	public IPEndPoint sourceEndpoint = null;//the UDP endpoint through which the connection has been established.
 
 	DateTime lastCommunication;
 
@@ -138,5 +139,11 @@ public class TCPConnection {
 
 	public override string ToString() {
 		return "[" + deviceType + ": " + uniqueId + "]";
+	}
+
+	~TCPConnection() {
+		Debug.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
+		if(UDPListener.Instance)
+			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
 	}
 }

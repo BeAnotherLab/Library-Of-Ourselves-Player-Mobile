@@ -56,10 +56,16 @@ public class VideoDisplay : MonoBehaviour{
 		string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 		string thumbnailPath = "";
 		for(int i = 0; i < split.Length - 1; ++i) thumbnailPath += split[i] + "/";
-		thumbnailPath += videoName + ".png";
-		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
+		thumbnailPath += videoName;
+		//try several known extensions:
+		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath + ".png");
+		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".PNG");
+		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpg");
+		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPG");
+		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpeg");
+		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPEG");
 		if(thumbnail == null) {
-			//No thumbnail for this one i guess, keep the default.
+			//none of the extensions have worked, keep the default in that case.
 		} else {
 			videoThumbnail.sprite = thumbnail;
 		}
@@ -122,8 +128,7 @@ public class VideoDisplay : MonoBehaviour{
 	public void contract() {
 		expandedDisplay = null;
 		if(UseFullscreenVideoShelf) {
-			//just expand again, actually
-			expand();
+			//nothing to do here.
 		} else {
 			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
 			expanding.InterpolateBackward();

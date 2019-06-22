@@ -31,7 +31,7 @@ public class SettingsAuth : MonoBehaviour{
 		get {
 			if(HazePrefs.HasKey("settings-pin")) {
 				return HazePrefs.GetString("settings-pin");
-			} else return "0000";
+			} else return "000101";
 		}
 		set {
 			HazePrefs.SetString("settings-pin", value);
@@ -81,6 +81,10 @@ public class SettingsAuth : MonoBehaviour{
 				VideoDisplay.expandedDisplay.expand();//update that display.
 			}
 		}
+	}
+
+	public static void ShutoffAdminAccess() {
+		TemporalUnlock = false;
 	}
 
 }

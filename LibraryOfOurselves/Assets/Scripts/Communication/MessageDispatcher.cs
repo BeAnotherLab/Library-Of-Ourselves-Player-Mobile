@@ -14,6 +14,7 @@ using UnityEngine.Events;
 [Serializable] class VideoTimeStampMessage : UnityEvent<TCPConnection, DateTime> { }
 [Serializable] class VideoTimeStampTimeBoolMessage : UnityEvent<TCPConnection, DateTime, double, bool> { }
 [Serializable] class VideoTimeStampAndTimeMessage : UnityEvent<TCPConnection, DateTime, double> { }
+[Serializable] class VideoTimeMessage : UnityEvent<TCPConnection, double> { }
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
 [Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
@@ -48,6 +49,7 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] StatusMessage status;
 	[SerializeField] AutocalibrationMessage autocalibration;
 	[SerializeField] AutocalibrationResultMessage autocalibrationResult;
+	[SerializeField] VideoTimeMessage gotoTime;
 	[SerializeField] bool ignoreIncorrectChannels = true;
 
 	public void OnMessageReception(TCPConnection connection, string channel, List<byte> data) {
@@ -162,6 +164,11 @@ public class MessageDispatcher : MonoBehaviour{
 					byte command = data.ReadByte();
 					float drift = data.ReadFloat();
 					autocalibrationResult.Invoke(connection, command, drift);
+				}
+				break;
+			case "goto": {
+					double time = data.ReadDouble();
+					gotoTime.Invoke(connection, time);
 				}
 				break;
 			default:

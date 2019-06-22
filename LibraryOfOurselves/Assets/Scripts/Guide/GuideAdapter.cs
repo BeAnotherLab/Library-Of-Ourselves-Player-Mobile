@@ -295,4 +295,12 @@ public class GuideAdapter : MonoBehaviour{
 		}
 	}
 
+	public void SendGotoTime(double time) {
+		//Broadcast a time to all user devices
+		List<byte> data = new List<byte>();
+		data.WriteString("goto");
+		data.WriteDouble(time);
+		TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+
 }

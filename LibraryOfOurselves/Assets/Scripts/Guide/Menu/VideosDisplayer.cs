@@ -158,8 +158,8 @@ public class VideosDisplayer : MonoBehaviour {
 						++numberOfConnectedDevices;
 						if(!handle.display.VideosAvailable.Contains(videoName)) {
 							allConnectedDevicesHaveIt = false;
-							if(videoDisplay == VideoDisplay.expandedDisplay)
-								videoDisplay.contract();//no longer available.
+							//if(videoDisplay == VideoDisplay.expandedDisplay)
+							//	videoDisplay.contract();//no longer available. //<- we do not need to do this anymore. Simply greying out the "Choose" button is enough.
 							break;
 						}
 					}
@@ -176,6 +176,9 @@ public class VideosDisplayer : MonoBehaviour {
 			/*if(VideoDisplay.expandedDisplay == videoDisplay && !videoDisplay.Available) {
 				videoDisplay.contract();
 			}*/
+			//Nope - instead simply update it
+			if(VideoDisplay.expandedDisplay == videoDisplay)
+				videoDisplay.expand();
 		}
 	}
 

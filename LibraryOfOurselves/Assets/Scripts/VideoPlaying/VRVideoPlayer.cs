@@ -20,6 +20,8 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onPlay;
 	[SerializeField] OVRInput.Button oculusGoRecenterButton = OVRInput.Button.PrimaryIndexTrigger;//change this to change which button controls recenter on oculus go
 	[SerializeField] GvrControllerButton mirageRecenterButton = GvrControllerButton.TouchPadButton;//change this to change which button controls recenter on mirage solo
+	[SerializeField] OVRInput.Button oculusGoQuitButton = OVRInput.Button.PrimaryThumbstick;
+	[SerializeField] GvrControllerButton mirageQuitButton = GvrControllerButton.App;
 	[SerializeField] GameObject choiceContainer;
 	[SerializeField] TextMesh questionMesh;
 	[SerializeField] TextMesh option1Mesh;
@@ -77,6 +79,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	public struct VideoLoadingResponse { public bool ok;public string errorMessage; }
 
+	long lastReadyFrame = -1;
 
 	private void Start() {
 		Camera.main.backgroundColor = DeviceColour.getDeviceColor(SystemInfo.deviceUniqueIdentifier);//Set background colour to something unique
@@ -97,6 +100,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		player.loopPointReached += delegate (VideoPlayer player) {
 			//as long as we havent received the Stop message, we can simply keep on playing.
 			play();
+		};
+		player.frameReady += delegate (VideoPlayer unused, long frame) {
+			lastReadyFrame = frame;
 		};
 	}
 
@@ -161,6 +167,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		//Prepare video player
 		player.url = getPath(videoName);
 		PlaybackSpeed = 1;
+		lastReadyFrame = -1;
+		player.sendFrameReadyEvents = true;//will only send up until the end of this method where we re-disable this param
 		player.Prepare();
 		Debug.Log("Preparing player: CanSetTime=" + player.canSetTime + ", CanSetPlaybackSpeed=" + player.canSetPlaybackSpeed);
 
@@ -189,6 +197,27 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		Reorient(Vector3.zero);//reset orientation
 
+		//Show first frame as soon as it's loaded in and rendered, making sure the video is 100% paused when we do so.
+		float previousVolume = Volume;
+		Volume = 0;//mute it for now
+		player.Play();//we do need to start playing it to render the frame, but we'll be pausing immediately after
+		while(lastReadyFrame == -1) {
+			//no frames have been readied so far...
+			await Task.Delay(20);
+		}//at least one frame has been marked as ready, so now we should be able to display the video
+		player.sendFrameReadyEvents = false;//stop sending them, we only need the callback for the initial frame
+		player.time = 0;
+		await Task.Delay(10);
+		player.time = 0;
+		player.Pause();//make sure the video is paused for now...
+		player.time = 0;
+		Volume = previousVolume;//restore volume
+		await Task.Delay(100);//wait a tenth of a second just to be sure the first frame has been rendered to the render texture
+		//and display on screen:
+		blackScreen.SetActive(false);
+		if(is360) spherePlayer.SetActive(true);
+		else semispherePlayer.SetActive(true);
+
 		return response;
 	}
 
@@ -216,6 +245,26 @@ public class VRVideoPlayer : MonoBehaviour{
 			rightAudio.Stop();
 		}
 		hasVideoPlaying = false;
+	}
+
+	float Volume {
+		get {
+			if(BinauralAudio)
+				return leftAudio.volume;
+			else if(player.audioTrackCount > 0)
+				return player.GetDirectAudioVolume(0);
+			else return 0;
+		}
+		set {
+			if(BinauralAudio) {
+				leftAudio.volume = value;
+				rightAudio.volume = value;
+			} else {
+				for(ushort track = 0; track < player.audioTrackCount; ++track) {
+					player.SetDirectAudioVolume(track, value);
+				}
+			}
+		}
 	}
 
 	public void PlayVideo(DateTime timestamp) {
@@ -333,17 +382,25 @@ public class VRVideoPlayer : MonoBehaviour{
 			if(OVRInput.Get(oculusGoRecenterButton)) {
 				Recenter();
 			}
+			if(OVRInput.Get(oculusGoQuitButton)) {
+				Application.Quit();
+			}
 		} else if(VRDevice.MirageSolo) {//On Mirage Solo, use the controller's click button
 			bool overrideTouch = false;
+			bool overrideQuit = false;
 			GvrControllerInputDevice device = GvrControllerInput.GetDevice(GvrControllerHand.Dominant);
 			if(device == null) {
 				device = GvrControllerInput.GetDevice(GvrControllerHand.NonDominant);
 				if(device == null) {
 					overrideTouch = GvrControllerInput.ClickButton;
+					overrideQuit = GvrControllerInput.AppButton;
 				}
 			}
 			if((device != null && device.GetButton(mirageRecenterButton)) || overrideTouch) {
 				Recenter();
+			}
+			if((device != null && device.GetButton(mirageQuitButton)) || overrideQuit) {
+				Application.Quit();
 			}
 		} else if(VRDevice.GearVR) {//On GearVR, double-tap to recalibrate
 			if(firstTap > 0) {//we've tapped a first time!
@@ -387,6 +444,13 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	public void Reorient(Vector3 eulerAngles) {
 		rotator.localEulerAngles = eulerAngles;
+	}
+
+	//Received when the guide attempts to change the time on the video.
+	public void Goto(double time) {
+		VideoTime = time;
+		PlaybackSpeed = 1;
+		sendImmediateSync();
 	}
 
 }

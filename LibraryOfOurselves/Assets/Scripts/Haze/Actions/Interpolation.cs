@@ -11,6 +11,7 @@ public class Interpolation : MonoBehaviour {
 	[SerializeField] float waitBetweenCycles = 0;
 	[SerializeField] bool onStart = true;
 	[SerializeField] bool onEnable = false;
+	[SerializeField] bool simulateFinishOnDisable = true;
 	[SerializeField] float from = 0;
 	[SerializeField] float to = 1;
 	[SerializeField] EasingFunction easingFunction;
@@ -83,6 +84,14 @@ public class Interpolation : MonoBehaviour {
 	
 	void OnEnable(){
 		if(onEnable) Interpolate();
+	}
+
+	private void OnDisable() {
+		if(simulateFinishOnDisable && Interpolating) {
+			if(previousDirection)
+				lerp(to);
+			else lerp(from);
+		}
 	}
 
 	public static float EaseSingle(float val, EasingFunction easingFunction) {

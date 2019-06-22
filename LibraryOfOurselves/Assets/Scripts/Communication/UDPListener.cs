@@ -35,15 +35,19 @@ public class UDPListener : MonoBehaviour{
 						string uniqueId = splitMessage[3];
 						IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
 						if(!encounteredIPs.Contains(endpoint)) {
-							Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port);
-							//Start connection with this guide
-							if(await tcpClient.ConnectToHost(endpoint, uniqueId, serverData.RemoteEndPoint)) {
+							Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port + "...");
+
+							//Start connection with this guide - deleted this because it "blocks" the thread
+							/*if(await tcpClient.ConnectToHost(endpoint, uniqueId, serverData.RemoteEndPoint)) {
 								encounteredIPs.Add(endpoint);
 								Debug.Log("Successfully connected to " + endpoint.Address + ".");
 							} else {
 								Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", will retry upon receiving UDP message.");
+							}*/
 
-							}
+							//try within different thread to connect - we'll allow another try within 10 seconds in case it does turn out to fail
+							tcpClient.ConnectToHost(endpoint, uniqueId, serverData.RemoteEndPoint);
+							encounteredIPs.Add(endpoint);
 						}
 					}
 				}
@@ -65,6 +69,10 @@ public class UDPListener : MonoBehaviour{
 				Debug.LogWarning("[UDPListener] Error, cannot send UDP packet: " + e.ToString());
 			}
 		}
+	}
+
+	public void RemoveEncounteredIP(IPEndPoint endpoint) {
+		encounteredIPs.Remove(endpoint);
 	}
 
 	private void OnDestroy() {

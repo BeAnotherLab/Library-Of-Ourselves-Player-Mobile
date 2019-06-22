@@ -84,6 +84,7 @@ public class TCPClient : MonoBehaviour{
 		connection.deviceType = TCPConnection.DeviceType.GUIDE;
 		connection.client = new TcpClient();
 		connection.client.NoDelay = true;
+		connection.sourceEndpoint = endpoint;
 		IPAddress ipv4 = endpoint.Address;
 		if(ipv4.AddressFamily != AddressFamily.InterNetwork)
 			ipv4 = ipv4.MapToIPv4();
@@ -93,7 +94,7 @@ public class TCPClient : MonoBehaviour{
 
 		try {
 			CancellationTokenSource cts = new CancellationTokenSource();
-			cts.CancelAfter(3000);//Cancel after 3 seconds
+			cts.CancelAfter(10000);//Cancel after 10 seconds
 			TaskCompletionSource<bool> cancellationCompletionSource = new TaskCompletionSource<bool>();
 
 			var connectAsync = connection.client.Client.ConnectAsync(ipv4, endpoint.Port);
@@ -141,6 +142,7 @@ public class TCPClient : MonoBehaviour{
 			Debug.LogError("[TCPClient] Error, cannot send identification message to host: " + e.ToString(), this);
 		}
 
+		UDPListener.Instance.RemoveEncounteredIP(endpoint);
 		return false;
 	}
 
