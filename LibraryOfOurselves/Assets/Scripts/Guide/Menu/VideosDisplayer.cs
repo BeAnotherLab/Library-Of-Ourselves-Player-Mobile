@@ -145,8 +145,6 @@ public class VideosDisplayer : MonoBehaviour {
 		Instance = null;
 	}
 
-	int previousNumberOfConnectedDevices = 0;
-
 	private void Update() {
 		//check whether we have all the videos on each device connected to us
 		foreach(VideoDisplay videoDisplay in displayedVideos) {
@@ -167,10 +165,6 @@ public class VideosDisplayer : MonoBehaviour {
 					}
 				}
 			}
-
-			//no need to go further each update loop if it's still the same amount of devices (assuming we won't run into 1 device connecting on the same frame as another disconnects)
-			if(previousNumberOfConnectedDevices == numberOfConnectedDevices) return;
-			previousNumberOfConnectedDevices = numberOfConnectedDevices;
 
 			videoDisplay.Available = allConnectedDevicesHaveIt;
 
