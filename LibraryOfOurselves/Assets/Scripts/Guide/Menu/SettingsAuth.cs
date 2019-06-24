@@ -13,12 +13,13 @@ public class SettingsAuth : MonoBehaviour{
     
 	public bool IsAppUnlocked {
 		get {
-			if(HazePrefs.HasKey("app-unlocked")) {
+			/*if(HazePrefs.HasKey("app-unlocked")) {
 				if(HazePrefs.GetInt("app-unlocked") == 1) {
 					return true;
 				}
 			}
-			return false;
+			return false;*/
+			return true; // App is always unlocked now. Might want to revert this for production build.
 		}
 		set {
 			HazePrefs.SetInt("app-unlocked", value ? 1 : 0);

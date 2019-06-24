@@ -96,6 +96,12 @@ public class VideoShelf : MonoBehaviour {
 		}
 	}
 
+	private void OnDisable() {
+		if(VideoDisplay.expandedDisplay != null) {
+			VideoDisplay.expandedDisplay.contract();
+		}
+	}
+
 	public void DisplayCurrentVideo() {
 
 		current = VideoDisplay.expandedDisplay;
