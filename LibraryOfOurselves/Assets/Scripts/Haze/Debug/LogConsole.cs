@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class LogConsole : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class LogConsole : MonoBehaviour
     {
         if (!enabled) return;
 
-        t += message + "\n";
+        t += "[" + DateTime.Now + "] [" + type + "] " + message + "\n" + stackTrace + "\n";
     }
 
     public static string Logs()
@@ -41,15 +42,17 @@ public class LogConsole : MonoBehaviour
         return instance.t;
     }
 
-    void write()
-    {
-        using (FileStream fs = File.OpenWrite(path)){
-            string rf = t;
-            rf.Replace("\n", "\r\n");
-            byte[] dat = new System.Text.UTF8Encoding(true).GetBytes(rf);
-            fs.Write(dat, 0, dat.Length);
-        }
+    void write() {
+		string fullPath = Application.persistentDataPath;
+		if(fullPath[fullPath.Length-1] != '/' && fullPath[fullPath.Length-1] != '\\') {
+			fullPath += "/";
+		}
+		fullPath += path;
+		Debug.Log("Outputting logs to: " + fullPath);
+		string rf = t;
+		rf.Replace("\n", "\r\n");
+		File.WriteAllText(fullPath, rf);
 
-    }
+	}
 
 }
