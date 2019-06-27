@@ -166,6 +166,7 @@ public class VideosDisplayer : MonoBehaviour {
 				}
 			}
 
+			bool previouslyAvailable = videoDisplay.Available;
 			videoDisplay.Available = allConnectedDevicesHaveIt;
 
 			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Length > 0) {
@@ -177,7 +178,7 @@ public class VideosDisplayer : MonoBehaviour {
 				videoDisplay.contract();
 			}*/
 			//Nope - instead simply update it
-			if(VideoDisplay.expandedDisplay == videoDisplay)
+			if(VideoDisplay.expandedDisplay == videoDisplay && previouslyAvailable != videoDisplay.Available)//only update if its availability changed this frame
 				videoDisplay.expand();
 		}
 	}
