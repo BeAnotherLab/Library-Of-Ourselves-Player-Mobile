@@ -1138,6 +1138,7 @@ MonoBehaviour:
   option2Mesh: {fileID: 1757211909}
   blackScreen: {fileID: 1569996673}
   rotator: {fileID: 1252721254}
+  audioLoadingMode: 2
   allowedErrorForSyncedPlayback: 0.4
   maximumAllowedErrorBeforeResync: 0.8
   maximumPlaybackSpeed: 1.2
