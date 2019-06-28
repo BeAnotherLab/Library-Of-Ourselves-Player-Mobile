@@ -1849,6 +1849,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: loo_log.txt
+  writeLogsTimer: 20
+  writeLogsCounter: 20
 --- !u!4 &1125294624
 Transform:
   m_ObjectHideFlags: 0
