@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using UnityEngine.Video;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 public class VRVideoPlayer : MonoBehaviour{
 
@@ -28,12 +29,19 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] TextMesh option2Mesh;
 	[SerializeField] GameObject blackScreen;
 	[SerializeField] Transform rotator;
+	[SerializeField] AudioLoadingMode audioLoadingMode = AudioLoadingMode.UnityWebResource;
 
 	[Header("Sync settings")]
 	[SerializeField] float allowedErrorForSyncedPlayback = 0.5f;
 	[SerializeField] float maximumAllowedErrorBeforeResync = 3.0f;
 	[SerializeField] float maximumPlaybackSpeed = 1.5f;
 	[SerializeField] float minimumPlaybackSpeed = 0.75f;
+
+	public enum AudioLoadingMode {
+		WWW,
+		NLayer,
+		UnityWebResource
+	}
 
 
 	public static VRVideoPlayer Instance { get; private set; }
@@ -50,8 +58,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		get { return __binauralAudio; }
 		set {
 			__binauralAudio = value;
-			leftAudio.gameObject.SetActive(value);
-			rightAudio.gameObject.SetActive(value);
+			leftAudio.enabled = value;
+			rightAudio.enabled = value;
 			player.audioOutputMode = value ? VideoAudioOutputMode.None : VideoAudioOutputMode.Direct;
 		}
 	}
@@ -115,7 +123,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	static string getAudioPath(string videoName, bool left) {
-		return Filesystem.SDCardRoot + videoName + "-" + (left ? "l" : "r") + ".mp3";
+		return Filesystem.SDCardRoot + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
 	}
 
 	public static bool IsVideoAvailable(string videoName) {
@@ -140,6 +148,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		if(!IsVideoAvailable(videoName)) {
 			response.errorMessage = "Video unavailable.";
 			response.ok = false;
+			Debug.LogError("Video " + videoName + " could not be found.");
 			return response;
 		}
 
@@ -147,22 +156,51 @@ public class VRVideoPlayer : MonoBehaviour{
 		if(mode.Length >= 3 && mode[0] == '3' && mode[1] == '6' && mode[2] == '0') {
 			//360 video.
 			is360 = true;
-		}
+			Debug.Log("Loading 360 degree video.");
+		} else Debug.Log("Loading 235 degree video.");
 
 		//Check if we need to play binaural audio
 		string leftAudioFile = getAudioPath(videoName, true);
 		string rightAudioFile = getAudioPath(videoName, false);
+		//determine extension based on whether the Wave file exists otherwise fallback onto mp3
+		if(File.Exists(leftAudioFile + ".wav")) leftAudioFile += ".wav"; else leftAudioFile += ".mp3";
+		if(File.Exists(rightAudioFile + ".wav")) rightAudioFile += ".wav"; else rightAudioFile += ".mp3";
+
+		//resources needed for loading audio
 		WWW leftWWW = null;
 		WWW rightWWW = null;
+		AudioClip leftClip = null;
+		AudioClip rightClip = null;
+		UnityWebRequest leftuwr = null;
+		UnityWebRequest rightuwr = null;
+
 		if(File.Exists(leftAudioFile) && File.Exists(rightAudioFile)) {
 			BinauralAudio = true;
+
 			//load the sound into the audio sources
-			leftWWW = new WWW("file://" + leftAudioFile.Replace('\\', '/'));
-			rightWWW = new WWW("file://" + rightAudioFile.Replace('\\', '/'));
+			switch(audioLoadingMode) {
+				case AudioLoadingMode.WWW:
+					leftWWW = new WWW("file://" + leftAudioFile.Replace('\\', '/'));
+					rightWWW = new WWW("file://" + rightAudioFile.Replace('\\', '/'));
+					break;
+				case AudioLoadingMode.NLayer:
+					leftClip = NLayerLoader.LoadMp3(leftAudioFile);
+					rightClip = NLayerLoader.LoadMp3(rightAudioFile);
+					break;
+				case AudioLoadingMode.UnityWebResource:
+					leftuwr = UnityWebRequestMultimedia.GetAudioClip("file://" + leftAudioFile.Replace('\\', '/'), AudioType.UNKNOWN);
+					rightuwr = UnityWebRequestMultimedia.GetAudioClip("file://" + rightAudioFile.Replace('\\', '/'), AudioType.UNKNOWN);
+					leftuwr.Send();
+					rightuwr.Send();
+					break;
+			}
 		} else {
 			BinauralAudio = false;
 		}
 		Debug.Log("Binaural audio: " + (BinauralAudio ? "on" : "off"));
+		if(BinauralAudio) {
+			Debug.Log("Loading binaural audio files: " + leftAudioFile + " and " + rightAudioFile);
+		}
 		
 		//Prepare video player
 		player.url = getPath(videoName);
@@ -188,11 +226,36 @@ public class VRVideoPlayer : MonoBehaviour{
 		//Wait for the audio sources to load
 		if(BinauralAudio) {
 			Debug.Log("Waiting for audio files to load...");
-			while(!leftWWW.isDone || !rightWWW.isDone)
-				await Task.Delay(20);
-			leftAudio.clip = leftWWW.GetAudioClip();
-			rightAudio.clip = rightWWW.GetAudioClip();
-			Debug.Log("Audio loaded!");
+
+			switch(audioLoadingMode) {
+				case AudioLoadingMode.WWW:
+					while(!leftWWW.isDone || !rightWWW.isDone)
+						await Task.Delay(20);
+					leftAudio.clip = leftWWW.GetAudioClip();
+					rightAudio.clip = rightWWW.GetAudioClip();
+					while(leftAudio.clip.loadState == AudioDataLoadState.Loading || rightAudio.clip.loadState == AudioDataLoadState.Loading)
+						await Task.Delay(20);
+					break;
+				case AudioLoadingMode.NLayer:
+					while(leftClip.loadState == AudioDataLoadState.Loading || rightClip.loadState == AudioDataLoadState.Loading)
+						await Task.Delay(20);
+					leftAudio.clip = leftClip;
+					rightAudio.clip = rightClip;
+					break;
+				case AudioLoadingMode.UnityWebResource:
+					while(!leftuwr.isDone || !rightuwr.isDone)
+						await Task.Delay(20);
+					leftAudio.clip = DownloadHandlerAudioClip.GetContent(leftuwr);
+					rightAudio.clip = DownloadHandlerAudioClip.GetContent(rightuwr);
+					if(leftuwr.isNetworkError)
+						Debug.LogError("Could not open audio file " + leftAudioFile + ": " + leftuwr.error);
+					if(rightuwr.isNetworkError)
+						Debug.LogError("Could not open audio file " + rightAudioFile + ": " + rightuwr.error);
+					break;
+			}
+
+			Debug.Log("Audio loaded: Left: " + leftAudio.clip.loadState + " / Right: " + rightAudio.clip.loadState);
+
 		}
 
 		Reorient(Vector3.zero);//reset orientation
