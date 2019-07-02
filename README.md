@@ -1,4 +1,4 @@
-# WIP-Player
+# Library-Of-Ourselves-Player-Mobile
 Mobile version of Library of ourselves app
 
 ### Current version: 0.1.3-beta
