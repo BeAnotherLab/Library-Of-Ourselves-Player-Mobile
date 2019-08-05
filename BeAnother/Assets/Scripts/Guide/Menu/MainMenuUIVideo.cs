@@ -20,6 +20,7 @@ public class MainMenuUIVideo : MonoBehaviour {
 		this.name = name;
 		this.path = path;
 		this.is360 = is360;
+		Debug.Log("MainMenuUIVideo::Init(): " + name + " is360: " + this.is360);
 	}
 	
 	/** Call when user selects this video */
@@ -31,6 +32,7 @@ public class MainMenuUIVideo : MonoBehaviour {
 		VideoMeta meta = VideoMeta.LoadMeta(name);
 		CurrentSelection.Angles = new Vector3(meta.pitch, meta.yaw, meta.roll);
 		onSelect.Invoke();
+		Debug.Log("MainMenuUIVideo::OnSelect(): " + CurrentSelection.Name + " is360: " + CurrentSelection.Is360);
 	}
 	
 }

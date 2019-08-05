@@ -32,10 +32,14 @@ public class MainMenuUIVideoPlacer : MonoBehaviour {
 		
 		//check 360
 		bool is360 = false;
+		Debug.Log("MainMenuUIVideoPlacer::AddVideo(): " + videoName + " (Checking for 360_ prefix)");
 		if(videoName.StartsWith(PREFIX_360)){
 			is360 = true;
 			//take the leading "360_" off the display name
 			videoName = videoName.Substring(PREFIX_360.Length, videoName.Length-PREFIX_360.Length);
+			Debug.Log("MainMenuUIVideoPlacer::AddVideo(): " + videoName + " is 360.");
+		} else {
+			Debug.Log("MainMenuUIVideoPlacer::AddVideo(): " + videoName + " is 235.");
 		}
 		
 		//get rid of suffix "_guide", "Guide" or "guide"
