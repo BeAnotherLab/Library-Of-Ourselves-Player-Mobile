@@ -11,9 +11,11 @@ public class Settings : MonoBehaviour {
 	[SerializeField] Slider allowedErrorSlider;
 	[SerializeField] Slider maximumErrorSlider;
 	[SerializeField] Slider syncedPlaybackSlider;
+	[SerializeField] Slider syncTimeSlider;
 	[SerializeField] Text allowedErrorText;
 	[SerializeField] Text maximumErrorText;
 	[SerializeField] Text syncedPlaybackText;
+	[SerializeField] Text syncTimeText;
 
 	public static Settings Instance { get; private set; }
 
@@ -76,10 +78,24 @@ public class Settings : MonoBehaviour {
 		}
 	}
 
+	public static float SyncTime {
+		get {
+			if(HazePrefs.HasKey("synctime")) {
+				return HazePrefs.GetFloat("synctime");
+			} else return 1.5f;
+		}
+		set {
+			HazePrefs.SetFloat("synctime", value);
+			GuideVideoPlayer.Instance.RetrieveSyncSettings();
+			if(Instance) Instance.OnEnable();
+		}
+	}
+
 	public void ResetSyncSettings() {
 		AllowedErrorForSyncedPlayback = 0.25f;
 		MaximumErrorForSyncedPlayback = 1.0f;
 		SyncedPlaybackMaximumTimeDilation = 1.5f;
+		SyncTime = 1.5f;
 		OnEnable();
 	}
 
@@ -87,10 +103,12 @@ public class Settings : MonoBehaviour {
 		allowedErrorSlider.SetValueWithoutNotify(AllowedErrorForSyncedPlayback);
 		maximumErrorSlider.SetValueWithoutNotify(MaximumErrorForSyncedPlayback);
 		syncedPlaybackSlider.SetValueWithoutNotify(SyncedPlaybackMaximumTimeDilation);
+		syncTimeSlider.SetValueWithoutNotify(SyncTime);
 
 		allowedErrorText.text = "Allowed error (" + AllowedErrorForSyncedPlayback + "s)";
 		maximumErrorText.text = "Maximum error (" + MaximumErrorForSyncedPlayback + "s)";
 		syncedPlaybackText.text = "Max time dilation (x" + SyncedPlaybackMaximumTimeDilation + ")";
+		syncTimeText.text = "Sync time (" + SyncTime + "s)";
 
 		allowedErrorSlider.maxValue = MaximumErrorForSyncedPlayback;
 		maximumErrorSlider.minValue = AllowedErrorForSyncedPlayback;
@@ -114,6 +132,10 @@ public class Settings : MonoBehaviour {
 
 	public void setTimeDilation(float f) {
 		SyncedPlaybackMaximumTimeDilation = f;
+	}
+
+	public void setSyncTime(float f) {
+		SyncTime = f;
 	}
 
 }

@@ -8,7 +8,7 @@ For smooth playback of the videos, the following export settings from Adobe Prem
 #### Guide videos:
 * Codec: H.264 (.mp4 format)
 * Resolution: At most 1024 on either axis
-* Frame rate: 25 to 30
+* Frame rate: 25 to 30 (try to keep this number a round integer for best quality)
 * Field order: Progressive
 * Render at maximum depth + Use maximum render quality both checked
 * Target bitrate: 0.19Mbps for tablets, up to 20Mbps for desktops

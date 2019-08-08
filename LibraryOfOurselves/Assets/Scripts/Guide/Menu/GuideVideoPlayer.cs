@@ -55,6 +55,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		maximumAllowedErrorBeforeResync = Settings.MaximumErrorForSyncedPlayback;
 		maximumPlaybackSpeed = Settings.SyncedPlaybackMaximumTimeDilation;
 		minimumPlaybackSpeed = 1.0f / Settings.SyncedPlaybackMaximumTimeDilation;
+		timeBetweenSyncs = Settings.SyncTime;
 	}
 
 	private void Start() {
