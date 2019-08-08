@@ -11,7 +11,7 @@ using UnityEngine.Events;
 [Serializable] class VideoNameMessage : UnityEvent<TCPConnection, string> { }
 [Serializable] class LoadVideoMessage : UnityEvent<TCPConnection, string, string> { }
 [Serializable] class LoadVideoResponseMessage : UnityEvent<TCPConnection, bool, string> { }
-[Serializable] class VideoTimeStampMessage : UnityEvent<TCPConnection, DateTime> { }
+[Serializable] class VideoTimeStampMessage : UnityEvent<TCPConnection, DateTime, float> { }
 [Serializable] class VideoTimeStampTimeBoolMessage : UnityEvent<TCPConnection, DateTime, double, bool> { }
 [Serializable] class VideoTimeStampAndTimeMessage : UnityEvent<TCPConnection, DateTime, double> { }
 [Serializable] class VideoTimeMessage : UnityEvent<TCPConnection, double> { }
@@ -116,7 +116,8 @@ public class MessageDispatcher : MonoBehaviour{
 				break;
 			case "play-video": {
 					DateTime stamp = data.ReadTimestamp();
-					playVideo.Invoke(connection, stamp);
+					float syncTime = data.ReadFloat();
+					playVideo.Invoke(connection, stamp, syncTime);
 				}
 				break;
 			case "pause-video": {

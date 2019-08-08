@@ -183,6 +183,7 @@ public class GuideAdapter : MonoBehaviour{
 		List<byte> data = new List<byte>();
 		data.WriteString("play-video");
 		data.WriteTimestamp(DateTime.Now);
+		data.WriteFloat(Settings.SyncTime);
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}

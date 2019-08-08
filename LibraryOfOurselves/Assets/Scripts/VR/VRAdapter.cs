@@ -211,10 +211,10 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceivePlayVideo(TCPConnection connection, DateTime timestamp) {
+	public void OnReceivePlayVideo(TCPConnection connection, DateTime timestamp, float syncTime) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			if(VRVideoPlayer.Instance) {
-				VRVideoPlayer.Instance.PlayVideo(timestamp);
+				VRVideoPlayer.Instance.PlayVideo(timestamp, syncTime);
 			}
 		}
 	}

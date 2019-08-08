@@ -330,13 +330,17 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 	}
 
-	public void PlayVideo(DateTime timestamp) {
+	public void PlayVideo(DateTime timestamp, float syncTime) {
 
 		blackScreen.SetActive(false);
 
 		//figure out difference in time between now and timestamp
 		TimeSpan difference = DateTime.Now - timestamp;
 		Debug.Log("Started playing video " + difference.TotalSeconds + " s ago.");
+		Debug.Log("Using sync time = " + syncTime);
+
+		//Apply sync time settings sent by Guide
+		timeBetweenSyncs = syncTime;
 
 		VideoTime = 0;
 		play();
