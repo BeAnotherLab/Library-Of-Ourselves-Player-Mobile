@@ -203,7 +203,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			}
 		}
 		onlyOneDevice = pairedDevices <= 1;
-		if(!onlyOneDevice) {//only send sync packets if there's more than one device paired atm
+		if(!onlyOneDevice || Settings.ForceMultiUserSetup) {//only send sync packets if there's more than one device paired atm
 			while(HasVideoLoaded && GuideAdapter.Instance) {
 				if(Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
 					sendImmediateSync();
@@ -219,7 +219,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	private void Update() {
 		if(displaying) {
-			if(!allDevicesReady) {
+			if(!allDevicesReady && videoPlayer.isPrepared) {
 				//Waiting for the devices to become ready...
 				allDevicesReady = true;
 				if(ConnectionsDisplayer.Instance) {
@@ -330,7 +330,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			return;
 		}
 
-		Debug.Log("Received sync for: " + targetTimeD);
+		Debug.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)targetTimeD;
 		float actualTime = (float)VideoTime;
@@ -341,7 +341,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			videoPlayer.playbackSpeed = 1;
 		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
 			Debug.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
-			videoPlayer.time = targetTime;
+			videoPlayer.time = targetTime + Settings.JumpAheadTime;//jump forward
 			videoPlayer.playbackSpeed = 1;
 		} else if(delta < 0) {// actualTime < targetTime -> go faster
 			delta = Mathf.Abs(delta) - allowedErrorForSyncedPlayback;//0 when the difference is the allowed range

@@ -330,7 +330,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 	}
 
-	public void PlayVideo(DateTime timestamp, float syncTime) {
+	public void PlayVideo(DateTime timestamp, float syncTime, Vector3 settings) {
 
 		blackScreen.SetActive(false);
 
@@ -341,6 +341,10 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		//Apply sync time settings sent by Guide
 		timeBetweenSyncs = syncTime;
+		allowedErrorForSyncedPlayback = settings.x;
+		maximumAllowedErrorBeforeResync = settings.y;
+		maximumPlaybackSpeed = settings.z;
+		minimumPlaybackSpeed = 1.0f / settings.z;
 
 		VideoTime = 0;
 		play();

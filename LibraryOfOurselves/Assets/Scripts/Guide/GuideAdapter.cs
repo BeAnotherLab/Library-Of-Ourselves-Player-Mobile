@@ -184,6 +184,11 @@ public class GuideAdapter : MonoBehaviour{
 		data.WriteString("play-video");
 		data.WriteTimestamp(DateTime.Now);
 		data.WriteFloat(Settings.SyncTime);
+		data.WriteVector3(new Vector3(
+			Settings.AllowedErrorForSyncedPlaybackUsers,
+			Settings.MaximumErrorForSyncedPlaybackUsers,
+			Settings.SyncedPlaybackMaximumTimeDilationUsers
+		));
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
@@ -224,7 +229,7 @@ public class GuideAdapter : MonoBehaviour{
 					++pairedDevices;
 				}
 			}
-			if(pairedDevices == 1) {
+			if(pairedDevices == 1 && !Settings.ForceMultiUserSetup) {
 				//ok, we can pass that on to the video player.
 				GuideVideoPlayer.Instance.Sync(timestamp, videoTime);
 			}

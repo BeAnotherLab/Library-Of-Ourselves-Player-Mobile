@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Haze
-  productName: Library Of Ourselves
+  productName: Library of Ourselves (Guide)
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.082352936, g: 0.26810414, b: 0.29411766, a: 1}
@@ -428,7 +428,7 @@ PlayerSettings:
     - Oculus
     - OpenVR
   - m_BuildTarget: Android
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices:
     - daydream
   m_BuildTargetEnableVuforiaSettings: []
