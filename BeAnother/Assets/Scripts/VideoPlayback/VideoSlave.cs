@@ -149,6 +149,7 @@ public class VideoSlave : MonoBehaviour {
 		if(bypassBinauralAudio || !BinauralAudio.Exists(audioPath)){
 			//didn't find the audio, bypass it then
 			bypassAudio = true;
+			print("Didn't find audio file: " + audioPath + " (Bypassing binaural audio)");
 		}else{
 			bypassAudio = false;
 		}
@@ -166,13 +167,16 @@ public class VideoSlave : MonoBehaviour {
 		//load the audio:
 		if(bypassAudio){
 			CurrentPlayer.audioOutputMode = VideoAudioOutputMode.Direct;//play from mp4
+			print("Set to direct audio mode");
 		}else{
 			CurrentPlayer.GetComponent<BinauralAudio>().Load(audioPath);
 			CurrentPlayer.audioOutputMode = VideoAudioOutputMode.None;//only play binaural
+			print("Set to binaural audio");
 		}
 		
 		//finalize preparations (necessary to do this after loading the audio in case of bypass)
 		CurrentPlayer.url = path;
+		print("Set url to " + path);
 		CurrentPlayer.Prepare();
 		
 		//recalibrate
@@ -185,7 +189,7 @@ public class VideoSlave : MonoBehaviour {
 			print("Can't play: currentplayer is null.");
 			return;
 		}
-		print("Playing.");
+		print("Playing. (bypassAudio = " + bypassAudio + ")");
 		autocalibrationApplier.Play();
 		CurrentPlayer.Play();
 		if(!bypassAudio)
@@ -227,14 +231,19 @@ public class VideoSlave : MonoBehaviour {
 			else
 				print("Expecting a 2 arguments in select");
 		}else if(dat[0] == "play"){//Start playing the video
+			print("Playing video");
 			Play();
 		}else if(dat[0] == "pause"){//Pauses
+			print("Pausing video");
 			Pause();
 		}else if(dat[0] == "stop"){//Unloads the video
+			print("Stopping video");
 			Stop();
 		}else if(dat[0] == "rewind"){//rewinds the video but keeps it loaded in
+			print("Rewinding");
 			Rewind();
 		}else if(dat[0] == "calibrate"){//Recenters sphere
+			print("Calibrating");
 			Calibrate();
 		}else if(dat[0] == "rotate"){//changes default pitch-yaw-roll (args 1 2 and 3)
 			if(currentSettings == null) return;
@@ -243,6 +252,7 @@ public class VideoSlave : MonoBehaviour {
 				currentSettings.Yaw = (float)Convert.ToDouble(dat[2]);
 				currentSettings.Roll = (float)Convert.ToDouble(dat[3]);
 				currentSettings.applyRotations(CurrentPlayer);
+				print("Rotating: " + currentSettings.Pitch + " / " + currentSettings.Yaw + " / " + currentSettings.Roll);
 			}else{
 				print("Expecting 3 arguments in rotate");
 			}
@@ -250,12 +260,14 @@ public class VideoSlave : MonoBehaviour {
 			if(currentSettings == null) return;
 			if(dat.Length > 1){
 				currentSettings.Is360 = dat[1] == "360";
+				print("Changing mode: " + dat[1]);
 				//reload video
 				LoadVideo(currentSettings.Name, dat[1]);
 			}else{
 				print("Expecting 1 argument in mode");
 			}
 		}else if(dat[0] == "autocalibrate"){//
+			print("Autocalibrating");
 			if(dat.Length > 1){
 				autocalibrationRecorder.OnReceiveCommand(dat[1]);
 			}else Debug.LogError("Expecting 1 argument in autocalibrate!");
@@ -269,6 +281,7 @@ public class VideoSlave : MonoBehaviour {
 	}
 	
 	void OnVideoEnd(VideoPlayer unused){
+		print("Video ended (OnVideoEnd)");
 		Stop();
 	}
 	
