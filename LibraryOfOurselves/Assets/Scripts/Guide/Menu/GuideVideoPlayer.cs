@@ -219,7 +219,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	private void Update() {
 		if(displaying) {
-			if(!allDevicesReady && videoPlayer.isPrepared) {
+			if(!allDevicesReady) {
 				//Waiting for the devices to become ready...
 				allDevicesReady = true;
 				if(ConnectionsDisplayer.Instance) {
