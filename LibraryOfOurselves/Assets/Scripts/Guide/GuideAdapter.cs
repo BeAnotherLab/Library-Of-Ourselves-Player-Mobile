@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -115,6 +116,13 @@ public class GuideAdapter : MonoBehaviour{
 		
 	}
 
+	public void SendLogsQueryAll() {
+		List<byte> data = new List<byte>();
+		data.WriteString("logs-query");
+		Debug.Log("Requesting logs...");
+		TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+
 	public void SendLogsQuery(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("logs-query");
@@ -122,7 +130,23 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void OnReceiveLogs(TCPConnection connection, string log) {
-		Debug.Log("Received logs from "+connection+":\n" + log);
+		Debug.Log("Received logs from " + connection.ToString() + ".");
+
+		//Generate two random words for saving the file
+		string path = "loo_log_" + RandomWords.Noun + "_" + RandomWords.Noun + "____" + connection.ToString() + ".txt";
+
+		//Write to file
+		string fullPath = Application.persistentDataPath;
+		if(fullPath[fullPath.Length - 1] != '/' && fullPath[fullPath.Length - 1] != '\\') {
+			fullPath += "/";
+		}
+		fullPath += path;
+		string rf = "Logs for device " + connection.ToString() + " at " + DateTime.Now.ToString() + ":\n" + log;
+		rf.Replace("\n", "\r\n");
+		File.WriteAllText(fullPath, rf);
+
+		Debug.Log("Wrote log to file " + path);
+		Debug.Log("(Full path: " + fullPath + ")");
 	}
 
 	public void SendHasVideo(TCPConnection connection, string videoName) {
