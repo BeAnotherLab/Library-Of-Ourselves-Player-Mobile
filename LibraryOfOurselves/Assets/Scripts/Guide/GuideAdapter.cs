@@ -130,23 +130,30 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void OnReceiveLogs(TCPConnection connection, string log) {
-		Debug.Log("Received logs from " + connection.ToString() + ".");
+		string path = "[Unknown path]";
+		try {
+			Debug.Log("Received logs from " + connection.ToString() + ".");
+			Debug.Log("Log contents: [[[[[\n" + log + "\n]]]]]");
 
-		//Generate two random words for saving the file
-		string path = "loo_log_" + RandomWords.Noun + "_" + RandomWords.Noun + "____" + connection.ToString() + ".txt";
+			//Generate two random words for saving the file
+			path = "loo_log_" + RandomWords.Noun + "_" + RandomWords.Noun + ".txt";
 
-		//Write to file
-		string fullPath = Application.persistentDataPath;
-		if(fullPath[fullPath.Length - 1] != '/' && fullPath[fullPath.Length - 1] != '\\') {
-			fullPath += "/";
+			//Write to file
+			string fullPath = Application.persistentDataPath;
+			if(fullPath[fullPath.Length - 1] != '/' && fullPath[fullPath.Length - 1] != '\\') {
+				fullPath += "/";
+			}
+			fullPath += path;
+			string rf = "Logs for device " + connection.ToString() + " at " + DateTime.Now.ToString() + ":\n" + log;
+			rf.Replace("\n", "\r\n");
+			File.WriteAllText(fullPath, rf);
+
+			Debug.Log("Wrote log to file " + path);
+			Debug.Log("(Full path: " + fullPath + ")");
+		}catch(Exception e) {
+			Debug.LogError("Error: Could not write to file " + path + ": " + e.Message);
+			Debug.LogError(e.StackTrace);
 		}
-		fullPath += path;
-		string rf = "Logs for device " + connection.ToString() + " at " + DateTime.Now.ToString() + ":\n" + log;
-		rf.Replace("\n", "\r\n");
-		File.WriteAllText(fullPath, rf);
-
-		Debug.Log("Wrote log to file " + path);
-		Debug.Log("(Full path: " + fullPath + ")");
 	}
 
 	public void SendHasVideo(TCPConnection connection, string videoName) {
