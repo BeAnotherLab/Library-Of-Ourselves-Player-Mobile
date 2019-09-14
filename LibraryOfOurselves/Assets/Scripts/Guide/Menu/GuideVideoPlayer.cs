@@ -118,6 +118,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 		currentVideo = videoDisplay;
 
 		if(GuideAdapter.Instance) {
+			Debug.Log("Loading video: " + videoDisplay.VideoName);
+
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
 			displaying = true;
 			allDevicesReady = false;
@@ -128,11 +130,14 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 			timeSlider.SetValueWithoutNotify(0);
 
+			Debug.Log("Loading...");
 			onLoad.Invoke();
 			onPause.Invoke();
 
 			HasVideoLoaded = true;
 			ConnectionsDisplayer.UpdateAllDisplays();
+		} else {
+			Debug.LogError("Error: No GuideAdapter instance!");
 		}
 	}
 
@@ -230,6 +235,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 							break;
 						}
 					}
+				} else {
+
 				}
 
 				//if it's still true it means they're all ready now :)

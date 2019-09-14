@@ -6,10 +6,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable] public class ConnectionEvent : UnityEvent<TCPConnection> { }
+
 public class GuideAdapter : MonoBehaviour{
 
 	[SerializeField] UnityEvent onZeroConnections;
 	[SerializeField] UnityEvent onFirstConnection;
+	[SerializeField] ConnectionEvent onConnectionFound;
+	[SerializeField] ConnectionEvent onConnected;
+	[SerializeField] bool OnlyAcceptOneConnection = false;
+
+	public static TCPConnection lastConnectedDevice = null;//For use within Old Guide
 
 	public static GuideAdapter Instance { get; private set; }
 
@@ -30,6 +37,7 @@ public class GuideAdapter : MonoBehaviour{
 			if(ConnectionsDisplayer.Instance.Handles.Count == 1)
 				onFirstConnection.Invoke();
 		}
+		onConnectionFound.Invoke(connection);
 	}
 
 	public void OnConnectionEnd(TCPConnection connection) {
@@ -71,6 +79,7 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void SendGuidePair(TCPConnection connection) {
+		if(OnlyAcceptOneConnection && TCPHost.Instance.NumberOfPairedDevices > 0) return;
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-pair");
 		connection.Send(data);
@@ -110,9 +119,14 @@ public class GuideAdapter : MonoBehaviour{
 		connection.lockedId = lockedId;
 
 		//Update all device displays
-		foreach(ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
-			h.display.UpdateDisplay();
+		if(ConnectionsDisplayer.Instance) {
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
+				h.display.UpdateDisplay();
+			}
 		}
+
+		lastConnectedDevice = connection;
+		onConnected.Invoke(connection);
 		
 	}
 
@@ -255,9 +269,11 @@ public class GuideAdapter : MonoBehaviour{
 		//only take it into account if it's the only device we're paired with
 		if(connection != null && connection.paired) {
 			int pairedDevices = 0;
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
-				if(handle.connection.active && handle.connection.paired) {
-					++pairedDevices;
+			if(ConnectionsDisplayer.Instance) {
+				foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+					if(handle.connection.active && handle.connection.paired) {
+						++pairedDevices;
+					}
 				}
 			}
 			if(pairedDevices == 1 && !Settings.ForceMultiUserSetup) {
@@ -296,10 +312,18 @@ public class GuideAdapter : MonoBehaviour{
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
+	//these two properties exclusively for use within 0ld guide
+	public static float LastFPSReceived { get; private set; }
+	public static int LastBatteryReceived { get; private set; }
+
 	public void OnReceiveStatus(TCPConnection connection, byte b_battery, short s_fps, byte b_temp) {
 		int battery = (int)b_battery;
 		float fps = ((float)s_fps) * 0.1f;
 		int temperature = (int)b_temp;
+
+		LastFPSReceived = fps;
+		LastBatteryReceived = battery;
+
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
 			if(handle != null) {

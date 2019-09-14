@@ -14715,6 +14715,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onConnectionFound:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ConnectionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onConnected:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ConnectionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  OnlyAcceptOneConnection: 0
 --- !u!4 &1243236690
 Transform:
   m_ObjectHideFlags: 0
@@ -16390,7 +16401,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 266.3999, y: -11.159325}
+  m_AnchoredPosition: {x: 266.3999, y: -11.159332}
   m_SizeDelta: {x: 522.7999, y: 12.318648}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1422470319

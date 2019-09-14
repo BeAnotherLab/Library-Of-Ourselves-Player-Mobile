@@ -78,6 +78,8 @@ public class VideoDisplay : MonoBehaviour{
 		GuideVideoPlayer player = GuideVideoPlayer.Instance;
 		if(player != null) {
 			player.LoadVideo(this);
+		} else {
+			Debug.LogError("Error: no GuideVideoPlayer instance!");
 		}
 	}
 

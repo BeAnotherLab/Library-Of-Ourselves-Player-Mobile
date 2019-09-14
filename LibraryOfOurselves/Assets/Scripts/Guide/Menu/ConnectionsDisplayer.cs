@@ -49,8 +49,10 @@ public class ConnectionsDisplayer : MonoBehaviour{
 	}
 
 	public static void UpdateAllDisplays() {
-		foreach(DisplayedConnectionHandle handle in Instance.Handles) {
-			handle.display.UpdateDisplay();
+		if(Instance != null) {
+			foreach(DisplayedConnectionHandle handle in Instance.Handles) {
+				handle.display.UpdateDisplay();
+			}
 		}
 	}
 
