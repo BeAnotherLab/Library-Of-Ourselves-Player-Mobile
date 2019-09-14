@@ -463,8 +463,8 @@ public class VRVideoPlayer : MonoBehaviour{
 			if(device == null) {
 				device = GvrControllerInput.GetDevice(GvrControllerHand.NonDominant);
 				if(device == null) {
-					overrideTouch = GvrControllerInput.ClickButton;
-					overrideQuit = GvrControllerInput.AppButton;
+					Debug.LogError("Daydream Input API Status: " + GvrControllerInput.ApiStatus);
+					Debug.LogError("ErrorDetails: " + GvrControllerInput.ErrorDetails);
 				}
 			}
 			if((device != null && device.GetButton(mirageRecenterButton)) || overrideTouch) {
