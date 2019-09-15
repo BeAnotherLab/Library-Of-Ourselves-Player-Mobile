@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Guide.unity
     guid: 5b059ee5266f6c141a107668c247c5cb
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VR.unity
     guid: 1601ec50a09d5f349893052a78c42c68
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/OldGuide.unity
     guid: 2bad647885c5b3b4b9fa8d8f2e0fd59d
   m_configObjects: {}
