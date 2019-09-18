@@ -176,10 +176,13 @@ public class ConnectionDisplay : MonoBehaviour{
 			pairButton.gameObject.SetActive(true);
 			lockButton.gameObject.SetActive(true);
 			recenterButton.gameObject.SetActive(true);
-			if(Connection.xrDeviceModel.ToLower().Contains("S8"))
+			if(Connection.xrDeviceModel.ToLower().Contains("s8")) {
+				Debug.Log("Connection "+Connection+" is S8: displaying Autocalibration button");
 				autocalibrationButton.gameObject.SetActive(true);
-			else
+			} else {
+				Debug.Log("Connection "+Connection+" is not S8 (" + Connection.xrDeviceModel.ToLower() + "): not displaying Autocalibration button");
 				autocalibrationButton.gameObject.SetActive(false);
+			}
 		} else if(Available) {
 			statusColor = availableColour;
 			textPair.gameObject.SetActive(true);

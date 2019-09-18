@@ -117,7 +117,8 @@ public class VideosDisplayer : MonoBehaviour {
 
 		//Save settings to json file
 		string json = JsonUtility.ToJson(settings);
-		File.WriteAllText(directory + videoName + "_Settings.json", json);
+		//File.WriteAllText(directory + videoName + "_Settings.json", json);
+		FileWriter.WriteFile(directory, videoName + "_Settings.json", json);
 	}
 
 	public void OnPairConnection(TCPConnection connection) {

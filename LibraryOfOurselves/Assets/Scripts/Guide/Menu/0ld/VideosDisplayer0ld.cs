@@ -161,7 +161,8 @@ public class VideosDisplayer0ld : MonoBehaviour {
 
 		//Save settings to json file
 		string json = JsonUtility.ToJson(meta);
-		File.WriteAllText(directory + videoName + "Info.json", json);
+		//File.WriteAllText(directory + videoName + "Info.json", json);
+		FileWriter.WriteFile(directory, videoName + "Info.json", json);
 
 		Debug.Log("Wrote metadata file to: " + directory + videoName + "Info.json");
 	}

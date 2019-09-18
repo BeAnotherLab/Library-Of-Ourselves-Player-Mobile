@@ -41,7 +41,7 @@ public class LogConsole : MonoBehaviour
     {
         if (!enabled) return;
 
-        t += "[" + DateTime.Now + "] [" + type + "] " + message + "\n" + stackTrace + "\n";
+        t += "[" + DateTime.Now + "] {" + type + "} " + message + "\n" + stackTrace + "\n";
 		++linesWrittenSinceEpoch;
 
 		if(writeLogsCounter > 0 && linesWrittenSinceEpoch >= writeLogsCounter)
@@ -61,10 +61,15 @@ public class LogConsole : MonoBehaviour
 		if(fullPath[fullPath.Length-1] != '/' && fullPath[fullPath.Length-1] != '\\') {
 			fullPath += "/";
 		}
-		fullPath += path;
+		//fullPath += path;
+
+		Debug.Log("Writing log file to: " + fullPath + path);
+
 		string rf = t;
 		rf.Replace("\n", "\r\n");
-		File.WriteAllText(fullPath, rf);
+
+		//File.WriteAllText(fullPath, rf);
+		FileWriter.WriteFile(fullPath, path, rf);
 
 		linesWrittenSinceEpoch = 0;
 
