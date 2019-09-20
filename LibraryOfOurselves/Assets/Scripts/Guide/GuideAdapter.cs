@@ -160,10 +160,11 @@ public class GuideAdapter : MonoBehaviour{
 			if(fullPath[fullPath.Length - 1] != '/' && fullPath[fullPath.Length - 1] != '\\') {
 				fullPath += "/";
 			}
-			fullPath += path;
+			//fullPath += path;
 			string rf = "Logs for device " + connection.ToString() + " at " + DateTime.Now.ToString() + ":\n" + log;
 			rf.Replace("\n", "\r\n");
-			File.WriteAllText(fullPath, rf);
+			//File.WriteAllText(fullPath, rf);
+			FileWriter.WriteFile(fullPath, path, rf);
 
 			Debug.Log("Wrote log to file " + path);
 			Debug.Log("(Full path: " + fullPath + ")");
@@ -180,6 +181,7 @@ public class GuideAdapter : MonoBehaviour{
 		//if(TCPHost.Instance)
 		//	TCPHost.Instance.BroadcastToPairedDevices(data);
 		connection.Send(data);
+		Debug.Log("Requesting devices for video " + videoName + "..");
 	}
 
 	public void OnReceiveHasVideoResponse(TCPConnection connection, string videoName) {

@@ -7,6 +7,8 @@ public static class FileWriter{
     
 	public static void WriteFile(string directory, string filename, string contents) {
 
+		directory += "LOO-files/";
+
 		string fullPath = directory + filename;
 
 		if(!Directory.Exists(directory)) {

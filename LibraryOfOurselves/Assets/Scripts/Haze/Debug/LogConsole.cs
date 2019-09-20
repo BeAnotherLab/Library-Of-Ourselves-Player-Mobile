@@ -12,6 +12,7 @@ public class LogConsole : MonoBehaviour
     [SerializeField] string path = "log.txt";
 	[SerializeField] float writeLogsTimer = 0;//every X seconds, write out the logs
 	[SerializeField] int writeLogsCounter = 0;//every X lines written, write out the logs
+	[SerializeField] bool copyToClipboard = true;
     
     string t = "Console:\n";
 
@@ -70,6 +71,11 @@ public class LogConsole : MonoBehaviour
 
 		//File.WriteAllText(fullPath, rf);
 		FileWriter.WriteFile(fullPath, path, rf);
+
+		if(copyToClipboard) {
+			GUIUtility.systemCopyBuffer = rf;
+			Debug.Log("Copied console contents to clipboard!");
+		}
 
 		linesWrittenSinceEpoch = 0;
 

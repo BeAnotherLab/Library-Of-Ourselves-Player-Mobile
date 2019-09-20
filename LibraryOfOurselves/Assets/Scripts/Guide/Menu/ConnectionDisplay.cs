@@ -127,6 +127,7 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void AddAvailableVideo(string videoName) {
+		Debug.Log("Adding video " + videoName + " to device " + Connection);
 		VideosAvailable.Add(videoName);
 	}
 

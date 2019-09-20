@@ -1723,6 +1723,7 @@ MonoBehaviour:
   path: loo_old_log.txt
   writeLogsTimer: 10
   writeLogsCounter: 20
+  copyToClipboard: 1
 --- !u!4 &294218515
 Transform:
   m_ObjectHideFlags: 0
@@ -5934,7 +5935,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1906994403}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99998486
+  m_Size: 0.99997294
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8837,8 +8838,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100.5, y: 0}
-  m_SizeDelta: {x: 201, y: 0}
+  m_AnchoredPosition: {x: 94.5, y: 0}
+  m_SizeDelta: {x: 189, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1611139043
 MonoBehaviour:
@@ -8945,7 +8946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -668.49994, y: -20}
+  m_AnchoredPosition: {x: -668.5, y: -20}
   m_SizeDelta: {x: 0, y: -40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1615613598

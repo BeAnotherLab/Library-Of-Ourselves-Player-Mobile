@@ -3271,8 +3271,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: loo_log.txt
-  writeLogsTimer: 20
+  writeLogsTimer: 10
   writeLogsCounter: 20
+  copyToClipboard: 1
 --- !u!4 &294218515
 Transform:
   m_ObjectHideFlags: 0
@@ -26616,6 +26617,13 @@ MonoBehaviour:
   noObjectNeededTranslation: {fileID: 8921296433547704477}
   editButton: {fileID: 813569766676221039}
   chooseButton: {fileID: 4118497569909204954}
+  appendToObjects: 
+  saveAsOldSettings: 0
+  onClickChoose:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   editChoice: {fileID: 6136847446885272103}
   addChoiceTranslation: {fileID: 4276102330096519214}
   choiceEditionPanel: {fileID: 8492134947831186782}
