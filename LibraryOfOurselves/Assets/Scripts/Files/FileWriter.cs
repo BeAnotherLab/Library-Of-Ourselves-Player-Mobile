@@ -7,6 +7,9 @@ public static class FileWriter{
     
 	public static void WriteFile(string directory, string filename, string contents) {
 
+		if(directory[directory.Length - 1] != '/' && directory[directory.Length - 1] != '\\') {
+			directory += '/';
+		}
 		directory += "LOO-files/";
 
 		string fullPath = directory + filename;
@@ -34,7 +37,7 @@ public static class FileWriter{
 
 		File.WriteAllText(fullPath, contents);
 
-		Debug.Log("Overwrote " + fullPath);
+		Debug.Log("Wrote to " + fullPath);
 	}
 
 }

@@ -64,7 +64,7 @@ public class LogConsole : MonoBehaviour
 		}
 		//fullPath += path;
 
-		Debug.Log("Writing log file to: " + fullPath + path);
+		Debug.Log("Writing log file to: " + path);
 
 		string rf = t;
 		rf.Replace("\n", "\r\n");
