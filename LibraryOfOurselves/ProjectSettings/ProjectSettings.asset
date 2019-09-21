@@ -423,7 +423,7 @@ PlayerSettings:
     m_Automatic: 1
   m_BuildTargetVRSettings:
   - m_BuildTarget: Standalone
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices:
     - Oculus
     - OpenVR
@@ -738,8 +738,10 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   vrEditorSettings:
     daydream:
-      daydreamIconForeground: {fileID: 0}
-      daydreamIconBackground: {fileID: 0}
+      daydreamIconForeground: {fileID: 2800000, guid: 121d93e19cca5144b954788779eca6b3,
+        type: 3}
+      daydreamIconBackground: {fileID: 2800000, guid: a025c23fceb7d4966b603419f551ce99,
+        type: 3}
   cloudServicesEnabled:
     UNet: 1
   luminIcon:

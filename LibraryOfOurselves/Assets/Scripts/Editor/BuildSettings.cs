@@ -33,6 +33,15 @@ public class BuildSettings {
 		}
 	}
 
+	[MenuItem("VRP/Build All - Prepare Daydream")]
+	public static void BuildAllPrepareDaydream() {
+		BuildWin64();
+		BuildAndroidGuide();
+		Build0ldAndroidGuide();
+		BuildOculus();
+		PrepareDaydreamBuild();
+	}
+
 
 
 	// --- Prepare builds ---

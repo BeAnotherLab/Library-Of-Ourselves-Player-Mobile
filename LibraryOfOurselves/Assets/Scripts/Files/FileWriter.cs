@@ -10,7 +10,8 @@ public static class FileWriter{
 		if(directory[directory.Length - 1] != '/' && directory[directory.Length - 1] != '\\') {
 			directory += '/';
 		}
-		directory += "LOO-files/";
+
+		//directory += "LOO-files/";
 
 		string fullPath = directory + filename;
 
