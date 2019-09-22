@@ -86,6 +86,10 @@ public class ConnectionDisplay : MonoBehaviour{
 		}
 	}
 
+	public byte LastAutocalibrationCommand { get; private set; }
+	public float LastAutocalibrationDrift { get; private set; }
+
+
 	List<string> __videosAvailable = new List<string>();
 	public List<string> VideosAvailable { get { return __videosAvailable; } }
 
@@ -309,6 +313,8 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void OnReceiveAutocalibrationResult(byte command, float drift) {
+		LastAutocalibrationCommand = command;
+		LastAutocalibrationDrift = drift;
 		switch(command) {
 			case 0:
 				acLoadingCircle.gameObject.SetActive(false);
