@@ -23,6 +23,8 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] string appendToObjects = "";
 	[SerializeField] bool saveAsOldSettings = false;
 	[SerializeField] UnityEvent onClickChoose;
+	[SerializeField] UnityEvent onClickEdit;
+	[SerializeField] UnityEvent onClickSave;
 
 	[Header("Choice editor")]
 	[SerializeField] Text editChoice;
@@ -39,6 +41,11 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] GameObject orientationEditionPanel;
 	[SerializeField] OrientationEditor orientationEditor;
 
+	[Header("Old-style orientation editor")]
+	[SerializeField] InputField pitchInputField;
+	[SerializeField] InputField yawInputField;
+	[SerializeField] InputField rollInputField;
+
 	VideoDisplay current = null;
 
 	bool __editMode = true;
@@ -50,8 +57,10 @@ public class VideoShelf : MonoBehaviour {
 				__editMode = value;
 
 				if(value) {//go into Edit Mode
-					editDisplay.gameObject.SetActive(false);
-					saveDisplay.gameObject.SetActive(true);
+					if(editDisplay != null)
+						editDisplay.gameObject.SetActive(false);
+					if(saveDisplay != null)
+						saveDisplay.gameObject.SetActive(true);
 
 					descriptionInputField.gameObject.SetActive(true);
 					objectsInputField.gameObject.SetActive(true);
@@ -64,6 +73,20 @@ public class VideoShelf : MonoBehaviour {
 					}
 					if(is360Display != null) is360Display.gameObject.SetActive(false);
 
+					//Old style orientation settings:
+					if(current.Settings.deltaAngles.Length > 0) {
+						Vector4 deltas = current.Settings.deltaAngles[0];
+						if(pitchInputField) {
+							pitchInputField.SetTextWithoutNotify(""+deltas.x);
+						}
+						if(yawInputField) {
+							yawInputField.SetTextWithoutNotify("" + deltas.y);
+						}
+						if(rollInputField) {
+							rollInputField.SetTextWithoutNotify("" + deltas.z);
+						}
+					}
+
 					if(editChoice != null) {
 						editChoice.gameObject.SetActive(true);
 						//Change the displayed text to "Add Choice" if there's no choices available yet
@@ -75,8 +98,10 @@ public class VideoShelf : MonoBehaviour {
 					if(editOrientation != null) editOrientation.gameObject.SetActive(true);
 
 				} else {//save and quit Edit Mode
-					editDisplay.gameObject.SetActive(true);
-					saveDisplay.gameObject.SetActive(false);
+					if(editDisplay != null)
+						editDisplay.gameObject.SetActive(true);
+					if(saveDisplay != null)
+						saveDisplay.gameObject.SetActive(false);
 					descriptionInputField.gameObject.SetActive(false);
 					objectsInputField.gameObject.SetActive(false);
 					if(is360Toggle != null) is360Toggle.gameObject.SetActive(false);
@@ -89,6 +114,15 @@ public class VideoShelf : MonoBehaviour {
 						current.Settings.description = descriptionInputField.text;
 						current.Settings.objectsNeeded = objectsInputField.text;
 						current.Settings.is360 = is360Toggle.isOn;
+
+						//Old-style orientation save
+						if(pitchInputField && yawInputField && rollInputField) {
+							Vector4 deltas = Vector4.zero;
+							float.TryParse(pitchInputField.text, out deltas.x);
+							float.TryParse(yawInputField.text, out deltas.y);
+							float.TryParse(rollInputField.text, out deltas.z);
+							current.Settings.deltaAngles = new Vector4[] { deltas };
+						}
 
 						//and save them!
 						if(saveAsOldSettings) {
@@ -163,6 +197,10 @@ public class VideoShelf : MonoBehaviour {
 
 	public void OnClickEdit() {
 		EditMode = !EditMode;
+		if(EditMode)
+			onClickEdit.Invoke();
+		else
+			onClickSave.Invoke();
 	}
 
 	public void OnClickEditChoice() {
