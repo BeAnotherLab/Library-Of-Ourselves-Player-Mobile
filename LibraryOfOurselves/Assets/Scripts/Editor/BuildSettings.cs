@@ -131,11 +131,14 @@ public class BuildSettings {
 	}
 
 	[MenuItem("VRP/Build Daydream")]
-	public static void BuildDaydream() {
+	public static void __buildDaydream() {
+		BuildDaydream();
+	}
+	public static void BuildDaydream(string filename = "daydream.apk") {
 		PrepareDaydreamBuild();
 		BuildPlayerOptions options = new BuildPlayerOptions();
 		options.scenes = new string[] { "Assets/Scenes/VR.unity" };
-		options.locationPathName = "Builds/daydream.apk";
+		options.locationPathName = "Builds/" + filename;
 		options.target = BuildTarget.Android;
 		options.options = BuildOptions.None;
 
@@ -263,6 +266,14 @@ public class BuildSettings {
 	public static void BuildWin64() {
 		BuildWin64Guide();
 		Build0ldWin64Guide();
+	}
+
+	[MenuItem("VRP/Build 5 Daydreams")]
+	public static void Build5Daydream() {
+		BuildDaydream();
+		for(int i = 0; i<4; ++i) {
+			BuildDaydream("daydream" + (i + 2) + ".apk");
+		}
 	}
 
 }
