@@ -133,6 +133,9 @@ public class VRAdapter : MonoBehaviour{
 			Debug.Log("Unpaired.");
 			onUnpair.Invoke();
 			SendPairConfirm();
+		}else if(currentlyPaired != null){
+			Debug.LogWarning("Received Unpair message from a guide we're not paired to. Accepting request regardless.");
+			OnReceiveGuideUnpair(currentlyPaired);//simulate receiving it from our paired guide instead
 		} else {
 			Debug.LogWarning("Cannot unpair.");
 		}

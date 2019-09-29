@@ -2073,6 +2073,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 1
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 5
@@ -3544,6 +3545,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 4
   to: 2.1
   easingFunction: 5
@@ -4592,6 +4594,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 6

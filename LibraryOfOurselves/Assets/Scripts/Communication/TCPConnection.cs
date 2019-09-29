@@ -138,7 +138,7 @@ public class TCPConnection {
 	}
 
 	public override string ToString() {
-		return "[" + deviceType + ": " + uniqueId + "]";
+		return "[" + deviceType + ": " + xrDeviceModel + "-" + uniqueId + "]";
 	}
 
 	~TCPConnection() {
