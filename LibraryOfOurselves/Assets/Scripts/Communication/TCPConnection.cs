@@ -59,6 +59,10 @@ public class TCPConnection {
 			if(UDP) {//Send over UDP
 				await SendUDPPacket(bytes);
 			} else {//Send over TCP
+				if(bytes.Count > (int)short.MaxValue) {
+					Debug.LogWarning("Bytes count is higher than max short value - sending first " + (short.MaxValue-2) + " bytes.");
+					bytes.RemoveRange(short.MaxValue - 2, bytes.Count - short.MaxValue - 2);
+				}
 				short length = (short)bytes.Count;
 				byte len1, len2;
 				FromShort(length, out len1, out len2);
@@ -71,7 +75,7 @@ public class TCPConnection {
 				await Stream.WriteAsync(data, 0, data.Length);
 			}
 		} catch(Exception e) {
-			Debug.Log("Could not send bytes. Connection failed.");
+			Debug.Log("Could not send bytes. Connection failed: " + e);
 			active = false;//this will notify client or host to disconnect from this connection.
 		}
 	}
@@ -145,5 +149,9 @@ public class TCPConnection {
 		Debug.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
 		if(UDPListener.Instance)
 			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
+
+		if(GuideAdapter.Instance) {
+			GuideAdapter.Instance.onConnectionEnd.Invoke(this);
+		}
 	}
 }

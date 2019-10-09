@@ -14,6 +14,7 @@ public class GuideAdapter : MonoBehaviour{
 	[SerializeField] UnityEvent onFirstConnection;
 	[SerializeField] ConnectionEvent onConnectionFound;
 	[SerializeField] ConnectionEvent onConnected;
+	public ConnectionEvent onConnectionEnd;//fired from TCPConnection::~TCPConnection()
 	[SerializeField] bool OnlyAcceptOneConnection = false;
 
 	public static TCPConnection lastConnectedDevice = null;//For use within Old Guide
@@ -116,6 +117,7 @@ public class GuideAdapter : MonoBehaviour{
 				connection.paired = false;
 				Debug.Log("Unpaired from " + connection);
 			}
+			Debug.LogWarning("Setting available to " + !paired + " for connection " + connection);
 			if(handle != null) handle.display.Available = !paired;
 		}
 		

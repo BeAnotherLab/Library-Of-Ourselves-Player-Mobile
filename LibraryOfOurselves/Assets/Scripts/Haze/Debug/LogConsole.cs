@@ -42,6 +42,10 @@ public class LogConsole : MonoBehaviour
     {
         if (!enabled) return;
 
+		if(message.StartsWith("GvrShimUnity_getControllerConnectionStatus")) {
+			return;//Ignore this message
+		}
+
         t += "[" + DateTime.Now + "] {" + type + "} " + message + "\n" + stackTrace + "\n";
 		++linesWrittenSinceEpoch;
 

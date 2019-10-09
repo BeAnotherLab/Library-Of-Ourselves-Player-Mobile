@@ -12454,6 +12454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1243236690}
   - component: {fileID: 1243236689}
+  - component: {fileID: 1243236691}
   m_Layer: 0
   m_Name: Adapter
   m_TagString: Untagged
@@ -12526,6 +12527,22 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: ConnectionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  onConnectionEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236691}
+        m_MethodName: Next
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ConnectionEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   OnlyAcceptOneConnection: 1
 --- !u!4 &1243236690
 Transform:
@@ -12541,6 +12558,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1243236691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243236688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4fbc76513ec01d4c86952759a989ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene:
+    m_SceneAsset: {fileID: 102900000, guid: 2bad647885c5b3b4b9fa8d8f2e0fd59d, type: 3}
+    m_SceneName: OldGuide
+  showAd: 0
+  verbose: 1
 --- !u!1 &1244989535
 GameObject:
   m_ObjectHideFlags: 0

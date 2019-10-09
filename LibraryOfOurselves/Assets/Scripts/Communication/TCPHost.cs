@@ -103,6 +103,11 @@ public class TCPHost : MonoBehaviour{
 
 				}catch(SocketException se) {
 					Debug.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se.ToString());
+					Debug.LogWarning("Attempting to restart TCPHost::Start()");
+					listener.Stop();
+					listener = null;
+					Start();//retry
+					return;
 				}catch(Exception e) {
 					if(listener != null)
 						Debug.LogWarning("Error, could not accept connection: " + e.ToString());
@@ -170,6 +175,7 @@ public class TCPHost : MonoBehaviour{
 					onMessageReception.Invoke(connection, channel, data);
 				}
 			} else {
+				Debug.LogWarning("Received data with length == 0 from connection " + connection);
 				connection.active = false;
 			}
 		}

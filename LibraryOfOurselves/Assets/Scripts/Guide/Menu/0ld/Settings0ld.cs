@@ -67,6 +67,10 @@ public class Settings0ld : MonoBehaviour{
 	}
 
 	private void Update() {
+		if(currentDisplay == null) {
+			autocalibrateText.text = "Disconnected.";
+			return;
+		}
 		if(currentDisplay.LastAutocalibrationCommand == 1) {
 			autocalibrateText.text = "Drift detected: " + string.Format("{0:0.#}°/s", currentDisplay.LastAutocalibrationDrift);
 		} else {
