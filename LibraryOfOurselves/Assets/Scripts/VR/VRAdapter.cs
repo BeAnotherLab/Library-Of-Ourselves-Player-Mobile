@@ -85,10 +85,10 @@ public class VRAdapter : MonoBehaviour{
 	public void OnReceiveGuideLock(TCPConnection connection) {
 		if(currentlyPaired != null && currentlyPaired == connection && TCPClient.Instance && TCPClient.Instance.LockedId != connection.uniqueId) {
 			TCPClient.Instance.LockedId = connection.uniqueId;
-			Debug.Log("Locking to " + connection);
+			Haze.Logger.Log("Locking to " + connection);
 			SendPairConfirm();
 		} else {
-			Debug.LogWarning("Cannot lock " + connection + ": currently paired with " + currentlyPaired);
+			Haze.Logger.LogWarning("Cannot lock " + connection + ": currently paired with " + currentlyPaired);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class VRAdapter : MonoBehaviour{
 		if(TCPClient.Instance) {
 			if(TCPClient.Instance.LockedId != "free") {
 				TCPClient.Instance.LockedId = "free";
-				Debug.Log("Unlocking.");
+				Haze.Logger.Log("Unlocking.");
 				SendPairConfirm();
 			}
 		}
@@ -106,10 +106,10 @@ public class VRAdapter : MonoBehaviour{
 		if(currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
 			List<byte> data = new List<byte>();
 			data.WriteString("autopair");
-			Debug.Log("Sending autopair request");
+			Haze.Logger.Log("Sending autopair request");
 			connection.Send(data);
 		} else {
-			Debug.LogWarning("Not allowed to send autopair to " + connection + "...");
+			Haze.Logger.LogWarning("Not allowed to send autopair to " + connection + "...");
 		}
 	}
 
@@ -117,12 +117,12 @@ public class VRAdapter : MonoBehaviour{
 		if(currentlyPaired == null && TCPClient.Instance && (TCPClient.Instance.LockedId == "free" || TCPClient.Instance.LockedId == connection.uniqueId)) {
 			currentlyPaired = connection;
 			connection.paired = true;
-			Debug.Log("Paired to " + connection);
+			Haze.Logger.Log("Paired to " + connection);
 			onPair.Invoke();
 			Autocalibration.Instance.OnPair();
 			SendPairConfirm();
 		} else {
-			Debug.LogWarning("Cannot pair to " + connection);
+			Haze.Logger.LogWarning("Cannot pair to " + connection);
 		}
 	}
 
@@ -130,14 +130,14 @@ public class VRAdapter : MonoBehaviour{
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			currentlyPaired = null;
 			connection.paired = false;
-			Debug.Log("Unpaired.");
+			Haze.Logger.Log("Unpaired.");
 			onUnpair.Invoke();
 			SendPairConfirm();
 		}else if(currentlyPaired != null){
-			Debug.LogWarning("Received Unpair message from a guide we're not paired to. Accepting request regardless.");
+			Haze.Logger.LogWarning("Received Unpair message from a guide we're not paired to. Accepting request regardless.");
 			OnReceiveGuideUnpair(currentlyPaired);//simulate receiving it from our paired guide instead
 		} else {
-			Debug.LogWarning("Cannot unpair.");
+			Haze.Logger.LogWarning("Cannot unpair.");
 		}
 	}
 
@@ -265,7 +265,7 @@ public class VRAdapter : MonoBehaviour{
 
 	public void OnReceiveStartChoice(TCPConnection connection, string question, string choice1, string choice2) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			Debug.Log("Display choices \'" + choice1 + "\' and \'" + choice2 + "\'");
+			Haze.Logger.Log("Display choices \'" + choice1 + "\' and \'" + choice2 + "\'");
 			if(VRVideoPlayer.Instance) {
 				VRVideoPlayer.Instance.DisplayChoice(question, choice1, choice2);
 			}

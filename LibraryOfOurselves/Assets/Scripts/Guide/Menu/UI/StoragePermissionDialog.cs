@@ -14,10 +14,10 @@ public class StoragePermissionDialog : MonoBehaviour{
 		if(VrPlayerBindings.Instance != null) {
 			if(!VrPlayerBindings.Instance.isExternalStoragePermissionEnabled()) {
 				//attempt to enable it
-				Debug.Log("Requesting storage permission.");
+				Haze.Logger.Log("Requesting storage permission.");
 				VrPlayerBindings.Instance.requestExternalStoragePermission(gameObject, "CallbackPermission");
 			} else {
-				Debug.Log("Storage permission is enabled.");
+				Haze.Logger.Log("Storage permission is enabled.");
 			}
 		}
 	}
@@ -28,7 +28,7 @@ public class StoragePermissionDialog : MonoBehaviour{
 			//ok!
 			onPermissionHasBeenAccepted.Invoke();
 		} else {
-			Debug.LogError("Could not grant external storage permission:\n" + message);
+			Haze.Logger.LogError("Could not grant external storage permission:\n" + message);
 			onPermissionHasBeenRefused.Invoke();
 		}
 	}

@@ -31,18 +31,18 @@ public class UDPListener : MonoBehaviour{
 					if(splitMessage.Length > 3) {
 						string ip = splitMessage[1];
 						int port = int.Parse(splitMessage[2]);
-						Debug.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
+						Haze.Logger.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
 						string uniqueId = splitMessage[3];
 						IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
 						if(!encounteredIPs.Contains(endpoint)) {
-							Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port + "...");
+							Haze.Logger.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port + "...");
 
 							//Start connection with this guide - deleted this because it "blocks" the thread
 							/*if(await tcpClient.ConnectToHost(endpoint, uniqueId, serverData.RemoteEndPoint)) {
 								encounteredIPs.Add(endpoint);
-								Debug.Log("Successfully connected to " + endpoint.Address + ".");
+								Haze.Logger.Log("Successfully connected to " + endpoint.Address + ".");
 							} else {
-								Debug.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", will retry upon receiving UDP message.");
+								Haze.Logger.LogWarning("Something went wrong when trying to connect to " + endpoint.Address + ", will retry upon receiving UDP message.");
 							}*/
 
 							//try within different thread to connect - we'll allow another try within 10 seconds in case it does turn out to fail
@@ -52,9 +52,9 @@ public class UDPListener : MonoBehaviour{
 					}
 				}
 			}catch(SocketException se) {
-				Debug.LogError("Socket Exception (" + se.ErrorCode + "), cannot receive client data from host: " + se.ToString());
+				Haze.Logger.LogError("Socket Exception (" + se.ErrorCode + "), cannot receive client data from host: " + se.ToString());
 			}catch(Exception e) {
-				Debug.Log("Error, cannot receive client data from host: " + e.ToString());
+				Haze.Logger.Log("Error, cannot receive client data from host: " + e.ToString());
 			}
 		}
     }
@@ -64,9 +64,9 @@ public class UDPListener : MonoBehaviour{
 			try {
 				await client.SendAsync(data, data.Length, remote);
 			} catch(SocketException se) {
-				Debug.LogWarning("[UDPListener] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
+				Haze.Logger.LogWarning("[UDPListener] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
 			} catch(Exception e) {
-				Debug.LogWarning("[UDPListener] Error, cannot send UDP packet: " + e.ToString());
+				Haze.Logger.LogWarning("[UDPListener] Error, cannot send UDP packet: " + e.ToString());
 			}
 		}
 	}

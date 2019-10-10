@@ -175,7 +175,7 @@ public class MessageDispatcher : MonoBehaviour{
 				break;
 			default:
 				if(!ignoreIncorrectChannels)
-					Debug.LogWarning("Received message on illegal channel: " + channel);
+					Haze.Logger.LogWarning("Received message on illegal channel: " + channel);
 				break;
 		}
 	}

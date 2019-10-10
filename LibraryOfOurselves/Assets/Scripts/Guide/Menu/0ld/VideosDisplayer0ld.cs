@@ -63,7 +63,7 @@ public class VideosDisplayer0ld : MonoBehaviour {
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
 
 	public void AddVideo(string path) {
-		Debug.Log("Adding video file: " + path + "...");
+		Haze.Logger.Log("Adding video file: " + path + "...");
 		try {
 			//Extract filename
 			string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
@@ -104,46 +104,46 @@ public class VideosDisplayer0ld : MonoBehaviour {
 					settings.is360 = true;
 					//take the leading "360_" off the display name
 					videoName = videoName.Substring("360_".Length, videoName.Length - "360_".Length);
-					Debug.Log(videoName + " is 360.");
+					Haze.Logger.Log(videoName + " is 360.");
 				} else {
-					Debug.Log(videoName + " is 235.");
+					Haze.Logger.Log(videoName + " is 235.");
 				}
 
 				//Try to find the associated settings file
 				string metaPath = directory + videoName + "Info.json";
-				Debug.Log("Attempting to find metadata file in: " + metaPath);
+				Haze.Logger.Log("Attempting to find metadata file in: " + metaPath);
 				if(File.Exists(metaPath)) {
 					string json = File.ReadAllText(metaPath);
 					settings.meta = JsonUtility.FromJson<VideoSettings.VideoMeta>(json);
-					Debug.Log("Found metadata file. " + settings.ToString());
+					Haze.Logger.Log("Found metadata file. " + settings.ToString());
 				} else {
 					//try to find it in the persistent data path instead of the sd card root then maybe?
 					metaPath = Application.persistentDataPath + videoName + "Info.json";
-					Debug.Log("Not found. Attempting to find metadata file in: " + metaPath);
+					Haze.Logger.Log("Not found. Attempting to find metadata file in: " + metaPath);
 					if(File.Exists(metaPath)) {
 						string json = File.ReadAllText(metaPath);
 						settings.meta = JsonUtility.FromJson<VideoSettings.VideoMeta>(json);
-						Debug.Log("Found metadata file. " + settings.ToString());
+						Haze.Logger.Log("Found metadata file. " + settings.ToString());
 					} else {
 						//no settings for this video yet.
 						settings.meta = new VideoSettings.VideoMeta();
-						Debug.Log("Saving metadata... " + settings.ToString());
+						Haze.Logger.Log("Saving metadata... " + settings.ToString());
 						SaveVideoMeta(path, videoName, settings.meta);
 					}
 				}
 
-				Debug.Log("Displaying video: " + videoName);
+				Haze.Logger.Log("Displaying video: " + videoName);
 
 				GameObject display = Instantiate(videoDisplayPrefab, videoRoot);
 				displayedVideos.Add(display.GetComponent<VideoDisplay>().Init(path, videoName, settings.NewSettings));
 
 			} else {
 				//Not a guide. ignore it.
-				Debug.Log("Video " + path + " is not a guide video.");
+				Haze.Logger.Log("Video " + path + " is not a guide video.");
 			}
 		} catch(Exception e) {
 			//could silently ignore, probably
-			Debug.LogWarning("Video " + path + " cannot be added: " + e);
+			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
 		}
 	}
 
@@ -164,7 +164,7 @@ public class VideosDisplayer0ld : MonoBehaviour {
 		//File.WriteAllText(directory + videoName + "Info.json", json);
 		FileWriter.WriteFile(directory, videoName + "Info.json", json);
 
-		Debug.Log("Wrote metadata file to: " + directory + videoName + "Info.json");
+		Haze.Logger.Log("Wrote metadata file to: " + directory + videoName + "Info.json");
 	}
 
 	public void OnPairConnection(TCPConnection connection) {

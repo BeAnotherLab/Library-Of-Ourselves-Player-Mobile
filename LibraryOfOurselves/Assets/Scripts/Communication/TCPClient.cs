@@ -88,7 +88,7 @@ public class TCPClient : MonoBehaviour{
 		IPAddress ipv4 = endpoint.Address;
 		if(ipv4.AddressFamily != AddressFamily.InterNetwork)
 			ipv4 = ipv4.MapToIPv4();
-		Debug.Log("IPv4: " + ipv4);
+		Haze.Logger.Log("IPv4: " + ipv4);
 
 		bool tcp = false;
 
@@ -105,18 +105,18 @@ public class TCPClient : MonoBehaviour{
 				}
 			}
 
-			Debug.Log("Connected through TCP. Sending identification message...");
+			Haze.Logger.Log("Connected through TCP. Sending identification message...");
 			tcp = true;
 		} catch(SocketException se) {
-			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot connect to host: " + se.ToString(), this);
+			Haze.Logger.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot connect to host: " + se.ToString(), this);
 		} catch(Exception e) {
-			Debug.LogError("[TCPClient] Error, cannot connect to host: " + e.ToString(), this);
+			Haze.Logger.LogError("[TCPClient] Error, cannot connect to host: " + e.ToString(), this);
 		}
 
 		if(!tcp) {
 			if(!allowUdp) return false;//nope, not allowed...
 			//Something went wrong and TCP was unavailable. Fallback to UDP
-			Debug.Log("Attempting to fall back to UDP with " + udpEndpoint);
+			Haze.Logger.Log("Attempting to fall back to UDP with " + udpEndpoint);
 			connection.client = null;
 			connection.udpEndpoint = udpEndpoint;
 		}
@@ -137,9 +137,9 @@ public class TCPClient : MonoBehaviour{
 
 			return true;
 		} catch(SocketException se) {
-			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot send identification message to host: " + se.ToString(), this);
+			Haze.Logger.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot send identification message to host: " + se.ToString(), this);
 		} catch(Exception e) {
-			Debug.LogError("[TCPClient] Error, cannot send identification message to host: " + e.ToString(), this);
+			Haze.Logger.LogError("[TCPClient] Error, cannot send identification message to host: " + e.ToString(), this);
 		}
 
 		UDPListener.Instance.RemoveEncounteredIP(endpoint);
@@ -161,9 +161,9 @@ public class TCPClient : MonoBehaviour{
 			onConnectionEnd.Invoke(connection);
 			hosts.Remove(connection);
 		}catch(SocketException se) {
-			Debug.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot communicate with host: " + se.ToString(), this);
+			Haze.Logger.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot communicate with host: " + se.ToString(), this);
 		}catch(Exception e) {
-			Debug.LogError("[TCPClient] Error, cannot communicate with host: " + e.ToString(), this);
+			Haze.Logger.LogError("[TCPClient] Error, cannot communicate with host: " + e.ToString(), this);
 		}
 	}
 

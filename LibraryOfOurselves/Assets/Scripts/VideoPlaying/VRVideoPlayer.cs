@@ -101,7 +101,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		BinauralAudio = false;
 
 		player.errorReceived += delegate (VideoPlayer player, string message) {
-			Debug.LogError("VideoPlayer error: " + message);
+			Haze.Logger.LogError("VideoPlayer error: " + message);
 			errorWhileLoading = true;
 			endOfVideo();
 		};
@@ -129,7 +129,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	public static bool IsVideoAvailable(string videoName) {
 
 		string path = getPath(videoName);
-		Debug.Log("Checking if we have " + path);
+		Haze.Logger.Log("Checking if we have " + path);
 		if(File.Exists(path)) {
 			return true;
 		}
@@ -142,13 +142,13 @@ public class VRVideoPlayer : MonoBehaviour{
 		response.ok = true;
 		response.errorMessage = "";
 
-		Debug.Log("Loading video " + videoName + "...");
+		Haze.Logger.Log("Loading video " + videoName + "...");
 		errorWhileLoading = false;
 
 		if(!IsVideoAvailable(videoName)) {
 			response.errorMessage = "Video unavailable.";
 			response.ok = false;
-			Debug.LogError("Video " + videoName + " could not be found.");
+			Haze.Logger.LogError("Video " + videoName + " could not be found.");
 			return response;
 		}
 
@@ -156,8 +156,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		if(mode.Length >= 3 && mode[0] == '3' && mode[1] == '6' && mode[2] == '0') {
 			//360 video.
 			is360 = true;
-			Debug.Log("Loading 360 degree video.");
-		} else Debug.Log("Loading 235 degree video.");
+			Haze.Logger.Log("Loading 360 degree video.");
+		} else Haze.Logger.Log("Loading 235 degree video.");
 
 		//Check if we need to play binaural audio
 		string leftAudioFile = getAudioPath(videoName, true);
@@ -197,9 +197,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		} else {
 			BinauralAudio = false;
 		}
-		Debug.Log("Binaural audio: " + (BinauralAudio ? "on" : "off"));
+		Haze.Logger.Log("Binaural audio: " + (BinauralAudio ? "on" : "off"));
 		if(BinauralAudio) {
-			Debug.Log("Loading binaural audio files: " + leftAudioFile + " and " + rightAudioFile);
+			Haze.Logger.Log("Loading binaural audio files: " + leftAudioFile + " and " + rightAudioFile);
 		}
 		
 		//Prepare video player
@@ -208,7 +208,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		lastReadyFrame = -1;
 		player.sendFrameReadyEvents = true;//will only send up until the end of this method where we re-disable this param
 		player.Prepare();
-		Debug.Log("Preparing player: CanSetTime=" + player.canSetTime + ", CanSetPlaybackSpeed=" + player.canSetPlaybackSpeed);
+		Haze.Logger.Log("Preparing player: CanSetTime=" + player.canSetTime + ", CanSetPlaybackSpeed=" + player.canSetPlaybackSpeed);
 
 		//Load the video into the player...
 		DateTime before = DateTime.Now;
@@ -221,11 +221,11 @@ public class VRVideoPlayer : MonoBehaviour{
 			return response;
 		}
 		TimeSpan took = DateTime.Now - before;
-		Debug.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
+		Haze.Logger.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
 
 		//Wait for the audio sources to load
 		if(BinauralAudio) {
-			Debug.Log("Waiting for audio files to load...");
+			Haze.Logger.Log("Waiting for audio files to load...");
 
 			switch(audioLoadingMode) {
 				case AudioLoadingMode.WWW:
@@ -248,13 +248,13 @@ public class VRVideoPlayer : MonoBehaviour{
 					leftAudio.clip = DownloadHandlerAudioClip.GetContent(leftuwr);
 					rightAudio.clip = DownloadHandlerAudioClip.GetContent(rightuwr);
 					if(leftuwr.isNetworkError)
-						Debug.LogError("Could not open audio file " + leftAudioFile + ": " + leftuwr.error);
+						Haze.Logger.LogError("Could not open audio file " + leftAudioFile + ": " + leftuwr.error);
 					if(rightuwr.isNetworkError)
-						Debug.LogError("Could not open audio file " + rightAudioFile + ": " + rightuwr.error);
+						Haze.Logger.LogError("Could not open audio file " + rightAudioFile + ": " + rightuwr.error);
 					break;
 			}
 
-			Debug.Log("Audio loaded: Left: " + leftAudio.clip.loadState + " / Right: " + rightAudio.clip.loadState);
+			Haze.Logger.Log("Audio loaded: Left: " + leftAudio.clip.loadState + " / Right: " + rightAudio.clip.loadState);
 
 		}
 
@@ -336,8 +336,8 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		//figure out difference in time between now and timestamp
 		TimeSpan difference = DateTime.Now - timestamp;
-		Debug.Log("Started playing video " + difference.TotalSeconds + " s ago.");
-		Debug.Log("Using sync time = " + syncTime);
+		Haze.Logger.Log("Started playing video " + difference.TotalSeconds + " s ago.");
+		Haze.Logger.Log("Using sync time = " + syncTime);
 
 		//Apply sync time settings sent by Guide
 		timeBetweenSyncs = syncTime;
@@ -368,7 +368,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
 			PlaybackSpeed = 1;
 		}else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
-			Debug.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
+			Haze.Logger.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
 			VideoTime = targetTime;
 			PlaybackSpeed = 1;
 		}else if(delta < 0) {// actualTime < targetTime -> go faster
@@ -386,7 +386,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 
 		if(!player.isPlaying) {
-			Debug.LogWarning("Player was stopped when we received Sync message");
+			Haze.Logger.LogWarning("Player was stopped when we received Sync message");
 			play();
 			VideoTime = targetTime;
 		}
@@ -463,8 +463,8 @@ public class VRVideoPlayer : MonoBehaviour{
 			if(device == null) {
 				device = GvrControllerInput.GetDevice(GvrControllerHand.NonDominant);
 				if(device == null) {
-					Debug.LogError("Daydream Input API Status: " + GvrControllerInput.ApiStatus);
-					Debug.LogError("ErrorDetails: " + GvrControllerInput.ErrorDetails);
+					Haze.Logger.LogError("Daydream Input API Status: " + GvrControllerInput.ApiStatus);
+					Haze.Logger.LogError("ErrorDetails: " + GvrControllerInput.ErrorDetails);
 				}
 			}
 			if((device != null && device.GetButton(mirageRecenterButton)) || overrideTouch) {
@@ -509,7 +509,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		StopVideo();
 		blackScreen.SetActive(true);//Set up the black screen until the follow-up video starts playing.
 		VRAdapter.Instance.SendSelectOption((byte)whichOption);
-		Debug.Log("Selecting option " + whichOption);
+		Haze.Logger.Log("Selecting option " + whichOption);
 		//Should we display something while we wait for the next video to load and show up?... maybe.
 	}
 

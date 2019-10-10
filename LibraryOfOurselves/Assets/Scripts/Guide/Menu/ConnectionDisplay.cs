@@ -115,7 +115,7 @@ public class ConnectionDisplay : MonoBehaviour{
 	bool initialized = false;
 	public void Init(TCPConnection connection) {
 		if(initialized) {
-			Debug.LogError("Cannot reinit a ConnectionDisplay!");
+			Haze.Logger.LogError("Cannot reinit a ConnectionDisplay!");
 			return;
 		}
 		initialized = true;
@@ -131,7 +131,7 @@ public class ConnectionDisplay : MonoBehaviour{
 	}
 
 	public void AddAvailableVideo(string videoName) {
-		Debug.Log("Adding video " + videoName + " to device " + Connection);
+		Haze.Logger.Log("Adding video " + videoName + " to device " + Connection);
 		VideosAvailable.Add(videoName);
 	}
 
@@ -158,10 +158,10 @@ public class ConnectionDisplay : MonoBehaviour{
 	public void OnClickPair() {
 		if(GuideAdapter.Instance) {
 			if(!Connection.paired) {
-				Debug.Log("Sending pair");
+				Haze.Logger.Log("Sending pair");
 				GuideAdapter.Instance.SendGuidePair(Connection);
 			} else {
-				Debug.Log("Sending unpair");
+				Haze.Logger.Log("Sending unpair");
 				GuideAdapter.Instance.SendGuideUnpair(Connection);
 			}
 		}
@@ -178,7 +178,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		Color uniqueIdColor = uniqueIdColourDisplay.color;
 
 		if(Connection.paired) {
-			Debug.Log("Connection " + Connection + " is paired. Showing LOCK and PAIR buttons by default.");
+			Haze.Logger.Log("Connection " + Connection + " is paired. Showing LOCK and PAIR buttons by default.");
 			statusColor = pairedColour;
 			textPair.gameObject.SetActive(false);
 			textUnpair.gameObject.SetActive(true);
@@ -186,28 +186,28 @@ public class ConnectionDisplay : MonoBehaviour{
 			lockButton.gameObject.SetActive(true);
 			recenterButton.gameObject.SetActive(true);
 			if(Connection.xrDeviceModel.ToLower().Contains("s8")) {
-				Debug.Log("Connection "+Connection+" is S8: displaying Autocalibration button");
+				Haze.Logger.Log("Connection "+Connection+" is S8: displaying Autocalibration button");
 				autocalibrationButton.gameObject.SetActive(true);
 			} else {
-				Debug.Log("Connection "+Connection+" is not S8 (" + Connection.xrDeviceModel.ToLower() + "): not displaying Autocalibration button");
+				Haze.Logger.Log("Connection "+Connection+" is not S8 (" + Connection.xrDeviceModel.ToLower() + "): not displaying Autocalibration button");
 				autocalibrationButton.gameObject.SetActive(false);
 			}
 		} else if(Available) {
-			Debug.Log("Connection " + Connection + " is available.");
+			Haze.Logger.Log("Connection " + Connection + " is available.");
 			statusColor = availableColour;
 			textPair.gameObject.SetActive(true);
 			textUnpair.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
-			Debug.Log("Hiding LOCK button for connection " + Connection + " because we aren't currently paired to it - will become visible after a bit.");
+			Haze.Logger.Log("Hiding LOCK button for connection " + Connection + " because we aren't currently paired to it - will become visible after a bit.");
 			recenterButton.gameObject.SetActive(false);
 			autocalibrationButton.gameObject.SetActive(false);
 			if(GuideVideoPlayer.Instance.HasVideoLoaded) {//can't pair with a device while a video is loaded up.
 				pairButton.gameObject.SetActive(false);
-				Debug.Log("Hiding PAIR button for connection " + Connection + " because a video is loaded at the moment.");
+				Haze.Logger.Log("Hiding PAIR button for connection " + Connection + " because a video is loaded at the moment.");
 			} else {
 				if(SettingsAuth.TemporalUnlock) {
 					pairButton.gameObject.SetActive(true);
-					Debug.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
+					Haze.Logger.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
 				} else {
 					int pairedDevices = 0;
 					foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
@@ -215,13 +215,13 @@ public class ConnectionDisplay : MonoBehaviour{
 							++pairedDevices;
 					}
 					pairButton.gameObject.SetActive(pairedDevices <= 0);//Only show if we're not connected to a device yet
-					if(pairedDevices <= 0) Debug.Log("Displaying PAIR button for connection " + Connection + " because this guide is not connected to any other.");
-					else Debug.Log("Hiding PAIR button for connection " + Connection + " because this guide is connected to other devices and is not allowed to enter Multi-user mode.");
+					if(pairedDevices <= 0) Haze.Logger.Log("Displaying PAIR button for connection " + Connection + " because this guide is not connected to any other.");
+					else Haze.Logger.Log("Hiding PAIR button for connection " + Connection + " because this guide is connected to other devices and is not allowed to enter Multi-user mode.");
 				}
 			}
 			StartCoroutine(enableUnlockButtonAfterABit());
 		} else {
-			Debug.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
+			Haze.Logger.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
 			statusColor = unavailableColour;
 			pairButton.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
@@ -268,7 +268,7 @@ public class ConnectionDisplay : MonoBehaviour{
 		if(!SettingsAuth.TemporalUnlock) {
 			editDeviceNameButton.enabled = false;
 			lockButton.gameObject.SetActive(false);
-			Debug.Log("Hiding LOCK and AUTOCALIBRATION buttons because guide is not temporally unlocked.");
+			Haze.Logger.Log("Hiding LOCK and AUTOCALIBRATION buttons because guide is not temporally unlocked.");
 			autocalibrationButton.gameObject.SetActive(false);
 		} else {
 			editDeviceNameButton.enabled = true;
@@ -281,9 +281,9 @@ public class ConnectionDisplay : MonoBehaviour{
 			//are we allowed to show the unlock button?
 			if(Connection.lockedId != "free") {
 				lockButton.gameObject.SetActive(true);
-				Debug.Log("Showing LOCK button because connection " + Connection + " is locked to " + Connection.lockedId + " and we've waited 3 seconds.");
+				Haze.Logger.Log("Showing LOCK button because connection " + Connection + " is locked to " + Connection.lockedId + " and we've waited 3 seconds.");
 			} else {
-				Debug.Log("Not showing LOCK button because connection " + Connection + " is not locked.");
+				Haze.Logger.Log("Not showing LOCK button because connection " + Connection + " is not locked.");
 			}
 		}
 	}

@@ -52,7 +52,7 @@ public class TCPConnection {
 
 	public async Task Send(List<byte> bytes) {
 		if(!active) {
-			Debug.Log("Could not send bytes. Connection failed.");
+			Haze.Logger.Log("Could not send bytes. Connection failed.");
 			return;
 		}
 		try {
@@ -60,7 +60,7 @@ public class TCPConnection {
 				await SendUDPPacket(bytes);
 			} else {//Send over TCP
 				if(bytes.Count > (int)short.MaxValue) {
-					Debug.LogWarning("Bytes count is higher than max short value - sending first " + (short.MaxValue-2) + " bytes.");
+					Haze.Logger.LogWarning("Bytes count is higher than max short value - sending first " + (short.MaxValue-2) + " bytes.");
 					bytes.RemoveRange(short.MaxValue - 2, bytes.Count - short.MaxValue - 2);
 				}
 				short length = (short)bytes.Count;
@@ -75,7 +75,7 @@ public class TCPConnection {
 				await Stream.WriteAsync(data, 0, data.Length);
 			}
 		} catch(Exception e) {
-			Debug.Log("Could not send bytes. Connection failed: " + e);
+			Haze.Logger.Log("Could not send bytes. Connection failed: " + e);
 			active = false;//this will notify client or host to disconnect from this connection.
 		}
 	}
@@ -115,7 +115,7 @@ public class TCPConnection {
 				}
 			}
 		}catch(Exception e) {
-			Debug.Log("Could not receive bytes. Connection failed.");
+			Haze.Logger.Log("Could not receive bytes. Connection failed.");
 		}
 		//if we get here, it means we've not returned yet...
 		active = false;//this will notify client or host to disconnect from this connection
@@ -146,7 +146,7 @@ public class TCPConnection {
 	}
 
 	~TCPConnection() {
-		Debug.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
+		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
 		if(UDPListener.Instance)
 			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
 

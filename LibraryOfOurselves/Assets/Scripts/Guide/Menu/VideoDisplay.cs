@@ -42,7 +42,7 @@ public class VideoDisplay : MonoBehaviour{
 	bool initialized = false;
 	public VideoDisplay Init(string path, string videoName, VideosDisplayer.VideoSettings settings) {
 		if(initialized) {
-			Debug.LogError("Cannot initialize a VideoDisplay twice!!");
+			Haze.Logger.LogError("Cannot initialize a VideoDisplay twice!!");
 			return null;
 		}
 
@@ -79,7 +79,7 @@ public class VideoDisplay : MonoBehaviour{
 		if(player != null) {
 			player.LoadVideo(this);
 		} else {
-			Debug.LogError("Error: no GuideVideoPlayer instance!");
+			Haze.Logger.LogError("Error: no GuideVideoPlayer instance!");
 		}
 	}
 
@@ -102,7 +102,7 @@ public class VideoDisplay : MonoBehaviour{
 			Singleton videoShelf = Singleton.GetInstance("videoshelf");
 			videoShelf.gameObject.SetActive(true);
 			videoShelf.GetComponentInChildren<VideoShelf>().DisplayCurrentVideo();
-			Debug.Log("Expanding.");
+			Haze.Logger.Log("Expanding.");
 
 		} else {
 

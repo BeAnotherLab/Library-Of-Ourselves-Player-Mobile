@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿//#define LOGGING_ENABLED // Haze-Dist
+
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,23 +22,26 @@ public class LogConsole : MonoBehaviour
 
     void OnEnable()
     {
-        if (instance == null) instance = this;
+#if LOGGING_ENABLED
+		if (instance == null) instance = this;
         else gameObject.SetActive(false);
 
         Application.logMessageReceived += HandleLog;
 
 		if(writeLogsTimer > 0)
 			StartCoroutine(writeLogsClock());
-    }
+#endif
+	}
 
-    void OnDisable()
-    {
-        if (instance == this) instance = null;
+    void OnDisable(){
+#if LOGGING_ENABLED
+		if (instance == this) instance = null;
 
         Application.logMessageReceived -= HandleLog;
 
         write();
-    }
+#endif
+	}
 
     void HandleLog(string message, string stackTrace, LogType type)
     {

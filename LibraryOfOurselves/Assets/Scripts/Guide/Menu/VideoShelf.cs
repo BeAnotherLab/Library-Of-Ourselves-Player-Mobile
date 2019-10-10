@@ -183,7 +183,7 @@ public class VideoShelf : MonoBehaviour {
 			chooseButton.gameObject.SetActive(true);
 		} else {
 			chooseButton.gameObject.SetActive(false);
-			Debug.Log("Hiding choose button (currentlyPaired = " + currentlyPaired + "; current.Available = " + current.Available + ")");
+			Haze.Logger.Log("Hiding choose button (currentlyPaired = " + currentlyPaired + "; current.Available = " + current.Available + ")");
 		}
 
 	}
