@@ -1,4 +1,4 @@
-﻿//#define ENABLE_LONG_RUNNING // Haze-Dist
+﻿#define ENABLE_LONG_RUNNING // Haze-Dist
 
 using System.Collections;
 using System.Collections.Generic;

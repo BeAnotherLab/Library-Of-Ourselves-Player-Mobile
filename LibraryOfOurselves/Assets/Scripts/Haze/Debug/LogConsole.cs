@@ -1,4 +1,4 @@
-﻿//#define LOGGING_ENABLED // Haze-Dist
+﻿#define LOGGING_ENABLED // Haze-Dist
 
 using System.IO;
 using System.Collections;

@@ -30,6 +30,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] GameObject blackScreen;
 	[SerializeField] Transform rotator;
 	[SerializeField] AudioLoadingMode audioLoadingMode = AudioLoadingMode.UnityWebResource;
+	[SerializeField] GameObject gvrControllerInput;
 
 	[Header("Sync settings")]
 	[SerializeField] float allowedErrorForSyncedPlayback = 0.5f;
@@ -112,6 +113,10 @@ public class VRVideoPlayer : MonoBehaviour{
 		player.frameReady += delegate (VideoPlayer unused, long frame) {
 			lastReadyFrame = frame;
 		};
+
+		if(VRDevice.MirageSolo) {
+			GameObject.Instantiate(gvrControllerInput);//Create the controller input manager for Daydream version
+		}
 	}
 
 	private void OnDestroy() {
