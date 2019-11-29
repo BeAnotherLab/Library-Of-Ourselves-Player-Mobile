@@ -122,7 +122,13 @@ public static class NetworkMessages {
 				}
 			}
 		}
-		return new DateTime(nowYear, nowMonth, nowDay, nowHr, min, sec, millis);
+		try {
+			return new DateTime(nowYear, nowMonth, nowDay, nowHr, min, sec, millis);
+		}catch(ArgumentOutOfRangeException aoore) {
+			Debug.LogError("Failed to read timestamp from data stream. Details:\nmin: " + min + "\nsec: " + sec + "\nmillis: " + millis + "\nnowHr: " + nowHr + "\nnowDay: " + nowDay + "\nnowMonth: " + nowMonth + "\nnowYear:" + nowYear);
+			Debug.LogError(aoore);
+			return DateTime.Now;//upon failing, simply return a timestamp for right now instead.
+		}
 	}
 
 	public static void WriteVector3(this List<byte> data, Vector3 v) {
