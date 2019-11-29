@@ -125,7 +125,7 @@ public class MessageDispatcher : MonoBehaviour{
 				}
 				break;
 			case "play-video": {
-					Debug.Log("Received play-video. Deciphering time stamp. Data: " + dataToReadableFormat(data));
+					Haze.Logger.Log("Received play-video. Deciphering time stamp. Data: " + dataToReadableFormat(data));
 					DateTime stamp = data.ReadTimestamp();
 					float syncTime = data.ReadFloat();
 					Vector3 settings = data.ReadVector3();
@@ -133,7 +133,7 @@ public class MessageDispatcher : MonoBehaviour{
 				}
 				break;
 			case "pause-video": {
-					Debug.Log("Received pause-video. Deciphering time stamp. Data: " + dataToReadableFormat(data));
+					Haze.Logger.Log("Received pause-video. Deciphering time stamp. Data: " + dataToReadableFormat(data));
 					DateTime stamp = data.ReadTimestamp();
 					double time = data.ReadDouble();
 					bool pause = data.ReadBool();
@@ -144,7 +144,7 @@ public class MessageDispatcher : MonoBehaviour{
 				stopVideo.Invoke(connection);
 				break;
 			case "sync": {
-					Debug.Log("Received sync. Deciphering time stamp. Data: " + dataToReadableFormat(data));
+					Haze.Logger.Log("Received sync. Deciphering time stamp. Data: " + dataToReadableFormat(data));
 					DateTime stamp = data.ReadTimestamp();
 					double time = data.ReadDouble();
 					sync.Invoke(connection, stamp, time);

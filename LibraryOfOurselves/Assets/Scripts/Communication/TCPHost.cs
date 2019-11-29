@@ -72,6 +72,17 @@ public class TCPHost : MonoBehaviour{
 			Haze.Logger.Log("Broadcasting ip " + ip.ToString() + " and port " + listenerLocalEndpoint.Port);
 
 			while(!stop) {
+
+				if(broadcaster.CriticalError) {
+					// something bad happened to the network.
+					Haze.Logger.LogError("Restarting TCPHost and UDPBroadcaster.");
+					broadcaster.StopBroadcasting();
+					listener.Stop();
+					listener = null;
+					Start();//restart
+					return;
+				}
+
 				try {
 
 					Haze.Logger.Log("Awaiting a connection request...");
@@ -106,6 +117,7 @@ public class TCPHost : MonoBehaviour{
 					Haze.Logger.LogWarning("Attempting to restart TCPHost::Start()");
 					listener.Stop();
 					listener = null;
+					broadcaster.StopBroadcasting();
 					Start();//retry
 					return;
 				}catch(Exception e) {

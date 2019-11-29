@@ -20,6 +20,12 @@ public class UDPBroadcaster : MonoBehaviour{
 	byte[] requestData;
 	bool stop = false;
 
+	bool __criticalError = false;
+	public bool CriticalError {
+		get { return __criticalError; }
+		private set { __criticalError = value; }
+	}
+
 	public static UDPBroadcaster Instance { get; private set; }
 
 	private void Start() {
@@ -32,6 +38,8 @@ public class UDPBroadcaster : MonoBehaviour{
 
 	IEnumerator broadcast(string ip, int port) {
 
+		CriticalError = false;
+
 		localIP = ip;
 		localPort = port;
 
@@ -42,13 +50,23 @@ public class UDPBroadcaster : MonoBehaviour{
 		server.EnableBroadcast = true;
 		server.DontFragment = true;
 		Listen();
+		int exceptions = 0;
 		while(!stop) {
 			try {
 				server.Send(requestData, requestData.Length, broadcastEndpoint);
+				exceptions = 0;
 			} catch(SocketException se) {
 				Haze.Logger.LogWarning("Socket error (" + se.ErrorCode + "), could not broadcast: " + se.ToString());
+				++exceptions;
 			} catch(Exception e) {
 				Haze.Logger.LogWarning("Error, could not broadcast: " + e.ToString());
+				++exceptions;
+			}
+
+			/// Too many exceptions in a row
+			if(exceptions > 7) {
+				Haze.Logger.LogError("Critical network error: Broadcasting has failed 7 times in a row.");
+				CriticalError = true;//this will flag the TCPHost to restart entirely
 			}
 
 			yield return new WaitForSeconds(1);

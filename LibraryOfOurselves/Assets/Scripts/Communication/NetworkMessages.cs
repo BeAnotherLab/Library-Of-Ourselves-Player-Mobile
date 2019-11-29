@@ -125,8 +125,8 @@ public static class NetworkMessages {
 		try {
 			return new DateTime(nowYear, nowMonth, nowDay, nowHr, min, sec, millis);
 		}catch(ArgumentOutOfRangeException aoore) {
-			Debug.LogError("Failed to read timestamp from data stream. Details:\nmin: " + min + "\nsec: " + sec + "\nmillis: " + millis + "\nnowHr: " + nowHr + "\nnowDay: " + nowDay + "\nnowMonth: " + nowMonth + "\nnowYear:" + nowYear);
-			Debug.LogError(aoore);
+			Haze.Logger.LogError("Failed to read timestamp from data stream. Details:\nmin: " + min + "\nsec: " + sec + "\nmillis: " + millis + "\nnowHr: " + nowHr + "\nnowDay: " + nowDay + "\nnowMonth: " + nowMonth + "\nnowYear:" + nowYear);
+			Haze.Logger.LogError(aoore);
 			return DateTime.Now;//upon failing, simply return a timestamp for right now instead.
 		}
 	}
