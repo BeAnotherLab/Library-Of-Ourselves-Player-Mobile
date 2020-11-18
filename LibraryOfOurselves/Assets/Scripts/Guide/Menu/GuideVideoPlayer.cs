@@ -48,6 +48,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	bool onlyOneDevice;
 
+	bool firstFrameReady = false; // will flip to true the first time a frame becomes ready, and false again when loading a new video
+
 	VideoDisplay currentVideo = null;
 
 	public void RetrieveSyncSettings() {
@@ -100,7 +102,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 		videoPlayer.sendFrameReadyEvents = true;
 		videoPlayer.frameReady += delegate (VideoPlayer player, long frame) {
-			if(frame == 1) {
+			if(!firstFrameReady || frame <= 2) {
+				firstFrameReady = true;
 				lastTimeShown = (float)player.time;
 				player.time = timeSlider.value * TotalVideoTime;
 				onFirstFrameReady.Invoke();
@@ -117,7 +120,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 		currentVideo = videoDisplay;
 
-		if(GuideAdapter.Instance) {
+		firstFrameReady = false;
+
+		if (GuideAdapter.Instance) {
 			Haze.Logger.Log("Loading video: " + videoDisplay.VideoName);
 
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
