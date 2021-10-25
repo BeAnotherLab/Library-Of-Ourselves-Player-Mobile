@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using RenderHeads.Media.AVProVideo;
 using UnityEngine.Video;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -44,10 +45,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		UnityWebResource
 	}
 
-
 	public static VRVideoPlayer Instance { get; private set; }
 
-	VideoPlayer player;
+	MediaPlayer player;
 	Camera mainCamera;
 	bool errorWhileLoading = false;
 	float firstTap = 0;
@@ -61,14 +61,15 @@ public class VRVideoPlayer : MonoBehaviour{
 			__binauralAudio = value;
 			leftAudio.enabled = value;
 			rightAudio.enabled = value;
-			player.audioOutputMode = value ? VideoAudioOutputMode.None : VideoAudioOutputMode.Direct;
+			//player.audioOutputMode = value ? VideoAudioOutputMode.None : VideoAudioOutputMode.Direct;
 		}
 	}
 
 	double VideoTime {
-		get { return player.time; }
-		set {
-			player.time = value;
+		get { return player.Control.GetCurrentTime(); }
+		set
+		{
+			player.Control.Seek(value);
 			if(BinauralAudio) {
 				leftAudio.time = (float)value;
 				rightAudio.time = (float)value;
@@ -78,7 +79,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	float PlaybackSpeed {
 		set {
-			player.playbackSpeed = value;
+			player.Control.SetPlaybackRate(value);
 			if(BinauralAudio) {
 				leftAudio.pitch = value;
 				rightAudio.pitch = value;
@@ -94,25 +95,20 @@ public class VRVideoPlayer : MonoBehaviour{
 		Camera.main.backgroundColor = DeviceColour.getDeviceColor(SystemInfo.deviceUniqueIdentifier);//Set background colour to something unique
 		Instance = this;
 		mainCamera = Camera.main;
-		player = GetComponent<VideoPlayer>();
+		player = GetComponent<MediaPlayer>();
 
 		choiceContainer.SetActive(false);
 		blackScreen.SetActive(false);
 
 		BinauralAudio = false;
 
+		/*
 		player.errorReceived += delegate (VideoPlayer player, string message) {
 			Haze.Logger.LogError("VideoPlayer error: " + message);
 			errorWhileLoading = true;
 			endOfVideo();
 		};
-		player.loopPointReached += delegate (VideoPlayer player) {
-			//as long as we havent received the Stop message, we can simply keep on playing.
-			play();
-		};
-		player.frameReady += delegate (VideoPlayer unused, long frame) {
-			lastReadyFrame = frame;
-		};
+		*/
 
 		if(VRDevice.MirageSolo) {
 			GameObject.Instantiate(gvrControllerInput);//Create the controller input manager for Daydream version
@@ -131,6 +127,20 @@ public class VRVideoPlayer : MonoBehaviour{
 		return Filesystem.SDCardRoot + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
 	}
 
+	public void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
+	{
+		switch (eventType)
+		{
+			case MediaPlayerEvent.EventType.FinishedPlaying:
+				play();
+				break;
+			case MediaPlayerEvent.EventType.FirstFrameReady:
+				lastReadyFrame = player.Control.GetCurrentTimeFrames();
+				break;
+		}
+	}
+
+	
 	public static bool IsVideoAvailable(string videoName) {
 
 		string path = getPath(videoName);
@@ -208,23 +218,13 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		player.url = getPath(videoName);
+		player.OpenMedia(new MediaPath(getPath(videoName), MediaPathType.RelativeToStreamingAssetsFolder), autoPlay:false);
 		PlaybackSpeed = 1;
 		lastReadyFrame = -1;
-		player.sendFrameReadyEvents = true;//will only send up until the end of this method where we re-disable this param
-		player.Prepare();
-		Haze.Logger.Log("Preparing player: CanSetTime=" + player.canSetTime + ", CanSetPlaybackSpeed=" + player.canSetPlaybackSpeed);
 
 		//Load the video into the player...
 		DateTime before = DateTime.Now;
-		while(!player.isPrepared && !errorWhileLoading) {
-			await Task.Delay(20);
-		}
-		if(errorWhileLoading) {
-			response.ok = false;
-			response.errorMessage = "Could not load video...";
-			return response;
-		}
+		
 		TimeSpan took = DateTime.Now - before;
 		Haze.Logger.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
 
@@ -273,12 +273,6 @@ public class VRVideoPlayer : MonoBehaviour{
 			//no frames have been readied so far...
 			await Task.Delay(20);
 		}//at least one frame has been marked as ready, so now we should be able to display the video
-		player.sendFrameReadyEvents = false;//stop sending them, we only need the callback for the initial frame
-		player.time = 0;
-		await Task.Delay(10);
-		player.time = 0;
-		player.Pause();//make sure the video is paused for now...
-		player.time = 0;
 		Volume = previousVolume;//restore volume
 		await Task.Delay(100);//wait a tenth of a second just to be sure the first frame has been rendered to the render texture
 		//and display on screen:
@@ -319,8 +313,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		get {
 			if(BinauralAudio)
 				return leftAudio.volume;
+			/*
 			else if(player.audioTrackCount > 0)
-				return player.GetDirectAudioVolume(0);
+				return player.GetDirectAudioVolume(0);*/
 			else return 0;
 		}
 		set {
@@ -328,9 +323,8 @@ public class VRVideoPlayer : MonoBehaviour{
 				leftAudio.volume = value;
 				rightAudio.volume = value;
 			} else {
-				for(ushort track = 0; track < player.audioTrackCount; ++track) {
-					player.SetDirectAudioVolume(track, value);
-				}
+				//for(ushort track = 0; track < player.AudioTracks; ++track) {
+				player.AudioVolume = value;
 			}
 		}
 	}
@@ -366,7 +360,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	public void Sync(DateTime unused, double videoTime) {
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)videoTime;
-		float actualTime = (float)player.time;
+		float actualTime = (float)player.Control.GetCurrentTime();
 		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
 
 		//Shall we speed up or slow down?
@@ -390,7 +384,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			PlaybackSpeed = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
 		}
 
-		if(!player.isPlaying) {
+		if(!player.Control.IsPlaying()) {
 			Haze.Logger.LogWarning("Player was stopped when we received Sync message");
 			play();
 			VideoTime = targetTime;
@@ -429,7 +423,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	async void SendSyncMessages() {
 		while(hasVideoPlaying && VRAdapter.Instance) {
-			if(player.isPlaying) {
+			if(player.Control.IsPlaying()) {
 				sendImmediateSync();
 			}
 			await Task.Delay((int)(timeBetweenSyncs * 1000));
@@ -499,7 +493,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	public void DisplayChoice(string question, string choice1, string choice2) {
 		//display the last frame:
-		VideoTime = player.length;
+		VideoTime = player.Info.GetDurationFrames();
 		pausePlayback();
 
 		questionMesh.text = question;
