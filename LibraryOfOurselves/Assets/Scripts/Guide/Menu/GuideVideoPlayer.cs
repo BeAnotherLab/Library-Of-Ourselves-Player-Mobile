@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Threading.Tasks;
+using RenderHeads.Media.AVProVideo;
 using UnityEngine.Events;
 using UnityEngine.Video;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	[SerializeField] float timeBetweenSyncs = 0.75f;
 	[SerializeField] Slider timeSlider;
-	[SerializeField] VideoPlayer videoPlayer;
+	[SerializeField] MediaPlayer videoPlayer;
 	[SerializeField] UnityEvent onLoad;
 	[SerializeField] UnityEvent onStop;
 	[SerializeField] UnityEvent onAllDevicesReady;
@@ -28,13 +29,13 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public static GuideVideoPlayer Instance { get; private set; }
 
-	double VideoTime { get { return videoPlayer.time; } }
+	double VideoTime { get { return videoPlayer.Info.GetDuration(); } }
 
 	public bool Playing { get; private set; }
 
 	public bool HasVideoLoaded { get; private set; }
 
-	float TotalVideoTime { get { return (float)(videoPlayer.frameCount / videoPlayer.frameRate); } }
+	float TotalVideoTime { get { return (float)(videoPlayer.Info.GetDurationFrames() / videoPlayer.Info.GetVideoFrameRate()); } }
 
 	public VideoDisplay CurrentVideo { get { return currentVideo; } }
 
@@ -62,14 +63,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		Instance = this;
 		onStop.Invoke();
 
-
-
-		//Retrieve the sync settings from saved settings on the device!
-		RetrieveSyncSettings();
-		//End retrieve sync settings
-
-
-
+		RetrieveSyncSettings(); //Retrieve the sync settings from saved settings on the device!
 
 		HasVideoLoaded = false;
 
@@ -79,35 +73,35 @@ public class GuideVideoPlayer : MonoBehaviour{
 				return;
 			}*/					//<- this code, if uncommented, prevents the time slider from being modified when playing back video for a single device
 			float time = val * TotalVideoTime;
-			videoPlayer.time = time;//set guide video time
+			videoPlayer.Control.Seek(time);//set guide video time
 			//send packet to force user device to reach selected time
-			GuideAdapter.Instance.SendGotoTime(videoPlayer.time);
+			GuideAdapter.Instance.SendGotoTime(videoPlayer.Control.GetCurrentTime());
 			if(Playing)
 				Pause();//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
 		});
-
-		videoPlayer.loopPointReached += delegate (VideoPlayer player) {
-			//Display a choice?
-			if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
-				VideosDisplayer.VideoChoice choice = currentVideo.Settings.choices[0];
-				Haze.Logger.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
-				GuideAdapter.Instance.SendStartChoice(choice.question, choice.option1, choice.option2);
-				Playing = false;
-			} else {
-				Stop();
-			}
-		};
-
-		videoPlayer.sendFrameReadyEvents = true;
-		videoPlayer.frameReady += delegate (VideoPlayer player, long frame) {
-			if(frame == 1) {
-				lastTimeShown = (float)player.time;
-				player.time = timeSlider.value * TotalVideoTime;
-				onFirstFrameReady.Invoke();
-			}
-		};
 	}
 
+	public void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
+	{
+		switch (eventType)
+		{
+			case MediaPlayerEvent.EventType.FinishedPlaying:
+				//Display a choice?
+				if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
+					VideosDisplayer.VideoChoice choice = currentVideo.Settings.choices[0];
+					Haze.Logger.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
+					GuideAdapter.Instance.SendStartChoice(choice.question, choice.option1, choice.option2);
+					Playing = false;
+				} else Stop();
+				break;
+			case MediaPlayerEvent.EventType.FirstFrameReady:
+				lastTimeShown = (float)player.Control.GetCurrentTime();
+				player.Control.Seek(timeSlider.value * TotalVideoTime);
+				onFirstFrameReady.Invoke();
+				break;
+		}
+	}
+	
 	private void OnDestroy() {
 		Instance = null;
 		Playing = false;
@@ -126,8 +120,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 			startedPlayback = false;
 			lastTimeShown = 0;
 
-			videoPlayer.url = videoDisplay.FullPath;
-
+			videoPlayer.OpenMedia(new MediaPath(videoDisplay.FullPath, MediaPathType.RelativeToStreamingAssetsFolder), autoPlay:false);
+			
 			timeSlider.SetValueWithoutNotify(0);
 
 			Haze.Logger.Log("Loading...");
@@ -251,9 +245,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 			//show time on slider
 			if(!Input.GetMouseButton(0)) {// <- only if we're not currently clicking/tapping
-				if(!Mathf.Approximately((float)videoPlayer.time, lastTimeShown) && videoPlayer.isPlaying) {
-					lastTimeShown = (float)videoPlayer.time;
-					timeSlider.SetValueWithoutNotify((float)videoPlayer.time / TotalVideoTime);
+				if(!Mathf.Approximately((float)videoPlayer.Control.GetCurrentTime(), lastTimeShown) && videoPlayer.Control.IsPlaying()) {
+					lastTimeShown = (float)videoPlayer.Control.GetCurrentTime();
+					timeSlider.SetValueWithoutNotify((float)videoPlayer.Control.GetCurrentTime() / TotalVideoTime);
 				}
 			}
 
@@ -319,12 +313,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 	IEnumerator __slowStart() {
 		if(onlyOneDevice) yield break;
 		float speed = 0.1f;
-		videoPlayer.playbackSpeed = speed;
+		videoPlayer.Control.SetPlaybackRate(speed);
 		while(speed < 1) {
 			speed += Time.deltaTime * 0.2f;
 			if(speed > 1)
 				speed = 1;
-			videoPlayer.playbackSpeed = speed;
+			videoPlayer.Control.SetPlaybackRate(speed);
 			yield return null;
 		}
 	}
@@ -332,7 +326,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public void Sync(DateTime unused, double targetTimeD) {
 
-		if(!videoPlayer.isPlaying) {
+		if(!videoPlayer.Control.IsPlaying()) {
 			Haze.Logger.LogWarning("Player was stopped when we received Sync message for " + targetTimeD);
 			return;
 		}
@@ -345,23 +339,23 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 		//Shall we speed up or slow down?
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
-			videoPlayer.playbackSpeed = 1;
+			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
 			Haze.Logger.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
-			videoPlayer.time = targetTime + Settings.JumpAheadTime;//jump forward
-			videoPlayer.playbackSpeed = 1;
+			videoPlayer.Control.Seek(targetTime + Settings.JumpAheadTime);//jump forward 
+			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(delta < 0) {// actualTime < targetTime -> go faster
 			delta = Mathf.Abs(delta) - allowedErrorForSyncedPlayback;//0 when the difference is the allowed range
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
 			//and remap from 0..1 to 1..max playback speed
-			videoPlayer.playbackSpeed = Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta);
+			videoPlayer.Control.SetPlaybackRate(Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta));
 		} else {// actualTime > targetTime -> go slower
 			delta = delta - allowedErrorForSyncedPlayback;//0 when difference is 0.5, 1 at 1.5 and higher
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
 			//and remap from 0..1 to 1..min playback speed
-			videoPlayer.playbackSpeed = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
+			videoPlayer.Control.SetPlaybackRate(Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta));
 		}
 	}
 
