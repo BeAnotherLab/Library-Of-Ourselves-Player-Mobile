@@ -18651,7 +18651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenSyncs: 1.5
   timeSlider: {fileID: 925161206}
-  videoPlayer: {fileID: 0}
+  videoPlayer: {fileID: 82956168}
   onLoad:
     m_PersistentCalls:
       m_Calls:
