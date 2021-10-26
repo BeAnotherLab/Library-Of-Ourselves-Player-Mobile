@@ -9,8 +9,9 @@ public class ListFiles : MonoBehaviour {
 	[SerializeField] StringEvent onFileFound;
 	[SerializeField] bool verbose = false;
 	
-	void Start(){
-		string dir = Filesystem.SDCardRoot;
+	void Start()
+	{
+		string dir = Application.streamingAssetsPath + "/videos/";
 		if(verbose)
 			print("Checking for " + extension + " files in " + dir);
 		foreach(string file in Directory.GetFiles(dir)){
