@@ -120,7 +120,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	static string getPath(string videoName) {
-		return Filesystem.SDCardRoot + videoName + ".mp4";
+		return "videos/" + videoName + ".mp4";
 	}
 
 	static string getAudioPath(string videoName, bool left) {
@@ -145,7 +145,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		string path = getPath(videoName);
 		Haze.Logger.Log("Checking if we have " + path);
-		if(File.Exists(path)) {
+		if(File.Exists(Application.streamingAssetsPath + "/" + path)) {
 			return true;
 		}
 
