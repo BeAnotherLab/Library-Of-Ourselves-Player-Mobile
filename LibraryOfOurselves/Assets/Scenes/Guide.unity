@@ -1259,7 +1259,7 @@ MonoBehaviour:
   _uvRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: -0.5
     width: 1
     height: 1
   _setNativeSize: 0
