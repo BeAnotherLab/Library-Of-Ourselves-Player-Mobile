@@ -29,7 +29,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public static GuideVideoPlayer Instance { get; private set; }
 
-	double VideoTime { get { return videoPlayer.Info.GetDuration(); } }
+	double VideoTime { get { return videoPlayer.Control.GetCurrentTime(); } }
 
 	public bool Playing { get; private set; }
 
