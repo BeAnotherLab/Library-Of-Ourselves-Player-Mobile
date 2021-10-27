@@ -331,11 +331,12 @@ public class GuideVideoPlayer : MonoBehaviour{
 			return;
 		}
 
-		Haze.Logger.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
+		//Haze.Logger.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)targetTimeD;
 		float actualTime = (float)VideoTime;
 		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
+		Debug.Log("delta "+ delta);
 
 		//Shall we speed up or slow down?
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
@@ -349,13 +350,17 @@ public class GuideVideoPlayer : MonoBehaviour{
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
 			//and remap from 0..1 to 1..max playback speed
-			videoPlayer.Control.SetPlaybackRate(Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta));
+			var playbackRate = Utilities.Map(0, 1, 1, maximumPlaybackSpeed, delta);
+			Debug.Log("too slow! Set Playback rate " + playbackRate);
+			videoPlayer.Control.SetPlaybackRate(playbackRate);
 		} else {// actualTime > targetTime -> go slower
 			delta = delta - allowedErrorForSyncedPlayback;//0 when difference is 0.5, 1 at 1.5 and higher
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
+			var playbackRate = Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta);
 			//and remap from 0..1 to 1..min playback speed
-			videoPlayer.Control.SetPlaybackRate(Utilities.Map(0, 1, 1, minimumPlaybackSpeed, delta));
+			videoPlayer.Control.SetPlaybackRate(playbackRate);
+			Debug.Log("too fast! Set Playback rate " + playbackRate);
 		}
 	}
 
