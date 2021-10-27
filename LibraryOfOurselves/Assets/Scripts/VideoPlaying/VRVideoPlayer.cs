@@ -113,6 +113,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		if(VRDevice.MirageSolo) {
 			GameObject.Instantiate(gvrControllerInput);//Create the controller input manager for Daydream version
 		}
+		
+		BetterStreamingAssets.Initialize();
 	}
 
 	private void OnDestroy() {
@@ -139,17 +141,11 @@ public class VRVideoPlayer : MonoBehaviour{
 				break;
 		}
 	}
-
 	
 	public static bool IsVideoAvailable(string videoName) {
-
 		string path = getPath(videoName);
 		Haze.Logger.Log("Checking if we have " + path);
-		if(File.Exists(Application.streamingAssetsPath + "/" + path)) {
-			return true;
-		}
-
-		return false;
+		return BetterStreamingAssets.FileExists(path);
 	}
 
 	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) {
