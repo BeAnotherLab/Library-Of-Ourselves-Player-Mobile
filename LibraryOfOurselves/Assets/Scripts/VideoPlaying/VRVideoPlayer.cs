@@ -267,15 +267,6 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		//Show first frame as soon as it's loaded in and rendered, making sure the video is 100% paused when we do so.
 		float previousVolume = Volume;
-		Volume = 0;//mute it for now
-		player.Play();//we do need to start playing it to render the frame, but we'll be pausing immediately after
-		while(lastReadyFrame == -1) {
-			//no frames have been readied so far...
-			await Task.Delay(20);
-		}//at least one frame has been marked as ready, so now we should be able to display the video
-		Volume = previousVolume;//restore volume
-		await Task.Delay(100);//wait a tenth of a second just to be sure the first frame has been rendered to the render texture
-		//and display on screen:
 		blackScreen.SetActive(false);
 		if(is360) spherePlayer.SetActive(true);
 		else semispherePlayer.SetActive(true);
