@@ -73,7 +73,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				return;
 			}*/					//<- this code, if uncommented, prevents the time slider from being modified when playing back video for a single device
 			float time = val * TotalVideoTime;
-			videoPlayer.Control.Seek(time);//set guide video time
+			videoPlayer.Control.SeekFast(time);//set guide video time
 			//send packet to force user device to reach selected time
 			GuideAdapter.Instance.SendGotoTime(videoPlayer.Control.GetCurrentTime());
 			if(Playing)
@@ -96,7 +96,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				break;
 			case MediaPlayerEvent.EventType.FirstFrameReady:
 				lastTimeShown = (float)player.Control.GetCurrentTime();
-				player.Control.Seek(timeSlider.value * TotalVideoTime);
+				player.Control.SeekFast(timeSlider.value * TotalVideoTime);
 				onFirstFrameReady.Invoke();
 				break;
 		}
@@ -342,7 +342,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
 			Haze.Logger.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
-			videoPlayer.Control.Seek(targetTime + Settings.JumpAheadTime);//jump forward 
+			videoPlayer.Control.SeekFast(targetTime + Settings.JumpAheadTime);//jump forward 
 			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(delta < 0) {// actualTime < targetTime -> go faster
 			delta = Mathf.Abs(delta) - allowedErrorForSyncedPlayback;//0 when the difference is the allowed range
