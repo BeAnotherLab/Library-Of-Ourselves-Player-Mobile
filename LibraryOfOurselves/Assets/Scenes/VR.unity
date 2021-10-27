@@ -1100,6 +1100,7 @@ GameObject:
   - component: {fileID: 645322550}
   - component: {fileID: 645322549}
   - component: {fileID: 645322551}
+  - component: {fileID: 645322552}
   m_Layer: 0
   m_Name: VRVideoPlayer
   m_TagString: Untagged
@@ -1451,6 +1452,27 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
+--- !u!114 &645322552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645322546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _media: {fileID: 645322551}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _material: {fileID: 2100000, guid: 707ef84e832e2ac4dafcb4787e7ee7ea, type: 2}
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
 --- !u!1 &677621424
 GameObject:
   m_ObjectHideFlags: 0
