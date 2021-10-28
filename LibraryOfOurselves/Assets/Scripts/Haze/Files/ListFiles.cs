@@ -11,10 +11,11 @@ public class ListFiles : MonoBehaviour {
 	
 	void Start()
 	{
+		BetterStreamingAssets.Initialize();
 		string dir = Application.streamingAssetsPath + "/videos/";
 		if(verbose)
 			print("Checking for " + extension + " files in " + dir);
-		foreach(string file in Directory.GetFiles(dir)){
+		foreach(string file in BetterStreamingAssets.GetFiles("videos")){
 			//check if extension is <extension>
 			string[] parts = file.Split('.');
 			string ext = parts[parts.Length-1];
