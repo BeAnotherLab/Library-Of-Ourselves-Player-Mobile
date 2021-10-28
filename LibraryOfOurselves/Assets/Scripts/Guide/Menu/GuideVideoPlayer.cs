@@ -79,6 +79,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			if(Playing)
 				Pause();//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
 		});
+		BetterStreamingAssets.Initialize();
 	}
 
 	public void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
