@@ -20,6 +20,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onPlay;
 	[SerializeField] UnityEvent onPause;
 	[SerializeField] UnityEvent onNextVideoIsUnavailable;
+	[SerializeField] FloatEvent onDeltaValueAvailable ;
 
 	[Header("Sync settings")]
 	[SerializeField] float allowedErrorForSyncedPlayback = 0.5f;
@@ -337,13 +338,13 @@ public class GuideVideoPlayer : MonoBehaviour{
 		float targetTime = (float)targetTimeD;
 		float actualTime = (float)VideoTime;
 		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
-		Debug.Log("delta "+ delta);
+		onDeltaValueAvailable.Invoke(delta);
 
-		//Shall we speed up or slow down?
+		//Shall we speed up or slow down?on
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
 			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
-			Haze.Logger.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
+			Haze.Logger.Log(delta + " ==> Too much difference, jumping to " + targetTime);
 			videoPlayer.Control.SeekFast(targetTime + Settings.JumpAheadTime);//jump forward 
 			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(delta < 0) {// actualTime < targetTime -> go faster

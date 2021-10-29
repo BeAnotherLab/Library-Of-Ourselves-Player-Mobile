@@ -16,6 +16,7 @@ public class Settings : MonoBehaviour {
 	[SerializeField] Slider allowedUsersSlider;
 	[SerializeField] Slider maxUsersSlider;
 	[SerializeField] Slider syncedUsersSlider;
+	[SerializeField] Text deltaText;
 	[SerializeField] Text allowedErrorText;
 	[SerializeField] Text maximumErrorText;
 	[SerializeField] Text syncedPlaybackText;
@@ -47,7 +48,7 @@ public class Settings : MonoBehaviour {
 	public void DisableAdminAccess() {
 		SettingsAuth.ShutoffAdminAccess();
 	}
-
+	
 	public static float AllowedErrorForSyncedPlayback {
 		get {
 			if(HazePrefs.HasKey("allowederrorforsyncedplayback"))
@@ -162,9 +163,7 @@ public class Settings : MonoBehaviour {
 			HazePrefs.SetInt("forcemultiusersetup", value ? 1 : 0);
 		}
 	}
-
-
-
+	
 	public void ResetSyncSettings() {
 		AllowedErrorForSyncedPlayback = 0.1f;
 		MaximumErrorForSyncedPlayback = 1.0f;
@@ -213,6 +212,11 @@ public class Settings : MonoBehaviour {
 
 	private void OnDestroy() {
 		Instance = null;
+	}
+
+	public void setDeltaText(float value)
+	{
+		deltaText.text = "delta : " + value;
 	}
 
 	public void setAllowedError(float f) {
