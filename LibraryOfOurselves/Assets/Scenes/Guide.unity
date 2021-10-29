@@ -1226,7 +1226,6 @@ GameObject:
   - component: {fileID: 82956165}
   - component: {fileID: 82956167}
   - component: {fileID: 82956168}
-  - component: {fileID: 82956159}
   m_Layer: 5
   m_Name: VideoDisplay
   m_TagString: Untagged
@@ -1234,38 +1233,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &82956159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82956158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  _mediaPlayer: {fileID: 82956168}
-  _defaultTexture: {fileID: 0}
-  _uvRect:
-    serializedVersion: 2
-    x: 0
-    y: -0.5
-    width: 1
-    height: 1
-  _setNativeSize: 0
-  _scaleMode: 2
-  _noDefaultDisplay: 1
-  _displayInEditor: 1
 --- !u!222 &82956160
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2579,6 +2546,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213308372}
   m_CullTransparentMesh: 0
+--- !u!1001 &225214476
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 180286, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_Name
+      value: RemoteDebugServer
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 452154, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72e56e3c1b0d9044e9a75891b4888f83, type: 3}
 --- !u!1 &228701388
 GameObject:
   m_ObjectHideFlags: 0
@@ -5451,24 +5475,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 496113538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 8400000, guid: 13856deaacd89cd4e930e03a67459268, type: 2}
-  m_UVRect:
+  _mediaPlayer: {fileID: 82956168}
+  _defaultTexture: {fileID: 0}
+  _uvRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: -0.5
     width: 1
     height: 1
+  _setNativeSize: 0
+  _scaleMode: 1
+  _noDefaultDisplay: 1
+  _displayInEditor: 1
 --- !u!222 &496113541
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7932,6 +7961,7 @@ MonoBehaviour:
   allowedUsersSlider: {fileID: 1286075009}
   maxUsersSlider: {fileID: 1382740722}
   syncedUsersSlider: {fileID: 704015493}
+  deltaText: {fileID: 0}
   allowedErrorText: {fileID: 376698394}
   maximumErrorText: {fileID: 988709709}
   syncedPlaybackText: {fileID: 407908107}
@@ -13113,7 +13143,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 807175057}
   m_HandleRect: {fileID: 807175056}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
