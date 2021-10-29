@@ -1603,7 +1603,7 @@ MonoBehaviour:
     preferredPeakBitRate: 0
     preferredPeakBitRateUnits: 1
     videoApi: 2
-    useFastOesPath: 0
+    useFastOesPath: 1
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
