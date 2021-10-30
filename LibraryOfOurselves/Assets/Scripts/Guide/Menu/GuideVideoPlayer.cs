@@ -122,7 +122,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			startedPlayback = false;
 			lastTimeShown = 0;
 
-			videoPlayer.OpenMedia(new MediaPath(videoDisplay.FullPath, MediaPathType.RelativeToStreamingAssetsFolder), autoPlay:false);
+			videoPlayer.OpenMedia(new MediaPath(videoDisplay.FullPath, MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
 			
 			timeSlider.SetValueWithoutNotify(0);
 
