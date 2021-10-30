@@ -5495,7 +5495,7 @@ MonoBehaviour:
     width: 1
     height: 1
   _setNativeSize: 0
-  _scaleMode: 1
+  _scaleMode: 2
   _noDefaultDisplay: 1
   _displayInEditor: 1
 --- !u!222 &496113541
