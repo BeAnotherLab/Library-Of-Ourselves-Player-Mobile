@@ -122,11 +122,11 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	static string getPath(string videoName) {
-		return "videos/" + videoName + ".mp4";
+		return videoName + ".mp4";
 	}
 
 	static string getAudioPath(string videoName, bool left) {
-		return Filesystem.SDCardRoot + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
+		return Application.persistentDataPath + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
 	}
 
 	public void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
@@ -143,9 +143,9 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 	
 	public static bool IsVideoAvailable(string videoName) {
-		string path = getPath(videoName);
+		string path = Application.persistentDataPath + "/" + getPath(videoName);
 		Haze.Logger.Log("Checking if we have " + path);
-		return BetterStreamingAssets.FileExists(path);
+		return File.Exists( path);
 	}
 
 	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) {
@@ -214,8 +214,9 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		player.OpenMedia(new MediaPath(getPath(videoName), MediaPathType.RelativeToStreamingAssetsFolder), autoPlay:false);
+		player.OpenMedia(new MediaPath(getPath(videoName), MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
 		PlaybackSpeed = 1;
+		
 		lastReadyFrame = -1;
 
 		//Load the video into the player...
