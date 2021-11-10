@@ -165,14 +165,14 @@ public class Settings : MonoBehaviour {
 	}
 	
 	public void ResetSyncSettings() {
-		AllowedErrorForSyncedPlayback = 0.1f;
-		MaximumErrorForSyncedPlayback = 1.0f;
-		SyncedPlaybackMaximumTimeDilation = 1.8f;
-		SyncTime = 0.7f;
+		AllowedErrorForSyncedPlayback = 0.04f;
+		MaximumErrorForSyncedPlayback = 0.85f;
+		SyncedPlaybackMaximumTimeDilation = 1.15f;
+		SyncTime = 1.3f;
 		JumpAheadTime = 0;
 		AllowedErrorForSyncedPlaybackUsers = 0.4f;
 		MaximumErrorForSyncedPlayback = 0.8f;
-		SyncedPlaybackMaximumTimeDilationUsers = 1.2f;
+		SyncedPlaybackMaximumTimeDilationUsers = 1.2f; 
 		OnEnable();
 	}
 
