@@ -53,7 +53,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("allowederrorforsyncedplayback"))
 				return HazePrefs.GetFloat("allowederrorforsyncedplayback");
-			else return 0.1f;
+			else return 0.04f;
 		}
 		set {
 			HazePrefs.SetFloat("allowederrorforsyncedplayback", value);
@@ -66,7 +66,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("maximumallowederrorforsyncedplayback"))
 				return HazePrefs.GetFloat("maximumallowederrorforsyncedplayback");
-			else return 1;
+			else return 0.85f;
 		}
 		set {
 			HazePrefs.SetFloat("maximumallowederrorforsyncedplayback", value);
@@ -79,7 +79,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("maximumtimedilationforsyncedplayback"))
 				return HazePrefs.GetFloat("maximumtimedilationforsyncedplayback");
-			else return 1.8f;
+			else return 1.15f;
 		}
 		set {
 			HazePrefs.SetFloat("maximumtimedilationforsyncedplayback", value);
@@ -92,7 +92,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("synctime")) {
 				return HazePrefs.GetFloat("synctime");
-			} else return 0.7f;
+			} else return 1.3f;
 		}
 		set {
 			HazePrefs.SetFloat("synctime", value);
