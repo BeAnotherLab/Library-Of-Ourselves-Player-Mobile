@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55448ade-21ae-4e40-b0bc-30e7e30e8b1c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.LibraryOfOurselves/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LibraryOfOurselves/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -17,28 +14,22 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file:///Applications/Unity/Hub/Editor/2019.3.15f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/RawImage.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Runtime/Playables/DirectorControlPlayable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Editor/State/ISequenceState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.2.16/Tests/Editor/HistoryTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshProUGUI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3A450083-8212-4EF8-B670-CCEF51067DB4/27/35664757/XRDevice.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Haze/Files/ListFiles.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Files/FileWriter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Runtime/Playables/DirectorControlPlayable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Editor/Animation/TimelineAnimationUtilities.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/DD49AECE-E059-44DB-91BF-4E1DA96114E0/63/664b982d/InvokableCall`4.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.2.16/Tests/Editor/HistoryTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_RichTextTagsCommon.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Editor/State/ISequenceState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Runtime/AssetUpgrade/TrackUpgrade.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshProUGUI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Tests/Runtime/TMP_RuntimeTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/VideoPlaying/VRVideoPlayer.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Guide/GuideAdapter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideoShelf.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1zPttef9eMxLvXnH5vi3rjJVImC" />
@@ -48,7 +39,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3496638" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3496708" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -67,10 +58,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="41472">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="41472" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -90,7 +81,6 @@
       <workItem from="1634136381321" duration="993000" />
       <workItem from="1634140701370" duration="331000" />
       <workItem from="1635163333574" duration="241000" />
-      <workItem from="1636562545896" duration="3196000" />
     </task>
     <servers />
   </component>
@@ -143,71 +133,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs</url>
-          <line>47</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs" initialLine="47" containingFunctionPresentation="method 'DisableAdminAccess'">
-            <startOffsets>
-              <option value="1513" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1514" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs</url>
-          <line>222</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs" initialLine="222" containingFunctionPresentation="method 'setAllowedError'">
-            <startOffsets>
-              <option value="7141" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7175" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs</url>
-          <line>58</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/UI/Settings.cs" initialLine="58" containingFunctionPresentation="property 'AllowedErrorForSyncedPlayback'">
-            <startOffsets>
-              <option value="1776" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1835" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/SettingsAuth.cs</url>
-          <line>32</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/SettingsAuth.cs" initialLine="32" containingFunctionPresentation="property 'CurrentPIN'">
-            <startOffsets>
-              <option value="773" />
-            </startOffsets>
-            <endOffsets>
-              <option value="809" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/SettingsAuth.cs</url>
-          <line>67</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/SettingsAuth.cs" initialLine="67" containingFunctionPresentation="method 'Auth'">
-            <startOffsets>
-              <option value="1532" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1563" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
