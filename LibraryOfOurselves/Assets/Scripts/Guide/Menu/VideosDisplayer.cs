@@ -48,6 +48,7 @@ public class VideosDisplayer : MonoBehaviour {
 			string directory = "";
 			for(int i = 0; i < split.Length - 1; ++i)
 				directory += split[i] + "/";
+			directory = "/" + directory;
 			split = split[split.Length - 1].Split(new string[] { ".mp4" }, StringSplitOptions.RemoveEmptyEntries);
 			string filename = "";
 			foreach(string f in split) {
