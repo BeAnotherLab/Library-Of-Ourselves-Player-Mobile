@@ -108,11 +108,12 @@ public class VideosDisplayer : MonoBehaviour {
 		//save directory is persistent data path
 		string directory = Application.persistentDataPath;
 #else
-		//save directory is sd card root
+		//hack for fixing path in editor
 		string[] split = videoPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 		string directory = "";
 		for(int i = 0; i<split.Length-1; ++i)
 			directory += split[i] + "/";
+		directory = "/" + directory;
 #endif
 
 		//Save settings to json file
