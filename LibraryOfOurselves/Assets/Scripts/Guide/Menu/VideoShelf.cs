@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngineInternal.Input;
 
-public class VideoShelf : MonoBehaviour {
 public class VideoShelf : MonoBehaviour { //displays a single video, along with choice and orientation editors
 
 	[SerializeField] Text titleDisplay;
@@ -59,12 +59,11 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 				if (value) //go into Edit Mode 
 				{
-					if (editDisplay != null) editDisplay.gameObject.SetActive(false);
-						
-					if (saveDisplay != null) saveDisplay.gameObject.SetActive(true);
+					if (editDisplay != null) editDisplay.gameObject.SetActive(false); //hide edit button if ¿not null?
+					if (saveDisplay != null) saveDisplay.gameObject.SetActive(true); //show save button
 
-					descriptionInputField.gameObject.SetActive(true);
-					objectsInputField.gameObject.SetActive(true);
+					descriptionInputField.gameObject.SetActive(true); //allow edition of video description
+					objectsInputField.gameObject.SetActive(true); //allow edition of objects to be used
 					descriptionInputField.text = current.Settings.description;
 					objectsInputField.text = current.Settings.objectsNeeded;
 
@@ -195,70 +194,21 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 			onClickSave.Invoke();
 	}
 
-	public void OnClickEditChoice() {
+	public void OnClickEditChoice() 
+	{
 		choiceEditionPanel.SetActive(true);
 		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-		if(settings.choices.Length > 0) {
-			questionField.text = settings.choices[0].question;
-			option1Field.text = settings.choices[0].option1;
-			option2Field.text = settings.choices[0].option2;
-			option1Dropdown.Selected = settings.choices[0].video1;
-			option2Dropdown.Selected = settings.choices[0].video2;
-		} else {
-			questionField.text = "";
-			option1Field.text = "";
-			option2Field.text = "";
-			//force default selection:
-			option1Dropdown.Selected = "%";
-			option2Dropdown.Selected = "%";
+		if (settings.choices.Count > 0) //if there are options
+		{
+			foreach (VideosDisplayer.VideoChoice choice in settings.choices) AddChoice(choice); //go through options an instantiate their prefab
 		}
 	}
 
-	public void OnClickSaveChoice() {
-		choiceEditionPanel.SetActive(false);
-
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-
-		if(settings.choices.Length <= 0) {
-			settings.choices = new VideosDisplayer.VideoChoice[1];
-			settings.choices[0] = new VideosDisplayer.VideoChoice();
-		}
-
-		settings.choices[0].question = questionField.text;
-		settings.choices[0].option1 = option1Field.text;
-		settings.choices[0].option2 = option2Field.text;
-		settings.choices[0].video1 = option1Dropdown.Selected;
-		settings.choices[0].video2 = option2Dropdown.Selected;
-
-		VideoDisplay.expandedDisplay.Settings = settings;
-
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
-	}
-
-	public void OnClickDeleteChoice() {
-	private GameObject AddChoice(VideosDisplayer.VideoChoice choice)
+	public void OnClickAddChoice()
 	{
-		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
-		instance.GetComponentInChildren<InputField>().text = choice.description;
-		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
-		return instance;
+		AddChoice(new VideosDisplayer.VideoChoice()); 
 	}
-		choiceEditionPanel.SetActive(false);
-
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-
-		if(settings.choices.Length > 0) {
-			settings.choices = new VideosDisplayer.VideoChoice[0];
-		}
-
-		VideoDisplay.expandedDisplay.Settings = settings;
-
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
-	}
-
-
+	
 	public void OnClickEditOrientation() {
 		orientationEditionPanel.SetActive(true);
 
@@ -280,6 +230,51 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 		settings.deltaAngles = orientationEditor.GetValues().ToArray();
 
+		VideoDisplay.expandedDisplay.Settings = settings;
+
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideoDisplay.expandedDisplay.expand();
+	}
+	
+	private GameObject AddChoice(VideosDisplayer.VideoChoice choice)
+	{
+		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
+		instance.GetComponentInChildren<InputField>().text = choice.description;
+		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
+		return instance;
+	}
+	
+	private void OnClickSaveChoice() {
+		choiceEditionPanel.SetActive(false);
+
+		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+
+		settings.choices = new List<VideosDisplayer.VideoChoice>();
+		
+		foreach (ChoiceOption choiceOption in optionFieldsParent.GetComponentsInChildren<ChoiceOption>())
+		{
+			Debug.Log("under choiceTransform " + choiceOption.gameObject.name);
+			var videoChoice = new VideosDisplayer.VideoChoice();
+			videoChoice.description = choiceOption.choiceInputField.text;
+			videoChoice.video = choiceOption.optionDropdown.Selected;
+			settings.choices.Add(videoChoice);
+		}
+
+		VideoDisplay.expandedDisplay.Settings = settings;
+
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideoDisplay.expandedDisplay.expand();
+	}
+
+	private void OnClickDeleteChoice() {
+		choiceEditionPanel.SetActive(false);
+
+		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+/*
+		if(settings.choices.Count > 0) {
+			settings.choices = new VideosDisplayer.VideoChoice[0];
+		}
+*/
 		VideoDisplay.expandedDisplay.Settings = settings;
 
 		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);

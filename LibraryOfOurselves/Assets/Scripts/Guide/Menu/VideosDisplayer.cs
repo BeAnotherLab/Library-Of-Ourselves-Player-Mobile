@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using UnityEngine.Events;
 
-public class VideosDisplayer : MonoBehaviour {
+public class VideosDisplayer : MonoBehaviour { //displays list of videos in a grid and saves settings
 
 	[SerializeField] GameObject videoShelfPrefab;
 	[SerializeField] GameObject videoDisplayPrefab;
@@ -13,12 +13,10 @@ public class VideosDisplayer : MonoBehaviour {
 
 	[Serializable]
 	public class VideoChoice {
-		public string question = "Question";
-		public string option1 = "Option 1";
-		public string option2 = "Option 2";
-		public string video1 = "";
-		public string video2 = "";
-	}
+		public string description = "description";  
+		public string video = "";
+		public Vector2 position = new Vector2();
+	} //TODO move to own file
 
 	[Serializable]
 	public class VideoSettings {
@@ -26,12 +24,13 @@ public class VideosDisplayer : MonoBehaviour {
 		public string description = "";
 		public string objectsNeeded = "";
 		public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
-		public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
+		//public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
+		public List<VideoChoice> choices = new List<VideoChoice>();
 
 		public override string ToString() {
 			return "[VideoSettings: is360=" + is360 + " | description=" + description + " | objectsNeeded=" + objectsNeeded + " | deltaAngles=" + deltaAngles + "]";
 		}
-	}
+	} //TODO own file
 
 	public static VideosDisplayer Instance { get; private set; }
 
@@ -172,7 +171,7 @@ public class VideosDisplayer : MonoBehaviour {
 			bool previouslyAvailable = videoDisplay.Available;
 			videoDisplay.Available = allConnectedDevicesHaveIt;
 
-			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Length > 0) {
+			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Count > 0) {
 				videoDisplay.Available = false;//Cannot display a video with choices if there's more than one device connected yet!
 			}
 
