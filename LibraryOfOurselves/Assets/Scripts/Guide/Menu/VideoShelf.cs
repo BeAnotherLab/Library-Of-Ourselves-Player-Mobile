@@ -46,21 +46,22 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] InputField yawInputField;
 	[SerializeField] InputField rollInputField;
 
-	VideoDisplay current = null;
+	VideoDisplay current;
 
 	bool __editMode = true;
-	bool enableSave = false;
+	bool enableSave ;
+	
 	bool EditMode {
 		get { return __editMode; }
 		set {
-			if(__editMode != value) {
+			if (__editMode != value) {
 				__editMode = value;
 
-				if(value) {//go into Edit Mode
-					if(editDisplay != null)
-						editDisplay.gameObject.SetActive(false);
-					if(saveDisplay != null)
-						saveDisplay.gameObject.SetActive(true);
+				if (value) //go into Edit Mode 
+				{
+					if (editDisplay != null) editDisplay.gameObject.SetActive(false);
+						
+					if (saveDisplay != null) saveDisplay.gameObject.SetActive(true);
 
 					descriptionInputField.gameObject.SetActive(true);
 					objectsInputField.gameObject.SetActive(true);
@@ -71,46 +72,42 @@ public class VideoShelf : MonoBehaviour {
 						is360Toggle.gameObject.SetActive(true);
 						is360Toggle.isOn = current.Settings.is360;
 					}
-					if(is360Display != null) is360Display.gameObject.SetActive(false);
+					
+					if (is360Display != null) is360Display.gameObject.SetActive(false);
 
 					//Old style orientation settings:
-					if(current.Settings.deltaAngles.Length > 0) {
+					if (current.Settings.deltaAngles.Length > 0) {
 						Vector4 deltas = current.Settings.deltaAngles[0];
-						if(pitchInputField) {
-							pitchInputField.SetTextWithoutNotify(""+deltas.x);
-						}
-						if(yawInputField) {
-							yawInputField.SetTextWithoutNotify("" + deltas.y);
-						}
-						if(rollInputField) {
-							rollInputField.SetTextWithoutNotify("" + deltas.z);
-						}
+						if(pitchInputField) pitchInputField.SetTextWithoutNotify(""+deltas.x);
+						if(yawInputField) yawInputField.SetTextWithoutNotify("" + deltas.y);
+						if(rollInputField) rollInputField.SetTextWithoutNotify("" + deltas.z);
 					}
 
-					if(editChoice != null) {
+					if (editChoice != null) {
 						editChoice.gameObject.SetActive(true);
 						//Change the displayed text to "Add Choice" if there's no choices available yet
-						if(current.Settings.choices.Length == 0) {
-							editChoice.text = addChoiceTranslation.name;
-						}
+						if (current.Settings.choices.Count == 0) editChoice.text = addChoiceTranslation.name;
 					}
 
-					if(editOrientation != null) editOrientation.gameObject.SetActive(true);
+					if (editOrientation != null) editOrientation.gameObject.SetActive(true);
 
-				} else {//save and quit Edit Mode
-					if(editDisplay != null)
-						editDisplay.gameObject.SetActive(true);
-					if(saveDisplay != null)
-						saveDisplay.gameObject.SetActive(false);
+				} 
+				else //save and quit Edit Mode 
+				{
+					if (editDisplay != null) editDisplay.gameObject.SetActive(true);
+					if (saveDisplay != null) saveDisplay.gameObject.SetActive(false);
+					
 					descriptionInputField.gameObject.SetActive(false);
 					objectsInputField.gameObject.SetActive(false);
-					if(is360Toggle != null) is360Toggle.gameObject.SetActive(false);
-					if(is360Display != null) is360Display.gameObject.SetActive(current.Settings.is360);
+					
+					if (is360Toggle != null) is360Toggle.gameObject.SetActive(false);
+					if (is360Display != null) is360Display.gameObject.SetActive(current.Settings.is360);
 
-					if(editChoice != null) editChoice.gameObject.SetActive(false);
-					if(editOrientation != null) editOrientation.gameObject.SetActive(false);
+					if (editChoice != null) editChoice.gameObject.SetActive(false);
+					if (editOrientation != null) editOrientation.gameObject.SetActive(false);
 
-					if(enableSave) {
+					if (enableSave) 
+					{
 						current.Settings.description = descriptionInputField.text;
 						current.Settings.objectsNeeded = objectsInputField.text;
 						current.Settings.is360 = is360Toggle.isOn;
@@ -125,18 +122,13 @@ public class VideoShelf : MonoBehaviour {
 						}
 
 						//and save them!
-						if(saveAsOldSettings) {
-							VideosDisplayer0ld.Instance.SaveVideoMeta(current.FullPath, current.VideoName, VideosDisplayer0ld.VideoSettings.FromNewSettings(current.Settings));
-						} else {
-							VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
-						}
+						if (saveAsOldSettings) VideosDisplayer0ld.Instance.SaveVideoMeta(current.FullPath, current.VideoName, VideosDisplayer0ld.VideoSettings.FromNewSettings(current.Settings));
+						else VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
 
 						//update display...
 						DisplayCurrentVideo();
 					}
-
 				}
-
 			}
 		}
 	}
@@ -153,15 +145,14 @@ public class VideoShelf : MonoBehaviour {
 
 		titleDisplay.text = current.VideoName;
 		thumbnailDisplay.sprite = current.Thumbnail;
-		if(current.Settings.description != "")
-			descriptionDisplay.text = current.Settings.description;
-		else
-			descriptionDisplay.text = noDescriptionTranslation.name;
-		if(current.Settings.objectsNeeded != "")
-			objectsDisplay.text = appendToObjects + current.Settings.objectsNeeded;
-		else
-			objectsDisplay.text = noObjectNeededTranslation.name;
-		if(is360Display != null) is360Display.SetActive(current.Settings.is360);
+		
+		if (current.Settings.description != "") descriptionDisplay.text = current.Settings.description;
+		else descriptionDisplay.text = noDescriptionTranslation.name;
+		
+		if (current.Settings.objectsNeeded != "") objectsDisplay.text = appendToObjects + current.Settings.objectsNeeded;
+		else objectsDisplay.text = noObjectNeededTranslation.name;
+			
+		if (is360Display != null) is360Display.SetActive(current.Settings.is360);
 
 		enableSave = false;
 		EditMode = false;
@@ -170,22 +161,23 @@ public class VideoShelf : MonoBehaviour {
 		editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
 
 		int currentlyPaired = 0;
-		if(ConnectionsDisplayer.Instance != null) {
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
-				if(handle.connection.active && handle.connection.paired)
+		if (ConnectionsDisplayer.Instance != null) 
+		{
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) 
+				if (handle.connection.active && handle.connection.paired)
 					++currentlyPaired;
-			}
-		} else {
-			currentlyPaired = 1;//Assume one connection when there are no display.
 		}
-		//if there's no connections (or some of them don't have the video), cannot play any videos.
-		if(currentlyPaired > 0 && current.Available) {
+		else currentlyPaired = 1;//Assume one connection when there are no display. 
+		
+		if (currentlyPaired > 0 && current.Available) //if there's no connections (or some of them don't have the video), cannot play any videos. 
+		{
 			chooseButton.gameObject.SetActive(true);
-		} else {
+		} 
+		else 
+		{
 			chooseButton.gameObject.SetActive(false);
 			Haze.Logger.Log("Hiding choose button (currentlyPaired = " + currentlyPaired + "; current.Available = " + current.Available + ")");
 		}
-
 	}
 
 	public void OnClickChoose() {
