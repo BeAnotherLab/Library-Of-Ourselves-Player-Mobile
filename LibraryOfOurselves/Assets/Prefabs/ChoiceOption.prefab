@@ -414,6 +414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aa3da9b07baf422e85517bda58f821e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _choiceInputField: {fileID: 0}
+  _optionDropdown: {fileID: 0}
+  _deleteSelf: {fileID: 0}
 --- !u!1 &3107081687263020160
 GameObject:
   m_ObjectHideFlags: 0
@@ -1570,7 +1573,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6043430968817634818}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 571867950986924775}
+        m_MethodName: OnClickDeleteButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &7594041653904004974

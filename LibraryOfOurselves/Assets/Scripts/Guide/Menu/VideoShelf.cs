@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class VideoShelf : MonoBehaviour {
+public class VideoShelf : MonoBehaviour { //displays a single video, along with choice and orientation editors
 
 	[SerializeField] Text titleDisplay;
 	[SerializeField] Image thumbnailDisplay;
@@ -31,11 +32,10 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] GameObject addChoiceTranslation;
 	[SerializeField] GameObject choiceEditionPanel;
 	[SerializeField] InputField questionField;
-	[SerializeField] InputField option1Field;
-	[SerializeField] InputField option2Field;
-	[SerializeField] VideoNamesDropdown option1Dropdown;
-	[SerializeField] VideoNamesDropdown option2Dropdown;
-
+	[SerializeField] Transform optionFieldsParent;
+	
+	[SerializeField] private GameObject choiceUIPrefab;
+	
 	[Header("Orientation editor")]
 	[SerializeField] Text editOrientation;
 	[SerializeField] GameObject orientationEditionPanel;
@@ -237,6 +237,13 @@ public class VideoShelf : MonoBehaviour {
 	}
 
 	public void OnClickDeleteChoice() {
+	private GameObject AddChoice(VideosDisplayer.VideoChoice choice)
+	{
+		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
+		instance.GetComponentInChildren<InputField>().text = choice.description;
+		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
+		return instance;
+	}
 		choiceEditionPanel.SetActive(false);
 
 		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
