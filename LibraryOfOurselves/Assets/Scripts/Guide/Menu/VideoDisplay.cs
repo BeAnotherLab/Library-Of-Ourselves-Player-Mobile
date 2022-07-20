@@ -16,7 +16,7 @@ public class VideoDisplay : MonoBehaviour{
 
 	public string FullPath { get; private set; }//path to guide video
 	public string VideoName { get; private set; }
-	public VideosDisplayer.VideoSettings Settings { get; set; }
+	public VideoSettings Settings { get; set; }
 
 	public static VideoDisplay expandedDisplay = null;
 
@@ -40,7 +40,8 @@ public class VideoDisplay : MonoBehaviour{
 	}
 
 	bool initialized = false;
-	public VideoDisplay Init(string path, string videoName, VideosDisplayer.VideoSettings settings) {
+	
+	public VideoDisplay Init(string path, string videoName, VideoSettings settings) {
 		if(initialized) {
 			Haze.Logger.LogError("Cannot initialize a VideoDisplay twice!!");
 			return null;

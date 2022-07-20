@@ -109,9 +109,6 @@ public class GuideAdapter : MonoBehaviour{
 			if(VideosDisplayer.Instance) {
 				VideosDisplayer.Instance.OnPairConnection(connection);
 			}
-			if(VideosDisplayer0ld.Instance) {
-				VideosDisplayer0ld.Instance.OnPairConnection(connection);
-			}
 		} else {
 			if(connection.paired) {
 				connection.paired = false;

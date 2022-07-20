@@ -90,9 +90,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 			case MediaPlayerEvent.EventType.FinishedPlaying:
 				//Display a choice?
 				if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
-					VideosDisplayer.VideoChoice choice = currentVideo.Settings.choices[0];
 					Haze.Logger.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
 					GuideAdapter.Instance.SendStartChoice(choice.question, choice.option1, choice.option2);
+					VideoChoice choice = currentVideo.Settings.choices[0];
 					Playing = false;
 				} else Stop();
 				break;

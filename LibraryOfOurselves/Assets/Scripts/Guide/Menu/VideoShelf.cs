@@ -120,9 +120,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 							current.Settings.deltaAngles = new Vector4[] { deltas };
 						}
 
-						//and save them!
-						if (saveAsOldSettings) VideosDisplayer0ld.Instance.SaveVideoMeta(current.FullPath, current.VideoName, VideosDisplayer0ld.VideoSettings.FromNewSettings(current.Settings));
-						else VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
+						VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
 
 						//update display...
 						DisplayCurrentVideo();
@@ -197,17 +195,17 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	public void OnClickEditChoice() 
 	{
 		choiceEditionPanel.SetActive(true);
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 		if (settings.choices.Count > 0) //if there are options
 		{
 			while (optionFieldsParent.childCount > 0) DestroyImmediate(optionFieldsParent.GetChild(0).gameObject);
-			foreach (VideosDisplayer.VideoChoice choice in settings.choices) AddChoice(choice); //go through options an instantiate their prefab
+			foreach (VideoChoice choice in settings.choices) AddChoice(choice); //go through options an instantiate their prefab
 		}
 	}
 
 	public void OnClickAddChoice()
 	{
-		AddChoice(new VideosDisplayer.VideoChoice()); 
+		AddChoice(new VideoChoice()); 
 	}
 	
 	public void OnClickEditOrientation() {
@@ -227,7 +225,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	public void OnClickSaveOrientation() {
 		orientationEditionPanel.SetActive(false);
 
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 
 		settings.deltaAngles = orientationEditor.GetValues().ToArray();
 
@@ -237,7 +235,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		VideoDisplay.expandedDisplay.expand();
 	}
 	
-	private GameObject AddChoice(VideosDisplayer.VideoChoice choice)
+	private GameObject AddChoice(VideoChoice choice)
 	{
 		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
 		instance.GetComponentInChildren<InputField>().text = choice.description;
@@ -248,14 +246,14 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	private void OnClickSaveChoice() {
 		choiceEditionPanel.SetActive(false);
 
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 
-		settings.choices = new List<VideosDisplayer.VideoChoice>();
+		settings.choices = new List<VideoChoice>();
 		
 		foreach (ChoiceOption choiceOption in optionFieldsParent.GetComponentsInChildren<ChoiceOption>())
 		{
 			Debug.Log("under choiceTransform " + choiceOption.gameObject.name);
-			var videoChoice = new VideosDisplayer.VideoChoice();
+			var videoChoice = new VideoChoice();
 			videoChoice.description = choiceOption.choiceInputField.text;
 			videoChoice.video = choiceOption.optionDropdown.Selected;
 			settings.choices.Add(videoChoice);
@@ -270,7 +268,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	private void OnClickDeleteChoice() {
 		choiceEditionPanel.SetActive(false);
 
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 /*
 		if(settings.choices.Count > 0) {
 			settings.choices = new VideosDisplayer.VideoChoice[0];
