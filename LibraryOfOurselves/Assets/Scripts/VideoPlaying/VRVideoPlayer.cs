@@ -26,8 +26,11 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] GvrControllerButton mirageQuitButton = GvrControllerButton.App;
 	[SerializeField] GameObject choiceContainer;
 	[SerializeField] TextMesh questionMesh;
-	[SerializeField] TextMesh option1Mesh;
-	[SerializeField] TextMesh option2Mesh;
+	
+	//[SerializeField] TextMesh option1Mesh;
+	//[SerializeField] TextMesh option2Mesh;
+	[SerializeField] List<TextMesh> optionMeshes;
+	
 	[SerializeField] GameObject blackScreen;
 	[SerializeField] Transform rotator;
 	[SerializeField] AudioLoadingMode audioLoadingMode = AudioLoadingMode.UnityWebResource;
@@ -479,14 +482,18 @@ public class VRVideoPlayer : MonoBehaviour{
 			OVRInput.FixedUpdate();
 	}
 
-	public void DisplayChoice(string question, string choice1, string choice2) {
+	public void DisplayChoice(string question, string choices) {
 		//display the last frame:
 		VideoTime = player.Info.GetDurationFrames();
 		pausePlayback();
 
 		questionMesh.text = question;
-		option1Mesh.text = choice1;
-		option2Mesh.text = choice2;
+		foreach(var option in choices.Split(','))
+		{
+			var newMesh = new TextMesh();
+			newMesh.text = option;
+			optionMeshes.Add(newMesh);
+		}
 
 		choiceContainer.SetActive(true);
 	}

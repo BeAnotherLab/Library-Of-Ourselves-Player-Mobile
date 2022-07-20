@@ -263,11 +263,11 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveStartChoice(TCPConnection connection, string question, string choice1, string choice2) {
+	public void OnReceiveStartChoice(TCPConnection connection, string question, string choices) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			Haze.Logger.Log("Display choices \'" + choice1 + "\' and \'" + choice2 + "\'");
+			Haze.Logger.Log("Display choices \'" + choices);
 			if(VRVideoPlayer.Instance) {
-				VRVideoPlayer.Instance.DisplayChoice(question, choice1, choice2);
+				VRVideoPlayer.Instance.DisplayChoice(question, choices);
 			}
 		}
 	}
