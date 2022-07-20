@@ -29,7 +29,8 @@ public class VRVideoPlayer : MonoBehaviour{
 	
 	//[SerializeField] TextMesh option1Mesh;
 	//[SerializeField] TextMesh option2Mesh;
-	[SerializeField] List<TextMesh> optionMeshes;
+	[SerializeField] private GameObject optionMeshPrefab;
+	[SerializeField] private Transform optionsParent;
 	
 	[SerializeField] GameObject blackScreen;
 	[SerializeField] Transform rotator;
@@ -482,17 +483,17 @@ public class VRVideoPlayer : MonoBehaviour{
 			OVRInput.FixedUpdate();
 	}
 
-	public void DisplayChoice(string question, string choices) {
+	public void DisplayChoice(string question, string choices)
+	{
 		//display the last frame:
 		VideoTime = player.Info.GetDurationFrames();
 		pausePlayback();
-
+		
 		questionMesh.text = question;
-		foreach(var option in choices.Split(','))
+		foreach (var option in choices.Split(','))
 		{
-			var newMesh = new TextMesh();
-			newMesh.text = option;
-			optionMeshes.Add(newMesh);
+			GameObject optionGameObject = Instantiate(optionMeshPrefab, optionsParent);
+			optionGameObject.GetComponentInChildren<TextMesh>().text = option;
 		}
 
 		choiceContainer.SetActive(true);

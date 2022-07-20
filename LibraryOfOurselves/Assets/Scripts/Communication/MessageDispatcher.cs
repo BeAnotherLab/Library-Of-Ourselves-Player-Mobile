@@ -16,7 +16,7 @@ using UnityEngine.Events;
 [Serializable] class VideoTimeStampAndTimeMessage : UnityEvent<TCPConnection, DateTime, double> { }
 [Serializable] class VideoTimeMessage : UnityEvent<TCPConnection, double> { }
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
-[Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string, string> { }
+[Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
 [Serializable] class ReorientMessage : UnityEvent<TCPConnection, Vector3> { }
 [Serializable] class StatusMessage : UnityEvent<TCPConnection, byte, short, byte> { }
@@ -142,9 +142,8 @@ public class MessageDispatcher : MonoBehaviour{
 				break;
 			case "start-choice": {
 					string question = data.ReadString();
-					string choice1 = data.ReadString();
-					string choice2 = data.ReadString();
-					startChoice.Invoke(connection, question, choice1, choice2);
+					string choices = data.ReadString();
+					startChoice.Invoke(connection, question, choices);
 				}
 				break;
 			case "select-option": {
