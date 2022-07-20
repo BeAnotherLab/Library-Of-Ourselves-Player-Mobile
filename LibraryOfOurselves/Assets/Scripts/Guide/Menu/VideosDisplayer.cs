@@ -5,32 +5,33 @@ using System;
 using System.IO;
 using UnityEngine.Events;
 
+
+[Serializable]
+public class VideoChoice {
+	public string description = "description";  
+	public string video = "";
+	public Vector2 position = new Vector2();
+} //TODO move to own file
+
+[Serializable]
+public class VideoSettings {
+	public bool is360 = false;
+	public string description = "";
+	public string objectsNeeded = "";
+	public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
+	//public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
+	public List<VideoChoice> choices = new List<VideoChoice>();
+
+	public override string ToString() {
+		return "[VideoSettings: is360=" + is360 + " | description=" + description + " | objectsNeeded=" + objectsNeeded + " | deltaAngles=" + deltaAngles + "]";
+	}
+} //TODO own file
+
 public class VideosDisplayer : MonoBehaviour { //displays list of videos in a grid and saves settings
 
 	[SerializeField] GameObject videoShelfPrefab;
 	[SerializeField] GameObject videoDisplayPrefab;
 	[SerializeField] UnityEvent onFoundOneVideo;
-
-	[Serializable]
-	public class VideoChoice {
-		public string description = "description";  
-		public string video = "";
-		public Vector2 position = new Vector2();
-	} //TODO move to own file
-
-	[Serializable]
-	public class VideoSettings {
-		public bool is360 = false;
-		public string description = "";
-		public string objectsNeeded = "";
-		public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
-		//public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
-		public List<VideoChoice> choices = new List<VideoChoice>();
-
-		public override string ToString() {
-			return "[VideoSettings: is360=" + is360 + " | description=" + description + " | objectsNeeded=" + objectsNeeded + " | deltaAngles=" + deltaAngles + "]";
-		}
-	} //TODO own file
 
 	public static VideosDisplayer Instance { get; private set; }
 
