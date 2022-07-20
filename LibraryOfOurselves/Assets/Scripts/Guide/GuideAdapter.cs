@@ -293,14 +293,14 @@ public class GuideAdapter : MonoBehaviour{
 		connection.Send(data);
 	}
 
-	public void SendStartChoice(string question, string choice1, string choice2) {
+	public void SendStartChoice(string question, List<VideoChoice> choice) {
 		List<byte> data = new List<byte>();
 		data.WriteString("start-choice");
+		string choicesString = ""; 
+		foreach (var option in choice) choicesString += "," + option.description;
 		data.WriteString(question);
-		data.WriteString(choice1);
-		data.WriteString(choice2);
-		if(TCPHost.Instance)
-			TCPHost.Instance.BroadcastToPairedDevices(data);
+		data.WriteString(choicesString);
+		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
 	public void OnReceiveSelectOption(TCPConnection connection, byte option) {

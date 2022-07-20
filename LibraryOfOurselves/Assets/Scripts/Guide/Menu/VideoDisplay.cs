@@ -50,7 +50,7 @@ public class VideoDisplay : MonoBehaviour{
 		FullPath = path;
 		VideoName = videoName;
 		Settings = settings;
-		Available = false;
+		Available = false; 
 
 		videoNameDisplay.text = VideoName;
 
