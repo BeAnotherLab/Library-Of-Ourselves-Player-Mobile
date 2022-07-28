@@ -303,6 +303,18 @@ public class GuideAdapter : MonoBehaviour{
 		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
+	public void SendEditChoice(string videoName, string description, Vector3 eulerAngles)
+	{
+		List<byte> data = new List<byte>();
+		data.WriteString("edit-choice");
+		data.WriteString(videoName);
+		data.WriteString(description);
+		data.WriteString(eulerAngles.x.ToString());
+		data.WriteString(eulerAngles.y.ToString());
+		data.WriteString(eulerAngles.z.ToString());
+		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+	
 	public void OnReceiveSelectOption(TCPConnection connection, byte option) {
 		if(GuideVideoPlayer.Instance != null)
 			GuideVideoPlayer.Instance.OnReceiveChoiceConfirmation(connection, (int)option - 1);

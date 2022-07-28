@@ -7,10 +7,17 @@ public class ChoiceOption : MonoBehaviour
 {
    public InputField choiceInputField;
    public VideoNamesDropdown optionDropdown;
-   [SerializeField] private Button _deleteSelf;
 
+   public delegate void OnEditButtonClicked();
+   public static OnEditButtonClicked EditButtonClicked; 
+   
    public void OnClickDeleteButton()
    {
       Destroy(gameObject);
+   }
+
+   public void OnClickEditButton()
+   {
+      EditButtonClicked.Invoke();
    }
 }
