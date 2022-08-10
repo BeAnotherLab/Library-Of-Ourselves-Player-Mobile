@@ -272,6 +272,17 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
+	public async void OnReceiveEditChoice(TCPConnection connection, string videoName, string description, string x, string y, string z)
+	{
+		if (currentlyPaired != null && connection == currentlyPaired)
+		{
+			Haze.Logger.Log("Edit choice for video" + videoName + " ");
+			//TODO load with mode
+			VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, "");
+			SendLoadVideoResponse(response.ok, response.errorMessage);
+		}
+	}
+	
 	public void SendSelectOption(byte option) {
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
