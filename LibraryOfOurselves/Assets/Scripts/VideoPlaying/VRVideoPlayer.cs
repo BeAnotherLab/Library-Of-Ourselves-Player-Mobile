@@ -491,7 +491,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			OVRInput.FixedUpdate();
 	}
 
-	public void DisplayChoice(string question, string choices)
+	public void DisplayChoice(string question, string choices) //TODO also needs positions
 	{
 		//display the last frame:
 		VideoTime = player.Info.GetDurationFrames();

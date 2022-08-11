@@ -17,8 +17,8 @@ using UnityEngine.Events;
 [Serializable] class VideoTimeMessage : UnityEvent<TCPConnection, double> { }
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
 [Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string> { }
-[Serializable] class ChoiceEditMessage : UnityEvent<TCPConnection, string, string, string, string> { }
-
+[Serializable] class ChoiceEditMessage : UnityEvent<TCPConnection, string, string, string> { }
+[Serializable] class ChoiceSaveMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
 [Serializable] class ReorientMessage : UnityEvent<TCPConnection, Vector3> { }
 [Serializable] class StatusMessage : UnityEvent<TCPConnection, byte, short, byte> { }
@@ -47,6 +47,7 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] VideoPlaybackMessage calibrate;
 	[SerializeField] ChoiceStartMessage startChoice;
 	[SerializeField] ChoiceEditMessage editChoice;
+	[SerializeField] ChoiceSaveMessage saveChoice;
 	[SerializeField] ChoiceSelectMessage selectOption;
 	[SerializeField] ReorientMessage reorient;
 	[SerializeField] StatusMessage status;
@@ -150,21 +151,18 @@ public class MessageDispatcher : MonoBehaviour{
 				}
 			case "edit-choice":
 			{
-					string videoName = data.ReadString();
-					string description = data.ReadString();
-					string x = data.ReadString();
-					string y = data.ReadString();
-					string z = data.ReadString();
-					editChoice.Invoke(videoName, description, x, y, z);
+				string videoName = data.ReadString();
+				string description = data.ReadString();
+				string eulerAngles = data.ReadString();
+				editChoice.Invoke(connection, videoName, description, eulerAngles);
 			}
+			break;
 			case "save-choice":
 			{
 				string videoName = data.ReadString();
 				string description = data.ReadString();
-				string x = data.ReadString();
-				string y = data.ReadString();
-				string z = data.ReadString();
-				saveChoice.Invoke(videoName, description,x,y,z);
+				string eulerAngles = data.ReadString();
+				saveChoice.Invoke(connection, videoName, description,eulerAngles);
 			}
 				break;
 			case "select-option": {

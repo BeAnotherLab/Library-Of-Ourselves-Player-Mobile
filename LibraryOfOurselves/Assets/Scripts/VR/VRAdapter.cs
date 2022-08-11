@@ -263,7 +263,7 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveStartChoice(TCPConnection connection, string question, string choices) {
+	public void OnReceiveStartChoice(TCPConnection connection, string question, string choices) { //TODO must add positions descriptions and video names!
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			Haze.Logger.Log("Display choices \'" + choices);
 			if(VRVideoPlayer.Instance) {
@@ -272,14 +272,13 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public async void OnReceiveEditChoice(TCPConnection connection, string videoName, string description, string x, string y, string z)
+	public async void OnReceiveEditChoice(TCPConnection connection, string videoName, string description, string eulerAngles)
 	{
 		if (currentlyPaired != null && connection == currentlyPaired)
 		{
 			Haze.Logger.Log("Edit choice for video" + videoName + " ");
-			//TODO load with mode
+			//TODO load with mode (360 or not)
 			VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, "");
-			SendLoadVideoResponse(response.ok, response.errorMessage);
 		}
 	}
 	
