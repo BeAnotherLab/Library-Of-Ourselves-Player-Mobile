@@ -152,7 +152,11 @@ public class VRVideoPlayer : MonoBehaviour{
 			case MediaPlayerEvent.EventType.FirstFrameReady:
 				Debug.Log("first frame ready");
 				lastReadyFrame = player.Control.GetCurrentTimeFrames();
-				if (_LoadingForChoicePosition) StartCoroutine(SeekToEnd());
+				if (_LoadingForChoicePosition)
+				{
+					StartCoroutine(SeekToEnd());
+					_LoadingForChoicePosition = false;
+				}
 				break;
 		}
 	}

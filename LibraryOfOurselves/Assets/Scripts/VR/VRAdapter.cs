@@ -282,6 +282,22 @@ public class VRAdapter : MonoBehaviour{
 			VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, "");
 		}
 	}
+
+	public void OnReceiveSaveChoice(TCPConnection connection, string videoName, string description, string eulerAngles)
+	{
+		if (currentlyPaired != null && connection == currentlyPaired)
+		{
+			Haze.Logger.Log("Save choice for video" + videoName + " ");
+			List<byte> data = new List<byte>();
+			data.WriteString("choice-position");
+
+			data.WriteString(Camera.main.gameObject.transform.eulerAngles.x + "," +
+			                 Camera.main.gameObject.transform.eulerAngles.y + "," +
+			                 Camera.main.gameObject.transform.eulerAngles.z);
+
+			currentlyPaired.Send(data);
+		}
+	}
 	
 	public void SendSelectOption(byte option) {
 		if(currentlyPaired != null) {
