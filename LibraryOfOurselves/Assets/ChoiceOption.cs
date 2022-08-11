@@ -12,6 +12,9 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
    public delegate void OnEditButtonClicked(string videoName, string description, Vector3 eulerAngles);
    public static OnEditButtonClicked EditButtonClicked;
 
+   public delegate void OnSaveButtonClicked(string videoName, string description, Vector3 eulerAngles);
+   public static OnSaveButtonClicked SaveButtonClicked;
+   
    [SerializeField] private GameObject _choiceEditButton;
    [SerializeField] private GameObject _choiceSaveButton;
    
@@ -30,7 +33,8 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
    public void OnClickSaveChoicePositionButton()
    {
       _choiceSaveButton.SetActive(false);
-      _choiceEditButton.SetActive(true);  
+      _choiceEditButton.SetActive(true);
+      SaveButtonClicked.Invoke( optionDropdown.Selected, choiceInputField.text, eulerAngles);
    }
 
    public void OnReceiveChoicePosition(Vector3 angles)

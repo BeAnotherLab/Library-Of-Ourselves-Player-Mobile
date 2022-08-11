@@ -14795,6 +14795,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: ChoiceStartMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  editChoice:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ChoiceEditMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  saveChoice:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ChoiceSaveMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   selectOption:
     m_PersistentCalls:
       m_Calls:
@@ -14810,6 +14820,22 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: ChoiceSelectMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  choicePositionMessage:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1243236689}
+        m_MethodName: OnReceiveChoicePosition
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: ChoicePositionMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   reorient:
     m_PersistentCalls:
