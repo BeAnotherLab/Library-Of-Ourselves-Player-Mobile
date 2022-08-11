@@ -20,12 +20,13 @@ using UnityEngine.Events;
 [Serializable] class ChoiceEditMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSaveMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
+[Serializable] class ChoicePositionMessage : UnityEvent<TCPConnection, string> { }
 [Serializable] class ReorientMessage : UnityEvent<TCPConnection, Vector3> { }
 [Serializable] class StatusMessage : UnityEvent<TCPConnection, byte, short, byte> { }
 [Serializable] class AutocalibrationMessage : UnityEvent<TCPConnection, byte> { }
 [Serializable] class AutocalibrationResultMessage : UnityEvent<TCPConnection, byte, float> { }
 
-public class MessageDispatcher : MonoBehaviour{
+public class MessageDispatcher : MonoBehaviour{ //TODO separate Guide/VR messages or at least make regions for each
 
 	[SerializeField] GuideLockMessage guideLock;
 	[SerializeField] GuideLockMessage guideUnlock;
@@ -49,6 +50,7 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] ChoiceEditMessage editChoice;
 	[SerializeField] ChoiceSaveMessage saveChoice;
 	[SerializeField] ChoiceSelectMessage selectOption;
+	[SerializeField] ChoicePositionMessage choicePositionMessage;
 	[SerializeField] ReorientMessage reorient;
 	[SerializeField] StatusMessage status;
 	[SerializeField] AutocalibrationMessage autocalibration;
@@ -149,6 +151,7 @@ public class MessageDispatcher : MonoBehaviour{
 					string choices = data.ReadString();
 					startChoice.Invoke(connection, question, choices);
 				}
+				break;
 			case "edit-choice":
 			{
 				string videoName = data.ReadString();
@@ -168,6 +171,11 @@ public class MessageDispatcher : MonoBehaviour{
 			case "select-option": {
 					byte option = data.ReadByte();
 					selectOption.Invoke(connection, option);
+				}
+				break;
+			case "choice-position": {
+					string position = data.ReadString();
+					choicePositionMessage.Invoke(connection, position);    
 				}
 				break;
 			case "reorient": {
