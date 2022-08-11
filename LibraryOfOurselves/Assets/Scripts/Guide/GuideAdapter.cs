@@ -21,6 +21,11 @@ public class GuideAdapter : MonoBehaviour{
 
 	public static GuideAdapter Instance { get; private set; }
 
+	private void OnEnable()
+	{
+		ChoiceOption.EditButtonClicked += SendEditChoice;
+	}
+
 	private void Start() {
 		Instance = this;
 		onZeroConnections.Invoke();
