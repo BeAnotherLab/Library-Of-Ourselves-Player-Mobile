@@ -43,6 +43,8 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] float maximumPlaybackSpeed = 1.5f;
 	[SerializeField] float minimumPlaybackSpeed = 0.75f;
 
+	[SerializeField] private int _frameBeforeEndInSeconds;
+	
 	public enum AudioLoadingMode {
 		WWW,
 		NLayer,
@@ -95,11 +97,18 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	long lastReadyFrame = -1;
 
+	private bool _LoadingForChoicePosition;
+	
+	private void OnEnable()
+	{
+		player = GetComponent<MediaPlayer>();
+		player.Events.AddListener(MediaPlayerEventReceived);
+	}
+
 	private void Start() {
 		Camera.main.backgroundColor = DeviceColour.getDeviceColor(SystemInfo.deviceUniqueIdentifier);//Set background colour to something unique
 		Instance = this;
 		mainCamera = Camera.main;
-		player = GetComponent<MediaPlayer>();
 
 		choiceContainer.SetActive(false);
 		blackScreen.SetActive(false);
@@ -133,17 +142,26 @@ public class VRVideoPlayer : MonoBehaviour{
 		return Application.persistentDataPath + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
 	}
 
-	public void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
+	private void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
 	{
 		switch (eventType)
 		{
 			case MediaPlayerEvent.EventType.FinishedPlaying:
-				play();
+				//play();
 				break;
 			case MediaPlayerEvent.EventType.FirstFrameReady:
+				Debug.Log("first frame ready");
 				lastReadyFrame = player.Control.GetCurrentTimeFrames();
+				if (_LoadingForChoicePosition) StartCoroutine(SeekToEnd());
 				break;
 		}
+	}
+
+	private IEnumerator SeekToEnd()
+	{
+		yield return new WaitForSeconds(2);
+		Debug.Log("first fram ready, seeking to end");
+		player.Control.Seek(player.Info.GetDuration() - _frameBeforeEndInSeconds);
 	}
 	
 	public static bool IsVideoAvailable(string videoName) {
@@ -152,7 +170,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		return File.Exists( path);
 	}
 
-	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) {
+	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) { //TODO async not actually necessary?
 		VideoLoadingResponse response = new VideoLoadingResponse();
 		response.ok = true;
 		response.errorMessage = "";
@@ -445,7 +463,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		BinauralAudio = false;
 	}
 
-
 	void Update() {
 		if(VRDevice.OculusGo) {//On OculusGo, use the controller's trigger to recalibrate
 			OVRInput.Update();
@@ -506,7 +523,7 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		choiceContainer.SetActive(true);
 	}
-
+	
 	public void OnSelectOption(int whichOption) {
 		choiceContainer.SetActive(false);
 		StopVideo();
@@ -518,9 +535,8 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	public void OnEditOption(string videoName, string description, Vector3 eulerAngles)
 	{
-		
+		_LoadingForChoicePosition = true;
 	}
-	
 	public void Reorient(Vector3 eulerAngles) {
 		rotator.localEulerAngles = eulerAngles;
 	}

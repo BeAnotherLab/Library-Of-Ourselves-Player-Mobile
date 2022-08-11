@@ -792,6 +792,7 @@ MonoBehaviour:
   maximumAllowedErrorBeforeResync: 0.8
   maximumPlaybackSpeed: 1.2
   minimumPlaybackSpeed: 0.8333333
+  _frameBeforeEndInSeconds: 5
 --- !u!4 &645322548
 Transform:
   m_ObjectHideFlags: 0
@@ -2609,6 +2610,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: ChoiceSelectMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  choicePositionMessage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: ChoicePositionMessage, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   reorient:
     m_PersistentCalls:

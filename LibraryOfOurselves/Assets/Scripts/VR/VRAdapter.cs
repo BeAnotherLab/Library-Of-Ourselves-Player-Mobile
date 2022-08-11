@@ -278,6 +278,7 @@ public class VRAdapter : MonoBehaviour{
 		{
 			Haze.Logger.Log("Edit choice for video" + videoName + " ");
 			//TODO load with mode (360 or not)
+			VRVideoPlayer.Instance.OnEditOption(videoName,description, new Vector3());
 			VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, "");
 		}
 	}
