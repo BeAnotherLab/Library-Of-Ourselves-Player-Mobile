@@ -26,7 +26,15 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
       _choiceSaveButton.SetActive(true);
       EditButtonClicked.Invoke( optionDropdown.Selected, choiceInputField.text, eulerAngles);
    }
+
+   public void OnClickSaveChoicePositionButton()
    {
-      EditButtonClicked.Invoke();
+      _choiceSaveButton.SetActive(false);
+      _choiceEditButton.SetActive(true);  
+   }
+
+   public void OnReceiveChoicePosition(Vector3 angles)
+   {
+      eulerAngles = angles;
    }
 }
