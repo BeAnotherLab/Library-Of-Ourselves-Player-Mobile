@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
    public InputField choiceInputField;
    public VideoNamesDropdown optionDropdown;
    public Vector3 eulerAngles;
+
+   public bool selected;
    
    public delegate void OnEditButtonClicked(string videoName, string description, Vector3 eulerAngles);
    public static OnEditButtonClicked EditButtonClicked;
@@ -17,17 +20,29 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
    
    [SerializeField] private GameObject _choiceEditButton;
    [SerializeField] private GameObject _choiceSaveButton;
-   
+
+   private void OnEnable()
+   {
+      EditButtonClicked += EditButtonClickedFromOutside;
+      GuideAdapter.ReceivedChoicePosition += OnReceiveChoicePosition;
+   }
+
    public void OnClickDeleteButton()
    {
       Destroy(gameObject);
    }
 
+   private void EditButtonClickedFromOutside(string videoName, string description, Vector3 eulerAngles)
+   {
+      selected = false; //TODO not sure if this approach for selection is safe
+   }
+   
    public void OnClickEditChoicePositionButton()
    {
       _choiceEditButton.SetActive(false);
       _choiceSaveButton.SetActive(true);
       EditButtonClicked.Invoke( optionDropdown.Selected, choiceInputField.text, eulerAngles);
+      selected = true;
    }
 
    public void OnClickSaveChoicePositionButton()
@@ -39,6 +54,6 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
 
    public void OnReceiveChoicePosition(Vector3 angles)
    {
-      eulerAngles = angles;
+      if(selected) eulerAngles = angles;
    }
 }
