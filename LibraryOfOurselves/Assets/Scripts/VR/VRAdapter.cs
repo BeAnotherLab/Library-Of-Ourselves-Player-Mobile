@@ -263,11 +263,11 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveStartChoice(TCPConnection connection, string question, string choices) { //TODO must add positions descriptions and video names!
+	public void OnReceiveStartChoice(TCPConnection connection, string question, string optionsDescriptions,  string optionsPositions) { //TODO must add positions
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			Haze.Logger.Log("Display choices \'" + choices);
+			Haze.Logger.Log("Display choices \'" + optionsDescriptions);
 			if(VRVideoPlayer.Instance) {
-				VRVideoPlayer.Instance.DisplayChoice(question, choices);
+				VRVideoPlayer.Instance.DisplayChoice(question, optionsDescriptions, optionsPositions);
 			}
 		}
 	}
@@ -299,7 +299,7 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 	
-	public void SendSelectOption(byte option) {
+	public void SendSelectOption(byte option) { //TODO also remove the instantiated options, also when guide exits video
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("select-option");

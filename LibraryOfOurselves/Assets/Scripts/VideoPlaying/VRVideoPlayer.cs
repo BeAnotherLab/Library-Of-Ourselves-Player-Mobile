@@ -512,17 +512,28 @@ public class VRVideoPlayer : MonoBehaviour{
 			OVRInput.FixedUpdate();
 	}
 
-	public void DisplayChoice(string question, string choices) //TODO also needs positions
+	public void DisplayChoice(string question, string optionsDescriptions, string optionsPositions) //TODO also needs positions
 	{
 		//display the last frame:
+		//TODO must match the frame used for setting the position on the guide app
 		VideoTime = player.Info.GetDurationFrames();
 		pausePlayback();
-		
+
 		questionMesh.text = question;
-		foreach (var option in choices.Split(','))
+
+		int i = 0;
+		foreach (var optionDescription in optionsDescriptions.Split(','))
 		{
 			GameObject optionGameObject = Instantiate(optionMeshPrefab, optionsParent);
-			optionGameObject.GetComponentInChildren<TextMesh>().text = option;
+			optionGameObject.GetComponentInChildren<TextMesh>().text = optionDescription;
+
+			var optionPosition = optionsPositions.Split('#')[i];
+			float x = float.Parse(optionPosition.Split(',')[0]);
+			float y = float.Parse(optionPosition.Split(',')[1]);
+			float z = float.Parse(optionPosition.Split(',')[2]);
+			optionGameObject.transform.eulerAngles = new Vector3(x, y, z);
+			
+			i++;
 		}
 
 		choiceContainer.SetActive(true);
@@ -534,7 +545,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		blackScreen.SetActive(true);//Set up the black screen until the follow-up video starts playing.
 		VRAdapter.Instance.SendSelectOption((byte)whichOption);
 		Haze.Logger.Log("Selecting option " + whichOption);
-		//Should we display something while we wait for the next video to load and show up?... maybe.
+		//TODO Should we display something while we wait for the next video to load and show up?... maybe.
 	}
 
 	public void OnEditOption(string videoName, string description, Vector3 eulerAngles)

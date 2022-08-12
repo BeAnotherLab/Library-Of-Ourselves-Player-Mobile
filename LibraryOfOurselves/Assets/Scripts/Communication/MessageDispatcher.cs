@@ -16,7 +16,7 @@ using UnityEngine.Events;
 [Serializable] class VideoTimeStampAndTimeMessage : UnityEvent<TCPConnection, DateTime, double> { }
 [Serializable] class VideoTimeMessage : UnityEvent<TCPConnection, double> { }
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
-[Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string> { }
+[Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceEditMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSaveMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
@@ -47,7 +47,7 @@ public class MessageDispatcher : MonoBehaviour{ //TODO separate Guide/VR message
 	[SerializeField] VideoTimeStampAndTimeMessage sync;
 	[SerializeField] VideoPlaybackMessage calibrate;
 	[SerializeField] ChoiceStartMessage startChoice;
-	[SerializeField] ChoiceEditMessage editChoice;
+	[SerializeField] ChoiceEditMessage editChoice; 
 	[SerializeField] ChoiceSaveMessage saveChoice;
 	[SerializeField] ChoiceSelectMessage selectOption;
 	[SerializeField] ChoicePositionMessage choicePositionMessage;
@@ -147,9 +147,10 @@ public class MessageDispatcher : MonoBehaviour{ //TODO separate Guide/VR message
 				calibrate.Invoke(connection);
 				break;
 			case "start-choice": {
-					string question = data.ReadString();
-					string choices = data.ReadString();
-					startChoice.Invoke(connection, question, choices);
+				string question = data.ReadString();
+				string optionsDescriptions = data.ReadString();
+				string optionsPositions = data.ReadString();
+				startChoice.Invoke(connection, question, optionsDescriptions, optionsPositions);
 				}
 				break;
 			case "edit-choice":
