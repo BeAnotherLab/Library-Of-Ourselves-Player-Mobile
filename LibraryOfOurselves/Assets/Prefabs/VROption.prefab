@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857214918213236861}
   m_Layer: 0
-  m_Name: Option1-Container
+  m_Name: VROption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

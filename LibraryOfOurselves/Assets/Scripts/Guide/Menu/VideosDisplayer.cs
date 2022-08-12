@@ -7,10 +7,10 @@ using UnityEngine.Events;
 
 
 [Serializable]
-public class VideoChoice {
+public class VideoChoice { //TODO rename to option?
 	public string description = "description";  
-	public string video = "";
-	public Vector2 position = new Vector2();
+	public string video = ""; //the destination video
+	public Vector3 position = new Vector3();
 } //TODO move to own file
 
 [Serializable]
@@ -98,7 +98,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			} else {
 				//Not a guide. ignore it.
 			}
-		}catch(Exception e) {
+		} catch(Exception e) {
 			//could silently ignore, probably
 			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
 		}

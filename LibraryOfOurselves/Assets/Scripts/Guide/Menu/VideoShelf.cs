@@ -131,7 +131,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	}
 
 	private void OnDisable() {
-		if(VideoDisplay.expandedDisplay != null) {
+		if (VideoDisplay.expandedDisplay != null) {
 			VideoDisplay.expandedDisplay.contract();
 		}
 	}
@@ -240,6 +240,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
 		instance.GetComponentInChildren<InputField>().text = choice.description;
 		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
+		instance.GetComponent<ChoiceOption>().eulerAngles = choice.position;
 		return instance;
 	}
 	
@@ -256,6 +257,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 			var videoChoice = new VideoChoice();
 			videoChoice.description = choiceOption.choiceInputField.text;
 			videoChoice.video = choiceOption.optionDropdown.Selected;
+			videoChoice.position = choiceOption.eulerAngles;
 			settings.choices.Add(videoChoice);
 		}
 

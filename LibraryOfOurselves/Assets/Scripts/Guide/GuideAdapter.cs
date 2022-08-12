@@ -302,13 +302,24 @@ public class GuideAdapter : MonoBehaviour{
 		connection.Send(data);
 	}
 
-	public void SendStartChoice(string question, List<VideoChoice> choice) {
+	public void SendStartChoice(string question, List<VideoChoice> options) {
 		List<byte> data = new List<byte>();
 		data.WriteString("start-choice");
-		string choicesString = ""; 
-		foreach (var option in choice) choicesString += "," + option.description;
+		string optionsDescriptions = ""; 
+		string optionsPositions = ""; 
+		for(int i = 0; i < options.Count; i++)
+		{
+			var option = options[i];
+			optionsDescriptions += option.description;
+			if (i < options.Count - 1) optionsDescriptions += "," ;
+			optionsPositions += option.position.x + ",";
+			optionsPositions += option.position.y + ",";
+			optionsPositions += option.position.z;
+			if (i < options.Count - 1) optionsPositions += "#";
+		}
 		data.WriteString(question);
-		data.WriteString(choicesString);
+		data.WriteString(optionsDescriptions);
+		data.WriteString(optionsPositions);
 		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
