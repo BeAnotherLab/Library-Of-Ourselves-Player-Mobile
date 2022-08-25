@@ -44,7 +44,6 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] float minimumPlaybackSpeed = 0.75f;
 
 	[SerializeField] private int _frameBeforeEndInSeconds;
-	
 	public enum AudioLoadingMode {
 		WWW,
 		NLayer,
@@ -546,6 +545,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		StopVideo();
 		blackScreen.SetActive(true);//Set up the black screen until the follow-up video starts playing.
 		VRAdapter.Instance.SendSelectOption((byte)whichOption);
+		ClearOptions();
 		Haze.Logger.Log("Selecting option " + whichOption);
 		//TODO Should we display something while we wait for the next video to load and show up?... maybe.
 	}
@@ -565,4 +565,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		sendImmediateSync();
 	}
 
+	private void ClearOptions()
+	{
+		while (optionsParent.childCount > 0) DestroyImmediate(optionsParent.GetChild(0).gameObject);
+	}
 }
