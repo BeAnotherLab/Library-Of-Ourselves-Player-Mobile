@@ -198,11 +198,16 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 		if (settings.choices.Count > 0) //if there are options
 		{
-			while (optionFieldsParent.childCount > 0) DestroyImmediate(optionFieldsParent.GetChild(0).gameObject);
+			ClearOptions();
 			foreach (VideoChoice choice in settings.choices) AddChoice(choice); //go through options an instantiate their prefab
 		}
 	}
 
+	public void ClearOptions()
+	{
+		while (optionFieldsParent.childCount > 0) DestroyImmediate(optionFieldsParent.GetChild(0).gameObject);
+	}
+	
 	public void OnClickAddChoice()
 	{
 		AddChoice(new VideoChoice()); 
