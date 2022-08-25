@@ -266,10 +266,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	public void OnReceiveChoiceConfirmation(TCPConnection connection, int choiceIndex) {
-		//choice index is either 0 or 1
 		if (currentVideo != null && currentVideo.Settings.choices.Count > 0) {
-			//TODO load video from choices list here 
-			string nextVideo = "";// = choiceIndex == 0 ? currentVideo.Settings.choices[0].video1 : currentVideo.Settings.choices[0].video2;
+			string nextVideo = currentVideo.Settings.choices[choiceIndex].video;
 			VideoDisplay nextVideoDisplay = VideosDisplayer.Instance.FindVideo(nextVideo);
 			if (nextVideoDisplay != null && nextVideoDisplay.Available) {
 				playImmediately = true;

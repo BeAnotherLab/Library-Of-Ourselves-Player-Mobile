@@ -103,6 +103,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	{
 		player = GetComponent<MediaPlayer>();
 		player.Events.AddListener(MediaPlayerEventReceived);
+		VRGazeChoice.ConfirmVRGazeSelection += OnSelectOption;
 	}
 
 	private void Start() {
@@ -526,6 +527,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		{
 			GameObject optionGameObject = Instantiate(optionMeshPrefab, optionsParent);
 			optionGameObject.GetComponentInChildren<TextMesh>().text = optionDescription;
+			optionGameObject.GetComponentInChildren<VRGazeChoice>().choiceIndex = i;
 
 			var optionPosition = optionsPositions.Split('#')[i];
 			float x = float.Parse(optionPosition.Split(',')[0]);
