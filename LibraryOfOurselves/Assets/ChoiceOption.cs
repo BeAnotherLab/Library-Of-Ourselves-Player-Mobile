@@ -20,6 +20,8 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
    
    [SerializeField] private GameObject _choiceEditButton;
    [SerializeField] private GameObject _choiceSaveButton;
+   [SerializeField] private Color _noDataColor;
+   [SerializeField] private Color _dataColor;
 
    private void OnEnable()
    {
