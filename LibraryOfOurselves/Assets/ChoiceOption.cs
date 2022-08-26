@@ -34,6 +34,14 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
       Destroy(gameObject);
    }
 
+   public void SetEditButtonColor(bool data)
+   {
+      if (data)
+         _choiceEditButton.GetComponent<Image>().color = _dataColor;
+      else
+         _choiceEditButton.GetComponent<Image>().color = _noDataColor;
+   }
+   
    private void EditButtonClickedFromOutside(string videoName, string description, Vector3 eulerAngles)
    {
       selected = false; //TODO not sure if this approach for selection is safe
@@ -51,6 +59,7 @@ public class ChoiceOption : MonoBehaviour //Tablet UI script for storing the dat
    {
       _choiceSaveButton.SetActive(false);
       _choiceEditButton.SetActive(true);
+      _choiceEditButton.GetComponent<Image>().color = _dataColor;
       SaveButtonClicked.Invoke( optionDropdown.Selected, choiceInputField.text, eulerAngles);
    }
 

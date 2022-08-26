@@ -246,6 +246,9 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		instance.GetComponentInChildren<InputField>().text = choice.description;
 		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
 		instance.GetComponent<ChoiceOption>().eulerAngles = choice.position;
+		var dataPresent = (choice.position.x != 0 || choice.position.y != 0 || choice.position.z != 0);
+		instance.GetComponent<ChoiceOption>().SetEditButtonColor(dataPresent);	
+		
 		return instance;
 	}
 	
