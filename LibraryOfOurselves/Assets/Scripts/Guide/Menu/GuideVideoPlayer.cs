@@ -265,7 +265,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveChoiceConfirmation(TCPConnection connection, int choiceIndex) {
+	public void OnReceiveChoiceConfirmation(TCPConnection connection, int choiceIndex)
+	{
+		choiceIndex++;
 		if (currentVideo != null && currentVideo.Settings.choices.Count > 0) {
 			string nextVideo = currentVideo.Settings.choices[choiceIndex].video;
 			VideoDisplay nextVideoDisplay = VideosDisplayer.Instance.FindVideo(nextVideo);
