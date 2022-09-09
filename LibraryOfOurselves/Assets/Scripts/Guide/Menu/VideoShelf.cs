@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngineInternal.Input;
 
-public class VideoShelf : MonoBehaviour {
+public class VideoShelf : MonoBehaviour { //displays a single video, along with choice and orientation editors
 
 	[SerializeField] Text titleDisplay;
 	[SerializeField] Image thumbnailDisplay;
@@ -31,11 +32,10 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] GameObject addChoiceTranslation;
 	[SerializeField] GameObject choiceEditionPanel;
 	[SerializeField] InputField questionField;
-	[SerializeField] InputField option1Field;
-	[SerializeField] InputField option2Field;
-	[SerializeField] VideoNamesDropdown option1Dropdown;
-	[SerializeField] VideoNamesDropdown option2Dropdown;
-
+	[SerializeField] Transform optionFieldsParent;
+	
+	[SerializeField] private GameObject choiceUIPrefab;
+	
 	[Header("Orientation editor")]
 	[SerializeField] Text editOrientation;
 	[SerializeField] GameObject orientationEditionPanel;
@@ -46,24 +46,24 @@ public class VideoShelf : MonoBehaviour {
 	[SerializeField] InputField yawInputField;
 	[SerializeField] InputField rollInputField;
 
-	VideoDisplay current = null;
+	VideoDisplay current;
 
 	bool __editMode = true;
-	bool enableSave = false;
+	bool enableSave ;
+	
 	bool EditMode {
 		get { return __editMode; }
 		set {
-			if(__editMode != value) {
+			if (__editMode != value) {
 				__editMode = value;
 
-				if(value) {//go into Edit Mode
-					if(editDisplay != null)
-						editDisplay.gameObject.SetActive(false);
-					if(saveDisplay != null)
-						saveDisplay.gameObject.SetActive(true);
+				if (value) //go into Edit Mode 
+				{
+					if (editDisplay != null) editDisplay.gameObject.SetActive(false); //hide edit button if ¿not null?
+					if (saveDisplay != null) saveDisplay.gameObject.SetActive(true); //show save button
 
-					descriptionInputField.gameObject.SetActive(true);
-					objectsInputField.gameObject.SetActive(true);
+					descriptionInputField.gameObject.SetActive(true); //allow edition of video description
+					objectsInputField.gameObject.SetActive(true); //allow edition of objects to be used
 					descriptionInputField.text = current.Settings.description;
 					objectsInputField.text = current.Settings.objectsNeeded;
 
@@ -71,46 +71,42 @@ public class VideoShelf : MonoBehaviour {
 						is360Toggle.gameObject.SetActive(true);
 						is360Toggle.isOn = current.Settings.is360;
 					}
-					if(is360Display != null) is360Display.gameObject.SetActive(false);
+					
+					if (is360Display != null) is360Display.gameObject.SetActive(false);
 
 					//Old style orientation settings:
-					if(current.Settings.deltaAngles.Length > 0) {
+					if (current.Settings.deltaAngles.Length > 0) {
 						Vector4 deltas = current.Settings.deltaAngles[0];
-						if(pitchInputField) {
-							pitchInputField.SetTextWithoutNotify(""+deltas.x);
-						}
-						if(yawInputField) {
-							yawInputField.SetTextWithoutNotify("" + deltas.y);
-						}
-						if(rollInputField) {
-							rollInputField.SetTextWithoutNotify("" + deltas.z);
-						}
+						if(pitchInputField) pitchInputField.SetTextWithoutNotify(""+deltas.x);
+						if(yawInputField) yawInputField.SetTextWithoutNotify("" + deltas.y);
+						if(rollInputField) rollInputField.SetTextWithoutNotify("" + deltas.z);
 					}
 
-					if(editChoice != null) {
+					if (editChoice != null) {
 						editChoice.gameObject.SetActive(true);
 						//Change the displayed text to "Add Choice" if there's no choices available yet
-						if(current.Settings.choices.Length == 0) {
-							editChoice.text = addChoiceTranslation.name;
-						}
+						if (current.Settings.choices.Count == 0) editChoice.text = addChoiceTranslation.name;
 					}
 
-					if(editOrientation != null) editOrientation.gameObject.SetActive(true);
+					if (editOrientation != null) editOrientation.gameObject.SetActive(true);
 
-				} else {//save and quit Edit Mode
-					if(editDisplay != null)
-						editDisplay.gameObject.SetActive(true);
-					if(saveDisplay != null)
-						saveDisplay.gameObject.SetActive(false);
+				} 
+				else //save and quit Edit Mode 
+				{
+					if (editDisplay != null) editDisplay.gameObject.SetActive(true);
+					if (saveDisplay != null) saveDisplay.gameObject.SetActive(false);
+					
 					descriptionInputField.gameObject.SetActive(false);
 					objectsInputField.gameObject.SetActive(false);
-					if(is360Toggle != null) is360Toggle.gameObject.SetActive(false);
-					if(is360Display != null) is360Display.gameObject.SetActive(current.Settings.is360);
+					
+					if (is360Toggle != null) is360Toggle.gameObject.SetActive(false);
+					if (is360Display != null) is360Display.gameObject.SetActive(current.Settings.is360);
 
-					if(editChoice != null) editChoice.gameObject.SetActive(false);
-					if(editOrientation != null) editOrientation.gameObject.SetActive(false);
+					if (editChoice != null) editChoice.gameObject.SetActive(false);
+					if (editOrientation != null) editOrientation.gameObject.SetActive(false);
 
-					if(enableSave) {
+					if (enableSave) 
+					{
 						current.Settings.description = descriptionInputField.text;
 						current.Settings.objectsNeeded = objectsInputField.text;
 						current.Settings.is360 = is360Toggle.isOn;
@@ -124,25 +120,18 @@ public class VideoShelf : MonoBehaviour {
 							current.Settings.deltaAngles = new Vector4[] { deltas };
 						}
 
-						//and save them!
-						if(saveAsOldSettings) {
-							VideosDisplayer0ld.Instance.SaveVideoMeta(current.FullPath, current.VideoName, VideosDisplayer0ld.VideoSettings.FromNewSettings(current.Settings));
-						} else {
-							VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
-						}
+						VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
 
 						//update display...
 						DisplayCurrentVideo();
 					}
-
 				}
-
 			}
 		}
 	}
 
 	private void OnDisable() {
-		if(VideoDisplay.expandedDisplay != null) {
+		if (VideoDisplay.expandedDisplay != null) {
 			VideoDisplay.expandedDisplay.contract();
 		}
 	}
@@ -153,15 +142,14 @@ public class VideoShelf : MonoBehaviour {
 
 		titleDisplay.text = current.VideoName;
 		thumbnailDisplay.sprite = current.Thumbnail;
-		if(current.Settings.description != "")
-			descriptionDisplay.text = current.Settings.description;
-		else
-			descriptionDisplay.text = noDescriptionTranslation.name;
-		if(current.Settings.objectsNeeded != "")
-			objectsDisplay.text = appendToObjects + current.Settings.objectsNeeded;
-		else
-			objectsDisplay.text = noObjectNeededTranslation.name;
-		if(is360Display != null) is360Display.SetActive(current.Settings.is360);
+		
+		if (current.Settings.description != "") descriptionDisplay.text = current.Settings.description;
+		else descriptionDisplay.text = noDescriptionTranslation.name;
+		
+		if (current.Settings.objectsNeeded != "") objectsDisplay.text = appendToObjects + current.Settings.objectsNeeded;
+		else objectsDisplay.text = noObjectNeededTranslation.name;
+			
+		if (is360Display != null) is360Display.SetActive(current.Settings.is360);
 
 		enableSave = false;
 		EditMode = false;
@@ -170,22 +158,23 @@ public class VideoShelf : MonoBehaviour {
 		editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
 
 		int currentlyPaired = 0;
-		if(ConnectionsDisplayer.Instance != null) {
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
-				if(handle.connection.active && handle.connection.paired)
+		if (ConnectionsDisplayer.Instance != null) 
+		{
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) 
+				if (handle.connection.active && handle.connection.paired)
 					++currentlyPaired;
-			}
-		} else {
-			currentlyPaired = 1;//Assume one connection when there are no display.
 		}
-		//if there's no connections (or some of them don't have the video), cannot play any videos.
-		if(currentlyPaired > 0 && current.Available) {
+		else currentlyPaired = 1;//Assume one connection when there are no display. 
+		
+		if (currentlyPaired > 0 && current.Available) //if there's no connections (or some of them don't have the video), cannot play any videos. 
+		{
 			chooseButton.gameObject.SetActive(true);
-		} else {
+		} 
+		else 
+		{
 			chooseButton.gameObject.SetActive(false);
 			Haze.Logger.Log("Hiding choose button (currentlyPaired = " + currentlyPaired + "; current.Available = " + current.Available + ")");
 		}
-
 	}
 
 	public void OnClickChoose() {
@@ -203,63 +192,27 @@ public class VideoShelf : MonoBehaviour {
 			onClickSave.Invoke();
 	}
 
-	public void OnClickEditChoice() {
+	public void OnClickEditChoice() 
+	{
 		choiceEditionPanel.SetActive(true);
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-		if(settings.choices.Length > 0) {
-			questionField.text = settings.choices[0].question;
-			option1Field.text = settings.choices[0].option1;
-			option2Field.text = settings.choices[0].option2;
-			option1Dropdown.Selected = settings.choices[0].video1;
-			option2Dropdown.Selected = settings.choices[0].video2;
-		} else {
-			questionField.text = "";
-			option1Field.text = "";
-			option2Field.text = "";
-			//force default selection:
-			option1Dropdown.Selected = "%";
-			option2Dropdown.Selected = "%";
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+		if (settings.choices.Count > 0) //if there are options
+		{
+			ClearOptions();
+			foreach (VideoChoice choice in settings.choices) AddChoice(choice); //go through options an instantiate their prefab
 		}
 	}
 
-	public void OnClickSaveChoice() {
-		choiceEditionPanel.SetActive(false);
-
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-
-		if(settings.choices.Length <= 0) {
-			settings.choices = new VideosDisplayer.VideoChoice[1];
-			settings.choices[0] = new VideosDisplayer.VideoChoice();
-		}
-
-		settings.choices[0].question = questionField.text;
-		settings.choices[0].option1 = option1Field.text;
-		settings.choices[0].option2 = option2Field.text;
-		settings.choices[0].video1 = option1Dropdown.Selected;
-		settings.choices[0].video2 = option2Dropdown.Selected;
-
-		VideoDisplay.expandedDisplay.Settings = settings;
-
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
+	public void ClearOptions()
+	{
+		while (optionFieldsParent.childCount > 0) DestroyImmediate(optionFieldsParent.GetChild(0).gameObject);
 	}
-
-	public void OnClickDeleteChoice() {
-		choiceEditionPanel.SetActive(false);
-
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-
-		if(settings.choices.Length > 0) {
-			settings.choices = new VideosDisplayer.VideoChoice[0];
-		}
-
-		VideoDisplay.expandedDisplay.Settings = settings;
-
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
+	
+	public void OnClickAddChoice()
+	{
+		AddChoice(new VideoChoice()); 
 	}
-
-
+	
 	public void OnClickEditOrientation() {
 		orientationEditionPanel.SetActive(true);
 
@@ -277,10 +230,60 @@ public class VideoShelf : MonoBehaviour {
 	public void OnClickSaveOrientation() {
 		orientationEditionPanel.SetActive(false);
 
-		VideosDisplayer.VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 
 		settings.deltaAngles = orientationEditor.GetValues().ToArray();
 
+		VideoDisplay.expandedDisplay.Settings = settings;
+
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideoDisplay.expandedDisplay.expand();
+	}
+	
+	private GameObject AddChoice(VideoChoice choice)
+	{
+		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
+		instance.GetComponentInChildren<InputField>().text = choice.description;
+		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
+		instance.GetComponent<ChoiceOption>().eulerAngles = choice.position;
+		var dataPresent = (choice.position.x != 0 || choice.position.y != 0 || choice.position.z != 0);
+		instance.GetComponent<ChoiceOption>().SetEditButtonColor(dataPresent);	
+		
+		return instance;
+	}
+	
+	private void OnClickSaveChoice() {
+		choiceEditionPanel.SetActive(false);
+
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+
+		settings.choices = new List<VideoChoice>();
+		
+		foreach (ChoiceOption choiceOption in optionFieldsParent.GetComponentsInChildren<ChoiceOption>())
+		{
+			Debug.Log("under choiceTransform " + choiceOption.gameObject.name);
+			var videoChoice = new VideoChoice();
+			videoChoice.description = choiceOption.choiceInputField.text;
+			videoChoice.video = choiceOption.optionDropdown.Selected;
+			videoChoice.position = choiceOption.eulerAngles;
+			settings.choices.Add(videoChoice);
+		}
+
+		VideoDisplay.expandedDisplay.Settings = settings;
+
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideoDisplay.expandedDisplay.expand();
+	}
+
+	private void OnClickDeleteChoice() {
+		choiceEditionPanel.SetActive(false);
+
+		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
+/*
+		if(settings.choices.Count > 0) {
+			settings.choices = new VideosDisplayer.VideoChoice[0];
+		}
+*/
 		VideoDisplay.expandedDisplay.Settings = settings;
 
 		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);

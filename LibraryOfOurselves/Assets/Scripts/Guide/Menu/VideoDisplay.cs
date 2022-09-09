@@ -16,9 +16,9 @@ public class VideoDisplay : MonoBehaviour{
 
 	public string FullPath { get; private set; }//path to guide video
 	public string VideoName { get; private set; }
-	public VideosDisplayer.VideoSettings Settings { get; set; }
+	public VideoSettings Settings { get; set; }
 
-	public static VideoDisplay expandedDisplay = null;
+	public static VideoDisplay expandedDisplay = null; //TODO use scriptable objects instead of singletons!
 
 	bool __available = true;
 	public bool Available {
@@ -40,8 +40,9 @@ public class VideoDisplay : MonoBehaviour{
 	}
 
 	bool initialized = false;
-	public VideoDisplay Init(string path, string videoName, VideosDisplayer.VideoSettings settings) {
-		if(initialized) {
+	
+	public VideoDisplay Init(string path, string videoName, VideoSettings settings) {
+		if (initialized) {
 			Haze.Logger.LogError("Cannot initialize a VideoDisplay twice!!");
 			return null;
 		}
@@ -49,7 +50,7 @@ public class VideoDisplay : MonoBehaviour{
 		FullPath = path;
 		VideoName = videoName;
 		Settings = settings;
-		Available = false;
+		Available = false; 
 
 		videoNameDisplay.text = VideoName;
 
@@ -129,7 +130,7 @@ public class VideoDisplay : MonoBehaviour{
 
 	public void contract() {
 		expandedDisplay = null;
-		if(UseFullscreenVideoShelf) {
+		if (UseFullscreenVideoShelf) {
 			//nothing to do here.
 		} else {
 			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();

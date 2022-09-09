@@ -17,9 +17,19 @@ public class GuideAdapter : MonoBehaviour{
 	public ConnectionEvent onConnectionEnd;//fired from TCPConnection::~TCPConnection()
 	[SerializeField] bool OnlyAcceptOneConnection = false;
 
+	public delegate void OnReceivedChoicePosition(Vector3 eulerAngles);
+	public static OnReceivedChoicePosition ReceivedChoicePosition;
+
+	
 	public static TCPConnection lastConnectedDevice = null;//For use within Old Guide
 
 	public static GuideAdapter Instance { get; private set; }
+
+	private void OnEnable()
+	{
+		ChoiceOption.EditButtonClicked += SendEditChoice;
+		ChoiceOption.SaveButtonClicked += SendSaveChoice;
+	}
 
 	private void Start() {
 		Instance = this;
@@ -29,7 +39,6 @@ public class GuideAdapter : MonoBehaviour{
 	private void OnDestroy() {
 		Instance = null;
 	}
-
 
 	public void OnNewConnection(TCPConnection connection) {
 		Haze.Logger.Log(connection + " has been added as an option");
@@ -108,9 +117,6 @@ public class GuideAdapter : MonoBehaviour{
 			//Give an update to the VideosDisplayer
 			if(VideosDisplayer.Instance) {
 				VideosDisplayer.Instance.OnPairConnection(connection);
-			}
-			if(VideosDisplayer0ld.Instance) {
-				VideosDisplayer0ld.Instance.OnPairConnection(connection);
 			}
 		} else {
 			if(connection.paired) {
@@ -296,16 +302,63 @@ public class GuideAdapter : MonoBehaviour{
 		connection.Send(data);
 	}
 
-	public void SendStartChoice(string question, string choice1, string choice2) {
+	public void SendStartChoice(string question, List<VideoChoice> options) {
 		List<byte> data = new List<byte>();
 		data.WriteString("start-choice");
+		string optionsDescriptions = ""; 
+		string optionsPositions = ""; 
+		for(int i = 0; i < options.Count; i++)
+		{
+			var option = options[i];
+			optionsDescriptions += option.description;
+			if (i < options.Count - 1) optionsDescriptions += "," ;
+			optionsPositions += option.position.x + ",";
+			optionsPositions += option.position.y + ",";
+			optionsPositions += option.position.z;
+			if (i < options.Count - 1) optionsPositions += "#";
+		}
 		data.WriteString(question);
-		data.WriteString(choice1);
-		data.WriteString(choice2);
-		if(TCPHost.Instance)
-			TCPHost.Instance.BroadcastToPairedDevices(data);
+		data.WriteString(optionsDescriptions);
+		data.WriteString(optionsPositions);
+		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
+	public void SendEditChoice(string videoName, string description, Vector3 eulerAngles) //TODO must include start video and selected video
+	{
+		List<byte> data = new List<byte>();
+		data.WriteString("edit-choice");
+		data.WriteString(VideoDisplay.expandedDisplay.VideoName); //start video
+		//TODO add end video name data.writestring(endVideoName)
+		data.WriteString(description);
+		data.WriteString(eulerAngles.x.ToString());
+		data.WriteString(eulerAngles.y.ToString());
+		data.WriteString(eulerAngles.z.ToString());
+		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+
+	public void SendSaveChoice(string videoName, string description, Vector3 eulerAngles)
+	{
+		List<byte> data = new List<byte>();
+		data.WriteString("save-choice");
+		data.WriteString(videoName);
+		data.WriteString(description);
+		data.WriteString(eulerAngles.x.ToString());
+		data.WriteString(eulerAngles.y.ToString());
+		data.WriteString(eulerAngles.z.ToString());
+		if (TCPHost.Instance) TCPHost.Instance.BroadcastToPairedDevices(data);
+	}
+
+	public void OnReceiveChoicePosition(TCPConnection connection, string eulerAngles)
+	{
+		Debug.Log("received choice position " + eulerAngles);
+		Vector3 eulerAnglesVector3 = new Vector3(
+			 float.Parse(eulerAngles.Split(',')[0]),
+			 float.Parse(eulerAngles.Split(',')[1]),
+			 float.Parse(eulerAngles.Split(',')[2])
+		);
+		ReceivedChoicePosition.Invoke(eulerAnglesVector3);
+	}
+	
 	public void OnReceiveSelectOption(TCPConnection connection, byte option) {
 		if(GuideVideoPlayer.Instance != null)
 			GuideVideoPlayer.Instance.OnReceiveChoiceConfirmation(connection, (int)option - 1);

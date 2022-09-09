@@ -6,11 +6,15 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider))]
 public class VRGazeChoice : MonoBehaviour {
 
+	public delegate  void OnConfirmVRGazeSelection(int index);
+	public static OnConfirmVRGazeSelection ConfirmVRGazeSelection;
+	public int choiceIndex;
+	
 	[SerializeField] float maxDistanceFromCam = 100;
 	[SerializeField] UnityEvent onStartGazing;
 	[SerializeField] UnityEvent onStopGazing;
 	[SerializeField] bool verbose = false;
-
+	
 	bool gazing = false;
 
 	private void Update() {
@@ -44,4 +48,8 @@ public class VRGazeChoice : MonoBehaviour {
 		}
 	}
 
+	public void OnSelectionComplete()
+	{
+		ConfirmVRGazeSelection(choiceIndex);
+	}
 }

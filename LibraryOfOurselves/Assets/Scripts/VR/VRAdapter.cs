@@ -263,16 +263,43 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveStartChoice(TCPConnection connection, string question, string choice1, string choice2) {
+	public void OnReceiveStartChoice(TCPConnection connection, string question, string optionsDescriptions,  string optionsPositions) { //TODO must add positions
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			Haze.Logger.Log("Display choices \'" + choice1 + "\' and \'" + choice2 + "\'");
+			Haze.Logger.Log("Display choices \'" + optionsDescriptions);
 			if(VRVideoPlayer.Instance) {
-				VRVideoPlayer.Instance.DisplayChoice(question, choice1, choice2);
+				VRVideoPlayer.Instance.DisplayChoice(question, optionsDescriptions, optionsPositions);
 			}
 		}
 	}
 
-	public void SendSelectOption(byte option) {
+	public async void OnReceiveEditChoice(TCPConnection connection, string videoName, string description, string eulerAngles)
+	{
+		if (currentlyPaired != null && connection == currentlyPaired)
+		{
+			Haze.Logger.Log("Edit choice for video" + videoName + " ");
+			//TODO load with mode (360 or not)
+			VRVideoPlayer.Instance.OnEditOption(videoName,description, new Vector3());
+			VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, "");
+		}
+	}
+
+	public void OnReceiveSaveChoice(TCPConnection connection, string videoName, string description, string eulerAngles)
+	{
+		if (currentlyPaired != null && connection == currentlyPaired)
+		{
+			Haze.Logger.Log("Save choice for video" + videoName + " ");
+			List<byte> data = new List<byte>();
+			data.WriteString("choice-position");
+
+			data.WriteString(Camera.main.gameObject.transform.eulerAngles.x + "," +
+			                 Camera.main.gameObject.transform.eulerAngles.y + "," +
+			                 Camera.main.gameObject.transform.eulerAngles.z);
+
+			currentlyPaired.Send(data);
+		}
+	}
+	
+	public void SendSelectOption(byte option) { //TODO also remove the instantiated options, also when guide exits video
 		if(currentlyPaired != null) {
 			List<byte> data = new List<byte>();
 			data.WriteString("select-option");

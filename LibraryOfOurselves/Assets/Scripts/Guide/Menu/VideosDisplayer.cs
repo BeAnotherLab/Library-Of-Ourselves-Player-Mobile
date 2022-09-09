@@ -5,33 +5,33 @@ using System;
 using System.IO;
 using UnityEngine.Events;
 
-public class VideosDisplayer : MonoBehaviour {
+
+[Serializable]
+public class VideoChoice { //TODO rename to option?
+	public string description = "description";  
+	public string video = ""; //the destination video
+	public Vector3 position = new Vector3();
+} //TODO move to own file
+
+[Serializable]
+public class VideoSettings {
+	public bool is360 = false;
+	public string description = "";
+	public string objectsNeeded = "";
+	public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
+	//public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
+	public List<VideoChoice> choices = new List<VideoChoice>();
+
+	public override string ToString() {
+		return "[VideoSettings: is360=" + is360 + " | description=" + description + " | objectsNeeded=" + objectsNeeded + " | deltaAngles=" + deltaAngles + "]";
+	}
+} //TODO own file
+
+public class VideosDisplayer : MonoBehaviour { //displays list of videos in a grid and saves settings
 
 	[SerializeField] GameObject videoShelfPrefab;
 	[SerializeField] GameObject videoDisplayPrefab;
 	[SerializeField] UnityEvent onFoundOneVideo;
-
-	[Serializable]
-	public class VideoChoice {
-		public string question = "Question";
-		public string option1 = "Option 1";
-		public string option2 = "Option 2";
-		public string video1 = "";
-		public string video2 = "";
-	}
-
-	[Serializable]
-	public class VideoSettings {
-		public bool is360 = false;
-		public string description = "";
-		public string objectsNeeded = "";
-		public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
-		public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
-
-		public override string ToString() {
-			return "[VideoSettings: is360=" + is360 + " | description=" + description + " | objectsNeeded=" + objectsNeeded + " | deltaAngles=" + deltaAngles + "]";
-		}
-	}
 
 	public static VideosDisplayer Instance { get; private set; }
 
@@ -48,6 +48,7 @@ public class VideosDisplayer : MonoBehaviour {
 			string directory = "";
 			for(int i = 0; i < split.Length - 1; ++i)
 				directory += split[i] + "/";
+			directory = "/" + directory;
 			split = split[split.Length - 1].Split(new string[] { ".mp4" }, StringSplitOptions.RemoveEmptyEntries);
 			string filename = "";
 			foreach(string f in split) {
@@ -97,7 +98,7 @@ public class VideosDisplayer : MonoBehaviour {
 			} else {
 				//Not a guide. ignore it.
 			}
-		}catch(Exception e) {
+		} catch(Exception e) {
 			//could silently ignore, probably
 			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
 		}
@@ -108,11 +109,12 @@ public class VideosDisplayer : MonoBehaviour {
 		//save directory is persistent data path
 		string directory = Application.persistentDataPath;
 #else
-		//save directory is sd card root
+		//hack for fixing path in editor
 		string[] split = videoPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 		string directory = "";
 		for(int i = 0; i<split.Length-1; ++i)
 			directory += split[i] + "/";
+		directory = "/" + directory;
 #endif
 
 		//Save settings to json file
@@ -170,7 +172,7 @@ public class VideosDisplayer : MonoBehaviour {
 			bool previouslyAvailable = videoDisplay.Available;
 			videoDisplay.Available = allConnectedDevicesHaveIt;
 
-			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Length > 0) {
+			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Count > 0) {
 				videoDisplay.Available = false;//Cannot display a video with choices if there's more than one device connected yet!
 			}
 

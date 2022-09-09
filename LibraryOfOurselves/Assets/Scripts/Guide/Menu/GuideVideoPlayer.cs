@@ -89,10 +89,11 @@ public class GuideVideoPlayer : MonoBehaviour{
 		{
 			case MediaPlayerEvent.EventType.FinishedPlaying:
 				//Display a choice?
-				if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
-					VideosDisplayer.VideoChoice choice = currentVideo.Settings.choices[0];
-					Haze.Logger.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
-					GuideAdapter.Instance.SendStartChoice(choice.question, choice.option1, choice.option2);
+				if (currentVideo != null && currentVideo.Settings.choices.Count > 0) {
+					List<VideoChoice> choice = currentVideo.Settings.choices;
+					//TODO display choices here
+					//Haze.Logger.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
+					GuideAdapter.Instance.SendStartChoice("where to next?", choice);
 					Playing = false;
 				} else Stop();
 				break;
@@ -264,12 +265,13 @@ public class GuideVideoPlayer : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveChoiceConfirmation(TCPConnection connection, int choiceIndex) {
-		//choice index is either 0 or 1
-		if(currentVideo != null && currentVideo.Settings.choices.Length > 0) {
-			string nextVideo = choiceIndex == 0 ? currentVideo.Settings.choices[0].video1 : currentVideo.Settings.choices[0].video2;
+	public void OnReceiveChoiceConfirmation(TCPConnection connection, int choiceIndex)
+	{
+		choiceIndex++;
+		if (currentVideo != null && currentVideo.Settings.choices.Count > 0) {
+			string nextVideo = currentVideo.Settings.choices[choiceIndex].video;
 			VideoDisplay nextVideoDisplay = VideosDisplayer.Instance.FindVideo(nextVideo);
-			if(nextVideoDisplay != null && nextVideoDisplay.Available) {
+			if (nextVideoDisplay != null && nextVideoDisplay.Available) {
 				playImmediately = true;
 				LoadVideo(nextVideoDisplay);
 			} else {
@@ -281,6 +283,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	Vector4 deltaAnglesPreviouslySent = Vector4.zero;
+	
 	void sendAnyRequiredReorient() {
 		if(currentVideo == null) return;
 		//check which reorient is the closest to the current video player time (without overstepping at all)

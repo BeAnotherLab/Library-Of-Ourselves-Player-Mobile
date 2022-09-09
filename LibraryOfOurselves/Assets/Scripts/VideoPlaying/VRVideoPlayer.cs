@@ -26,8 +26,12 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] GvrControllerButton mirageQuitButton = GvrControllerButton.App;
 	[SerializeField] GameObject choiceContainer;
 	[SerializeField] TextMesh questionMesh;
-	[SerializeField] TextMesh option1Mesh;
-	[SerializeField] TextMesh option2Mesh;
+	
+	//[SerializeField] TextMesh option1Mesh;
+	//[SerializeField] TextMesh option2Mesh;
+	[SerializeField] private GameObject optionMeshPrefab;
+	[SerializeField] private Transform optionsParent;
+	
 	[SerializeField] GameObject blackScreen;
 	[SerializeField] Transform rotator;
 	[SerializeField] AudioLoadingMode audioLoadingMode = AudioLoadingMode.UnityWebResource;
@@ -39,6 +43,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] float maximumPlaybackSpeed = 1.5f;
 	[SerializeField] float minimumPlaybackSpeed = 0.75f;
 
+	[SerializeField] private int _frameBeforeEndInSeconds;
 	public enum AudioLoadingMode {
 		WWW,
 		NLayer,
@@ -91,11 +96,19 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	long lastReadyFrame = -1;
 
+	private bool _LoadingForChoicePosition;
+	
+	private void OnEnable()
+	{
+		player = GetComponent<MediaPlayer>();
+		player.Events.AddListener(MediaPlayerEventReceived);
+		VRGazeChoice.ConfirmVRGazeSelection += OnSelectOption;
+	}
+
 	private void Start() {
 		Camera.main.backgroundColor = DeviceColour.getDeviceColor(SystemInfo.deviceUniqueIdentifier);//Set background colour to something unique
 		Instance = this;
 		mainCamera = Camera.main;
-		player = GetComponent<MediaPlayer>();
 
 		choiceContainer.SetActive(false);
 		blackScreen.SetActive(false);
@@ -129,17 +142,30 @@ public class VRVideoPlayer : MonoBehaviour{
 		return Application.persistentDataPath + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
 	}
 
-	public void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
+	private void MediaPlayerEventReceived(MediaPlayer player, MediaPlayerEvent.EventType eventType, ErrorCode errorCode)
 	{
 		switch (eventType)
 		{
 			case MediaPlayerEvent.EventType.FinishedPlaying:
-				play();
+				//play();
 				break;
 			case MediaPlayerEvent.EventType.FirstFrameReady:
+				Debug.Log("first frame ready");
 				lastReadyFrame = player.Control.GetCurrentTimeFrames();
+				if (_LoadingForChoicePosition)
+				{
+					StartCoroutine(SeekToEnd());
+					_LoadingForChoicePosition = false;
+				}
 				break;
 		}
+	}
+
+	private IEnumerator SeekToEnd()
+	{
+		yield return new WaitForSeconds(2);
+		Debug.Log("first fram ready, seeking to end");
+		player.Control.Seek(player.Info.GetDuration() - _frameBeforeEndInSeconds);
 	}
 	
 	public static bool IsVideoAvailable(string videoName) {
@@ -148,7 +174,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		return File.Exists( path);
 	}
 
-	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) {
+	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) { //TODO async not actually necessary?
 		VideoLoadingResponse response = new VideoLoadingResponse();
 		response.ok = true;
 		response.errorMessage = "";
@@ -156,7 +182,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		Haze.Logger.Log("Loading video " + videoName + "...");
 		errorWhileLoading = false;
 
-		if(!IsVideoAvailable(videoName)) {
+		if (!IsVideoAvailable(videoName)) 
+		{
 			response.errorMessage = "Video unavailable.";
 			response.ok = false;
 			Haze.Logger.LogError("Video " + videoName + " could not be found.");
@@ -164,15 +191,17 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 
 		is360 = false;
-		if(mode.Length >= 3 && mode[0] == '3' && mode[1] == '6' && mode[2] == '0') {
-			//360 video.
+		if (mode.Length >= 3 && mode[0] == '3' && mode[1] == '6' && mode[2] == '0') 
+		{
 			is360 = true;
 			Haze.Logger.Log("Loading 360 degree video.");
-		} else Haze.Logger.Log("Loading 235 degree video.");
+		}
+		else Haze.Logger.Log("Loading 235 degree video.");
 
 		//Check if we need to play binaural audio
 		string leftAudioFile = getAudioPath(videoName, true);
 		string rightAudioFile = getAudioPath(videoName, false);
+		
 		//determine extension based on whether the Wave file exists otherwise fallback onto mp3
 		if(File.Exists(leftAudioFile + ".wav")) leftAudioFile += ".wav"; else leftAudioFile += ".mp3";
 		if(File.Exists(rightAudioFile + ".wav")) rightAudioFile += ".wav"; else rightAudioFile += ".mp3";
@@ -185,11 +214,13 @@ public class VRVideoPlayer : MonoBehaviour{
 		UnityWebRequest leftuwr = null;
 		UnityWebRequest rightuwr = null;
 
-		if(File.Exists(leftAudioFile) && File.Exists(rightAudioFile)) {
+		if (File.Exists(leftAudioFile) && File.Exists(rightAudioFile)) 
+		{
 			BinauralAudio = true;
 
 			//load the sound into the audio sources
-			switch(audioLoadingMode) {
+			switch (audioLoadingMode) 
+			{
 				case AudioLoadingMode.WWW:
 					leftWWW = new WWW("file://" + leftAudioFile.Replace('\\', '/'));
 					rightWWW = new WWW("file://" + rightAudioFile.Replace('\\', '/'));
@@ -205,31 +236,34 @@ public class VRVideoPlayer : MonoBehaviour{
 					rightuwr.Send();
 					break;
 			}
-		} else {
+		} 
+		else 
+		{
 			BinauralAudio = false;
 		}
 		Haze.Logger.Log("Binaural audio: " + (BinauralAudio ? "on" : "off"));
-		if(BinauralAudio) {
+		if (BinauralAudio) 
+		{
 			Haze.Logger.Log("Loading binaural audio files: " + leftAudioFile + " and " + rightAudioFile);
 		}
 		
 		//Prepare video player
 		player.OpenMedia(new MediaPath(getPath(videoName), MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
 		PlaybackSpeed = 1;
-		
-		lastReadyFrame = -1;
+		lastReadyFrame = -1; //TODO delete, value never used
 
 		//Load the video into the player...
 		DateTime before = DateTime.Now;
-		
 		TimeSpan took = DateTime.Now - before;
 		Haze.Logger.Log("Player is prepared! Took: " + took.TotalMilliseconds + " ms.");
 
 		//Wait for the audio sources to load
-		if(BinauralAudio) {
+		if (BinauralAudio) 
+		{
 			Haze.Logger.Log("Waiting for audio files to load...");
 
-			switch(audioLoadingMode) {
+			switch (audioLoadingMode) 
+			{
 				case AudioLoadingMode.WWW:
 					while(!leftWWW.isDone || !rightWWW.isDone)
 						await Task.Delay(20);
@@ -265,7 +299,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		//Show first frame as soon as it's loaded in and rendered, making sure the video is 100% paused when we do so.
 		float previousVolume = Volume;
 		blackScreen.SetActive(false);
-		if(is360) spherePlayer.SetActive(true);
+		if (is360) spherePlayer.SetActive(true);
 		else semispherePlayer.SetActive(true);
 
 		return response;
@@ -433,7 +467,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		BinauralAudio = false;
 	}
 
-
 	void Update() {
 		if(VRDevice.OculusGo) {//On OculusGo, use the controller's trigger to recalibrate
 			OVRInput.Update();
@@ -479,27 +512,48 @@ public class VRVideoPlayer : MonoBehaviour{
 			OVRInput.FixedUpdate();
 	}
 
-	public void DisplayChoice(string question, string choice1, string choice2) {
+	public void DisplayChoice(string question, string optionsDescriptions, string optionsPositions) //TODO also needs positions
+	{
 		//display the last frame:
+		//TODO must match the frame used for setting the position on the guide app
 		VideoTime = player.Info.GetDurationFrames();
 		pausePlayback();
 
 		questionMesh.text = question;
-		option1Mesh.text = choice1;
-		option2Mesh.text = choice2;
+
+		int i = 0;
+		foreach (var optionDescription in optionsDescriptions.Split(','))
+		{
+			GameObject optionGameObject = Instantiate(optionMeshPrefab, optionsParent);
+			optionGameObject.GetComponentInChildren<TextMesh>().text = optionDescription;
+			optionGameObject.GetComponentInChildren<VRGazeChoice>().choiceIndex = i;
+
+			var optionPosition = optionsPositions.Split('#')[i];
+			float x = float.Parse(optionPosition.Split(',')[0]);
+			float y = float.Parse(optionPosition.Split(',')[1]);
+			float z = float.Parse(optionPosition.Split(',')[2]);
+			optionGameObject.transform.eulerAngles = new Vector3(x, y, z);
+			
+			i++;
+		}
 
 		choiceContainer.SetActive(true);
 	}
-
+	
 	public void OnSelectOption(int whichOption) {
 		choiceContainer.SetActive(false);
 		StopVideo();
 		blackScreen.SetActive(true);//Set up the black screen until the follow-up video starts playing.
 		VRAdapter.Instance.SendSelectOption((byte)whichOption);
+		ClearOptions();
 		Haze.Logger.Log("Selecting option " + whichOption);
-		//Should we display something while we wait for the next video to load and show up?... maybe.
+		//TODO Should we display something while we wait for the next video to load and show up?... maybe.
 	}
 
+	public void OnEditOption(string videoName, string description, Vector3 eulerAngles)
+	{
+		_LoadingForChoicePosition = true;
+	}
 	public void Reorient(Vector3 eulerAngles) {
 		rotator.localEulerAngles = eulerAngles;
 	}
@@ -511,4 +565,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		sendImmediateSync();
 	}
 
+	private void ClearOptions()
+	{
+		while (optionsParent.childCount > 0) DestroyImmediate(optionsParent.GetChild(0).gameObject);
+	}
 }

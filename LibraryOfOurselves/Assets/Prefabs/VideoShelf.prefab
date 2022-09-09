@@ -1019,6 +1019,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 1
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 5
@@ -6837,6 +6838,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 1
+  simulateFinishOnDisable: 1
   from: 0
   to: 1
   easingFunction: 5
@@ -7569,17 +7571,35 @@ MonoBehaviour:
   noObjectNeededTranslation: {fileID: 451338182300849974}
   editButton: {fileID: 8559046139795923908}
   chooseButton: {fileID: 4947874625174521969}
+  appendToObjects: 
+  saveAsOldSettings: 0
+  onClickChoose:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onClickEdit:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onClickSave:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   editChoice: {fileID: 2929521483943323020}
   addChoiceTranslation: {fileID: 5105518542712907653}
   choiceEditionPanel: {fileID: 601135735665699573}
   questionField: {fileID: 8534297585056750854}
-  option1Field: {fileID: 8730021247879412645}
-  option2Field: {fileID: 6704922441197007717}
-  option1Dropdown: {fileID: 8878506772442636123}
-  option2Dropdown: {fileID: 7261856040162647416}
+  optionFieldsParent: {fileID: 0}
+  choiceUIPrefab: {fileID: 0}
   editOrientation: {fileID: 207016489721377656}
   orientationEditionPanel: {fileID: 7115574242159084162}
   orientationEditor: {fileID: 1189103138115031698}
+  pitchInputField: {fileID: 0}
+  yawInputField: {fileID: 0}
+  rollInputField: {fileID: 0}
 --- !u!114 &8017664878787395117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7612,6 +7632,7 @@ MonoBehaviour:
   waitBetweenCycles: 0
   onStart: 0
   onEnable: 0
+  simulateFinishOnDisable: 1
   from: 3.1
   to: 1.9
   easingFunction: 5

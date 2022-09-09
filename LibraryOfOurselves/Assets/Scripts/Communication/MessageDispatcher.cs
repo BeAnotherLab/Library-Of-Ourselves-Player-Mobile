@@ -17,13 +17,16 @@ using UnityEngine.Events;
 [Serializable] class VideoTimeMessage : UnityEvent<TCPConnection, double> { }
 [Serializable] class VideoPlaybackMessage : UnityEvent<TCPConnection> { }
 [Serializable] class ChoiceStartMessage : UnityEvent<TCPConnection, string, string, string> { }
+[Serializable] class ChoiceEditMessage : UnityEvent<TCPConnection, string, string, string> { }
+[Serializable] class ChoiceSaveMessage : UnityEvent<TCPConnection, string, string, string> { }
 [Serializable] class ChoiceSelectMessage : UnityEvent<TCPConnection, byte> { }
+[Serializable] class ChoicePositionMessage : UnityEvent<TCPConnection, string> { }
 [Serializable] class ReorientMessage : UnityEvent<TCPConnection, Vector3> { }
 [Serializable] class StatusMessage : UnityEvent<TCPConnection, byte, short, byte> { }
 [Serializable] class AutocalibrationMessage : UnityEvent<TCPConnection, byte> { }
 [Serializable] class AutocalibrationResultMessage : UnityEvent<TCPConnection, byte, float> { }
 
-public class MessageDispatcher : MonoBehaviour{
+public class MessageDispatcher : MonoBehaviour{ //TODO separate Guide/VR messages or at least make regions for each
 
 	[SerializeField] GuideLockMessage guideLock;
 	[SerializeField] GuideLockMessage guideUnlock;
@@ -44,7 +47,10 @@ public class MessageDispatcher : MonoBehaviour{
 	[SerializeField] VideoTimeStampAndTimeMessage sync;
 	[SerializeField] VideoPlaybackMessage calibrate;
 	[SerializeField] ChoiceStartMessage startChoice;
+	[SerializeField] ChoiceEditMessage editChoice; 
+	[SerializeField] ChoiceSaveMessage saveChoice;
 	[SerializeField] ChoiceSelectMessage selectOption;
+	[SerializeField] ChoicePositionMessage choicePositionMessage;
 	[SerializeField] ReorientMessage reorient;
 	[SerializeField] StatusMessage status;
 	[SerializeField] AutocalibrationMessage autocalibration;
@@ -141,15 +147,36 @@ public class MessageDispatcher : MonoBehaviour{
 				calibrate.Invoke(connection);
 				break;
 			case "start-choice": {
-					string question = data.ReadString();
-					string choice1 = data.ReadString();
-					string choice2 = data.ReadString();
-					startChoice.Invoke(connection, question, choice1, choice2);
+				string question = data.ReadString();
+				string optionsDescriptions = data.ReadString();
+				string optionsPositions = data.ReadString();
+				startChoice.Invoke(connection, question, optionsDescriptions, optionsPositions);
 				}
+				break;
+			case "edit-choice":
+			{
+				string videoName = data.ReadString();
+				string description = data.ReadString();
+				string eulerAngles = data.ReadString();
+				editChoice.Invoke(connection, videoName, description, eulerAngles);
+			}
+			break;
+			case "save-choice":
+			{
+				string videoName = data.ReadString();
+				string description = data.ReadString();
+				string eulerAngles = data.ReadString();
+				saveChoice.Invoke(connection, videoName, description,eulerAngles);
+			}
 				break;
 			case "select-option": {
 					byte option = data.ReadByte();
 					selectOption.Invoke(connection, option);
+				}
+				break;
+			case "choice-position": {
+					string position = data.ReadString();
+					choicePositionMessage.Invoke(connection, position);    
 				}
 				break;
 			case "reorient": {
