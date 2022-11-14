@@ -779,7 +779,6 @@ MonoBehaviour:
   oculusGoQuitButton: 32768
   mirageQuitButton: 8
   choiceContainer: {fileID: 1219138843}
-  questionMesh: {fileID: 0}
   optionMeshPrefab: {fileID: 857214918213236850, guid: 633a5ddc8e032924b9c6d97d5ccafcd9,
     type: 3}
   optionsParent: {fileID: 1219671154}
@@ -792,7 +791,7 @@ MonoBehaviour:
   maximumAllowedErrorBeforeResync: 0.8
   maximumPlaybackSpeed: 1.2
   minimumPlaybackSpeed: 0.8333333
-  _frameBeforeEndInSeconds: 5
+  _frameBeforeEndInSeconds: 3
 --- !u!4 &645322548
 Transform:
   m_ObjectHideFlags: 0
