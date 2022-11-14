@@ -791,7 +791,7 @@ MonoBehaviour:
   maximumAllowedErrorBeforeResync: 0.8
   maximumPlaybackSpeed: 1.2
   minimumPlaybackSpeed: 0.8333333
-  _frameBeforeEndInSeconds: 3
+  _frameBeforeEndInSeconds: 2
 --- !u!4 &645322548
 Transform:
   m_ObjectHideFlags: 0
