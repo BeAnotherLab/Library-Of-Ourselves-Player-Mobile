@@ -25,10 +25,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] OVRInput.Button oculusGoQuitButton = OVRInput.Button.PrimaryThumbstick;
 	[SerializeField] GvrControllerButton mirageQuitButton = GvrControllerButton.App;
 	[SerializeField] GameObject choiceContainer;
-	[SerializeField] TextMesh questionMesh;
 	
-	//[SerializeField] TextMesh option1Mesh;
-	//[SerializeField] TextMesh option2Mesh;
 	[SerializeField] private GameObject optionMeshPrefab;
 	[SerializeField] private Transform optionsParent;
 	
@@ -518,8 +515,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		//TODO must match the frame used for setting the position on the guide app
 		VideoTime = player.Info.GetDurationFrames();
 		pausePlayback();
-
-		questionMesh.text = question;
 
 		int i = 0;
 		foreach (var optionDescription in optionsDescriptions.Split(','))
