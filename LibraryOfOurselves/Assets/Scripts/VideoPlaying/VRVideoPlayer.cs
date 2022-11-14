@@ -462,6 +462,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		onVideoEnds.Invoke();
 		blackScreen.SetActive(false);
 		BinauralAudio = false;
+		ClearOptions();
 	}
 
 	void Update() {
