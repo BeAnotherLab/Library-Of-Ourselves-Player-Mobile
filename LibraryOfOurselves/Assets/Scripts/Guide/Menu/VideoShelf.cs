@@ -31,7 +31,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	[SerializeField] Text editChoice;
 	[SerializeField] GameObject addChoiceTranslation;
 	[SerializeField] GameObject choiceEditionPanel;
-	[SerializeField] InputField questionField;
 	[SerializeField] Transform optionFieldsParent;
 	
 	[SerializeField] private GameObject choiceUIPrefab;
