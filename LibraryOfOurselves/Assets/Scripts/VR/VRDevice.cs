@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class VRDevice{
+public class VRDevice{ //TODO remove this class, none of the devices listed exist anymore 
 	
 	public static bool MirageSolo{
 		get{

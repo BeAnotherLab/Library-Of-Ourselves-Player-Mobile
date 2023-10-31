@@ -67,8 +67,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 	}
 
-	double VideoTime {
-		get { return player.Control.GetCurrentTime(); }
+	float VideoTime {
+		get { return player.Control.GetCurrentTimeMs(); }
 		set
 		{
 			player.Control.Seek(value);
@@ -90,8 +90,6 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	public struct VideoLoadingResponse { public bool ok;public string errorMessage; }
-
-	long lastReadyFrame = -1;
 
 	private bool _LoadingForChoicePosition;
 	
@@ -148,7 +146,6 @@ public class VRVideoPlayer : MonoBehaviour{
 				break;
 			case MediaPlayerEvent.EventType.FirstFrameReady:
 				Debug.Log("first frame ready");
-				lastReadyFrame = player.Control.GetCurrentTimeFrames();
 				if (_LoadingForChoicePosition)
 				{
 					StartCoroutine(SeekToEnd());
@@ -162,7 +159,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	{
 		yield return new WaitForSeconds(2);
 		Debug.Log("first fram ready, seeking to end");
-		player.Control.Seek(player.Info.GetDuration() - _frameBeforeEndInSeconds);
+		player.Control.Seek(player.Info.GetDurationMs() - _frameBeforeEndInSeconds);
 	}
 	
 	public static bool IsVideoAvailable(string videoName) {
@@ -245,9 +242,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		player.OpenMedia(new MediaPath(getPath(videoName), MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
+		player.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToPersistentDataFolder, videoName, autoPlay: false);
 		PlaybackSpeed = 1;
-		lastReadyFrame = -1; //TODO delete, value never used
 
 		//Load the video into the player...
 		DateTime before = DateTime.Now;
@@ -294,7 +290,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		Reorient(Vector3.zero);//reset orientation
 
 		//Show first frame as soon as it's loaded in and rendered, making sure the video is 100% paused when we do so.
-		float previousVolume = Volume;
 		blackScreen.SetActive(false);
 		if (is360) spherePlayer.SetActive(true);
 		else semispherePlayer.SetActive(true);
@@ -328,26 +323,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		hasVideoPlaying = false;
 	}
 
-	float Volume {
-		get {
-			if(BinauralAudio)
-				return leftAudio.volume;
-			/*
-			else if(player.audioTrackCount > 0)
-				return player.GetDirectAudioVolume(0);*/
-			else return 0;
-		}
-		set {
-			if(BinauralAudio) {
-				leftAudio.volume = value;
-				rightAudio.volume = value;
-			} else {
-				//for(ushort track = 0; track < player.AudioTracks; ++track) {
-				player.AudioVolume = value;
-			}
-		}
-	}
-
 	public void PlayVideo(DateTime timestamp, float syncTime, Vector3 settings) {
 
 		blackScreen.SetActive(false);
@@ -379,17 +354,17 @@ public class VRVideoPlayer : MonoBehaviour{
 	public void Sync(DateTime unused, double videoTime) {
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)videoTime;
-		float actualTime = (float)player.Control.GetCurrentTime();
+		float actualTime = (float)player.Control.GetCurrentTimeMs();
 		float delta = actualTime - targetTime;//Negative->go faster; Positive->go slower
 
 		//Shall we speed up or slow down?
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
 			PlaybackSpeed = 1;
-		}else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
+		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
 			Haze.Logger.Log("Target time = " + targetTime + " / Actual time = " + actualTime + " // Difference = " + delta + " ==> Too much difference, jumping to " + targetTime);
 			VideoTime = targetTime;
 			PlaybackSpeed = 1;
-		}else if(delta < 0) {// actualTime < targetTime -> go faster
+		} else if(delta < 0) {// actualTime < targetTime -> go faster
 			delta = Mathf.Abs(delta) - allowedErrorForSyncedPlayback;//0 when the difference is the allowed range
 			//remap delta to 0..1
 			delta = Utilities.Map(0, maximumAllowedErrorBeforeResync - allowedErrorForSyncedPlayback, 0, 1, delta);
@@ -414,7 +389,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	//Toggles between playing and paused.
-	public async void PauseVideo(double videoTime, bool pause) {
+	public async void PauseVideo(float videoTime, bool pause) {
 		if(!pause) {
 			VideoTime = videoTime;
 			PlaybackSpeed = 1;
@@ -514,7 +489,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	{
 		//display the last frame:
 		//TODO must match the frame used for setting the position on the guide app
-		VideoTime = player.Info.GetDurationFrames();
+		VideoTime = player.Info.GetDurationMs(); //TODO convert ms to frames
 		pausePlayback();
 
 		int i = 0;
@@ -555,7 +530,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 
 	//Received when the guide attempts to change the time on the video.
-	public void Goto(double time) {
+	public void Goto(float time) {
 		VideoTime = time;
 		PlaybackSpeed = 1;
 		sendImmediateSync();

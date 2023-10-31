@@ -30,13 +30,13 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	public static GuideVideoPlayer Instance { get; private set; }
 
-	double VideoTime { get { return videoPlayer.Control.GetCurrentTime(); } }
+	double VideoTime { get { return videoPlayer.Control.GetCurrentTimeMs(); } }
 
 	public bool Playing { get; private set; }
 
 	public bool HasVideoLoaded { get; private set; }
 
-	float TotalVideoTime { get { return (float)(videoPlayer.Info.GetDurationFrames() / videoPlayer.Info.GetVideoFrameRate()); } }
+	float TotalVideoTime { get { return (float)(videoPlayer.Info.GetDurationMs()); } }
 
 	public VideoDisplay CurrentVideo { get { return currentVideo; } }
 
@@ -76,7 +76,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			float time = val * TotalVideoTime;
 			videoPlayer.Control.SeekFast(time);//set guide video time
 			//send packet to force user device to reach selected time
-			GuideAdapter.Instance.SendGotoTime(videoPlayer.Control.GetCurrentTime());
+			GuideAdapter.Instance.SendGotoTime(videoPlayer.Control.GetCurrentTimeMs());
 			if(Playing)
 				Pause();//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
 		});
@@ -98,7 +98,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				} else Stop();
 				break;
 			case MediaPlayerEvent.EventType.FirstFrameReady:
-				lastTimeShown = (float)player.Control.GetCurrentTime();
+				lastTimeShown = (float)player.Control.GetCurrentTimeMs();
 				player.Control.SeekFast(timeSlider.value * TotalVideoTime);
 				onFirstFrameReady.Invoke();
 				break;
@@ -123,7 +123,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 			startedPlayback = false;
 			lastTimeShown = 0;
 
-			videoPlayer.OpenMedia(new MediaPath(videoDisplay.FullPath, MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
+			videoPlayer.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToPersistentDataFolder,
+				videoDisplay.FullPath, autoPlay: false);
 			
 			timeSlider.SetValueWithoutNotify(0);
 
@@ -248,9 +249,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 			//show time on slider
 			if(!Input.GetMouseButton(0)) {// <- only if we're not currently clicking/tapping
-				if(!Mathf.Approximately((float)videoPlayer.Control.GetCurrentTime(), lastTimeShown) && videoPlayer.Control.IsPlaying()) {
-					lastTimeShown = (float)videoPlayer.Control.GetCurrentTime();
-					timeSlider.SetValueWithoutNotify((float)videoPlayer.Control.GetCurrentTime() / TotalVideoTime);
+				if(!Mathf.Approximately((float)videoPlayer.Control.GetCurrentTimeMs(), lastTimeShown) && videoPlayer.Control.IsPlaying()) {
+					lastTimeShown = (float)videoPlayer.Control.GetCurrentTimeMs();
+					timeSlider.SetValueWithoutNotify(videoPlayer.Control.GetCurrentTimeMs() / TotalVideoTime);
 				}
 			}
 

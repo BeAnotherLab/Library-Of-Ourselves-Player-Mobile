@@ -222,7 +222,7 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceivePauseVideo(TCPConnection connection, DateTime unused, double videoTime, bool pause) {
+	public void OnReceivePauseVideo(TCPConnection connection, DateTime unused, float videoTime, bool pause) {
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			if(VRVideoPlayer.Instance) {
 				VRVideoPlayer.Instance.PauseVideo(videoTime, pause);
@@ -354,7 +354,7 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void ReceiveGotoTime(TCPConnection connection, double time) {
+	public void ReceiveGotoTime(TCPConnection connection, float time) {
 		if(currentlyPaired != null && currentlyPaired == connection) {
 			if(VRVideoPlayer.Instance != null)
 				VRVideoPlayer.Instance.Goto(time);
