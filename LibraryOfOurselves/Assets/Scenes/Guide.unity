@@ -1444,205 +1444,144 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638c870cac4da414fba921606d504407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaSource: 0
-  _mediaReference: {fileID: 0}
-  _mediaPath:
-    _pathType: 2
-    _path: 
-  _fallbackMediaHints:
-    transparency: 0
-    alphaPacking: 0
-    stereoPacking: 0
-  _autoOpen: 0
-  _autoPlayOnStart: 1
-  _loop: 0
-  _audioVolume: 1
-  _audioBalance: 0
-  _audioMuted: 0
-  _playbackRate: 1
-  _useResampler: 0
-  _resampleMode: 0
-  _resampleBufferSize: 5
-  _videoMapping: 0
-  _textureFilterMode: 1
-  _textureWrapMode: 1
-  _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
-  _sideloadSubtitles: 0
-  _subtitlePath:
-    _pathType: 2
-    _path: 
-  _audioHeadTransform: {fileID: 0}
-  _audioFocusEnabled: 0
-  _audioFocusTransform: {fileID: 0}
-  _audioFocusWidthDegrees: 90
-  _audioFocusOffLevelDB: 0
-  _httpHeaders:
-    httpHeaders: []
-  _keyAuth:
-    keyServerToken: 
-    overrideDecryptionKeyBase64: 
-    overrideDecryptionKey: 
-  _events:
+  m_VideoLocation: 2
+  m_VideoPath: 
+  m_AutoOpen: 1
+  m_AutoStart: 1
+  m_Loop: 0
+  m_Volume: 1
+  m_Balance: 0
+  m_Muted: 0
+  m_PlaybackRate: 1
+  m_Resample: 0
+  m_ResampleMode: 0
+  m_ResampleBufferSize: 5
+  m_Persistent: 0
+  m_videoMapping: 0
+  m_StereoPacking: 0
+  m_AlphaPacking: 0
+  m_DisplayDebugStereoColorTint: 0
+  m_FilterMode: 1
+  m_WrapMode: 1
+  m_AnisoLevel: 0
+  m_LoadSubtitles: 0
+  m_SubtitleLocation: 2
+  m_SubtitlePath: 
+  m_AudioHeadTransform: {fileID: 0}
+  m_AudioFocusEnabled: 0
+  m_AudioFocusTransform: {fileID: 0}
+  m_AudioFocusWidthDegrees: 90
+  m_AudioFocusOffLevelDB: 0
+  m_events:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1641151807}
-        m_MethodName: MediaPlayerEventReceived
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: RenderHeads.Media.AVProVideo.MediaPlayerEvent, AVProVideo.Runtime,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  _eventMask: -1
+      m_Calls: []
+    m_TypeName: RenderHeads.Media.AVProVideo.MediaPlayerEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_eventMask: -1
+  m_forceFileFormat: 0
   _pauseMediaOnAppPause: 1
   _playMediaOnAppUnpause: 1
-  _persistent: 0
-  _forceFileFormat: 0
+  m_sourceSampleRate: 0
+  m_sourceChannels: 0
+  m_manuallySetAudioSourceProperties: 0
   _optionsWindows:
-    httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
+    overridePath: 0
+    pathLocation: 2
+    path: 
     videoApi: 0
     useHardwareDecoding: 1
+    useUnityAudio: 0
+    forceAudioResample: 1
     useTextureMips: 0
-    use10BitTextures: 0
     hintAlphaChannel: 0
     useLowLatency: 0
-    useCustomMovParser: 0
-    useHapNotchLC: 0
-    useStereoDetection: 1
-    useTextTrackSupport: 1
-    useFacebookAudio360Support: 1
-    bufferedFrameSelection: 0
-    pauseOnPrerollComplete: 0
     forceAudioOutputDeviceName: 
     preferredFilters: []
-    audioOutput: 0
-    audio360ChannelMode: 0
-    startWithHighestBitrate: 0
-    useLowLiveLatency: 0
-    parallelFrameCount: 3
-    prerollFrameCount: 4
-    useUnityAudio: 0
     enableAudio360: 0
+    audio360ChannelMode: 0
   _optionsMacOSX:
-    httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
-    textureFormat: 0
+    overridePath: 0
+    pathLocation: 2
+    path: 
     audioMode: 0
-    _flags: 0
-    maximumPlaybackRate: 2
-    preferredMaximumResolution: 0
-    customPreferredMaximumResolution: {x: 0, y: 0}
-    _preferredPeakBitRate: 0
-    _preferredPeakBitRateUnits: 1
-    _preferredForwardBufferDuration: 0
+    httpHeaders:
+    - header: 
+      value: 
+    httpHeaderJson: 
+    keyServerURLOverride: 
+    keyServerAuthToken: 
+    base64EncodedKeyBlob: 
   _optionsIOS:
-    httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
-    textureFormat: 0
+    overridePath: 0
+    pathLocation: 2
+    path: 
     audioMode: 0
-    _flags: 0
-    maximumPlaybackRate: 2
-    preferredMaximumResolution: 0
-    customPreferredMaximumResolution: {x: 0, y: 0}
-    _preferredPeakBitRate: 0
-    _preferredPeakBitRateUnits: 1
-    _preferredForwardBufferDuration: 0
+    httpHeaders:
+    - header: 
+      value: 
+    httpHeaderJson: 
+    keyServerURLOverride: 
+    keyServerAuthToken: 
+    base64EncodedKeyBlob: 
+    useYpCbCr420Textures: 1
+    resumePlaybackOnAudioSessionRouteChange: 0
   _optionsTVOS:
-    httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
-    textureFormat: 0
+    overridePath: 0
+    pathLocation: 2
+    path: 
     audioMode: 0
-    _flags: 0
-    maximumPlaybackRate: 2
-    preferredMaximumResolution: 0
-    customPreferredMaximumResolution: {x: 0, y: 0}
-    _preferredPeakBitRate: 0
-    _preferredPeakBitRateUnits: 1
-    _preferredForwardBufferDuration: 0
-  _optionsAndroid:
     httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
-    preferredMaximumResolution: 0
-    customPreferredMaximumResolution: {x: 0, y: 0}
-    preferredPeakBitRate: 0
-    preferredPeakBitRateUnits: 1
+    - header: 
+      value: 
+    httpHeaderJson: 
+    keyServerURLOverride: 
+    keyServerAuthToken: 
+    base64EncodedKeyBlob: 
+    useYpCbCr420Textures: 1
+    resumePlaybackOnAudioSessionRouteChange: 0
+  _optionsAndroid:
+    overridePath: 0
+    pathLocation: 2
+    path: 
     videoApi: 2
     useFastOesPath: 1
     showPosterFrame: 0
-    audioOutput: 0
+    enableAudio360: 0
     audio360ChannelMode: 0
     preferSoftwareDecoder: 0
+    httpHeaders:
+    - header: 
+      value: 
+    httpHeaderJson: 
     fileOffset: 0
-    startWithHighestBitrate: 0
-    minBufferMs: 50000
-    maxBufferMs: 50000
-    bufferForPlaybackMs: 2500
-    bufferForPlaybackAfterRebufferMs: 5000
-    enableAudio360: 0
-  _optionsWindowsUWP:
-    httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
+  _optionsWindowsPhone:
+    overridePath: 0
+    pathLocation: 2
+    path: 
     useHardwareDecoding: 1
+    useUnityAudio: 0
+    forceAudioResample: 1
     useTextureMips: 0
-    use10BitTextures: 0
-    hintOutput10Bit: 0
     useLowLatency: 0
-    videoApi: 1
-    audioOutput: 0
-    audio360ChannelMode: 0
-    startWithHighestBitrate: 0
-    useLowLiveLatency: 0
+  _optionsWindowsUWP:
+    overridePath: 0
+    pathLocation: 2
+    path: 
+    useHardwareDecoding: 1
+    useUnityAudio: 0
+    forceAudioResample: 1
+    useTextureMips: 0
+    useLowLatency: 0
   _optionsWebGL:
-    httpHeaders:
-      httpHeaders: []
-    keyAuth:
-      keyServerToken: 
-      overrideDecryptionKeyBase64: 
-      overrideDecryptionKey: 
+    overridePath: 0
+    pathLocation: 2
+    path: 
     externalLibrary: 0
     useTextureMips: 0
-  m_VideoPath: 
-  m_VideoLocation: 2
+  _optionsPS4:
+    overridePath: 0
+    pathLocation: 2
+    path: 
 --- !u!1 &97004156
 GameObject:
   m_ObjectHideFlags: 0
@@ -5493,8 +5432,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   _mediaPlayer: {fileID: 82956168}
-  _defaultTexture: {fileID: 0}
-  _uvRect:
+  m_UVRect:
     serializedVersion: 2
     x: 0
     y: 0
@@ -5504,6 +5442,7 @@ MonoBehaviour:
   _scaleMode: 2
   _noDefaultDisplay: 1
   _displayInEditor: 1
+  _defaultTexture: {fileID: 0}
 --- !u!222 &496113541
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24048,18 +23987,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &856348130739040941 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1700352299190554083, guid: af19f8a9ac72a4bd894bad0d2d1fa5b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 6743646997448771348}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 575553740, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &897146627601469731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25653,7 +25580,6 @@ MonoBehaviour:
   editChoice: {fileID: 6136847446885272103}
   addChoiceTranslation: {fileID: 4276102330096519214}
   choiceEditionPanel: {fileID: 8492134947831186782}
-  questionField: {fileID: 856348130739040941}
   optionFieldsParent: {fileID: 310219033}
   choiceUIPrefab: {fileID: 2997394712337894248, guid: c9bda8ee9405846c9a7013d210dd7e9c,
     type: 3}
@@ -27568,7 +27494,7 @@ PrefabInstance:
     - target: {fileID: 780534099267347199, guid: af19f8a9ac72a4bd894bad0d2d1fa5b2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -68.345215
+      value: -68.3452
       objectReference: {fileID: 0}
     - target: {fileID: 780534099267347199, guid: af19f8a9ac72a4bd894bad0d2d1fa5b2,
         type: 3}
