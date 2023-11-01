@@ -19118,10 +19118,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: FloatEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  allowedErrorForSyncedPlayback: 0.25
-  maximumAllowedErrorBeforeResync: 1
-  maximumPlaybackSpeed: 1.5
-  minimumPlaybackSpeed: 0.6666667
+  allowedErrorForSyncedPlayback: 250
+  maximumAllowedErrorBeforeResync: 1000
+  maximumPlaybackSpeed: 1500
+  minimumPlaybackSpeed: 666
 --- !u!4 &1641151808
 Transform:
   m_ObjectHideFlags: 0
