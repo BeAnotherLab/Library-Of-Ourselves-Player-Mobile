@@ -20,10 +20,6 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] UnityEvent onVideoEnds;
 	[SerializeField] UnityEvent onPause;
 	[SerializeField] UnityEvent onPlay;
-	[SerializeField] OVRInput.Button oculusGoRecenterButton = OVRInput.Button.PrimaryIndexTrigger;//change this to change which button controls recenter on oculus go
-	[SerializeField] GvrControllerButton mirageRecenterButton = GvrControllerButton.TouchPadButton;//change this to change which button controls recenter on mirage solo
-	[SerializeField] OVRInput.Button oculusGoQuitButton = OVRInput.Button.PrimaryThumbstick;
-	[SerializeField] GvrControllerButton mirageQuitButton = GvrControllerButton.App;
 	[SerializeField] GameObject choiceContainer;
 	
 	[SerializeField] private GameObject optionMeshPrefab;
@@ -462,51 +458,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		blackScreen.SetActive(false);
 		BinauralAudio = false;
 		ClearOptions();
-	}
-
-	void Update() {
-		if(VRDevice.OculusGo) {//On OculusGo, use the controller's trigger to recalibrate
-			OVRInput.Update();
-			if(OVRInput.Get(oculusGoRecenterButton)) {
-				Recenter();
-			}
-			if(OVRInput.Get(oculusGoQuitButton)) {
-				Application.Quit();
-			}
-		} else if(VRDevice.MirageSolo) {//On Mirage Solo, use the controller's click button
-			bool overrideTouch = false;
-			bool overrideQuit = false;
-			GvrControllerInputDevice device = GvrControllerInput.GetDevice(GvrControllerHand.Dominant);
-			if(device == null) {
-				device = GvrControllerInput.GetDevice(GvrControllerHand.NonDominant);
-				if(device == null) {
-					Haze.Logger.LogError("Daydream Input API Status: " + GvrControllerInput.ApiStatus);
-					Haze.Logger.LogError("ErrorDetails: " + GvrControllerInput.ErrorDetails);
-				}
-			}
-			if((device != null && device.GetButton(mirageRecenterButton)) || overrideTouch) {
-				Recenter();
-			}
-			if((device != null && device.GetButton(mirageQuitButton)) || overrideQuit) {
-				Application.Quit();
-			}
-		} else if(VRDevice.GearVR) {//On GearVR, double-tap to recalibrate
-			if(firstTap > 0) {//we've tapped a first time!
-				if(Input.GetMouseButtonDown(0)) {
-					//that's it, double-tapped.
-					Recenter();
-					firstTap = 0;
-				}
-				firstTap -= Time.deltaTime;
-			} else if(Input.GetMouseButtonUp(0)) {
-				firstTap = 0.3f;//you have .3 seconds to tap once more for double tap!
-			}
-		}
-	}
-
-	void FixedUpdate() {
-		if(VRDevice.OculusGo)
-			OVRInput.FixedUpdate();
 	}
 
 	public void DisplayChoice(string question, string optionsDescriptions, string optionsPositions) //TODO also needs positions

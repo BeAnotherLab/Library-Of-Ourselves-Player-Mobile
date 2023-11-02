@@ -50,7 +50,6 @@ public class BuildSettings {
 	public static void PrepareOculusBuild() {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
 		PlayerSettings.virtualRealitySupported = true;
-		PlayerSettings.SetVirtualRealitySDKs(BuildTargetGroup.Android, new[] { "Oculus" });
 		PlayerSettings.productName = "Library of Ourselves (User)";
 		PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "sco.Haze.LibraryOfOurselves");
 		enableScene(1);
@@ -61,7 +60,6 @@ public class BuildSettings {
 	public static void PrepareDaydreamBuild() {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
 		PlayerSettings.virtualRealitySupported = true;
-		PlayerSettings.SetVirtualRealitySDKs(BuildTargetGroup.Android, new[] { "daydream" });
 		PlayerSettings.productName = "Library of Ourselves (User)";
 		PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "sco.Haze.LibraryOfOurselves");
 		enableScene(1);

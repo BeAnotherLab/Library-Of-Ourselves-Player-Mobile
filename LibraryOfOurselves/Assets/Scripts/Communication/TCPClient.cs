@@ -127,7 +127,8 @@ public class TCPClient : MonoBehaviour{
 			data.WriteByte((byte)deviceType);
 			data.WriteString(SystemInfo.deviceUniqueIdentifier);
 			data.WriteString(LockedId);
-			data.WriteString(XRDevice.model);
+			//data.WriteString(XRDevice.model);
+			data.WriteString("XRDevice.model");
 
 			await connection.Send(data);
 			hosts.Add(connection);
