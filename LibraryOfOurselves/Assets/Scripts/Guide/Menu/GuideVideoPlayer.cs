@@ -77,7 +77,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			videoPlayer.Control.SeekFast(time);//set guide video time
 			//send packet to force user device to reach selected time
 			GuideAdapter.Instance.SendGotoTime(videoPlayer.Control.GetCurrentTimeMs());
-			if(Playing)
+			if (Playing)
 				Pause();//force it to pause so that the guide will need to press Play, giving enough time for the VR device to catch up.
 		});
 		BetterStreamingAssets.Initialize();
@@ -114,7 +114,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 		currentVideo = videoDisplay;
 
-		if(GuideAdapter.Instance) {
+		if (GuideAdapter.Instance) {
 			Haze.Logger.Log("Loading video: " + videoDisplay.VideoName);
 
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
@@ -206,9 +206,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 			}
 		}
 		onlyOneDevice = pairedDevices <= 1;
-		if(!onlyOneDevice || Settings.ForceMultiUserSetup) {//only send sync packets if there's more than one device paired atm
-			while(HasVideoLoaded && GuideAdapter.Instance) {
-				if(Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
+		if (!onlyOneDevice || Settings.ForceMultiUserSetup) {//only send sync packets if there's more than one device paired atm
+			while (HasVideoLoaded && GuideAdapter.Instance) {
+				if (Playing && Settings.SendSyncMessages) {//only if the behaviour is allowed by the current settings.
 					sendImmediateSync();
 				}
 				await Task.Delay((int)(timeBetweenSyncs * 1000));
@@ -221,26 +221,24 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	private void Update() {
-		if(displaying) {
-			if(!allDevicesReady) {
+		if (displaying) {
+			if (!allDevicesReady) {
 				//Waiting for the devices to become ready...
 				allDevicesReady = true;
-				if(ConnectionsDisplayer.Instance) {
-					foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
-						if(handle.connection.paired && !handle.display.IsVideoReady) {
+				if (ConnectionsDisplayer.Instance) {
+					foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+						if (handle.connection.paired && !handle.display.IsVideoReady) {
 							//this one's not ready yet...
 							allDevicesReady = false;
 							break;
 						}
 					}
-				} else {
-
-				}
+				} 
 
 				//if it's still true it means they're all ready now :)
-				if(allDevicesReady) {
+				if (allDevicesReady) {
 					onAllDevicesReady.Invoke();
-					if(playImmediately) {
+					if (playImmediately) {
 						Play();
 						playImmediately = false;
 					}
@@ -248,8 +246,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 			}
 
 			//show time on slider
-			if(!Input.GetMouseButton(0)) {// <- only if we're not currently clicking/tapping
-				if(!Mathf.Approximately((float)videoPlayer.Control.GetCurrentTimeMs(), lastTimeShown) && videoPlayer.Control.IsPlaying()) {
+			if (!Input.GetMouseButton(0)) {// <- only if we're not currently clicking/tapping
+				if (!Mathf.Approximately((float)videoPlayer.Control.GetCurrentTimeMs(), lastTimeShown) && videoPlayer.Control.IsPlaying()) {
 					lastTimeShown = (float)videoPlayer.Control.GetCurrentTimeMs();
 					timeSlider.SetValueWithoutNotify(videoPlayer.Control.GetCurrentTimeMs() / TotalVideoTime);
 				}
@@ -259,7 +257,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			sendAnyRequiredReorient();
 
 			//if no one is paired anymore, just stop.
-			if(TCPHost.Instance != null && TCPHost.Instance.NumberOfPairedDevices <= 0) {
+			if (TCPHost.Instance != null && TCPHost.Instance.NumberOfPairedDevices <= 0) {
 				Stop();
 			}
 
@@ -316,6 +314,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			StopCoroutine(__slowStartRoutine);
 		__slowStartRoutine = StartCoroutine(__slowStart());
 	}
+	
 	IEnumerator __slowStart() {
 		if(onlyOneDevice) yield break;
 		float speed = 0.1f;
@@ -329,7 +328,6 @@ public class GuideVideoPlayer : MonoBehaviour{
 		}
 	}
 
-
 	public void Sync(DateTime unused, double targetTimeD) {
 
 		if(!videoPlayer.Control.IsPlaying()) {
@@ -337,7 +335,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			return;
 		}
 
-		//Haze.Logger.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
+		Haze.Logger.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)targetTimeD;
 		float actualTime = (float)VideoTime;
