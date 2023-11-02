@@ -242,7 +242,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		player.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToPersistentDataFolder, videoName, autoPlay: false);
+		player.OpenVideoFromFile(MediaPlayer.FileLocation.RelativeToPersistentDataFolder, videoName + ".mp4", autoPlay: false);
 		PlaybackSpeed = 1;
 
 		//Load the video into the player...
