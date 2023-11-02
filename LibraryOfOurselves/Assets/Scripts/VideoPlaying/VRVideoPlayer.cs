@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 
 public class VRVideoPlayer : MonoBehaviour{
 
-	[SerializeField] float timeBetweenSyncs = 0.75f;
+	[SerializeField] float timeBetweenSyncs;
 	[SerializeField] GameObject semispherePlayer;
 	[SerializeField] GameObject spherePlayer;
 	[SerializeField] AudioSource leftAudio;
@@ -337,7 +337,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		allowedErrorForSyncedPlayback = settings.x;
 		maximumAllowedErrorBeforeResync = settings.y;
 		maximumPlaybackSpeed = settings.z;
-		minimumPlaybackSpeed = 1.0f / settings.z;
+		minimumPlaybackSpeed = 1.0f / settings.z; //TODO might not be a supported value
 
 		VideoTime = 0;
 		play();
@@ -420,7 +420,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			if(player.Control.IsPlaying()) {
 				sendImmediateSync();
 			}
-			await Task.Delay((int)(timeBetweenSyncs * 1000));
+			await Task.Delay((int)(timeBetweenSyncs));
 		}
 	}
 
