@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/OldGuide.unity
     guid: 2bad647885c5b3b4b9fa8d8f2e0fd59d
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 93bbdb993c0570d4ea212bd5da4f2d5a,
+      type: 2}
