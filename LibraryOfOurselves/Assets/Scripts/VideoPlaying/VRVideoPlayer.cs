@@ -35,10 +35,10 @@ public class VRVideoPlayer : MonoBehaviour{
 	[SerializeField] GameObject gvrControllerInput;
 
 	[Header("Sync settings")]
-	[SerializeField] float allowedErrorForSyncedPlayback = 0.5f;
-	[SerializeField] float maximumAllowedErrorBeforeResync = 3.0f;
-	[SerializeField] float maximumPlaybackSpeed = 1.5f;
-	[SerializeField] float minimumPlaybackSpeed = 0.75f;
+	[SerializeField] float allowedErrorForSyncedPlayback;
+	[SerializeField] float maximumAllowedErrorBeforeResync;
+	[SerializeField] float maximumPlaybackSpeed;
+	[SerializeField] float minimumPlaybackSpeed; //TODO do we need this? value might not be supported
 
 	[SerializeField] private int _frameBeforeEndInSeconds;
 	public enum AudioLoadingMode {
