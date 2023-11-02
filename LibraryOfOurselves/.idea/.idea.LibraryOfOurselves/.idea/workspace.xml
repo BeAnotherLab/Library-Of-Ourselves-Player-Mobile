@@ -2,568 +2,267 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55448ade-21ae-4e40-b0bc-30e7e30e8b1c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/Demo-360.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/Demo-360.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/Demo-Cube.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/Demo-Cube.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/Demo-Skybox.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/Demo-Skybox.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/LookAround360.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/LookAround360.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/BackingGradient.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/BackingGradient.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/HorizontalSegmentsPrimitive.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/HorizontalSegmentsPrimitive.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-AudioSpectrum.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-AudioSpectrum.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Buffering.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Buffering.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-CC.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-CC.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Circle.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Circle.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Feedback.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Feedback.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-NavBack.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-NavBack.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-NavForward.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-NavForward.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Options.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Options.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-PlayPause.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-PlayPause.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Volume.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI-Volume.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI.mat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI.mat.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/MediaPlayerUI.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/OverlayManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/MediaPlayerUI/OverlayManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/OctahedronSphere8192.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Common/OctahedronSphere8192.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Https-HLS-AppleBipBop.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Https-HLS-AppleBipBop.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Https-HLS-AzureLlamaDrama4K.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Https-HLS-AzureLlamaDrama4K.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-BigBuck720p30.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-BigBuck720p30.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones-360Mono.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones-360Mono.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones-360Stereo.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones-360Stereo.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones-Transparent.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones-Transparent.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-Cones.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-RenderHeads.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/SampleMedia/Sample-Local-MP4-RenderHeads.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_360Stereo.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_360Stereo.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_DisplayComponents.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_DisplayComponents.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_MediaPlayer.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_MediaPlayer.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_Playlist.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/Scenes/Demo_Playlist.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/_AVProVideo.Demos.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Demos/_AVProVideo.Demos.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Docs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Docs/AVPro Video - User Manual.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Docs/AVPro Video - User Manual.pdf.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Docs/Documentation.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Docs/Documentation.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Resources/AVProVideoIcon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Resources/AVProVideoIcon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/AnimCollapseSection.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/AnimCollapseSection.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/ApplyToMaterialEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/ApplyToMaterialEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/ApplyToMeshEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/ApplyToMeshEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/AudioOutputEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/AudioOutputEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/DisplayIMGUIEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/DisplayIMGUIEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_AboutHelp.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_AboutHelp.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Android.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Android.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Apple.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Apple.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Audio.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Audio.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Debug.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Debug.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Events.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Events.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Global.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Global.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Network.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Network.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Platforms.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Platforms.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Player.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Player.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Source.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Source.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Subtitles.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Subtitles.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_WebGL.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_WebGL.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Windows.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/MediaPlayerEditor_Windows.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/PlaylistMediaPlayerEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/Components/PlaylistMediaPlayerEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/EditorHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/EditorHelper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/MediaHintsDrawer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/MediaHintsDrawer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/MediaPathDrawer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/MediaPathDrawer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/MediaReferenceEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/MediaReferenceEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PluginProcessor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PluginProcessor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild_Android.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild_Android.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild_iOS.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild_iOS.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild_macOS.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PostProcessBuild_macOS.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PreProcessBuild.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/PreProcessBuild.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/RecentItems.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/RecentItems.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/RecentMenu.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/RecentMenu.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/SupportWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/SupportWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/VideoResolveOptionsDrawer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/Scripts/VideoResolveOptionsDrawer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/_AVProVideo.Editor.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Editor/_AVProVideo.Editor.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlAsset.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlAsset.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlBehaviour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlBehaviour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlMixerBehaviour.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlMixerBehaviour.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlTrack.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/MediaPlayerControlTrack.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/_AVProVideo.Extensions.Timeline.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/Timeline/_AVProVideo.Extensions.Timeline.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Editor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Editor/DisplayUGUIEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Editor/DisplayUGUIEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Editor/_AVProVideo.Extensions.UnityUI.Editor.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Editor/_AVProVideo.Extensions.UnityUI.Editor.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Runtime.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Runtime/DisplayUGUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Runtime/DisplayUGUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Runtime/SubtitlesUGUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/Runtime/SubtitlesUGUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/_AVProVideo.Extensions.UnityUI.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/UnityUI/_AVProVideo.Extensions.UnityUI.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/VisualEffectGraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/VisualEffectGraph/ApplyToVfxGraph.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/VisualEffectGraph/ApplyToVfxGraph.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/VisualEffectGraph/_AVProVideo.Extensions.VisualEffectGraph.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Extensions/VisualEffectGraph/_AVProVideo.Extensions.VisualEffectGraph.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/ExoPlayer-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/ExoPlayer-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/FacebookAudio360-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/FacebookAudio360-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/GdclMpeg4-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/GdclMpeg4-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/Hap-3rdParty.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/Hap-3rdParty.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/Hap-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/Hap-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/HapInAvFoundation-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/HapInAvFoundation-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/LibSamplerate-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/LibSamplerate-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/Third-Party Notices.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Licenses/Third-Party Notices.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/AVProVideo.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/AVProVideo.jar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/audio360-exo.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/audio360-exo.jar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/audio360.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/audio360.jar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-common.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-common.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-core.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-core.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-dash.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-dash.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-extractor.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-extractor.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-hls.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-hls.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-smoothstreaming.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer-smoothstreaming.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/exoplayer.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/extension-rtmp.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/extension-rtmp.aar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/guava-27.1-android.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/guava-27.1-android.jar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libAVProVideo2Native.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libAVProVideo2Native.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libAudio360-JNI.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libAudio360-JNI.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libAudio360.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libAudio360.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libopus.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libopus.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libopusJNI.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libopusJNI.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libresample-rh.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libresample-rh.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libsamplerate-android.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/arm64-v8a/libsamplerate-android.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libAVProVideo2Native.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libAVProVideo2Native.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libAudio360-JNI.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libAudio360-JNI.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libAudio360.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libAudio360.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libopus.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libopus.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libopusJNI.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libopusJNI.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libresample-rh.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libresample-rh.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libsamplerate-android.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/armeabi-v7a/libsamplerate-android.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libAVProVideo2Native.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libAVProVideo2Native.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libAudio360-JNI.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libAudio360-JNI.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libAudio360.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libAudio360.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libopus.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libopus.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libopusJNI.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libopusJNI.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libresample-rh.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libresample-rh.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libsamplerate-android.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libs/x86/libsamplerate-android.so.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libsamplerate-License.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/libsamplerate-License.txt.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/resample-rh.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/resample-rh.jar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/zip_file.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Android/zip_file.jar.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM/AVProVideo.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM/AVProVideo.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM/AVProVideoWinRT.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM/AVProVideoWinRT.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM64.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM64/AVProVideo.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM64/AVProVideo.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM64/AVProVideoWinRT.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/ARM64/AVProVideoWinRT.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86/AVProVideo.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86/AVProVideo.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86/AVProVideoWinRT.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86/AVProVideoWinRT.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86/Audio360.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86/Audio360.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64/AVProVideo.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64/AVProVideo.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64/AVProVideoWinRT.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64/AVProVideoWinRT.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64/Audio360.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WSA/UWP/x86_64/Audio360.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WebGL.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WebGL/AVProVideo.jslib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/WebGL/AVProVideo.jslib.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86/AVProVideo.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86/AVProVideo.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86/AVProVideoWinRT.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86/AVProVideoWinRT.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86/Audio360.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86/Audio360.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64/AVProVideo.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64/AVProVideo.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64/AVProVideoWinRT.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64/AVProVideoWinRT.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64/Audio360.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/Windows/x86_64/Audio360.dll.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/AVProVideo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/AVProVideo.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Headers.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Headers/AVProVideo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Headers/AVProVideo.h.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Headers/AVProVideoTypes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Headers/AVProVideoTypes.h.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Info.plist.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-ios.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-ios.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-ios.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-ios.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7-apple-ios.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7-apple-ios.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7-apple-ios.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7-apple-ios.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/armv7.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideoBootstrap.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/iOS/AVProVideoBootstrap.m.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/CodeResources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/CodeResources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/Info.plist.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/MacOS.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/MacOS/AVProVideo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/MacOS/AVProVideo.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/_CodeSignature.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/_CodeSignature/CodeResources" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/macOS/AVProVideo.bundle/Contents/_CodeSignature/CodeResources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/AVProVideo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/AVProVideo.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Headers.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Headers/AVProVideo.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Headers/AVProVideo.h.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Headers/AVProVideoTypes.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Headers/AVProVideoTypes.h.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Info.plist.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-tvos.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-tvos.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-tvos.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64-apple-tvos.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftdoc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftdoc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftmodule" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideo.framework/Modules/AVProVideo.swiftmodule/arm64.swiftmodule.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideoBootstrap.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Plugins/tvOS/AVProVideoBootstrap.m.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Resources/Textures.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Resources/Textures/AVProVideo-NullPlayer-Frame0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Resources/Textures/AVProVideo-NullPlayer-Frame0.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Resources/Textures/AVProVideo-NullPlayer-Frame1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Resources/Textures/AVProVideo-NullPlayer-Frame1.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/AssetTypes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/AssetTypes/MediaReference.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/AssetTypes/MediaReference.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/ApplyToMaterial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/ApplyToMaterial.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/ApplyToMesh.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/ApplyToMesh.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/AudioChannelMixer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/AudioChannelMixer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/AudioOutput.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/AudioOutput.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/DisplayIMGUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/DisplayIMGUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayerSync.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayerSync.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_AppFocus.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_AppFocus.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_EditorMute.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_EditorMute.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_EditorPlayPause.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_EditorPlayPause.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_Events.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_Events.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_ExtractFrame.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_ExtractFrame.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_OpenBuffer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_OpenBuffer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_OpenStream.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_OpenStream.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_PlatformOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_PlatformOptions.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_Subtitles.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_Subtitles.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_TimeScale.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_TimeScale.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_Upgrade.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/MediaPlayer_Upgrade.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/PlaylistMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/PlaylistMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/UpdateMultiPassStereo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Components/UpdateMultiPassStereo.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/ApplyToBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/ApplyToBase.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/AudioOutputManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/AudioOutputManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/BaseMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/BaseMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Events.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Events.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Helper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Helper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Interfaces.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Interfaces.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/PlaybackQualityStats.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/PlaybackQualityStats.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/AndroidMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/AndroidMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/AppleMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/AppleMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/NullMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/NullMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WebGLMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WebGLMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WindowsMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WindowsMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WindowsMediaPlayer_BufferedFrames.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WindowsMediaPlayer_BufferedFrames.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WindowsRtMediaPlayer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Players/WindowsRtMediaPlayer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/TextTrack.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/TextTrack.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Tracks.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Tracks.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/HttpHeader.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/HttpHeader.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/KeyAuthData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/KeyAuthData.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/Resampler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/Resampler.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/Subtitles.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/Subtitles.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/VideoRender.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Scripts/Internal/Utils/VideoRender.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Lit-Diffuse.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Lit-Diffuse.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Lit-Transparent-Diffuse.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Lit-Transparent-Diffuse.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Skybox-Cube3x2.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Skybox-Cube3x2.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Skybox-Sphere.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Skybox-Sphere.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Unlit-AndroidOES.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Unlit-AndroidOES.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Unlit-Transparent.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Unlit-Transparent.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Unlit.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-Unlit.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-AndroidOES.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-AndroidOES.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-StereoUV.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-StereoUV.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-Transparent-AndroidOES.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-Transparent-AndroidOES.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-Transparent.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere-Transparent.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo-VR-InsideSphere.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo.cginc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/AVProVideo.cginc.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-BlendFrames.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-BlendFrames.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-IMGUI-Transparent.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-IMGUI-Transparent.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-Preview.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-Preview.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-Resolve.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-Resolve.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-Transition.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-Transition.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-UI-AndroidOES.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-UI-AndroidOES.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-UI-Default-Stereo.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-UI-Default-Stereo.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-UI-Default-Transparent.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/Shaders/Resources/AVProVideo-Internal-UI-Default-Transparent.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/_AVProVideo.Runtime.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/AVProVideo/Runtime/_AVProVideo.Runtime.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce081718e091cd2f03" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce081718e091cd2f03.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce081718e5364a2d01" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce081718e5364a2d01.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce081718e5364a2d02" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce081718e5364a2d02.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce09171963cca0de0c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce09171963cca0de0c.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917196cb3e41903" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917196cb3e41903.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917196cb3e41904" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917196cb3e41904.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917196d01562b01" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917196d01562b01.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917199b97e0f80d" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/Assets/oculussig_ce0917199b97e0f80d.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/VrPlayerBindings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/VrPlayerBindings.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/vpb-release.aar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Android/vpb-release.aar.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LibraryOfOurselves/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LibraryOfOurselves/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Materials/BackfacesVideo.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Materials/BackfacesVideo.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_close_01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_close_01a.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_open_01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_open_01a.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Scenes/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Scripts/Audio.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Scripts/Audio/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Scripts/Utils.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Scripts/Utils/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Content.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Content/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Plugins.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Plugins/Android32.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Plugins/Android64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Resources/FallbackTextures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Resources/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Resources/Materials/Expressive.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Resources/Materials/Version1.5.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/AvatarGallery.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/AvatarGallery/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/Controllers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/CrossPlatform.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/GripPoses.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/GripPoses/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/LocalAvatar.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/LocalAvatar/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/LocalAvatar/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/RemoteLoopback.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/RemoteLoopback/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/SocialStarter/Assets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/SocialStarter/Assets/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/SocialStarter/Assets/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Samples/SocialStarter/Assets/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Avatar/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Assets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Assets/OfflineModel.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Audio.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Audio/vox_lp_01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Models/FemaleHead_Morph.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Models/FemaleHead_Morph/Female.fbm.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Models/FemaleHead_Morph/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Models/RobotHead_TextureFlip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Models/RobotHead_TextureFlip/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Plugins.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Plugins/Android32.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Plugins/Android64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Plugins/MacOSX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Plugins/Win64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Plugins/iOS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Scenes/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Scripts/Helpers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/EntitlementCheck.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/GroupPresenceSample.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/GroupPresenceSample/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/GroupPresenceSample/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/GroupPresenceSample/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/NetChat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/SimplePlatformSample.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrBoardGame.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrBoardGame/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrBoardGame/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrHoops.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrHoops/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrHoops/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrVoiceChat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrVoiceChat/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Platform/Samples/VrVoiceChat/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/CustomHands/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DebugUI/Fonts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DebugUI/Fonts/Montserrat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DebugUI/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DebugUI/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DebugUI/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DistanceGrab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DistanceGrab/Mesh.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DistanceGrab/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/DistanceGrab/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Firebase.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Firebase/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Gradle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Gradle/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Audio.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Audio/ButtonDown.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Audio/ButtonUp.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Scripts/Tools.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Locomotion/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Locomotion/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Locomotion/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Locomotion/Scripts/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/TouchControllers/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/TouchControllers/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/TouchControllers/Materials/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/TouchControllers/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/TouchControllers/NewTouchControllers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Plugins/Android/Audio360.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Plugins/Android/java/com/oculus.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Plugins/Android/java/com/oculus/videoplayer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/Video/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/AppDeeplink.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/AppDeeplink/UI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/CustomHands.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DebugUI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/PhysicsMaterials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/Prefabs/GrabOffsetsAndPoses.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/Prefabs/OutlineItems.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/DistanceGrab/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Firebase.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Moo_Cow.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/TrainWhistleAv01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Crossing.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_1_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_2_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_3_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_4_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_5_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Start_From_Stop_v01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_SteamBlast_A.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_2.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_3.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_4.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_5.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Rotate_Fast_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Rotate_Slow_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Start.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Stop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Scripts/Utils.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Textures/ControllerBoxTextures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/TrainScene.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Locomotion/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlay.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlay/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlay/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlay/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlay/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlayCanvas.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlayCanvas/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlayCanvas/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlayCanvas/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/OVROverlayCanvas/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Passthrough/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Passthrough/Materials/skybox.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Passthrough/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Passthrough/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Passthrough/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Skyboxes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Skyboxes/Sky_01.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Skyboxes/Sky_02.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/SharedAssets/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/StartScene.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/StartScene/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/StartScene/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/Stereo180Video.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/Standard Assets/Character Controllers/Sources/PrototypeCharacter.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/Standard Assets/Character Controllers/Sources/PrototypeCharacter/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/Standard Assets/Character Controllers/Sources/PrototypeCharacter/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/Standard Assets/Character Controllers/Sources/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/mixers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/360 Workstation Ambisonic Panning AmbiX.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/hammer.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/noise.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/sine.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/speech.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/water.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/AudioClips.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/AudioClips/sfx_belt_in.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Editor/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Editor/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/HandTracking.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForQuest2.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForQuest2/Animation.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForQuest2/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForQuestAndRiftS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForQuestAndRiftS/Animation.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForQuestAndRiftS/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForRift.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForRift/Animation.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Meshes/OculusTouchForRift/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0/Android.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0/AndroidOpenXR.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0/AndroidUniversal.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0/Win.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0/Win64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Plugins/1.65.0/Win64OpenXR.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Textures/HandTracking.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Textures/Icons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Textures/Logos.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Textures/OculusTouchForQuest2.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Textures/OculusTouchForQuestAndRiftS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/Textures/OculusTouchForRift.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/x86_64.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/x86_64.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/x86_64/AVProVideo.dll.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/x86_64/AVProVideo.dll.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideosDisplayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideosDisplayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/VideoPlaying/VRVideoPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/VideoPlaying/VRVideoPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/AlphaLeftRight.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/AlphaTopBottom.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/BigBuckBunny_360p30.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/BigBuckBunny_360p30.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/BigBuckBunny_720p30.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/Sample180.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/SampleCube.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/SampleSphere.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/XR.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/XR/Loaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -574,25 +273,24 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Tests/Runtime/TMP_RuntimeTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.3.15f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/RawImage.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.package-manager-ui/Tests/Editor/Services/Mock/MockSearchOperation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_RichTextTagsCommon.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collab-proxy@1.2.16/Tests/Editor/HistoryTests.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_FontAsset.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Editor/Animation/TimelineAnimationUtilities.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/578b5b677e3045f586753155bc1864cbffc00/7b/e238c9eb/InvokableCall`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshProUGUI.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Runtime/Playables/DirectorControlPlayable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Editor/State/ISequenceState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file:///Applications/Unity/Hub/Editor/2019.1.2f1/Unity.app/Contents/Resources/PackageManager/BuiltInPackages/com.unity.timeline/Runtime/AssetUpgrade/TrackUpgrade.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.0.1/Tests/Runtime/TMP_RuntimeTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/578b5b677e3045f586753155bc1864cbffc00/3b/190df6f1/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Guide/GuideAdapter.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideoShelf.cs" />
     </changedPaths>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1zPttef9eMxLvXnH5vi3rjJVImC" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -607,6 +305,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="rider.run.widget.enabled.cache" value="false" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -643,12 +342,14 @@
       <workItem from="1634136381321" duration="993000" />
       <workItem from="1634140701370" duration="331000" />
       <workItem from="1635163333574" duration="241000" />
+      <workItem from="1698921773226" duration="4253000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="Vcs.Log.Tabs.Properties">
@@ -699,13 +400,26 @@
           <line>128</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/GuideVideoPlayer.cs" initialLine="133" containingFunctionPresentation="method 'LoadVideo'">
             <startOffsets>
-              <option value="4227" />
+              <option value="4308" />
             </startOffsets>
             <endOffsets>
-              <option value="4267" />
+              <option value="4348" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideosDisplayer.cs</url>
+          <line>55</line>
+          <properties documentPath="C:\Users\Obert\Documents\Library-Of-Ourselves-Player-Mobile\LibraryOfOurselves\Assets\Scripts\Guide\Menu\VideosDisplayer.cs" initialLine="55" containingFunctionPresentation="method 'AddVideo'">
+            <startOffsets>
+              <option value="1959" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2013" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
