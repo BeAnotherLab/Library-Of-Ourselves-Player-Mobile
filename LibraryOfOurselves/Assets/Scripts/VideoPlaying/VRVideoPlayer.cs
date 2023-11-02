@@ -124,7 +124,6 @@ public class VRVideoPlayer : MonoBehaviour{
 			GameObject.Instantiate(gvrControllerInput);//Create the controller input manager for Daydream version
 		}
 		
-		BetterStreamingAssets.Initialize();
 	}
 
 	private void OnDestroy() {
