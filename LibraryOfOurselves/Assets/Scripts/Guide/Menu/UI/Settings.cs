@@ -49,11 +49,12 @@ public class Settings : MonoBehaviour {
 		SettingsAuth.ShutoffAdminAccess();
 	}
 	
+	//TODO why do we have separate Allowed/Mqx Error values for user and guide?
 	public static float AllowedErrorForSyncedPlayback {
 		get {
 			if(HazePrefs.HasKey("allowederrorforsyncedplayback"))
 				return HazePrefs.GetFloat("allowederrorforsyncedplayback");
-			else return 0.04f;
+			else return 400f;
 		}
 		set {
 			HazePrefs.SetFloat("allowederrorforsyncedplayback", value);
@@ -66,7 +67,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("maximumallowederrorforsyncedplayback"))
 				return HazePrefs.GetFloat("maximumallowederrorforsyncedplayback");
-			else return 0.85f;
+			else return 850f;
 		}
 		set {
 			HazePrefs.SetFloat("maximumallowederrorforsyncedplayback", value);
@@ -92,7 +93,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("synctime")) {
 				return HazePrefs.GetFloat("synctime");
-			} else return 1.3f;
+			} else return 1300f;
 		}
 		set {
 			HazePrefs.SetFloat("synctime", value);
@@ -118,7 +119,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("allowederrorforsyncedplaybackusers"))
 				return HazePrefs.GetFloat("allowederrorforsyncedplaybackusers");
-			else return 0.4f;
+			else return 400f;
 		}
 		set {
 			HazePrefs.SetFloat("allowederrorforsyncedplaybackusers", value);
@@ -131,7 +132,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("maximumallowederrorforsyncedplaybackusers"))
 				return HazePrefs.GetFloat("maximumallowederrorforsyncedplaybackusers");
-			else return 0.8f;
+			else return 800f;
 		}
 		set {
 			HazePrefs.SetFloat("maximumallowederrorforsyncedplaybackusers", value);
@@ -144,7 +145,7 @@ public class Settings : MonoBehaviour {
 		get {
 			if(HazePrefs.HasKey("maximumtimedilationforsyncedplaybackusers"))
 				return HazePrefs.GetFloat("maximumtimedilationforsyncedplaybackusers");
-			else return 1.2f;
+			else return 1200f;
 		}
 		set {
 			HazePrefs.SetFloat("maximumtimedilationforsyncedplaybackusers", value);
@@ -165,13 +166,15 @@ public class Settings : MonoBehaviour {
 	}
 	
 	public void ResetSyncSettings() {
-		AllowedErrorForSyncedPlayback = 0.04f;
-		MaximumErrorForSyncedPlayback = 0.85f;
+		AllowedErrorForSyncedPlayback = 40f;
+		MaximumErrorForSyncedPlayback = 850f;
 		SyncedPlaybackMaximumTimeDilation = 1.15f;
-		SyncTime = 1.3f;
+		
+		SyncTime = 1300f;
 		JumpAheadTime = 0;
-		AllowedErrorForSyncedPlaybackUsers = 0.4f;
-		MaximumErrorForSyncedPlayback = 0.8f;
+		
+		AllowedErrorForSyncedPlaybackUsers = 0400f;
+		MaximumErrorForSyncedPlaybackUsers = 800f;
 		SyncedPlaybackMaximumTimeDilationUsers = 1.2f; 
 		OnEnable();
 	}
@@ -186,18 +189,19 @@ public class Settings : MonoBehaviour {
 		maxUsersSlider.SetValueWithoutNotify(MaximumErrorForSyncedPlaybackUsers);
 		syncedUsersSlider.SetValueWithoutNotify(SyncedPlaybackMaximumTimeDilationUsers);
 
-		allowedErrorText.text = "Allowed error (" + AllowedErrorForSyncedPlayback + "s)";
-		maximumErrorText.text = "Maximum error (" + MaximumErrorForSyncedPlayback + "s)";
+		allowedErrorText.text = "Allowed error (" + AllowedErrorForSyncedPlayback + "ms)";
+		maximumErrorText.text = "Maximum error (" + MaximumErrorForSyncedPlayback + "ms)";
 		syncedPlaybackText.text = "Max time dilation (x" + SyncedPlaybackMaximumTimeDilation + ")";
-		syncTimeText.text = "Sync time (" + SyncTime + "s)";
-		jumpAheadText.text = "Jump ahead time (" + JumpAheadTime + "s)";
-		allowedUsersText.text = "Allowed error - multi users (" + AllowedErrorForSyncedPlaybackUsers + "s)";
-		maxUsersText.text = "Maximum error - multi users (" + MaximumErrorForSyncedPlaybackUsers + "s)";
+		syncTimeText.text = "Sync time (" + SyncTime + "ms)";
+		jumpAheadText.text = "Jump ahead time (" + JumpAheadTime + "ms)";
+		allowedUsersText.text = "Allowed error - multi users (" + AllowedErrorForSyncedPlaybackUsers + "ms)";
+		maxUsersText.text = "Maximum error - multi users (" + MaximumErrorForSyncedPlaybackUsers + "ms)";
 		syncedUsersText.text = "Max time dilation - multi users (x" + SyncedPlaybackMaximumTimeDilationUsers + ")";
 
 		allowedErrorSlider.maxValue = MaximumErrorForSyncedPlayback;
 		maximumErrorSlider.minValue = AllowedErrorForSyncedPlayback;
 		allowedUsersSlider.maxValue = MaximumErrorForSyncedPlaybackUsers;
+
 		maxUsersSlider.minValue = AllowedErrorForSyncedPlaybackUsers;
 
 		forceMultiUsersToggle.onValueChanged.AddListener(delegate (bool val){
