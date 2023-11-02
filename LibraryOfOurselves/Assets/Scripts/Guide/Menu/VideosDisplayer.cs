@@ -48,7 +48,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			string directory = "";
 			for(int i = 0; i < split.Length - 1; ++i)
 				directory += split[i] + "/";
-			directory = "/" + directory;
 			split = split[split.Length - 1].Split(new string[] { ".mp4" }, StringSplitOptions.RemoveEmptyEntries);
 			string filename = "";
 			foreach(string f in split) {
@@ -109,12 +108,11 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		//save directory is persistent data path
 		string directory = Application.persistentDataPath;
 #else
-		//hack for fixing path in editor
+		//save directory is sd card root
 		string[] split = videoPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
 		string directory = "";
 		for(int i = 0; i<split.Length-1; ++i)
 			directory += split[i] + "/";
-		directory = "/" + directory;
 #endif
 
 		//Save settings to json file
