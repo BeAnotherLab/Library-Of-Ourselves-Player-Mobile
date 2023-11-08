@@ -21,11 +21,7 @@ public class Status : MonoBehaviour{
 	public int Temperature {
 		get {
 #if UNITY_ANDROID && !UNITY_EDITOR
-			float temp = VrPlayerBindings.Instance.GetTemperature();
-			if(temp == float.NegativeInfinity) {
-				return int.MaxValue;//Temperature is unavailable
-			}
-			return (int)temp;
+			return int.MaxValue;//Temperature is unavailable
 #else
 			return int.MaxValue;
 #endif

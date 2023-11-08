@@ -57,8 +57,8 @@ public class Filesystem {
 	
 	static string getSDCardPath(){
 #if UNITY_ANDROID && !UNITY_EDITOR
-		string path = VrPlayerBindings.Instance.GetSDCardPath();
-		if(path != null) return path;
+		//string path = VrPlayerBindings.Instance.GetSDCardPath();
+		//if(path != null) return path;
 		return Application.persistentDataPath;
 #else
 		return Application.persistentDataPath;

@@ -48,7 +48,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			string directory = "";
 			for(int i = 0; i < split.Length - 1; ++i)
 				directory += split[i] + "/";
-			directory = "/" + directory;
 			split = split[split.Length - 1].Split(new string[] { ".mp4" }, StringSplitOptions.RemoveEmptyEntries);
 			string filename = "";
 			foreach(string f in split) {
@@ -114,7 +113,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		string directory = "";
 		for(int i = 0; i<split.Length-1; ++i)
 			directory += split[i] + "/";
-		directory = "/" + directory;
+		//directory = "/" + directory;
 #endif
 
 		//Save settings to json file

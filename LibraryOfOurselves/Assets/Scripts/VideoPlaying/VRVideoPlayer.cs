@@ -116,9 +116,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		};
 		*/
 
-		if(VRDevice.MirageSolo) {
-			GameObject.Instantiate(gvrControllerInput);//Create the controller input manager for Daydream version
-		}
 		
 	}
 
