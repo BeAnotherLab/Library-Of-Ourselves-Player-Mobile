@@ -33,6 +33,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 		private readonly static FieldDescription _optionShowPosterFrames = new FieldDescription(".showPosterFrame", new GUIContent("Show Poster Frame", "Allows a paused loaded video to display the initial frame. This uses up decoder resources."));
 		private readonly static FieldDescription _optionPreferSoftwareDecoder = new FieldDescription(".preferSoftwareDecoder", GUIContent.none);
 		private readonly static FieldDescription _optionForceRtpTCP = new FieldDescription(".forceRtpTCP", GUIContent.none);
+		private readonly static FieldDescription _optionForceEnableMediaCodecAsyncQueueing = new FieldDescription(".forceEnableMediaCodecAsyncQueueing", GUIContent.none);
 		private readonly static FieldDescription _optionPreferredMaximumResolution = new FieldDescription("._preferredMaximumResolution", new GUIContent("Preferred Maximum Resolution", "The desired maximum resolution of the video."));
 #if UNITY_2017_2_OR_NEWER
 		private readonly static FieldDescription _optionCustomPreferredMaxResolution = new FieldDescription("._customPreferredMaximumResolution", new GUIContent(" "));
@@ -125,6 +126,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 
 				DisplayPlatformOption(optionsVarName, _optionPreferSoftwareDecoder);
 				DisplayPlatformOption(optionsVarName, _optionForceRtpTCP);
+				DisplayPlatformOption(optionsVarName, _optionForceEnableMediaCodecAsyncQueueing);
 
 				// Audio
 				{

@@ -723,6 +723,17 @@ namespace RenderHeads.Media.AVProVideo
 		{
 			return CurrentPlayer.TextureProducer.GetTextureAlphaPacking();
 		}
+
+		public float[] GetAffineTransform()
+		{
+			return CurrentPlayer.TextureProducer.GetAffineTransform();
+		}
+
+		public Matrix4x4 GetTextureMatrix()
+		{
+			return CurrentPlayer.TextureProducer.GetTextureMatrix();
+		}
+
 #endregion Implementing ITextureProducer
 
 		private static string GetTransitionName(Transition transition)

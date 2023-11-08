@@ -499,6 +499,16 @@ namespace RenderHeads.Media.AVProVideo
 		/// </summary>
 		Matrix4x4 GetYpCbCrTransform();
 
+		/// <summary>
+		/// The affine transform of the texture as an array of six floats: [a, b, c, d, tx, ty].
+		/// </summary>
+		float[] GetAffineTransform();
+
+		/// <summary>
+		/// The full 4x4 transform of the texture
+		/// </summary>
+		Matrix4x4 GetTextureMatrix();
+
 #if AVPRO_NEW_GAMMA
 		/// <summary>
 		/// Returns the gamma type of a sampled pixel

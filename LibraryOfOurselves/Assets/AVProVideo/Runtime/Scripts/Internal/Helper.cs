@@ -10,13 +10,13 @@ namespace RenderHeads.Media.AVProVideo
 {
 	public static class Helper
 	{
-		public const string AVProVideoVersion = "2.8.5";
+		public const string AVProVideoVersion = "2.9.0";
 		public sealed class ExpectedPluginVersion
 		{
 			public const string Windows      = "2.8.5";
 			public const string WinRT        = "2.8.5";
-			public const string Android      = "2.8.5";
-			public const string Apple        = "2.8.5";
+			public const string Android      = "2.9.0";
+			public const string Apple        = "2.9.0";
 		}
 
 		public const string UnityBaseTextureName = "_MainTex";
@@ -311,9 +311,9 @@ namespace RenderHeads.Media.AVProVideo
 			return result;
 		}
 
-		private static Matrix4x4 PortraitMatrix         = Matrix4x4.TRS(new Vector3(0f, 1f, 0f), Quaternion.Euler(0f, 0f, -90f), Vector3.one);
-		private static Matrix4x4 PortraitFlippedMatrix  = Matrix4x4.TRS(new Vector3(1f, 0f, 0f), Quaternion.Euler(0f, 0f, 90f), Vector3.one);
-		private static Matrix4x4 LandscapeFlippedMatrix = Matrix4x4.TRS(new Vector3(0f, 1f, 0f), Quaternion.Euler(0f, 0f, -90f), Vector3.one);
+		private static Matrix4x4 PortraitMatrix         = Matrix4x4.TRS(new Vector3(0f, 1f, 0f), Quaternion.Euler(0f, 0f,  -90f), Vector3.one);
+		private static Matrix4x4 PortraitFlippedMatrix  = Matrix4x4.TRS(new Vector3(1f, 0f, 0f), Quaternion.Euler(0f, 0f,   90f), Vector3.one);
+		private static Matrix4x4 LandscapeFlippedMatrix = Matrix4x4.TRS(new Vector3(1f, 1f, 0f), Quaternion.Euler(0f, 0f, -180f), Vector3.one);
 
 		public static Matrix4x4 GetMatrixForOrientation(Orientation ori)
 		{
@@ -343,6 +343,15 @@ namespace RenderHeads.Media.AVProVideo
 					throw new System.Exception("Unknown Orientation type");
 			}
 			return result;
+		}
+
+		public static Matrix4x4 Matrix4x4FromAffineTransform(float[] affineXfrm)
+		{
+			Vector4 v0 = new Vector4(affineXfrm[0], affineXfrm[1], 0, 0);
+			Vector4 v1 = new Vector4(affineXfrm[2], affineXfrm[3], 0, 0);
+			Vector4 v2 = new Vector4(            0,             0, 1, 0);
+			Vector4 v3 = new Vector4(affineXfrm[4], affineXfrm[5], 0, 1);
+			return new Matrix4x4(v0, v1, v2, v3);
 		}
 
 		public static int ConvertTimeSecondsToFrame(double seconds, float frameRate)

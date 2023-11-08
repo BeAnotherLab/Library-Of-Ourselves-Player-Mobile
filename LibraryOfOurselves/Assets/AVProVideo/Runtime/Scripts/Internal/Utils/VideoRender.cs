@@ -273,24 +273,25 @@ namespace RenderHeads.Media.AVProVideo
 
 		public static void SetupTextureMatrix(Material material, float[] transform)
 		{
-#if (!UNITY_EDITOR && UNITY_ANDROID)
-// STE: HasProperty doesn't work on Matrix'
-//			if (material != null && (material.HasProperty(VideoRender.PropTextureMatrix.Id)))
-			{
-				if (transform != null)
-				{
-					Matrix4x4 m = new Matrix4x4(new Vector4( transform[0], transform[1], transform[2], transform[3] ), 
-												new Vector4( transform[4], transform[5], transform[6], transform[7] ), 
-												new Vector4( transform[8], transform[9], transform[10], transform[11] ), 
-												new Vector4( transform[12], transform[13], transform[14], transform[15] ));
-					material.SetMatrix(VideoRender.PropTextureMatrix.Id, m);
-				}
-				else
-				{
-					material.SetMatrix(VideoRender.PropTextureMatrix.Id, Matrix4x4.identity);
-				}
-			}
-#endif
+			if (material == null)
+				return;
+
+			if (transform == null || transform.Length != 6)
+				transform = new float[6] { 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f };
+
+			Vector4 v0 = new Vector4(transform[0], transform[1], 0, 0);
+			Vector4 v1 = new Vector4(transform[2], transform[3], 0, 0);
+			Vector4 v2 = new Vector4(0, 0, 1, 0);
+			Vector4 v3 = new Vector4(transform[4], transform[5], 0, 1);
+
+			material.SetMatrix("_MainTex_Xfrm", new Matrix4x4(v0, v1, v2, v3));
+		}
+
+		public static void SetupTextureMatrix(Material material, Matrix4x4 transform)
+		{
+			if (material == null)
+				return;
+			material.SetMatrix("_MainTex_Xfrm", transform);
 		}
 
 #if UNITY_PLATFORM_SUPPORTS_YPCBCR
@@ -346,7 +347,13 @@ namespace RenderHeads.Media.AVProVideo
 			if (mediaPlayer != null)
 			{
 				Texture mainTexture = GetTexture(mediaPlayer, 0);
+				Matrix4x4 textureTransform = Matrix4x4.identity;
 				Texture yCbCrTexture = GetTexture(mediaPlayer, 1);
+				Matrix4x4 yCbCrTransform = Matrix4x4.identity;
+				StereoPacking stereoPacking = StereoPacking.None;
+				AlphaPacking alphaPacking = AlphaPacking.None;
+				bool flipY = false;
+				bool isLinear = false;
 
 				if (texturePropId != -1)
 				{
@@ -357,15 +364,22 @@ namespace RenderHeads.Media.AVProVideo
 					material.SetTexture(texturePropId, mainTexture);
 				}
 
-				SetupMaterial(material,
-							(mediaPlayer.TextureProducer != null)?mediaPlayer.TextureProducer.RequiresVerticalFlip():false,
-							(mediaPlayer.Info != null)?mediaPlayer.Info.PlayerSupportsLinearColorSpace():true,
-							(mediaPlayer.TextureProducer != null)?mediaPlayer.TextureProducer.GetYpCbCrTransform():Matrix4x4.identity,
-							yCbCrTexture,
-							(mediaPlayer.Info != null && mediaPlayer.PlatformOptionsAndroid.useFastOesPath)?mediaPlayer.Info.GetTextureTransform():null,
-							mediaPlayer.VideoLayoutMapping,
-							(mediaPlayer.TextureProducer != null)?mediaPlayer.TextureProducer.GetTextureStereoPacking():StereoPacking.None,
-							(mediaPlayer.TextureProducer != null)?mediaPlayer.TextureProducer.GetTextureAlphaPacking():AlphaPacking.None);
+				ITextureProducer textureProducer = mediaPlayer.TextureProducer;
+				if (textureProducer != null)
+				{
+					flipY = textureProducer.RequiresVerticalFlip();
+					yCbCrTransform = textureProducer.GetYpCbCrTransform();
+					stereoPacking = textureProducer.GetTextureStereoPacking();
+					alphaPacking = textureProducer.GetTextureAlphaPacking();
+					textureTransform = textureProducer.GetTextureMatrix();
+				}
+
+				if (mediaPlayer.Info != null)
+				{
+					isLinear = mediaPlayer.Info.PlayerSupportsLinearColorSpace();
+				}
+
+				SetupMaterial(material, flipY, isLinear, yCbCrTransform, yCbCrTexture, textureTransform, mediaPlayer.VideoLayoutMapping, stereoPacking, alphaPacking);
 			}
 			else
 			{
@@ -373,12 +387,20 @@ namespace RenderHeads.Media.AVProVideo
 				{
 					material.SetTexture(texturePropId, fallbackTexture);
 				}
-				SetupMaterial(material, false, true, Matrix4x4.identity, null);
+				SetupMaterial(material, false, true, Matrix4x4.identity, null, Matrix4x4.identity);
 			}
 		}
 
-		internal static void SetupMaterial(Material material, bool flipVertically, bool playerSupportsLinear, Matrix4x4 ycbcrTransform, Texture ycbcrTexture = null, float[] textureTransform = null,
-			VideoMapping mapping = VideoMapping.Normal, StereoPacking stereoPacking = StereoPacking.None, AlphaPacking alphaPacking = AlphaPacking.None)
+		internal static void SetupMaterial(
+			Material material,
+			bool flipVertically,
+			bool playerSupportsLinear,
+			Matrix4x4 ycbcrTransform,
+			Texture ycbcrTexture,
+			Matrix4x4 textureTransform,
+			VideoMapping mapping = VideoMapping.Normal,
+			StereoPacking stereoPacking = StereoPacking.None,
+			AlphaPacking alphaPacking = AlphaPacking.None)
 		{
 			SetupVerticalFlipMaterial(material, flipVertically);
 
@@ -401,25 +423,19 @@ namespace RenderHeads.Media.AVProVideo
 			}
 
 			// Apply gamma correction
-			#if UNITY_PLATFORM_SUPPORTS_LINEAR
+#if UNITY_PLATFORM_SUPPORTS_LINEAR
 			if (material.HasProperty(VideoRender.PropApplyGamma.Id))
 			{
 				VideoRender.SetupGammaMaterial(material, playerSupportsLinear);
 			}
-			#endif
+#endif
 
-			// Adjust for cropping (when the decoder decodes in blocks that overrun the video frame size, it pads), OES only as we apply this lower down for none-OES
-			#if (!UNITY_EDITOR && UNITY_ANDROID)
-// STE: HasProperty doesn't work on Matrix'
-//			if (material.HasProperty(VideoRender.PropTextureMatrix.Id))
-			{
-				VideoRender.SetupTextureMatrix(material, textureTransform);
-			}
-			#endif
+			// Adjust for cropping/orientation (when the decoder decodes in blocks that overrun the video frame size, it pads), OES only as we apply this lower down for none-OES
+			VideoRender.SetupTextureMatrix(material, textureTransform);
 
-			#if UNITY_PLATFORM_SUPPORTS_YPCBCR
+#if UNITY_PLATFORM_SUPPORTS_YPCBCR
 			VideoRender.SetupYpCbCrMaterial(material, ycbcrTexture != null, ycbcrTransform, ycbcrTexture);
-			#endif
+#endif
 		}
 
 		[System.Flags]
@@ -477,6 +493,7 @@ namespace RenderHeads.Media.AVProVideo
 				texture.GetTextureStereoPacking(),
 				eyeMode,
 				pixelAspectRatio,
+				texture.GetTextureMatrix(),
 				ref targetWidth,
 				ref targetHeight);
 
@@ -538,8 +555,13 @@ namespace RenderHeads.Media.AVProVideo
 			return targetTexture;
 		}
 
-		public static void GetResolveTextureSize(AlphaPacking alphaPacking, StereoPacking stereoPacking, StereoEye eyeMode, float pixelAspectRatio, ref int width, ref int height)
+		public static void GetResolveTextureSize(AlphaPacking alphaPacking, StereoPacking stereoPacking, StereoEye eyeMode, float pixelAspectRatio, Matrix4x4 textureXfrm, ref int width, ref int height)
 		{
+			Vector4 size = new Vector4(width, height, 0, 0);
+			size = textureXfrm * size;
+			width = (int)Mathf.Abs(size.x);
+			height = (int)Mathf.Abs(size.y);
+
 			switch (alphaPacking)
 			{
 				case AlphaPacking.LeftRight:
@@ -574,8 +596,6 @@ namespace RenderHeads.Media.AVProVideo
 					height = Mathf.RoundToInt(height / pixelAspectRatio);
 				}
 			}
-
-			// TODO: take into account rotation
 		}
 
 		public static bool RequiresResolve(ITextureProducer texture)
@@ -593,7 +613,8 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				int sourceWidth = texture.width;
 				int sourceHeight = texture.height;
-				GetResolveTextureSize(alphaPacking, StereoPacking.Unknown, StereoEye.Both, pixelAspectRatio, ref sourceWidth, ref sourceHeight);
+				Matrix4x4 textureXfrm = Matrix4x4.identity;
+				GetResolveTextureSize(alphaPacking, StereoPacking.Unknown, StereoEye.Both, pixelAspectRatio, textureXfrm, ref sourceWidth, ref sourceHeight);
 
 				float sourceRatio = (float)sourceWidth / (float)sourceHeight;
 				Rect sourceRect = new Rect(0f, 0f, 1f, 1f);

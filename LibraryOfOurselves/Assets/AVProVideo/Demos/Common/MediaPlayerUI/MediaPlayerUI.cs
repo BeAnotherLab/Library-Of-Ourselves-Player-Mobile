@@ -563,6 +563,7 @@ namespace RenderHeads.Media.AVProVideo.Demos
 		private void UpdateAudioSpectrum()
 		{
 			bool showAudioSpectrum = false;
+#if !UNITY_IOS || UNITY_EDITOR
 			if (_mediaPlayer && _mediaPlayer.Control != null)
 			{
 				AudioSource audioSource = _mediaPlayer.AudioSource;
@@ -611,7 +612,7 @@ namespace RenderHeads.Media.AVProVideo.Demos
 					_audioSpectrumMaterial.SetFloat(_propSpectrumRange.Id, (float)sampleRange);
 				}
 			}
-
+#endif
 			if (_imageAudioSpectrum)
 			{
 				_imageAudioSpectrum.gameObject.SetActive(showAudioSpectrum);

@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>AVPPluginShortVersionString</key>
-	<string>2.8.5</string>
+	<string>2.9.0</string>
 	<key>AVPPluginVersion</key>
-	<string>1892</string>
+	<string>1918</string>
 	<key>BuildMachineOSBuild</key>
-	<string>22G90</string>
+	<string>23B74</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -21,13 +21,13 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.8.5</string>
+	<string>2.9.0</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1892</string>
+	<string>1918</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>

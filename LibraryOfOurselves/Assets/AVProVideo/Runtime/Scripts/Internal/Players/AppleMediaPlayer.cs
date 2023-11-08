@@ -243,24 +243,39 @@ namespace RenderHeads.Media.AVProVideo
 						case Native.AVPPlayerTextureFormat.R8:
 							textureFormat = TextureFormat.R8;
 							break;
+
+						case Native.AVPPlayerTextureFormat.R16:
+							textureFormat = TextureFormat.R16;
+							break;
+
 						case Native.AVPPlayerTextureFormat.RG8:
 							textureFormat = TextureFormat.RG16;
 							break;
+
+						case Native.AVPPlayerTextureFormat.RG16:
+							textureFormat = TextureFormat.RG32;
+							break;
+
 						case Native.AVPPlayerTextureFormat.BC1:
 							textureFormat = TextureFormat.DXT1;
 							break;
+
 						case Native.AVPPlayerTextureFormat.BC3:
 							textureFormat = TextureFormat.DXT5;
 							break;
+
 						case Native.AVPPlayerTextureFormat.BC4:
 							textureFormat = TextureFormat.BC4;
 							break;
+
 						case Native.AVPPlayerTextureFormat.BC5:
 							textureFormat = TextureFormat.BC5;
 							break;
+
 						case Native.AVPPlayerTextureFormat.BC7:
 							textureFormat = TextureFormat.BC7;
 							break;
+
 						case Native.AVPPlayerTextureFormat.BGRA8:
 						default:
 							break;
@@ -800,16 +815,17 @@ namespace RenderHeads.Media.AVProVideo
 			return _state.status.IsStalled();
 		}
 
-		public override float[] GetTextureTransform()
+		public override float[] GetAffineTransform()
 		{
 			if (_state.selectedVideoTrack >= 0)
 			{
-				Native.AVPAffineTransform transform = _videoTrackInfo[_state.selectedVideoTrack].transform;
-				return new float[] { transform.a, transform.b, transform.c, transform.d, transform.tx, transform.ty };
+				Native.AVPPlayerVideoTrackInfo videoTrackInfo = _videoTrackInfo[_state.selectedVideoTrack];
+				Native.AVPAffineTransform transform = videoTrackInfo.transform;
+				return new float[] { transform.a, transform.b, transform.c, transform.d, transform.tx / 1080.0f, transform.ty };
 			}
 			else
 			{
-				return new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+				return new float[] { 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f };
 			}
 		}
 

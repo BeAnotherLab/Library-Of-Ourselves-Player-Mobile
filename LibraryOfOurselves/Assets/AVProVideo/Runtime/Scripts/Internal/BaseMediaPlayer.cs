@@ -142,11 +142,25 @@ namespace RenderHeads.Media.AVProVideo
 		/// <inheritdoc/>
 		public abstract bool		RequiresVerticalFlip();
 		/// <inheritdoc/>
-		public virtual float[]		GetTextureTransform() { return new float[] { 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f }; }
-		/// <inheritdoc/>
 		public virtual float		GetTexturePixelAspectRatio() { return 1f; }
 		/// <inheritdoc/>
 		public virtual Matrix4x4	GetYpCbCrTransform() { return Matrix4x4.identity; }
+		/// <inheritdoc/>
+		public virtual float[]		GetAffineTransform() { return new float[] { 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f }; }
+		/// <inheritdoc/>
+		public virtual float[]		GetTextureTransform() { return GetAffineTransform(); }
+		/// <inheritdoc/>
+		public virtual Matrix4x4	GetTextureMatrix()
+		{
+			float[] transform = GetAffineTransform();
+			if (transform == null || transform.Length != 6)
+				return Matrix4x4.identity;
+			Vector4 v0 = new Vector4(transform[0], transform[1], 0, 0);
+			Vector4 v1 = new Vector4(transform[2], transform[3], 0, 0);
+			Vector4 v2 = new Vector4(           0,            0, 1, 0);
+			Vector4 v3 = new Vector4(transform[4], transform[5], 0, 1);
+			return new Matrix4x4(v0, v1, v2, v3);
+		}
 
 		public StereoPacking GetTextureStereoPacking()
 		{
