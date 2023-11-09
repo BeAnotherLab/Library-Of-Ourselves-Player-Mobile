@@ -9,12 +9,17 @@ using RenderHeads.Media.AVProVideo;
 using UnityEngine.Video;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using UnityEngine.Serialization;
 
 public class VRVideoPlayer : MonoBehaviour{
 
 	[SerializeField] float timeBetweenSyncs = 0.75f;
-	[SerializeField] GameObject semispherePlayer;
-	[SerializeField] GameObject spherePlayer;
+	[SerializeField] private GameObject _semispherePlayer;
+	[SerializeField] private RenderTexture _semiSphereRenderTexture;
+	[SerializeField] private GameObject _spherePlayer;
+	[SerializeField] private RenderTexture _sphereRenderTexture;
+	[SerializeField] private Material _renderMaterial;
+	
 	[SerializeField] AudioSource leftAudio;
 	[SerializeField] AudioSource rightAudio;
 	[SerializeField] UnityEvent onVideoEnds;
@@ -288,8 +293,18 @@ public class VRVideoPlayer : MonoBehaviour{
 		//Show first frame as soon as it's loaded in and rendered, making sure the video is 100% paused when we do so.
 		float previousVolume = Volume;
 		blackScreen.SetActive(false);
-		if (is360) spherePlayer.SetActive(true);
-		else semispherePlayer.SetActive(true);
+		if (is360)
+		{
+			GetComponent<ResolveToRenderTexture>().ExternalTexture = _sphereRenderTexture;
+			_renderMaterial.mainTexture = _sphereRenderTexture;
+			_spherePlayer.SetActive(true);
+		}
+		else
+		{
+			GetComponent<ResolveToRenderTexture>().ExternalTexture = _semiSphereRenderTexture;
+			_renderMaterial.mainTexture = _semiSphereRenderTexture;
+			_semispherePlayer.SetActive(true);
+		}
 
 		return response;
 	}
@@ -359,8 +374,8 @@ public class VRVideoPlayer : MonoBehaviour{
 		VideoTime = 0;
 		play();
 		
-		if(is360) spherePlayer.SetActive(true);
-		else semispherePlayer.SetActive(true);
+		if(is360) _spherePlayer.SetActive(true);
+		else _semispherePlayer.SetActive(true);
 
 		onPlay.Invoke();
 
@@ -447,8 +462,8 @@ public class VRVideoPlayer : MonoBehaviour{
 
 	void endOfVideo() {
 		stop();
-		semispherePlayer.SetActive(false);
-		spherePlayer.SetActive(false);
+		_semispherePlayer.SetActive(false);
+		_spherePlayer.SetActive(false);
 		if(VRAdapter.Instance != null)
 			VRAdapter.Instance.SendIsEmpty();
 		onVideoEnds.Invoke();
