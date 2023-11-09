@@ -50,7 +50,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 0
+  m_ActiveColorSpace: 1
   m_SpriteBatchVertexThreshold: 300
   m_MTRendering: 1
   mipStripping: 0
@@ -139,6 +139,8 @@ PlayerSettings:
   bundleVersion: 0.1
   preloadedAssets:
   - {fileID: 11400000, guid: 69f5af269a03b2549b14729e78a671e0, type: 2}
+  - {fileID: 2242277684806792511, guid: 04591f31b7f90c249b8852092eabe76d, type: 2}
+  - {fileID: 11400000, guid: 7136d586b7f28004eaf8a74f7937ef69, type: 2}
   - {fileID: 7984119296232465727, guid: 93bbdb993c0570d4ea212bd5da4f2d5a, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -168,8 +170,8 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 22
-  AndroidTargetSdkVersion: 0
+  AndroidMinSdkVersion: 23
+  AndroidTargetSdkVersion: 33
   AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
@@ -459,7 +461,7 @@ PlayerSettings:
     m_GraphicsJobMode: 0
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
-    m_APIs: 0b00000008000000
+    m_APIs: 0b000000
     m_Automatic: 0
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
@@ -483,7 +485,7 @@ PlayerSettings:
     - Oculus
     - OpenVR
   - m_BuildTarget: Android
-    m_Enabled: 0
+    m_Enabled: 1
     m_Devices:
     - Oculus
   m_DefaultShaderChunkSizeInMB: 16
