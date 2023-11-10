@@ -8,7 +8,6 @@ public class ConnectionDisplay : MonoBehaviour{
 	[SerializeField] Text modelNameDisplay;
 	[SerializeField] Text batteryDisplay;
 	[SerializeField] Text fpsDisplay;
-	[SerializeField] Text temperatureDisplay;
 	[SerializeField] Image uniqueIdColourDisplay;
 	[SerializeField] Image statusDisplay;
 	[SerializeField] Color pairedColour;
@@ -50,17 +49,6 @@ public class ConnectionDisplay : MonoBehaviour{
 	public float FPS {
 		set {
 			fpsDisplay.text = value + " FPS";
-		}
-	}
-
-	public int Temperature {
-		set {
-			if(value == int.MaxValue) {
-				//unavailable
-				temperatureDisplay.text = "";
-			} else {
-				temperatureDisplay.text = value + "°";
-			}
 		}
 	}
 

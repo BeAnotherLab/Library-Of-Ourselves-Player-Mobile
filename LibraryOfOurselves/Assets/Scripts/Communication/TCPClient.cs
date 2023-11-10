@@ -128,7 +128,7 @@ public class TCPClient : MonoBehaviour{
 			data.WriteString(SystemInfo.deviceUniqueIdentifier);
 			data.WriteString(LockedId);
 			//data.WriteString(XRDevice.model);
-			data.WriteString("XRDevice.model");
+			data.WriteString("Oculus Quest");
 
 			await connection.Send(data);
 			hosts.Add(connection);

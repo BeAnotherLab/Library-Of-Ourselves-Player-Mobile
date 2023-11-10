@@ -389,7 +389,6 @@ public class GuideAdapter : MonoBehaviour{
 			if(handle != null) {
 				handle.display.Battery = battery;
 				handle.display.FPS = fps;
-				handle.display.Temperature = temperature;
 			} else {
 				Haze.Logger.LogWarning("Received status from a non-existent connection, apparently...");
 			}
