@@ -64,7 +64,7 @@ public class VRAdapter : MonoBehaviour{
 
 	public void OnNewConnection(TCPConnection connection) {
 		SendPairConfirm();//give them our current pairing state
-		if(currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
+		if (currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
 			//we're locked to this one so let's immediately request connection
 			SendAutopair(connection);
 		}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12735014, g: 0.13418937, b: 0.121155, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -471,12 +471,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cfe5a8d9682d24aaebc62b36cbf053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deviceType: 1
-  onNewConnection:
+  _deviceType: 1
+  _onNewConnection:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
         m_MethodName: OnNewConnection
         m_Mode: 0
         m_Arguments:
@@ -487,11 +487,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onMessageReception:
+  _onMessageReception:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1655649857}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: MessageDispatcher, Assembly-CSharp
         m_MethodName: OnMessageReception
         m_Mode: 0
         m_Arguments:
@@ -502,11 +502,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onConnectionEnd:
+  _onConnectionEnd:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
         m_MethodName: OnConnectionEnd
         m_Mode: 0
         m_Arguments:
