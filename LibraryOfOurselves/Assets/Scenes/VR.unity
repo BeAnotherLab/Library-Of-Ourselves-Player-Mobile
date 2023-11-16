@@ -452,6 +452,7 @@ GameObject:
   - component: {fileID: 1655649856}
   - component: {fileID: 1655649855}
   - component: {fileID: 1655649857}
+  - component: {fileID: 1655649858}
   m_Layer: 0
   m_Name: Client
   m_TagString: Untagged
@@ -472,6 +473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deviceType: 1
+  allowUdp: 1
   _onNewConnection:
     m_PersistentCalls:
       m_Calls:
@@ -517,7 +519,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  allowUdp: 1
 --- !u!4 &1655649856
 Transform:
   m_ObjectHideFlags: 0
@@ -545,36 +546,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4a017b8753f11488667fe934c4f1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guideLock:
+  ignoreIncorrectChannels: 1
+  _guideLock:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveGuideLock
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  guideUnlock:
+      m_Calls: []
+  _guideUnlock:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveGuideUnlock
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   autopair:
     m_PersistentCalls:
       m_Calls: []
@@ -845,7 +823,274 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1655649858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655649854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025bd3dbcb5b747ab92a44910cf3ca44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   ignoreIncorrectChannels: 1
+  _guideLock:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveGuideLock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _guideUnlock:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveGuideUnlock
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  guidePair:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveGuidePair
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  guideUnpair:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveGuideUnpair
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  logsQuery:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveLogsQuery
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hasVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveHasVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  loadVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveLoadVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  playVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceivePlayVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  pauseVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceivePauseVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  stopVideo:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveStopVideo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  calibrate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveCalibrate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  startChoice:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveStartChoice
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  editChoice:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveEditChoice
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  saveChoice:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveSaveChoice
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  reorient:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveReorient
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  autocalibration:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: OnReceiveAutocalibration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  gotoTime:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 732249988}
+        m_TargetAssemblyTypeName: VRAdapter, Assembly-CSharp
+        m_MethodName: ReceiveGotoTime
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &485814582473567967 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3775008245584220385, guid: 6b36a2762800f8f4ab72b3ba99d66547,
