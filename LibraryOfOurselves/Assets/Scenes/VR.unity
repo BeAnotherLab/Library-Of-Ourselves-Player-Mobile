@@ -493,7 +493,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1655649857}
-        m_TargetAssemblyTypeName: MessageDispatcher, Assembly-CSharp
+        m_TargetAssemblyTypeName: SyncMessageDispatcher, Assembly-CSharp
+        m_MethodName: OnMessageReception
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1655649858}
+        m_TargetAssemblyTypeName: VRMessageDispatcher, Assembly-CSharp
         m_MethodName: OnMessageReception
         m_Mode: 0
         m_Arguments:
@@ -546,274 +558,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4a017b8753f11488667fe934c4f1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreIncorrectChannels: 1
-  _guideLock:
-    m_PersistentCalls:
-      m_Calls: []
-  _guideUnlock:
-    m_PersistentCalls:
-      m_Calls: []
-  autopair:
-    m_PersistentCalls:
-      m_Calls: []
-  guidePair:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveGuidePair
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  guideUnpair:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveGuideUnpair
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  pairConfirm:
-    m_PersistentCalls:
-      m_Calls: []
-  logsQuery:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveLogsQuery
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  logs:
-    m_PersistentCalls:
-      m_Calls: []
-  hasVideo:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveHasVideo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  hasVideoResponse:
-    m_PersistentCalls:
-      m_Calls: []
-  isEmpty:
-    m_PersistentCalls:
-      m_Calls: []
-  loadVideo:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveLoadVideo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  loadVideoResponse:
-    m_PersistentCalls:
-      m_Calls: []
-  playVideo:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceivePlayVideo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  pauseVideo:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceivePauseVideo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  stopVideo:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveStopVideo
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   sync:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 732249988}
         m_TargetAssemblyTypeName: 
         m_MethodName: OnReceiveSync
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  calibrate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveCalibrate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  startChoice:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveStartChoice
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  editChoice:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveEditChoice
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  saveChoice:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveSaveChoice
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  selectOption:
-    m_PersistentCalls:
-      m_Calls: []
-  choicePositionMessage:
-    m_PersistentCalls:
-      m_Calls: []
-  reorient:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveReorient
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  status:
-    m_PersistentCalls:
-      m_Calls: []
-  autocalibration:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnReceiveAutocalibration
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  autocalibrationResult:
-    m_PersistentCalls:
-      m_Calls: []
-  gotoTime:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 732249988}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ReceiveGotoTime
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
