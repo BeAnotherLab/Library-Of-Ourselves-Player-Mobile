@@ -6,28 +6,29 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using UnityEngine.Serialization;
 
 public class TCPHost : MonoBehaviour{
 
-	[SerializeField] UDPBroadcaster broadcaster;
-	[SerializeField] TCPConnection.DeviceType deviceType = TCPConnection.DeviceType.GUIDE;
-	[SerializeField] NewConnectionEvent onNewConnection;
-	[SerializeField] MessageReceivedEvent onMessageReception;
-	[SerializeField] ConnectionEndEvent onConnectionEnd;
-	[SerializeField] float unresponsiveThreshold = 2;//After this amount of time, device will be shown as unresponsive
-	[SerializeField] ResponsivenessEvent onResponsivenessChanged;
-
 	public static TCPHost Instance { get; private set; }
 
-	TcpListener listener = null;
-	bool stop = false;
+	[SerializeField] private float _unresponsiveThreshold;//After this amount of time, device will be shown as unresponsive
+
+	[SerializeField] private UDPBroadcaster _broadcaster;
+	[SerializeField] private NewConnectionEvent _onNewConnection; 
+	[SerializeField] private MessageReceivedEvent _onMessageReception;
+	[SerializeField] private ConnectionEndEvent _onConnectionEnd;
+	[SerializeField] ResponsivenessEvent _onResponsivenessChanged;
+
+	private TcpListener _listener;
+	private bool _stop;
 	List<TCPConnection> users = new List<TCPConnection>();
 
 	public int NumberOfPairedDevices {
 		get {
 			int i = 0;
-			foreach(TCPConnection conn in users) {
-				if(conn.active && conn.paired)
+			foreach (TCPConnection conn in users) {
+				if (conn.active && conn.paired)
 					++i;
 			}
 			return i;
@@ -36,49 +37,48 @@ public class TCPHost : MonoBehaviour{
 
     async void Start() {
 		Instance = this;
-		if(broadcaster) {
+		if (_broadcaster) {
 
 			string hostName = Dns.GetHostName();
 			IPHostEntry hostEntry = await Dns.GetHostEntryAsync(hostName);
 			int ipIndex = -1;
-			for(int i = 0; i<hostEntry.AddressList.Length; ++i) {
+			for (int i = 0; i < hostEntry.AddressList.Length; ++i) {
 				IPAddress thisOne = hostEntry.AddressList[i];
-				if(thisOne.AddressFamily != AddressFamily.InterNetwork && thisOne.IsIPv4MappedToIPv6) {
+				if (thisOne.AddressFamily != AddressFamily.InterNetwork && thisOne.IsIPv4MappedToIPv6) {
 					thisOne = thisOne.MapToIPv4();
 				}
 				Haze.Logger.Log("Address " + i + " = " + thisOne);
-				if(thisOne.GetAddressBytes()[0] == (byte)192 && thisOne.GetAddressBytes()[1] == (byte)168) {
+				if (thisOne.GetAddressBytes()[0] == (byte)192 && thisOne.GetAddressBytes()[1] == (byte)168) {
 					ipIndex = i;
 					break;
 				}
 			}
 			IPAddress ip;
-			if(ipIndex > -1)
+			if (ipIndex > -1)
 				ip = hostEntry.AddressList[ipIndex];
 			else
 				ip = IPAddress.Any;
 			
-			if(ip.AddressFamily != AddressFamily.InterNetwork) {
+			if (ip.AddressFamily != AddressFamily.InterNetwork) {
 				ip = ip.MapToIPv4();
 			}
 			
 			Haze.Logger.Log("Ip: " + ip);
 
-			listener = new TcpListener(ip, 0);
-			listener.Start();
-			IPEndPoint listenerLocalEndpoint = (IPEndPoint)listener.LocalEndpoint;
+			_listener = new TcpListener(ip, 0);
+			_listener.Start();
+			IPEndPoint listenerLocalEndpoint = (IPEndPoint)_listener.LocalEndpoint;
 
-			broadcaster.StartBroadcasting(listenerLocalEndpoint.Address.ToString(), listenerLocalEndpoint.Port);
-			Haze.Logger.Log("Broadcasting ip " + ip.ToString() + " and port " + listenerLocalEndpoint.Port);
+			_broadcaster.StartBroadcasting(listenerLocalEndpoint.Address.ToString(), listenerLocalEndpoint.Port);
+			Haze.Logger.Log("Broadcasting ip " + ip + " and port " + listenerLocalEndpoint.Port);
 
-			while(!stop) {
+			while (!_stop) {
 				try {
-
 					Haze.Logger.Log("Awaiting a connection request...");
-					TcpClient client = await listener.AcceptTcpClientAsync();
+					TcpClient client = await _listener.AcceptTcpClientAsync();
 					client.NoDelay = true;
-					IPEndPoint localEndpoint = (IPEndPoint)client.Client.LocalEndPoint;
-					IPEndPoint remoteEndpoint = (IPEndPoint)client.Client.RemoteEndPoint;
+					IPEndPoint localEndpoint = (IPEndPoint) client.Client.LocalEndPoint;
+					IPEndPoint remoteEndpoint = (IPEndPoint) client.Client.RemoteEndPoint;
 					Haze.Logger.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
 					TCPConnection connection = new TCPConnection();
 					connection.client = client;
@@ -86,7 +86,8 @@ public class TCPHost : MonoBehaviour{
 					//wait for identification message:
 					List<byte> data = await connection.Receive();
 					string channel = data.ReadString();
-					if(channel != "identification") {
+					
+					if (channel != "identification") {
 						Haze.Logger.LogWarning("Device at " + remoteEndpoint.Address + " has responded with an illegal channel: " + channel);
 					} else {
 						connection.deviceType = (TCPConnection.DeviceType)data.ReadByte();
@@ -96,24 +97,23 @@ public class TCPHost : MonoBehaviour{
 
 						users.Add(connection);
 
-						onNewConnection.Invoke(connection);
+						_onNewConnection.Invoke(connection);
 
 						Communicate(connection);
 					}
 
-				}catch(SocketException se) {
-					Haze.Logger.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se.ToString());
+				} catch (SocketException se) {
+					Haze.Logger.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se);
 					Haze.Logger.LogWarning("Attempting to restart TCPHost::Start()");
-					listener.Stop();
-					listener = null;
-					Start();//retry
+					_listener.Stop();
+					_listener = null;
+					Start(); //retry
 					return;
-				}catch(Exception e) {
-					if(listener != null)
-						Haze.Logger.LogWarning("Error, could not accept connection: " + e.ToString());
+				} catch (Exception e) {
+					if (_listener != null)
+						Haze.Logger.LogWarning("Error, could not accept connection: " + e);
 					//else just means that we're exiting Unity.
 				}
-				
 			}
 		} else {
 			Haze.Logger.LogError("No broadcaster...");
@@ -121,14 +121,14 @@ public class TCPHost : MonoBehaviour{
     }
 
 	private void Update() {
-		foreach(TCPConnection conn in users) {
-			if(conn.active) {
-				if(conn.responsive && conn.TimeSinceLastConnection > unresponsiveThreshold) {
+		foreach (TCPConnection conn in users) { //check responsiveness of connection
+			if (conn.active) {
+				if (conn.responsive && conn.TimeSinceLastConnection > _unresponsiveThreshold) {
 					conn.responsive = false;
-					onResponsivenessChanged.Invoke(conn, false);
-				} else if(!conn.responsive && conn.TimeSinceLastConnection < unresponsiveThreshold) {
+					_onResponsivenessChanged.Invoke(conn, false);
+				} else if (!conn.responsive && conn.TimeSinceLastConnection < _unresponsiveThreshold) {
 					conn.responsive = true;
-					onResponsivenessChanged.Invoke(conn, true);
+					_onResponsivenessChanged.Invoke(conn, true);
 				}
 			}
 		}
@@ -157,7 +157,7 @@ public class TCPHost : MonoBehaviour{
 
 			users.Add(connection);
 
-			onNewConnection.Invoke(connection);
+			_onNewConnection.Invoke(connection);
 
 			Communicate(connection);
 		}
@@ -172,7 +172,7 @@ public class TCPHost : MonoBehaviour{
 					connection.active = false;
 				} else {
 					//received a message from the host!
-					onMessageReception.Invoke(connection, channel, data);
+					_onMessageReception.Invoke(connection, channel, data);
 				}
 			} else {
 				Haze.Logger.LogWarning("Received data with length == 0 from connection " + connection);
@@ -191,7 +191,7 @@ public class TCPHost : MonoBehaviour{
 			}
 		}
 
-		onConnectionEnd.Invoke(connection);
+		_onConnectionEnd.Invoke(connection);
 		users.Remove(connection);
 		if(!connection.UDP) {
 			connection.client.Close();
@@ -213,15 +213,15 @@ public class TCPHost : MonoBehaviour{
 		foreach(TCPConnection conn in users) {
 			if(conn.active) {
 				List<byte> data = new List<byte>();
-				data.WriteString("disconnection");
+				data.WriteString("disconnection"); //TODO is this used?
 				conn.Send(data);
 			}
 		}
 
-		stop = true;
-		if(listener != null) {
-			listener.Stop();
-			listener = null;
+		_stop = true;
+		if(_listener != null) {
+			_listener.Stop();
+			_listener = null;
 		}
 	}
 }

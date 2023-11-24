@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12735014, g: 0.13418937, b: 0.121155, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13395,7 +13395,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 807175057}
   m_HandleRect: {fileID: 807175056}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -14558,13 +14558,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eac47559addc0949808bbeb026731e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  broadcaster: {fileID: 1334058103}
-  deviceType: 0
-  onNewConnection:
+  _unresponsiveThreshold: 6
+  _broadcaster: {fileID: 1334058103}
+  _onNewConnection:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1243236689}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GuideAdapter, Assembly-CSharp
         m_MethodName: OnNewConnection
         m_Mode: 0
         m_Arguments:
@@ -14575,11 +14575,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onMessageReception:
+  _onMessageReception:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1210354435}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SyncMessageDispatcher, Assembly-CSharp
         m_MethodName: OnMessageReception
         m_Mode: 0
         m_Arguments:
@@ -14602,11 +14602,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onConnectionEnd:
+  _onConnectionEnd:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1243236689}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GuideAdapter, Assembly-CSharp
         m_MethodName: OnConnectionEnd
         m_Mode: 0
         m_Arguments:
@@ -14617,12 +14617,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  unresponsiveThreshold: 6
-  onResponsivenessChanged:
+  _onResponsivenessChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1243236689}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: GuideAdapter, Assembly-CSharp
         m_MethodName: OnConnectionResponsivenessChanged
         m_Mode: 0
         m_Arguments:
@@ -14687,7 +14686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0e78ceb32ba474daf48062afb77bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreIncorrectChannels: 1
+  ignoreIncorrectChannels: 0
   autopair:
     m_PersistentCalls:
       m_Calls:
@@ -14984,7 +14983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 266.39996, y: -83.918755}
+  m_AnchoredPosition: {x: 266.39996, y: -83.91875}
   m_SizeDelta: {x: 522.7999, y: 18.2625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240805549
