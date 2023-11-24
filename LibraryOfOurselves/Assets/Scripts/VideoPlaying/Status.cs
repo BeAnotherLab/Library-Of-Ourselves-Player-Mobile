@@ -8,7 +8,7 @@ public class Status : MonoBehaviour{
 
 	public int Battery {
 		get {
-			return (int)(SystemInfo.batteryLevel * 100);
+			return (int) (SystemInfo.batteryLevel * 100);
 		}
 	}
 
@@ -31,7 +31,6 @@ public class Status : MonoBehaviour{
 #endif
 		}
 	}
-
 
 	private void Start() {
 		Instance = this;

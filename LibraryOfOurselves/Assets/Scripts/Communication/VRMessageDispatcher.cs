@@ -57,31 +57,21 @@ public class VRMessageDispatcher : MonoBehaviour
 		}
 		else if (channel == "stop-video") stopVideo.Invoke(connection);
 		else if (channel == "calibrate") calibrate.Invoke(connection);
-		else if (channel == "start-choice")
-		{
-			string question = data.ReadString();
-			string optionsDescriptions = data.ReadString();
-			string optionsPositions = data.ReadString();
-			startChoice.Invoke(connection, question, optionsDescriptions, optionsPositions);
-		}
-		else if (channel == "edit-choice")
-		{
-			string videoName = data.ReadString();
-			string description = data.ReadString();
-			string eulerAngles = data.ReadString();
-			editChoice.Invoke(connection, videoName, description, eulerAngles);
-		}
-		else if (channel == "save-choice")
-		{
-			string videoName = data.ReadString();
-			string description = data.ReadString();
-			string eulerAngles = data.ReadString();
-			saveChoice.Invoke(connection, videoName, description,eulerAngles);
-		}
+		else if (channel == "start-choice") ParseChoiceMessage(connection, editChoice, data);
+		else if (channel == "edit-choice") ParseChoiceMessage(connection, editChoice, data);
+		else if (channel == "save-choice") ParseChoiceMessage(connection, saveChoice, data);
 		else if (channel == "reorient") reorient.Invoke(connection, data.ReadVector3());
 		else if (channel == "autocalibration") autocalibration.Invoke(connection, data.ReadByte());
 		else if (channel == "goto") gotoTime.Invoke(connection, data.ReadDouble());
 		else if (!ignoreIncorrectChannels) Haze.Logger.LogWarning("Received message on illegal channel: " + channel);
 	}
 
+	private void ParseChoiceMessage(TCPConnection connection, UnityEvent<TCPConnection, string, string, string> myEvent, List<byte> data)
+	{
+		string videoName = data.ReadString();
+		string description = data.ReadString();
+		string eulerAngles = data.ReadString();
+	    myEvent.Invoke(connection, videoName, description, eulerAngles);
+	}
+	
 }
