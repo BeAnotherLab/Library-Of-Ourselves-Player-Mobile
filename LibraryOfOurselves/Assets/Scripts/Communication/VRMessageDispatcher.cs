@@ -63,6 +63,7 @@ public class VRMessageDispatcher : MonoBehaviour
 		else if (channel == "reorient") reorient.Invoke(connection, data.ReadVector3());
 		else if (channel == "autocalibration") autocalibration.Invoke(connection, data.ReadByte());
 		else if (channel == "goto") gotoTime.Invoke(connection, data.ReadDouble());
+		else if (channel == "disconnection") Haze.Logger.Log("Guide disconnected");
 		else if (!ignoreIncorrectChannels) Haze.Logger.LogWarning("Received message on illegal channel: " + channel);
 	}
 

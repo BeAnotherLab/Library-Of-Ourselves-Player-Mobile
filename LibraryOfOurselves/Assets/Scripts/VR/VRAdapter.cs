@@ -145,13 +145,13 @@ public class VRAdapter : MonoBehaviour{
 		List<byte> data = new List<byte>();
 		data.WriteString("pair-confirm");
 		data.WriteString(currentlyPaired != null ? currentlyPaired.uniqueId : "0");
-		if(TCPClient.Instance)
+		if (TCPClient.Instance)
 			data.WriteString(TCPClient.Instance.LockedId);
 		else
 			data.WriteString("free");
-		if(TCPClient.Instance)
+		if (TCPClient.Instance)
 			TCPClient.Instance.BroadcastToAllGuides(data);
-		if(currentlyPaired != null) SendIsEmpty();
+		if (currentlyPaired != null) SendIsEmpty();
 	}
 
 	public void OnReceiveLogsQuery(TCPConnection connection) {
