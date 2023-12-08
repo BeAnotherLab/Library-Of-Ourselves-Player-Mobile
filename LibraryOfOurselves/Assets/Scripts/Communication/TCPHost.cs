@@ -6,6 +6,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Unity.XR.CoreUtils;
 using UnityEngine.Serialization;
 
 public class TCPHost : MonoBehaviour{
@@ -21,7 +22,7 @@ public class TCPHost : MonoBehaviour{
 	[SerializeField] ResponsivenessEvent _onResponsivenessChanged;
 
 	private TcpListener _listener;
-	List<TCPConnection> users = new List<TCPConnection>();
+	[SerializeField] private  List<TCPConnection> users = new List<TCPConnection>();
 
 	public int NumberOfPairedDevices {
 		get {
@@ -79,7 +80,7 @@ public class TCPHost : MonoBehaviour{
 					IPEndPoint localEndpoint = (IPEndPoint) client.Client.LocalEndPoint;
 					IPEndPoint remoteEndpoint = (IPEndPoint) client.Client.RemoteEndPoint;
 					Haze.Logger.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
-					TCPConnection connection = new TCPConnection();
+					TCPConnection connection = ScriptableObject.CreateInstance<TCPConnection>();
 					connection.client = client;
 
 					//wait for identification message:
@@ -134,7 +135,7 @@ public class TCPHost : MonoBehaviour{
 	}
 
 	public void ReceiveUDPPacket(IPEndPoint remote, List<byte> data) {
-		foreach(TCPConnection conn in users) {//is this addressed to one of our local connections?
+		foreach(TCPConnection conn in users) {//is this addressed to one of our local UDP connections?
 			if(conn.UDP) {
 				conn.ReceiveUDPPacket(data);
 				return;
@@ -146,7 +147,7 @@ public class TCPHost : MonoBehaviour{
 		if(channel == "identification") {
 			Haze.Logger.Log("Accepted [UDP] connection from " + remote.Address + " (port " + remote.Port + ")");
 
-			TCPConnection connection = new TCPConnection();
+			TCPConnection connection = ScriptableObject.CreateInstance<TCPConnection>();
 			connection.udpEndpoint = remote;//set it up as UDP
 
 			connection.deviceType = (TCPConnection.DeviceType)data.ReadByte();

@@ -13,7 +13,8 @@ using UnityEngine.Events;
 [Serializable] public class ConnectionEndEvent : UnityEvent<TCPConnection> { }
 [Serializable] public class ResponsivenessEvent : UnityEvent<TCPConnection, bool> { }
 
-public class TCPConnection {
+[CreateAssetMenu]
+public class TCPConnection : ScriptableObject{
 
 	public string uniqueId;//the unique id of the device on the other end
 	public string xrDeviceModel = "unknown";//the XR device model name
@@ -145,7 +146,7 @@ public class TCPConnection {
 		return "[" + deviceType + ": " + xrDeviceModel + "-" + uniqueId + "]";
 	}
 
-	~TCPConnection() {
+	private void OnDestroy (){
 		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
 		if(UDPListener.Instance)
 			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);

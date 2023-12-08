@@ -78,7 +78,7 @@ public class TCPClient : MonoBehaviour {
 	
 	public async Task ConnectToHost(IPEndPoint endpoint, string uniqueId, IPEndPoint udpEndpoint) 
 	{
-		TCPConnection connection = new TCPConnection();
+		TCPConnection connection = ScriptableObject.CreateInstance<TCPConnection>();
 		connection.uniqueId = uniqueId;
 		connection.deviceType = TCPConnection.DeviceType.GUIDE;
 		connection.client = new TcpClient();
