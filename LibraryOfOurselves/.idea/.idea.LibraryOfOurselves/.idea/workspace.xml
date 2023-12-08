@@ -4,7 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55448ade-21ae-4e40-b0bc-30e7e30e8b1c" name="Default Changelist" comment="" />
+    <list default="true" id="55448ade-21ae-4e40-b0bc-30e7e30e8b1c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LibraryOfOurselves/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LibraryOfOurselves/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_close_01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_close_01a.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_open_01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/AudioManager/Audio/TestSounds/metal_sliding_door_open_01a.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/LipSync/Audio/vox_lp_01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Audio/ButtonDown.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Core/HandsInteraction/Audio/ButtonUp.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Moo_Cow.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/TrainWhistleAv01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Crossing.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_1_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_2_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_3_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_4_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Speed_5_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Start_From_Stop_v01.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_SteamBlast_A.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_2.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_3.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_4.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Train_Stop_From_Speed_5.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Rotate_Fast_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Rotate_Slow_Loop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Start.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Audio/Windmill_Stop.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/360 Workstation Ambisonic Panning AmbiX.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/hammer.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/noise.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/sine.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/speech.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/Spatializer/scenes/sounds/water.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Oculus/VR/AudioClips/sfx_belt_in.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Communication/GuideMessageDispatcher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Communication/GuideMessageDispatcher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Communication/TCPConnection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Communication/TCPConnection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Communication/TCPHost.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Communication/TCPHost.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Guide/GuideAdapter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Guide/GuideAdapter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/AlphaLeftRight.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/AlphaTopBottom.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/BigBuckBunny_360p30.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/BigBuckBunny_360p30.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/BigBuckBunny_720p30.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/Sample180.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/SampleCube.mp4.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/AVProVideoSamples/SampleSphere.mp4.meta" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +61,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/873cb98bd7b6d9e3d289b4092a3736f854992bfff4d3bc2cfe6504213203974/System.Net.Sockets.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.sprite@1.0.0/Editor/SpriteEditorModule/SpritePhysicsShapeModule.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -28,23 +76,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "SolutionBuilderGeneralOptionsPage",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;SolutionBuilderGeneralOptionsPage&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\VRLab\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\VRLab\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\VRLab\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\VRLab\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\VRLab\\AppData\\Roaming\\JetBrains\\Rider2023.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\VRLab\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.7f1\Editor\Unity.exe" />
@@ -72,10 +120,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="5636">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="10944">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="5636" />
+      <option name="pid" value="10944" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -98,6 +146,7 @@
       <workItem from="1698947742792" duration="661000" />
       <workItem from="1698948617160" duration="153000" />
       <workItem from="1698949227627" duration="1021000" />
+      <workItem from="1702050463256" duration="9510000" />
     </task>
     <servers />
   </component>
@@ -127,42 +176,42 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideosDisplayer.cs</url>
-          <line>127</line>
+          <line>126</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideosDisplayer.cs" initialLine="127" containingFunctionPresentation="method 'OnPairConnection'">
             <startOffsets>
-              <option value="4565" />
+              <option value="4535" />
             </startOffsets>
             <endOffsets>
-              <option value="4622" />
+              <option value="4592" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/GuideVideoPlayer.cs</url>
-          <line>127</line>
+          <line>126</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Scripts/Guide/Menu/GuideVideoPlayer.cs" initialLine="133" containingFunctionPresentation="method 'LoadVideo'">
             <startOffsets>
-              <option value="4189" />
+              <option value="4151" />
             </startOffsets>
             <endOffsets>
-              <option value="4229" />
+              <option value="4191" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/Menu/VideosDisplayer.cs</url>
-          <line>51</line>
-          <properties documentPath="C:\Users\VRLab\Documents\Library-Of-Ourselves-Player-Mobile\LibraryOfOurselves\Assets\Scripts\Guide\Menu\VideosDisplayer.cs" initialLine="51" containingFunctionPresentation="Method 'AddVideo'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Guide/GuideAdapter.cs</url>
+          <line>101</line>
+          <properties documentPath="C:\Users\VRLab\Documents\Library-Of-Ourselves-Player-Mobile\LibraryOfOurselves\Assets\Scripts\Guide\GuideAdapter.cs" initialLine="106" containingFunctionPresentation="Method 'OnReceivePairConfirm'">
             <startOffsets>
-              <option value="1798" />
+              <option value="3088" />
             </startOffsets>
             <endOffsets>
-              <option value="1900" />
+              <option value="3122" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

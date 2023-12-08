@@ -12,10 +12,6 @@ public class GuideAdapter : MonoBehaviour{
 
 	[SerializeField] UnityEvent onZeroConnections;
 	[SerializeField] UnityEvent onFirstConnection;
-	[SerializeField] ConnectionEvent onConnectionFound;
-	[SerializeField] ConnectionEvent onConnected;
-	public ConnectionEvent onConnectionEnd;//fired from TCPConnection::~TCPConnection()
-	[SerializeField] bool OnlyAcceptOneConnection = false;
 
 	public delegate void OnReceivedChoicePosition(Vector3 eulerAngles);
 	public static OnReceivedChoicePosition ReceivedChoicePosition;
@@ -44,7 +40,6 @@ public class GuideAdapter : MonoBehaviour{
 			if(ConnectionsDisplayer.Instance.Handles.Count == 1)
 				onFirstConnection.Invoke();
 		}
-		onConnectionFound.Invoke(connection);
 	}
 
 	public void OnConnectionEnd(TCPConnection connection) {
@@ -86,7 +81,6 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void SendGuidePair(TCPConnection connection) {
-		if(OnlyAcceptOneConnection && TCPHost.Instance.NumberOfPairedDevices > 0) return;
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-pair");
 		connection.Send(data);
@@ -99,15 +93,15 @@ public class GuideAdapter : MonoBehaviour{
 		connection.Send(data);
 	}
 
-	public void OnReceivePairConfirm(TCPConnection connection, string pairedId, string lockedId) {
+	public void OnReceivePairConfirm(TCPConnection connection, string pairedId, string lockedId) { //
 
 		ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
-		if(ConnectionsDisplayer.Instance) {
+		if (ConnectionsDisplayer.Instance) {
 			handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
 		}
 
 		bool paired = pairedId != "0";//string "0" means the device is unpaired now
-		if(pairedId == SystemInfo.deviceUniqueIdentifier) {
+		if (pairedId == SystemInfo.deviceUniqueIdentifier) { //check if this is a device we were paired to
 			Haze.Logger.Log("Paired to " + connection);
 			connection.paired = true;
 			if(handle != null) handle.display.Available = true;
@@ -116,25 +110,23 @@ public class GuideAdapter : MonoBehaviour{
 				VideosDisplayer.Instance.OnPairConnection(connection);
 			}
 		} else {
-			if(connection.paired) {
+			if (connection.paired) {
 				connection.paired = false;
 				Haze.Logger.Log("Unpaired from " + connection);
 			}
 			Haze.Logger.LogWarning("Setting available to " + !paired + " for connection " + connection);
-			if(handle != null) handle.display.Available = !paired;
+			if (handle != null) handle.display.Available = !paired;
 		}
 		
 		connection.lockedId = lockedId;
 
 		//Update all device displays
-		if(ConnectionsDisplayer.Instance) {
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
+		if (ConnectionsDisplayer.Instance) {
+			foreach (ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
 				h.display.UpdateDisplay();
 			}
 		}
 
-		onConnected.Invoke(connection);
-		
 	}
 
 	public void SendLogsQueryAll() {

@@ -29,7 +29,7 @@ public class GuideMessageDispatcher : MonoBehaviour
 			status.Invoke(connection, battery, fps, temp);
 		}
 		else if (channel == "autopair" ) autopair.Invoke(connection);
-		else if (channel == "pair-confirm")
+		else if (channel == "pair-confirm") //can either confirm pairing on unpairing
 		{
 			string pairedId = data.ReadString();
 			string lockedId = data.ReadString();

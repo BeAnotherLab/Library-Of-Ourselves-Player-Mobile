@@ -91,8 +91,8 @@ public class TCPConnection {
 
 	public async Task<List<byte>> Receive() {
 		try {
-			if(active) {
-				if(!UDP) {
+			if (active) {
+				if (!UDP) {
 					//Receive through TCP
 					byte[] lengthBuffer = new byte[2];
 					await Stream.ReadAsync(lengthBuffer, 0, 2);
@@ -114,7 +114,7 @@ public class TCPConnection {
 					return nextPacket;
 				}
 			}
-		}catch(Exception e) {
+		} catch(Exception e) {
 			Haze.Logger.Log("Could not receive bytes. Connection failed.");
 		}
 		//if we get here, it means we've not returned yet...
@@ -149,9 +149,5 @@ public class TCPConnection {
 		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
 		if(UDPListener.Instance)
 			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
-
-		if(GuideAdapter.Instance) {
-			GuideAdapter.Instance.onConnectionEnd.Invoke(this);
-		}
 	}
 }

@@ -163,14 +163,14 @@ public class TCPHost : MonoBehaviour{
 	}
 
 	private async void Communicate(TCPConnection connection) {
-		while(connection.active) {
+		while (connection.active) {
 			List<byte> data = await connection.Receive();
-			if(data.Count > 0) {
+			if (data.Count > 0) {
 				string channel = data.ReadString();
-				if(channel == "disconnection") {
+				if (channel == "disconnection") {
 					connection.active = false;
 				} else {
-					//received a message from the host!
+					//received a message from the client!
 					_onMessageReception.Invoke(connection, channel, data);
 				}
 			} else {
