@@ -13,6 +13,8 @@ public class TCPHost : MonoBehaviour{
 
 	public static TCPHost Instance { get; private set; }
 
+	[SerializeField] private List<TCPConnection> users;
+	
 	[SerializeField] private float _unresponsiveThreshold;//After this amount of time, device will be shown as unresponsive
 
 	[SerializeField] private UDPBroadcaster _broadcaster;
@@ -22,7 +24,6 @@ public class TCPHost : MonoBehaviour{
 	[SerializeField] ResponsivenessEvent _onResponsivenessChanged;
 
 	private TcpListener _listener;
-	[SerializeField] private  List<TCPConnection> users = new List<TCPConnection>();
 
 	public int NumberOfPairedDevices {
 		get {
@@ -77,6 +78,7 @@ public class TCPHost : MonoBehaviour{
 					Haze.Logger.Log("Awaiting a connection request...");
 					TcpClient client = await _listener.AcceptTcpClientAsync();
 					client.NoDelay = true;
+					//TODO use client.Connected to detect if connectionn was severed 
 					IPEndPoint localEndpoint = (IPEndPoint) client.Client.LocalEndPoint;
 					IPEndPoint remoteEndpoint = (IPEndPoint) client.Client.RemoteEndPoint;
 					Haze.Logger.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
