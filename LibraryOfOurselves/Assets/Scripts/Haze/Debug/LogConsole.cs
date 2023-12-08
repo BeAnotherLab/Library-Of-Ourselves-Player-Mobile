@@ -73,7 +73,7 @@ public class LogConsole : MonoBehaviour
 		}
 		//fullPath += path;
 
-		Debug.Log("Writing log file to: " + path);
+		//Debug.Log("Writing log file to: " + path);
 
 		string rf = t;
 		rf.Replace("\n", "\r\n");
@@ -83,7 +83,7 @@ public class LogConsole : MonoBehaviour
 
 		if(copyToClipboard) {
 			GUIUtility.systemCopyBuffer = rf;
-			Debug.Log("Copied console contents to clipboard!");
+			//Debug.Log("Copied console contents to clipboard!");
 		}
 
 		linesWrittenSinceEpoch = 0;

@@ -86,7 +86,7 @@ public class TCPClient : MonoBehaviour {
 		connection.sourceEndpoint = endpoint;
 		IPAddress ipv4 = endpoint.Address;
 		if(ipv4.AddressFamily != AddressFamily.InterNetwork) ipv4 = ipv4.MapToIPv4();
-		Haze.Logger.Log("IPv4: " + ipv4);
+		Haze.Logger.Log("connecting to host with IP: " + ipv4);
 
 		bool tcp = false;
 
