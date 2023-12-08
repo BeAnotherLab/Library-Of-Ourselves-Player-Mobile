@@ -20,9 +20,6 @@ public class GuideAdapter : MonoBehaviour{
 	public delegate void OnReceivedChoicePosition(Vector3 eulerAngles);
 	public static OnReceivedChoicePosition ReceivedChoicePosition;
 
-	
-	public static TCPConnection lastConnectedDevice = null;//For use within Old Guide
-
 	public static GuideAdapter Instance { get; private set; }
 
 	private void OnEnable()
@@ -136,7 +133,6 @@ public class GuideAdapter : MonoBehaviour{
 			}
 		}
 
-		lastConnectedDevice = connection;
 		onConnected.Invoke(connection);
 		
 	}
