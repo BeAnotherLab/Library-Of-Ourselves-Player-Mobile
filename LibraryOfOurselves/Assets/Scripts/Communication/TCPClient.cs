@@ -36,8 +36,7 @@ public class TCPClient : MonoBehaviour {
 	[SerializeField] private NewConnectionEvent _onNewConnection;
 	[SerializeField] private MessageReceivedEvent _onMessageReception;
 	[SerializeField] private ConnectionEndEvent _onConnectionEnd;
-
-	private readonly List<TCPConnection> _hosts = new List<TCPConnection>();
+	[SerializeField] private readonly List<TCPConnection> _hosts;
 
 	private void Start() {
 		Instance = this;
