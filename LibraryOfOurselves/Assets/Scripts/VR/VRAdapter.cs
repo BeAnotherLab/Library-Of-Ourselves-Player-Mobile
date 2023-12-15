@@ -80,6 +80,7 @@ public class VRAdapter : MonoBehaviour{
 			SendPairConfirm();//advertise as available to all guides
 		}
 		connection.active = false;
+		//TODO deletE? here it's not a problem because we are in the best case scenario of having received a disconnection message 
 	}
 
 	public void OnReceiveGuideLock(TCPConnection connection) {

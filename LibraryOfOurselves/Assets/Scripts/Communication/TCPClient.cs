@@ -154,14 +154,22 @@ public class TCPClient : MonoBehaviour {
 			{
 				List<byte> data = await connection.Receive();
 				string channel = data.ReadString();
-				if (channel == "disconnection") connection.active = false;
+				if (channel == "disconnection")
+				{
+					connection.active = false;
+				}
 				else _onMessageReception.Invoke(connection, channel, data); //received a message from the host! 
 			}
 			_onConnectionEnd.Invoke(connection);
 			_hosts.Remove(connection);
+			Destroy(connection);
  		} catch (SocketException se) {
+			_hosts.Remove(connection);
+			Destroy(connection);
 			Haze.Logger.LogError("[TCPClient] Socket Exception (" + se.ErrorCode + "), cannot communicate with host: " + se.ToString(), this);
 		} catch (Exception e) {
+			_hosts.Remove(connection);
+			Destroy(connection);
 			Haze.Logger.LogError("[TCPClient] Error, cannot communicate with host: " + e.ToString(), this);
 		}
 	}

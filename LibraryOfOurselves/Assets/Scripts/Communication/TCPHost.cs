@@ -84,7 +84,7 @@ public class TCPHost : MonoBehaviour{
 					Haze.Logger.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
 					TCPConnection connection = ScriptableObject.CreateInstance<TCPConnection>();
 					connection.client = client;
-
+					
 					//wait for identification message:
 					List<byte> data = await connection.Receive();
 					string channel = data.ReadString();
@@ -125,12 +125,14 @@ public class TCPHost : MonoBehaviour{
 	private void Update() {
 		foreach (TCPConnection conn in users) { //check responsiveness of connection
 			if (conn.active) {
-				if (conn.responsive && TimeSinceLastConnection(conn.lastCommunication) > _unresponsiveThreshold) {
-					conn.responsive = false;
-					_onResponsivenessChanged.Invoke(conn, false);
+				if (conn.responsive && TimeSinceLastConnection(conn.lastCommunication) > _unresponsiveThreshold)
+				{
+					users.Remove(conn);
+					Destroy(conn);
+					_onResponsivenessChanged.Invoke(conn, false); //TODO remove?
 				} else if (!conn.responsive && TimeSinceLastConnection(conn.lastCommunication)  < _unresponsiveThreshold) {
 					conn.responsive = true;
-					_onResponsivenessChanged.Invoke(conn, true);
+					_onResponsivenessChanged.Invoke(conn, true); //TODO remove?
 				}
 			}
 		}
@@ -172,6 +174,8 @@ public class TCPHost : MonoBehaviour{
 				string channel = data.ReadString();
 				if (channel == "disconnection") {
 					connection.active = false;
+					users.Remove(connection);
+					Destroy(connection);
 				} else {
 					//received a message from the client!
 					_onMessageReception.Invoke(connection, channel, data);
@@ -179,6 +183,8 @@ public class TCPHost : MonoBehaviour{
 			} else {
 				Haze.Logger.LogWarning("Received data with length == 0 from connection " + connection);
 				connection.active = false;
+				users.Remove(connection);
+				Destroy(connection);
 			}
 		}
 
@@ -194,7 +200,9 @@ public class TCPHost : MonoBehaviour{
 		}
 
 		_onConnectionEnd.Invoke(connection);
-		users.Remove(connection);
+		users.Remove(connection); //TODO this does not destroy the scriptable object
+		Destroy(connection);
+
 		if(!connection.UDP) {
 			connection.client.Close();
 		}

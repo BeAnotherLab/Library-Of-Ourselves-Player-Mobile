@@ -38,7 +38,7 @@ public class TCPConnection : ScriptableObject {
 		VR
 	}
 	
-	private void OnDestroy (){
+	private void OnDestroy () { //called on exiting UNITY. TODO only then!?
 		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
 		if(UDPListener.Instance)
 			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
