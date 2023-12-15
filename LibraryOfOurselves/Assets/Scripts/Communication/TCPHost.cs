@@ -125,10 +125,10 @@ public class TCPHost : MonoBehaviour{
 	private void Update() {
 		foreach (TCPConnection conn in users) { //check responsiveness of connection
 			if (conn.active) {
-				if (conn.responsive && conn.TimeSinceLastConnection > _unresponsiveThreshold) {
+				if (conn.responsive && TimeSinceLastConnection(conn.lastCommunication) > _unresponsiveThreshold) {
 					conn.responsive = false;
 					_onResponsivenessChanged.Invoke(conn, false);
-				} else if (!conn.responsive && conn.TimeSinceLastConnection < _unresponsiveThreshold) {
+				} else if (!conn.responsive && TimeSinceLastConnection(conn.lastCommunication)  < _unresponsiveThreshold) {
 					conn.responsive = true;
 					_onResponsivenessChanged.Invoke(conn, true);
 				}
@@ -225,4 +225,9 @@ public class TCPHost : MonoBehaviour{
 			_listener = null;
 		}
 	}
+	
+	private float TimeSinceLastConnection(DateTime lastCommunication) {
+			return (float) (DateTime.Now - lastCommunication).TotalSeconds;
+	}
+	
 }

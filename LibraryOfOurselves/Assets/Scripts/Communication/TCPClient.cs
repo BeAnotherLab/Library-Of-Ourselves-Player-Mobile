@@ -12,6 +12,8 @@ public class TCPClient : MonoBehaviour {
 	
 	public static TCPClient Instance { get; private set; }
 
+	[SerializeField] private List<TCPConnection> _hosts;
+	
 	public string LockedId {
 		get {
 			if(HazePrefs.HasKey("locked-id"))
@@ -36,7 +38,6 @@ public class TCPClient : MonoBehaviour {
 	[SerializeField] private NewConnectionEvent _onNewConnection;
 	[SerializeField] private MessageReceivedEvent _onMessageReception;
 	[SerializeField] private ConnectionEndEvent _onConnectionEnd;
-	[SerializeField] private readonly List<TCPConnection> _hosts;
 
 	private void Start() {
 		Instance = this;

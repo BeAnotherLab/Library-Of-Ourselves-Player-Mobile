@@ -14,7 +14,7 @@ using UnityEngine.Events;
 [Serializable] public class ResponsivenessEvent : UnityEvent<TCPConnection, bool> { }
 
 [CreateAssetMenu]
-public class TCPConnection : ScriptableObject{
+public class TCPConnection : ScriptableObject {
 
 	public string uniqueId;//the unique id of the device on the other end
 	public string xrDeviceModel = "unknown";//the XR device model name
@@ -27,46 +27,44 @@ public class TCPConnection : ScriptableObject{
 	public IPEndPoint udpEndpoint = null;//if this is non-null, the connection has been established over udp rather than tcp
 	public IPEndPoint sourceEndpoint = null;//the UDP endpoint through which the connection has been established.
 
-	DateTime lastCommunication;
+	public DateTime lastCommunication;
 
 	List<List<byte>> udpPackets = new List<List<byte>>();
-
-	public float TimeSinceLastConnection {
-		get {
-			return (float)(DateTime.Now - lastCommunication).TotalSeconds;
-		}
-	}
-
+	
+	public bool UDP { get { return udpEndpoint != null; } }
+	
 	public enum DeviceType {
 		GUIDE,
-		VR,
-		AUDIO
+		VR
 	}
-
-	public NetworkStream Stream { get { if(UDP) return null; return client.GetStream(); } }
-
-	public bool UDP { get { return udpEndpoint != null; } }
-
-	public TCPConnection() {
-		lastCommunication = DateTime.Now;
+	
+	private void OnDestroy (){
+		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
+		if(UDPListener.Instance)
+			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
 	}
+	
+	private NetworkStream Stream { get { if(UDP) return null; return client.GetStream(); } }
 
 	public async Task Send(List<byte> bytes) {
-		if(!active) {
+		if (!active) {
 			Haze.Logger.Log("Could not send bytes. Connection failed.");
 			return;
 		}
 		try {
-			if(UDP) {//Send over UDP
+			if (UDP) {//Send over UDP
 				await SendUDPPacket(bytes);
 			} else {//Send over TCP
-				if(bytes.Count > (int)short.MaxValue) {
+				if (bytes.Count > (int)short.MaxValue) {
 					Haze.Logger.LogWarning("Bytes count is higher than max short value - sending first " + (short.MaxValue-2) + " bytes.");
 					bytes.RemoveRange(short.MaxValue - 2, bytes.Count - short.MaxValue - 2);
 				}
 				short length = (short)bytes.Count;
+				
 				byte len1, len2;
-				FromShort(length, out len1, out len2);
+				len2 = (byte)(length >> 8);
+				len1 = (byte)(length & 255);
+				
 				byte[] data = new byte[length + 2];
 				data[0] = len1;
 				data[1] = len2;
@@ -75,19 +73,10 @@ public class TCPConnection : ScriptableObject{
 				}
 				await Stream.WriteAsync(data, 0, data.Length);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Haze.Logger.Log("Could not send bytes. Connection failed: " + e);
 			active = false;//this will notify client or host to disconnect from this connection.
 		}
-	}
-
-	static short ToShort(short byte1, short byte2) {
-		return (short)((byte2 << 8) + byte1);
-	}
-
-	static void FromShort(short number, out byte byte1, out byte byte2) {
-		byte2 = (byte)(number >> 8);
-		byte1 = (byte)(number & 255);
 	}
 
 	public async Task<List<byte>> Receive() {
@@ -99,7 +88,8 @@ public class TCPConnection : ScriptableObject{
 					await Stream.ReadAsync(lengthBuffer, 0, 2);
 					byte len1 = lengthBuffer[0];
 					byte len2 = lengthBuffer[1];
-					short length = ToShort(len1, len2);
+					short length = (short)((len2 << 8) + len1);
+
 					byte[] buffer = new byte[length];
 					await Stream.ReadAsync(buffer, 0, length);
 					lastCommunication = DateTime.Now;
@@ -146,9 +136,4 @@ public class TCPConnection : ScriptableObject{
 		return "[" + deviceType + ": " + xrDeviceModel + "-" + uniqueId + "]";
 	}
 
-	private void OnDestroy (){
-		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
-		if(UDPListener.Instance)
-			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
-	}
 }

@@ -15,12 +15,10 @@ public class UDPBroadcaster : MonoBehaviour{
 	[SerializeField] int broadcastPort = 9725;
 
 	UdpClient server;
-	string localIP;
-	int localPort;
 	byte[] requestData;
-	bool stop = false;
+	bool stop;
 
-	public static UDPBroadcaster Instance { get; private set; }
+	public static UDPBroadcaster Instance;
 
 	private void Start() {
 		Instance = this;
@@ -31,10 +29,6 @@ public class UDPBroadcaster : MonoBehaviour{
 	}
 
 	IEnumerator broadcast(string ip, int port) {
-
-		localIP = ip;
-		localPort = port;
-
 		stop = false;
 		server = new UdpClient(broadcastPort);
 		requestData = Encoding.ASCII.GetBytes("guide-broadcast>" + ip + ">" + port + ">" + SystemInfo.deviceUniqueIdentifier);
