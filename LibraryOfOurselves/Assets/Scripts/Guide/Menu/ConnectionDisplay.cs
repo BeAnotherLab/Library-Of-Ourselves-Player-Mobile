@@ -148,20 +148,17 @@ public class ConnectionDisplay : MonoBehaviour
 	}
 
 	public void UpdateDisplay() {
-		Color statusColor = statusDisplay.color;
-		Color uniqueIdColor = uniqueIdColourDisplay.color;
 
 		if (Connection.paired) {
-			statusColor = pairedColour;
+			statusDisplay.color = pairedColour;
 			textPair.gameObject.SetActive(false);
 			textUnpair.gameObject.SetActive(true);
 			pairButton.gameObject.SetActive(true);
 			lockButton.gameObject.SetActive(true);
 			recenterButton.gameObject.SetActive(true);
-			
 		} 
 		else if (Available) {
-			statusColor = availableColour;
+			statusDisplay.color = availableColour;
 			textPair.gameObject.SetActive(true);
 			textUnpair.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
@@ -188,24 +185,12 @@ public class ConnectionDisplay : MonoBehaviour
 		} 
 		else {
 			Haze.Logger.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
-			statusColor = unavailableColour;
+			statusDisplay.color = unavailableColour;
 			pairButton.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
 			recenterButton.gameObject.SetActive(false);
 			StartCoroutine(EnableUnlockButtonAfterABit());
 		}
-
-		if(Connection.responsive) {
-			statusColor.a = 1;
-			uniqueIdColor.a = 1;
-		}
-		else {
-			statusColor.a = 0.3f;
-			uniqueIdColor.a = 0.3f;
-		}
-
-		statusDisplay.color = statusColor;
-		uniqueIdColourDisplay.color = uniqueIdColor;
 
 		//the lock is closed and the device is unlocked:
 		if (_hasClosedLock && Connection.lockedId == "free") {
@@ -249,7 +234,7 @@ public class ConnectionDisplay : MonoBehaviour
 		Connection.active = false;
 	}
 
-	private IEnumerator EnableUnlockButtonAfterABit() {
+	private IEnumerator EnableUnlockButtonAfterABit() { //TODO why do we have to wait before showing unlock button?
 		yield return new WaitForSeconds(3);
 		if (Connection.lockedId != "free && !Connection.paired")  lockButton.gameObject.SetActive(true); //are we allowed to show the unlock button?
 	}
