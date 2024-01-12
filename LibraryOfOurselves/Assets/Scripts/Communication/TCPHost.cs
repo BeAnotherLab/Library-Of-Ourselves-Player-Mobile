@@ -127,12 +127,9 @@ public class TCPHost : MonoBehaviour{
 			if (conn.active) {
 				if (conn.responsive && TimeSinceLastConnection(conn.lastCommunication) > _unresponsiveThreshold)
 				{
+					_onConnectionEnd.Invoke(conn);
 					users.Remove(conn);
 					Destroy(conn);
-					_onResponsivenessChanged.Invoke(conn, false); //TODO remove?
-				} else if (!conn.responsive && TimeSinceLastConnection(conn.lastCommunication)  < _unresponsiveThreshold) {
-					conn.responsive = true;
-					_onResponsivenessChanged.Invoke(conn, true); //TODO remove?
 				}
 			}
 		}

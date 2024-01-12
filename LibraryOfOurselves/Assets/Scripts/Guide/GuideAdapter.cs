@@ -54,15 +54,6 @@ public class GuideAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnConnectionResponsivenessChanged(TCPConnection connection, bool isResponsive) {
-		ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
-		if(ConnectionsDisplayer.Instance) {
-			handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
-			if(handle != null)
-				handle.display.UpdateDisplay();
-		}
-	}
-
 	public void SendGuideLock(TCPConnection connection) {
 		List<byte> data = new List<byte>();
 		data.WriteString("guide-lock");
