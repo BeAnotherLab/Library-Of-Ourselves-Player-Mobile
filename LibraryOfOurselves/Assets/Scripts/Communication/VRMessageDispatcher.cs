@@ -24,7 +24,6 @@ public class VRMessageDispatcher : MonoBehaviour
 	[SerializeField] private UnityEvent<TCPConnection, string, string, string> editChoice; //VR
 	[SerializeField] private UnityEvent<TCPConnection, string, string, string> saveChoice; //VR
 	[SerializeField] private UnityEvent<TCPConnection, Vector3> reorient; //VR
-	[SerializeField] private UnityEvent<TCPConnection, byte> autocalibration; //VR
 	[SerializeField] private UnityEvent<TCPConnection, double> gotoTime; //VR
 
 	public void OnMessageReception(TCPConnection connection, string channel, List<byte> data) 
@@ -61,7 +60,6 @@ public class VRMessageDispatcher : MonoBehaviour
 		else if (channel == "edit-choice") ParseChoiceMessage(connection, editChoice, data);
 		else if (channel == "save-choice") ParseChoiceMessage(connection, saveChoice, data);
 		else if (channel == "reorient") reorient.Invoke(connection, data.ReadVector3());
-		else if (channel == "autocalibration") autocalibration.Invoke(connection, data.ReadByte());
 		else if (channel == "goto") gotoTime.Invoke(connection, data.ReadDouble());
 		else if (channel == "disconnection") Haze.Logger.Log("Guide disconnected");
 		else if (!ignoreIncorrectChannels) Haze.Logger.LogWarning("Received message on illegal channel: " + channel);

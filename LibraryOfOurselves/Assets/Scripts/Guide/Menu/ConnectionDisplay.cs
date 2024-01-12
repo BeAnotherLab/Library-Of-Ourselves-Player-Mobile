@@ -28,16 +28,6 @@ public class ConnectionDisplay : MonoBehaviour{
 	[SerializeField] InputField editDeviceNameField;
 	[SerializeField] GameObject udpDisplay;
 
-	[Header("Autocalibration")]
-	[SerializeField] GameObject autocalibrationButton;
-	[SerializeField] GameObject autocalibrationEditor;
-	[SerializeField] Text driftDisplay;
-	[SerializeField] GameObject acStartButton;
-	[SerializeField] GameObject acStopButton;
-	[SerializeField] GameObject acResetButton;
-	[SerializeField] Slider acLoadingBar;
-	[SerializeField] GameObject acLoadingCircle;
-
 	public TCPConnection Connection { get; private set; }
 
 	public int Battery {
@@ -74,17 +64,12 @@ public class ConnectionDisplay : MonoBehaviour{
 		}
 	}
 
-	public byte LastAutocalibrationCommand { get; private set; }
-	public float LastAutocalibrationDrift { get; private set; }
-
-
 	List<string> __videosAvailable = new List<string>();
 	public List<string> VideosAvailable { get { return __videosAvailable; } }
 
 	public bool IsVideoReady { get; set; }
 
 	bool hasClosedLock = false;
-
 
 	bool __available = true;
 	public bool Available {//True when it's possible for us to connect to this device
@@ -111,7 +96,6 @@ public class ConnectionDisplay : MonoBehaviour{
 		UpdateDisplay();
 		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
 		modelNameDisplay.text = DeviceAlias;
-		autocalibrationEditor.SetActive(false);
 
 		udpDisplay.SetActive(connection.UDP);
 
@@ -173,13 +157,7 @@ public class ConnectionDisplay : MonoBehaviour{
 			pairButton.gameObject.SetActive(true);
 			lockButton.gameObject.SetActive(true);
 			recenterButton.gameObject.SetActive(true);
-			if(Connection.xrDeviceModel.ToLower().Contains("s8")) {
-				Haze.Logger.Log("Connection "+Connection+" is S8: displaying Autocalibration button");
-				autocalibrationButton.gameObject.SetActive(true);
-			} else {
-				Haze.Logger.Log("Connection "+Connection+" is not S8 (" + Connection.xrDeviceModel.ToLower() + "): not displaying Autocalibration button");
-				autocalibrationButton.gameObject.SetActive(false);
-			}
+			
 		} else if(Available) {
 			Haze.Logger.Log("Connection " + Connection + " is available.");
 			statusColor = availableColour;
@@ -188,7 +166,6 @@ public class ConnectionDisplay : MonoBehaviour{
 			lockButton.gameObject.SetActive(false);
 			Haze.Logger.Log("Hiding LOCK button for connection " + Connection + " because we aren't currently paired to it - will become visible after a bit.");
 			recenterButton.gameObject.SetActive(false);
-			autocalibrationButton.gameObject.SetActive(false);
 			if(GuideVideoPlayer.Instance.HasVideoLoaded) {//can't pair with a device while a video is loaded up.
 				pairButton.gameObject.SetActive(false);
 				Haze.Logger.Log("Hiding PAIR button for connection " + Connection + " because a video is loaded at the moment.");
@@ -214,7 +191,6 @@ public class ConnectionDisplay : MonoBehaviour{
 			pairButton.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);
 			recenterButton.gameObject.SetActive(false);
-			autocalibrationButton.gameObject.SetActive(false);
 			StartCoroutine(enableUnlockButtonAfterABit());
 		}
 
@@ -251,14 +227,10 @@ public class ConnectionDisplay : MonoBehaviour{
 			}
 		}
 
-
 		//If we don't have Admin Access, disable lock button and edit device name abilities.
 		if(!SettingsAuth.TemporalUnlock) {
 			editDeviceNameButton.enabled = false;
 			lockButton.gameObject.SetActive(false);
-			Haze.Logger.Log("Hiding LOCK and AUTOCALIBRATION buttons because guide is not temporally unlocked.");
-			autocalibrationButton.gameObject.SetActive(false);
-		} else {
 			editDeviceNameButton.enabled = true;
 		}
 	}
@@ -289,62 +261,6 @@ public class ConnectionDisplay : MonoBehaviour{
 
 	public void OnClickCloseButton() {
 		Connection.active = false;
-	}
-
-	public void OnClickAutocalibration() {
-		GuideAdapter.Instance.SendAutocalibration(Connection, 0);
-		driftDisplay.gameObject.SetActive(false);
-		acLoadingBar.gameObject.SetActive(false);
-		acLoadingCircle.gameObject.SetActive(true);
-		acResetButton.gameObject.SetActive(false);
-		acStopButton.gameObject.SetActive(true);
-		acStartButton.gameObject.SetActive(false);
-	}
-
-	public void OnClickStopAutocalibration() {
-		GuideAdapter.Instance.SendAutocalibration(Connection, 1);
-		driftDisplay.gameObject.SetActive(false);
-		acLoadingBar.gameObject.SetActive(false);
-		acLoadingCircle.gameObject.SetActive(false);
-		acResetButton.gameObject.SetActive(true);
-		acStopButton.gameObject.SetActive(false);
-		acStartButton.gameObject.SetActive(true);
-	}
-
-	public void OnClickResetAutocalibration() {
-		GuideAdapter.Instance.SendAutocalibration(Connection, 2);
-	}
-
-	public void OnReceiveAutocalibrationResult(byte command, float drift) {
-		LastAutocalibrationCommand = command;
-		LastAutocalibrationDrift = drift;
-		switch(command) {
-			case 0:
-				acLoadingCircle.gameObject.SetActive(false);
-				StartCoroutine(showACLoading());
-				break;
-			case 1:
-				driftDisplay.text = string.Format("{0:0.#}°/s", drift);
-				StopAllCoroutines();
-				driftDisplay.gameObject.SetActive(true);
-				acLoadingBar.gameObject.SetActive(false);
-				acLoadingCircle.gameObject.SetActive(false);
-				acResetButton.gameObject.SetActive(true);
-				acStopButton.gameObject.SetActive(false);
-				acStartButton.gameObject.SetActive(true);
-				break;
-		}
-	}
-
-	IEnumerator showACLoading() {
-		acLoadingBar.gameObject.SetActive(true);
-
-		float elapsed = 0;
-		while(elapsed < 5 * 60) {// 5 minutes
-			elapsed += Time.deltaTime;
-			acLoadingBar.value = elapsed / 5.0f / 60.0f;
-			yield return null;
-		}
 	}
 
 }

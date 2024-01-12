@@ -120,7 +120,6 @@ public class VRAdapter : MonoBehaviour{
 			connection.paired = true;
 			Haze.Logger.Log("Paired to " + connection);
 			onPair.Invoke();
-			Autocalibration.Instance.OnPair();
 			SendPairConfirm();
 		} else {
 			Haze.Logger.LogWarning("Cannot pair to " + connection);
@@ -335,23 +334,6 @@ public class VRAdapter : MonoBehaviour{
 			if(VRVideoPlayer.Instance) {
 				VRVideoPlayer.Instance.Reorient(angles);
 			}
-		}
-	}
-
-	public void OnReceiveAutocalibration(TCPConnection connection, byte command) {
-		if(connection == currentlyPaired && connection != null) {
-			if(Autocalibration.Instance)
-				Autocalibration.Instance.OnReceiveAutocalibrate(command);
-		}
-	}
-
-	public void SendAutocalibrationResult(byte command, float drift) {
-		if(currentlyPaired != null && currentlyPaired.active) {
-			List<byte> data = new List<byte>();
-			data.WriteString("autocalibration-result");
-			data.WriteByte(command);
-			data.WriteFloat(drift);
-			currentlyPaired.Send(data);
 		}
 	}
 

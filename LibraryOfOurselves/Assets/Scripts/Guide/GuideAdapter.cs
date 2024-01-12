@@ -374,26 +374,6 @@ public class GuideAdapter : MonoBehaviour{
 		}
 	}
 
-	public void SendAutocalibration(TCPConnection connection, byte command) {
-		List<byte> data = new List<byte>();
-		data.WriteString("autocalibration");
-		data.WriteByte(command);
-		if(connection != null && connection.active)
-			connection.Send(data);
-	}
-
-	public void OnReceiveAutocalibrationResult(TCPConnection connection, byte command, float drift) {
-		if(ConnectionsDisplayer.Instance) {
-			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
-			if(handle != null) {
-				//Treat the response as necessary
-				handle.display.OnReceiveAutocalibrationResult(command, drift);
-			} else {
-				Haze.Logger.LogWarning("Received autocalibration result from a non-existent connection apparently :(");
-			}
-		}
-	}
-
 	public void SendGotoTime(double time) {
 		//Broadcast a time to all user devices
 		List<byte> data = new List<byte>();

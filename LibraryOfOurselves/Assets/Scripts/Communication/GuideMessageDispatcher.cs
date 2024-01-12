@@ -18,7 +18,6 @@ public class GuideMessageDispatcher : MonoBehaviour
 	[SerializeField] private UnityEvent<TCPConnection, byte> selectOption; //Guide 
 	[SerializeField] private UnityEvent<TCPConnection, string> choicePositionMessage; //Guide
 	[SerializeField] private UnityEvent<TCPConnection, byte, short, byte> status; //Guide
-	[SerializeField] private UnityEvent<TCPConnection, byte, float> autocalibrationResult; //Guide
 
 	public void OnMessageReception(TCPConnection connection, string channel, List<byte> data) 
 	{
@@ -54,12 +53,6 @@ public class GuideMessageDispatcher : MonoBehaviour
 			selectOption.Invoke(connection, option);
 		}
 		else if (channel == "choice-position") choicePositionMessage.Invoke(connection, data.ReadString());    
-		else if (channel == "autocalibration-result")
-		{
-			byte command = data.ReadByte();
-			float drift = data.ReadFloat();
-			autocalibrationResult.Invoke(connection, command, drift);
-		}
 		else if (!ignoreIncorrectChannels) Haze.Logger.LogWarning("Received message on illegal channel: " + channel);
 	}
 
