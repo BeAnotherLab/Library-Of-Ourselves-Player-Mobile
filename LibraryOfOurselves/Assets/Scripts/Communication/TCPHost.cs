@@ -24,7 +24,8 @@ public class TCPHost : MonoBehaviour{
 	[SerializeField] ResponsivenessEvent _onResponsivenessChanged;
 
 	private TcpListener _listener;
-
+	private bool _stop;
+	
 	public int NumberOfPairedDevices {
 		get {
 			int i = 0;
@@ -73,7 +74,7 @@ public class TCPHost : MonoBehaviour{
 			_broadcaster.StartBroadcasting(listenerLocalEndpoint.Address.ToString(), listenerLocalEndpoint.Port);
 			Haze.Logger.Log("Broadcasting ip " + ip + " and port " + listenerLocalEndpoint.Port);
 
-			while (true) { //running always... but no longer awaiting connection once one that was created gets destroyed
+			while (!_stop) { //running always... 
 				try {
 					Haze.Logger.Log("Awaiting a connection request...");
 					TcpClient client = await _listener.AcceptTcpClientAsync();
@@ -225,6 +226,8 @@ public class TCPHost : MonoBehaviour{
 			}
 		}
 
+		_stop = true;
+		
 		if(_listener != null) {
 			_listener.Stop();
 			_listener = null;
