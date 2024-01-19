@@ -34,7 +34,7 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void OnNewConnection(TCPConnection connection) {
-		Haze.Logger.Log(connection + " has been added as an option");
+		Debug.Log(connection + " has been added as an option");
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.Instance.AddConnection(connection);
 			if(ConnectionsDisplayer.Instance.Handles.Count == 1)
@@ -45,7 +45,7 @@ public class GuideAdapter : MonoBehaviour{
 	public void OnConnectionEnd(TCPConnection connection) {
 		connection.active = false;
 		connection.paired = false;
-		Haze.Logger.Log(connection + " is no longer available");
+		Debug.Log(connection + " is no longer available");
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.Instance.RemoveConnection(connection);
 			if(ConnectionsDisplayer.Instance.Handles.Count <= 0) {
@@ -67,7 +67,7 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void OnReceiveAutopair(TCPConnection connection) {
-		Haze.Logger.Log(connection.ToString() + " requests autopair.");
+		Debug.Log(connection.ToString() + " requests autopair.");
 		SendGuidePair(connection);
 	}
 
@@ -93,7 +93,7 @@ public class GuideAdapter : MonoBehaviour{
 
 		bool paired = pairedId != "0";//string "0" means the device is unpaired now
 		if (pairedId == SystemInfo.deviceUniqueIdentifier) { //check if this is a device we were paired to
-			Haze.Logger.Log("Paired to " + connection);
+			Debug.Log("Paired to " + connection);
 			connection.paired = true;
 			if(handle != null) handle.display.Available = true;
 			//Give an update to the VideosDisplayer
@@ -103,9 +103,9 @@ public class GuideAdapter : MonoBehaviour{
 		} else {
 			if (connection.paired) {
 				connection.paired = false;
-				Haze.Logger.Log("Unpaired from " + connection);
+				Debug.Log("Unpaired from " + connection);
 			}
-			Haze.Logger.LogWarning("Setting available to " + !paired + " for connection " + connection);
+			Debug.LogWarning("Setting available to " + !paired + " for connection " + connection);
 			if (handle != null) handle.display.Available = !paired;
 		}
 		
@@ -123,7 +123,7 @@ public class GuideAdapter : MonoBehaviour{
 	public void SendLogsQueryAll() {
 		List<byte> data = new List<byte>();
 		data.WriteString("logs-query");
-		Haze.Logger.Log("Requesting logs...");
+		Debug.Log("Requesting logs...");
 		TCPHost.Instance.BroadcastToPairedDevices(data);
 	}
 
@@ -136,8 +136,8 @@ public class GuideAdapter : MonoBehaviour{
 	public void OnReceiveLogs(TCPConnection connection, string log) {
 		string path = "[Unknown path]";
 		try {
-			Haze.Logger.Log("Received logs from " + connection.ToString() + ".");
-			Haze.Logger.Log("Log contents: [[[[[\n" + log + "\n]]]]]");
+			Debug.Log("Received logs from " + connection.ToString() + ".");
+			Debug.Log("Log contents: [[[[[\n" + log + "\n]]]]]");
 
 			//Generate two random words for saving the file
 			path = "loo_log_" + RandomWords.Noun + "_" + RandomWords.Noun + ".txt";
@@ -153,11 +153,11 @@ public class GuideAdapter : MonoBehaviour{
 			//File.WriteAllText(fullPath, rf);
 			FileWriter.WriteFile(fullPath, path, rf);
 
-			Haze.Logger.Log("Wrote log to file " + path);
-			Haze.Logger.Log("(Full path: " + fullPath + ")");
+			Debug.Log("Wrote log to file " + path);
+			Debug.Log("(Full path: " + fullPath + ")");
 		}catch(Exception e) {
-			Haze.Logger.LogError("Error: Could not write to file " + path + ": " + e.Message);
-			Haze.Logger.LogError(e.StackTrace);
+			Debug.LogError("Error: Could not write to file " + path + ": " + e.Message);
+			Debug.LogError(e.StackTrace);
 		}
 	}
 
@@ -168,11 +168,11 @@ public class GuideAdapter : MonoBehaviour{
 		//if(TCPHost.Instance)
 		//	TCPHost.Instance.BroadcastToPairedDevices(data);
 		connection.Send(data);
-		Haze.Logger.Log("Requesting devices for video " + videoName + "..");
+		Debug.Log("Requesting devices for video " + videoName + "..");
 	}
 
 	public void OnReceiveHasVideoResponse(TCPConnection connection, string videoName) {
-		Haze.Logger.Log(connection + " has video " + videoName);
+		Debug.Log(connection + " has video " + videoName);
 		ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
 		if(ConnectionsDisplayer.Instance) {
 			handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
@@ -183,7 +183,7 @@ public class GuideAdapter : MonoBehaviour{
 	}
 
 	public void OnReceiveIsEmpty(TCPConnection connection) {
-		//Haze.Logger.Log(connection + " is empty");
+		//Debug.Log(connection + " is empty");
 		// should we take note?
 	}
 
@@ -203,7 +203,7 @@ public class GuideAdapter : MonoBehaviour{
 
 	public void OnReceiveLoadVideoResponse(TCPConnection connection, bool ok, string errorMessage) {
 		if(ok) {
-			Haze.Logger.Log(connection + " has successfully loaded video.");
+			Debug.Log(connection + " has successfully loaded video.");
 			ConnectionsDisplayer.DisplayedConnectionHandle handle = null;
 			if(ConnectionsDisplayer.Instance) {
 				handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
@@ -211,7 +211,7 @@ public class GuideAdapter : MonoBehaviour{
 					handle.display.IsVideoReady = true;
 			}
 		} else {
-			Haze.Logger.LogWarning("Error: " + connection + " could not load video: " + errorMessage);
+			Debug.LogWarning("Error: " + connection + " could not load video: " + errorMessage);
 			//TODO: display error message
 		}
 	}
@@ -369,7 +369,7 @@ public class GuideAdapter : MonoBehaviour{
 				handle.display.Battery = battery;
 				handle.display.FPS = fps;
 			} else {
-				Haze.Logger.LogWarning("Received status from a non-existent connection, apparently...");
+				Debug.LogWarning("Received status from a non-existent connection, apparently...");
 			}
 		}
 	}

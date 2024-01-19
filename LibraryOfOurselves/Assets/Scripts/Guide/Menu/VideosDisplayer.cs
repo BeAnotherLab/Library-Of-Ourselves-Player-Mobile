@@ -41,7 +41,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	GameObject lastVideoShelf = null;
 
 	public void AddVideo(string path) {
-		Haze.Logger.Log("Adding video file: " + path + "...");
+		Debug.Log("Adding video file: " + path + "...");
 		try {
 			//Extract filename
 			string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
@@ -79,12 +79,12 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 					} else {
 						//no settings for this video yet.
 						settings = new VideoSettings();
-						Haze.Logger.Log("Saving settings...");
+						Debug.Log("Saving settings...");
 						SaveVideoSettings(path, videoName, settings);
 					}
 				}
 
-				Haze.Logger.Log("Displaying video: " + videoName);
+				Debug.Log("Displaying video: " + videoName);
 
 				if(lastVideoShelf == null || lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1).childCount >= 3) {
 					lastVideoShelf = Instantiate(videoShelfPrefab, transform);//add a shelf
@@ -99,7 +99,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			}
 		} catch(Exception e) {
 			//could silently ignore, probably
-			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
+			Debug.LogWarning("Video " + path + " cannot be added: " + e);
 		}
 	}
 

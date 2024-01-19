@@ -16,29 +16,29 @@ public static class FileWriter{
 		string fullPath = directory + filename;
 
 		if(!Directory.Exists(directory)) {
-			Haze.Logger.Log("Creating directory: " + directory);
+			Debug.Log("Creating directory: " + directory);
 			Directory.CreateDirectory(directory);
 			if(Directory.Exists(directory)) {
-				Haze.Logger.Log("Created directory.");
+				Debug.Log("Created directory.");
 			} else {
-				Haze.Logger.LogError("Error: Could not create directory: " + directory);
+				Debug.LogError("Error: Could not create directory: " + directory);
 				return;
 			}
 		}
 
 		if(!File.Exists(fullPath)) {
-			Haze.Logger.Log("Creating file: " + filename + " (" + fullPath + ")");
+			Debug.Log("Creating file: " + filename + " (" + fullPath + ")");
 			File.Create(fullPath).Close();
 			if(File.Exists(fullPath)) {
-				Haze.Logger.Log("Created file.");
+				Debug.Log("Created file.");
 			} else {
-				Haze.Logger.LogError("Error: Could not create file: " + filename + " (" + fullPath + ")");
+				Debug.LogError("Error: Could not create file: " + filename + " (" + fullPath + ")");
 			}
 		}
 
 		File.WriteAllText(fullPath, contents);
 
-		Haze.Logger.Log("Wrote to " + fullPath);
+		Debug.Log("Wrote to " + fullPath);
 	}
 
 }

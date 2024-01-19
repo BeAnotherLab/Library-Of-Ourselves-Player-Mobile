@@ -86,10 +86,10 @@ public class VRAdapter : MonoBehaviour{
 	public void OnReceiveGuideLock(TCPConnection connection) {
 		if(currentlyPaired != null && currentlyPaired == connection && TCPClient.Instance && TCPClient.Instance.LockedId != connection.uniqueId) {
 			TCPClient.Instance.LockedId = connection.uniqueId;
-			Haze.Logger.Log("Locking to " + connection);
+			Debug.Log("Locking to " + connection);
 			SendPairConfirm();
 		} else {
-			Haze.Logger.LogWarning("Cannot lock " + connection + ": currently paired with " + currentlyPaired);
+			Debug.LogWarning("Cannot lock " + connection + ": currently paired with " + currentlyPaired);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class VRAdapter : MonoBehaviour{
 		if(TCPClient.Instance) {
 			if(TCPClient.Instance.LockedId != "free") {
 				TCPClient.Instance.LockedId = "free";
-				Haze.Logger.Log("Unlocking.");
+				Debug.Log("Unlocking.");
 				SendPairConfirm();
 			}
 		}
@@ -107,10 +107,10 @@ public class VRAdapter : MonoBehaviour{
 		if(currentlyPaired == null && TCPClient.Instance && connection.uniqueId == TCPClient.Instance.LockedId) {
 			List<byte> data = new List<byte>();
 			data.WriteString("autopair");
-			Haze.Logger.Log("Sending autopair request");
+			Debug.Log("Sending autopair request");
 			connection.Send(data);
 		} else {
-			Haze.Logger.LogWarning("Not allowed to send autopair to " + connection + "...");
+			Debug.LogWarning("Not allowed to send autopair to " + connection + "...");
 		}
 	}
 
@@ -118,11 +118,11 @@ public class VRAdapter : MonoBehaviour{
 		if(currentlyPaired == null && TCPClient.Instance && (TCPClient.Instance.LockedId == "free" || TCPClient.Instance.LockedId == connection.uniqueId)) {
 			currentlyPaired = connection;
 			connection.paired = true;
-			Haze.Logger.Log("Paired to " + connection);
+			Debug.Log("Paired to " + connection);
 			onPair.Invoke();
 			SendPairConfirm();
 		} else {
-			Haze.Logger.LogWarning("Cannot pair to " + connection);
+			Debug.LogWarning("Cannot pair to " + connection);
 		}
 	}
 
@@ -130,14 +130,14 @@ public class VRAdapter : MonoBehaviour{
 		if(currentlyPaired != null && connection == currentlyPaired) {
 			currentlyPaired = null;
 			connection.paired = false;
-			Haze.Logger.Log("Unpaired.");
+			Debug.Log("Unpaired.");
 			onUnpair.Invoke();
 			SendPairConfirm();
 		}else if(currentlyPaired != null){
-			Haze.Logger.LogWarning("Received Unpair message from a guide we're not paired to. Accepting request regardless.");
+			Debug.LogWarning("Received Unpair message from a guide we're not paired to. Accepting request regardless.");
 			OnReceiveGuideUnpair(currentlyPaired);//simulate receiving it from our paired guide instead
 		} else {
-			Haze.Logger.LogWarning("Cannot unpair.");
+			Debug.LogWarning("Cannot unpair.");
 		}
 	}
 
@@ -265,7 +265,7 @@ public class VRAdapter : MonoBehaviour{
 
 	public void OnReceiveStartChoice(TCPConnection connection, string question, string optionsDescriptions,  string optionsPositions) { //TODO must add positions
 		if(currentlyPaired != null && connection == currentlyPaired) {
-			Haze.Logger.Log("Display choices \'" + optionsDescriptions);
+			Debug.Log("Display choices \'" + optionsDescriptions);
 			if(VRVideoPlayer.Instance) {
 				VRVideoPlayer.Instance.DisplayChoice(question, optionsDescriptions, optionsPositions);
 			}
@@ -276,7 +276,7 @@ public class VRAdapter : MonoBehaviour{
 	{
 		if (currentlyPaired != null && connection == currentlyPaired)
 		{
-			Haze.Logger.Log("Edit choice for video" + videoName + " ");
+			Debug.Log("Edit choice for video" + videoName + " ");
 			//TODO load with mode (360 or not)
 			VRVideoPlayer.Instance.OnEditOption(videoName,description, new Vector3());
 			VRVideoPlayer.VideoLoadingResponse response = await VRVideoPlayer.Instance.LoadVideo(videoName, "360");
@@ -287,7 +287,7 @@ public class VRAdapter : MonoBehaviour{
 	{
 		if (currentlyPaired != null && connection == currentlyPaired)
 		{
-			Haze.Logger.Log("Save choice for video" + videoName + " ");
+			Debug.Log("Save choice for video" + videoName + " ");
 			List<byte> data = new List<byte>();
 			data.WriteString("choice-position");
 
