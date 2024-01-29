@@ -37,3 +37,14 @@ The following packages were updated:
 The following packages were removed:
   com.unity.package-manager-ui@2.1.2
   com.unity.xr.oculus.android@1.38.3
+
+=== Mon Jan 29 14:16:51 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ai.navigation from version 1.1.4 to 1.1.5
+  com.unity.collab-proxy from version 2.0.5 to 2.1.0
+  com.unity.ide.visualstudio from version 2.0.18 to 2.0.21
+  com.unity.xr.oculus from version 4.0.0 to 4.1.1
