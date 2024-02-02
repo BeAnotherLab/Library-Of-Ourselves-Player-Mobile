@@ -11,13 +11,16 @@ public class VideoLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _mediaPlayer = GetComponent<MediaPlayer>();
 #if !UNITY_EDITOR && UNITY_ANDROID
+
+        _mediaPlayer = GetComponent<MediaPlayer>();
         Debug.Log("can we read from the Movies folder ? ");
         foreach (FileSystemEntry entry in FileBrowserHelpers.GetEntriesInDirectory("/storage/emulated/0/Movies", false))
         {
             Debug.Log(entry);
         }
+        
+        LoadVideo("/storage/emulated/0/Movies/4KBeach.mp4");
 #endif
     }
 
