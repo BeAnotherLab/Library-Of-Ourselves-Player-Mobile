@@ -139,8 +139,6 @@ PlayerSettings:
   bundleVersion: 0.1
   preloadedAssets:
   - {fileID: 11400000, guid: 69f5af269a03b2549b14729e78a671e0, type: 2}
-  - {fileID: 2242277684806792511, guid: 04591f31b7f90c249b8852092eabe76d, type: 2}
-  - {fileID: 11400000, guid: 7136d586b7f28004eaf8a74f7937ef69, type: 2}
   - {fileID: 7984119296232465727, guid: 93bbdb993c0570d4ea212bd5da4f2d5a, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -161,7 +159,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: sco.Haze.LibraryOfOurselvesGuide
+    Android: sco.Haze.LibraryOfOurselvesGuidefile
     Standalone: com.oculus.UnitySample
   buildNumber:
     Standalone: 0

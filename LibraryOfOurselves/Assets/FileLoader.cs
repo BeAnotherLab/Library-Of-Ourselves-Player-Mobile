@@ -6,6 +6,8 @@ using SimpleFileBrowser;
 
 public class FileLoader : MonoBehaviour
 {
+    [SerializeField] private VideoLoader _videoLoader;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,8 @@ public class FileLoader : MonoBehaviour
 
         if( FileBrowser.Success )
         {
+            _videoLoader.LoadVideo(FileBrowser.Result[0]); 
+            
             // Print paths of the selected files (FileBrowser.Result) (null, if FileBrowser.Success is false)
             for( int i = 0; i < FileBrowser.Result.Length; i++ )
                 Debug.Log( FileBrowser.Result[i] );
