@@ -14,6 +14,14 @@ public class VideoChoice { //TODO rename to option?
 	public Vector3 position = new Vector3();
 } //TODO move to own file
 
+public class DataFolder //TODO make it a scriptable object?
+{
+#if !UNITY_EDITOR && UNITY_ANDROID
+	public string Path = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent";
+#endif
+	public static string Path = Application.persistentDataPath;
+}
+
 [Serializable]
 public class VideoSettings {
 	public bool is360 = false;
@@ -92,12 +100,8 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			{
 				//ok! this is a guide video. Try to find the associated settings file
 				var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
-				string settingsPath = Path.Combine(Application.persistentDataPath, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
+				string settingsPath = Path.Combine(DataFolder.Path, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
 
-#if !UNITY_EDITOR && UNITY_ANDROID
-				string settingsPath = Path.Combine("/storage/emulated/0/Movies/LibraryOfOUrselvesContent", videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
-#endif //TODO use only one #if preprocessor directive to set the path  
-				
 				VideoSettings settings;
 				if (File.Exists(settingsPath)) 
 				{
@@ -135,16 +139,9 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	}
 
 	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO why do we need path AND name? 
-		
-#if UNITY_ANDROID && !UNITY_EDITOR
-		//TODO make global directory variable, set it with the #preprocessor directive
-		var directory = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent" //save directory is Movies folder
-#else
-		var directory = Application.persistentDataPath;
-#endif
 		string json = JsonUtility.ToJson(settings); 
 		videoName = videoName.Substring(0, videoName.IndexOf("guide", StringComparison.OrdinalIgnoreCase)); //extract videoname from filename
-		File.WriteAllText(Path.Combine(directory, videoName + "_Settings.json"), json); //Save settings to json file
+		File.WriteAllText(Path.Combine(DataFolder.Path, videoName + "_Settings.json"), json); //Save settings to json file
 	}
 
 	public void OnPairConnection(TCPConnection connection) {

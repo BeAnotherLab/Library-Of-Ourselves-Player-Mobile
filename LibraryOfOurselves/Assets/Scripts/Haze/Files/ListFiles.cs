@@ -13,10 +13,7 @@ public class ListFiles : MonoBehaviour {
 	{
 		string dir = Application.persistentDataPath;
 
-#if !UNITY_EDITOR && UNITY_ANDROID
-		string dir = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent";
-#endif
-		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + dir);
+		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + DataFolder.Path);
 			
 		foreach (string file in Directory.GetFiles(dir))
 		{

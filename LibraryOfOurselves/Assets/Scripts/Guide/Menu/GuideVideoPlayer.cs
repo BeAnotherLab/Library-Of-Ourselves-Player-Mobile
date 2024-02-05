@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using RenderHeads.Media.AVProVideo;
 using UnityEngine.Events;
@@ -122,11 +123,8 @@ public class GuideVideoPlayer : MonoBehaviour{
 			startedPlayback = false;
 			lastTimeShown = 0;
 
-			videoPlayer.OpenMedia(new MediaPath(videoDisplay.FullPath, MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
-#if !UNITY_EDITOR && UNITY_ANDROID
-			//on Android, load from Library of Ourselves content folder 
-			player.OpenMedia(new MediaPath(Path.Combine("/storage/emulated/0/Movies/LibraryOfOUrselvesContent", videoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
-#endif
+			videoPlayer.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoDisplay.VideoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+			
 			timeSlider.SetValueWithoutNotify(0);
 
 			Haze.Logger.Log("Loading...");
