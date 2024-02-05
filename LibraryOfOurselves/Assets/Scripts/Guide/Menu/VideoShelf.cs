@@ -119,7 +119,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 							current.Settings.deltaAngles = new Vector4[] { deltas };
 						}
 
-						VideosDisplayer.Instance.SaveVideoSettings(current.FullPath, current.VideoName, current.Settings);
+						VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
 
 						//update display...
 						DisplayCurrentVideo();
@@ -235,7 +235,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 		VideoDisplay.expandedDisplay.Settings = settings;
 
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
 		VideoDisplay.expandedDisplay.expand();
 	}
 	
@@ -270,7 +270,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 		VideoDisplay.expandedDisplay.Settings = settings;
 
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
 		VideoDisplay.expandedDisplay.expand();
 	}
 
@@ -285,7 +285,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 */
 		VideoDisplay.expandedDisplay.Settings = settings;
 
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.FullPath, VideoDisplay.expandedDisplay.VideoName, settings);
+		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
 		VideoDisplay.expandedDisplay.expand();
 	}
 

@@ -113,7 +113,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 		currentVideo = videoDisplay;
 
-		if(GuideAdapter.Instance) {
+		if (GuideAdapter.Instance) {
 			Haze.Logger.Log("Loading video: " + videoDisplay.VideoName);
 
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
@@ -123,7 +123,10 @@ public class GuideVideoPlayer : MonoBehaviour{
 			lastTimeShown = 0;
 
 			videoPlayer.OpenMedia(new MediaPath(videoDisplay.FullPath, MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
-			
+#if !UNITY_EDITOR && UNITY_ANDROID
+			//on Android, load from Library of Ourselves content folder 
+			player.OpenMedia(new MediaPath(Path.Combine("/storage/emulated/0/Movies/LibraryOfOUrselvesContent", videoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+#endif
 			timeSlider.SetValueWithoutNotify(0);
 
 			Haze.Logger.Log("Loading...");
@@ -132,7 +135,9 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 			HasVideoLoaded = true;
 			ConnectionsDisplayer.UpdateAllDisplays();
-		} else {
+		} 
+		else 
+		{
 			Haze.Logger.LogError("Error: No GuideAdapter instance!");
 		}
 	}

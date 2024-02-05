@@ -128,7 +128,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		Instance = null;
 	}
 
-	static string getPath(string videoName) {
+	private static string GetPath(string videoName) {
 		return videoName + ".mp4";
 	}
 
@@ -163,7 +163,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 	
 	public static bool IsVideoAvailable(string videoName) {
-		string path = Application.persistentDataPath + "/" + getPath(videoName);
+		string path = Application.persistentDataPath + "/" + GetPath(videoName);
 		Haze.Logger.Log("Checking if we have " + path);
 		return File.Exists( path);
 	}
@@ -242,7 +242,14 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		player.OpenMedia(new MediaPath(getPath(videoName), MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
+		//in the editor, load from persistent data path
+		player.OpenMedia(new MediaPath(GetPath(videoName), MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
+#if !UNITY_EDITOR && UNITY_ANDROID
+		//on Android, load from Library of Ourselves content folder 
+		player.OpenMedia(new MediaPath(Path.Combine("/storage/emulated/0/Movies/LibraryOfOUrselvesContent", videoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+#endif
+
+		
 		PlaybackSpeed = 1;
 		lastReadyFrame = -1; //TODO delete, value never used
 

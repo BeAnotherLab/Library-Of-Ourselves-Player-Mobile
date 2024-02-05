@@ -7,20 +7,26 @@ public class ListFiles : MonoBehaviour {
 	
 	[SerializeField] string extension = "txt";
 	[SerializeField] StringEvent onFileFound;
-	[SerializeField] bool verbose = false;
+	[SerializeField] bool verbose;
 	
 	void Start()
 	{
 		string dir = Application.persistentDataPath;
-		if(verbose)
-			print("Checking for " + extension + " files in " + dir);
-		foreach(string file in Directory.GetFiles(dir)){
+
+#if !UNITY_EDITOR && UNITY_ANDROID
+		string dir = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent";
+#endif
+		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + dir);
+			
+		foreach (string file in Directory.GetFiles(dir))
+		{
 			//check if extension is <extension>
 			string[] parts = file.Split('.');
 			string ext = parts[parts.Length-1];
-			if(ext == extension){
+			if (ext == extension)
+			{
 				onFileFound.Invoke(file);
-				if(verbose) print("Found " + file);
+				if (verbose) Haze.Logger.Log("Found " + file);
 			}
 		}
 	}

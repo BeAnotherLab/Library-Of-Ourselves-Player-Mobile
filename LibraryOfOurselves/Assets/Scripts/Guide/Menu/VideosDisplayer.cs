@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using SimpleFileBrowser;
 using UnityEngine.Events;
 
 
@@ -79,87 +80,71 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				videoDisplay.expand();
 		}
 	}
-	
+
 	public void AddVideo(string path) {
 		Haze.Logger.Log("Adding video file: " + path + "...");
-		try {
-			//Extract filename
-			string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-			string directory = "";
-			for(int i = 0; i < split.Length - 1; ++i)
-				directory += split[i] + "/";
-			split = split[split.Length - 1].Split(new string[] { ".mp4" }, StringSplitOptions.RemoveEmptyEntries);
-			string filename = "";
-			foreach(string f in split) {
-				filename += f + ".";
-			}
-			filename = filename.Substring(0, filename.Length - 1);
-
+		try
+		{
+			string fileName = FileBrowserHelpers.GetFilename(path);
+			
 			//Is it a guide?
-			split = filename.Split(new string[] { "Guide", "guide", "GUIDE" }, StringSplitOptions.None);
-			if(split.Length > 1) {
-				//ok! this is a guide video.
-				string videoName = "";
-				foreach(string f in split) {
-					videoName += f;
-				}
+			if (path.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1) //tests if we can find case independent "guide" string in filename
+			{
+				//ok! this is a guide video. Try to find the associated settings file
+				var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
+				string settingsPath = Path.Combine(Application.persistentDataPath, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
 
-				//Try to find the associated settings file
-				string settingsPath = directory + videoName + "_Settings.json";
+#if !UNITY_EDITOR && UNITY_ANDROID
+				string settingsPath = Path.Combine("/storage/emulated/0/Movies/LibraryOfOUrselvesContent", videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
+#endif //TODO use only one #if preprocessor directive to set the path  
+				
 				VideoSettings settings;
-				if(File.Exists(settingsPath)) {
+				if (File.Exists(settingsPath)) 
+				{
 					string json = File.ReadAllText(settingsPath);
 					settings = JsonUtility.FromJson<VideoSettings>(json);
-				} else {
-					//try to find it in the persistent data path instead of the sd card root then maybe?
-					settingsPath = Application.persistentDataPath + videoName + "_Settings.json";
-					if(File.Exists(settingsPath)) {
-						string json = File.ReadAllText(settingsPath);
-						settings = JsonUtility.FromJson<VideoSettings>(json);
-					} else {
-						//no settings for this video yet.
-						settings = new VideoSettings();
-						Haze.Logger.Log("Saving settings...");
-						SaveVideoSettings(path, videoName, settings);
-					}
+				}
+				else //no settings for this video yet.
+				{
+					settings = new VideoSettings();
+					Haze.Logger.Log("Saving settings...");
+					SaveVideoSettings(fileName, settings);
 				}
 
-				Haze.Logger.Log("Displaying video: " + videoName);
+				Haze.Logger.Log("Displaying video: " + fileName);
 
-				if(lastVideoShelf == null || lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1).childCount >= 3) {
-					lastVideoShelf = Instantiate(videoShelfPrefab, transform);//add a shelf
+				if (lastVideoShelf == null || lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1).childCount >= 3) {
+					lastVideoShelf = Instantiate(videoShelfPrefab, transform);//add a shelf //TODO use rectangular layout so that we can ignore this
 				}
-				displayedVideos.Add(Instantiate(videoDisplayPrefab, lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1)).GetComponent<VideoDisplay>().Init(path, videoName, settings));
+				
+				//instantiate and initialize new video display
+				displayedVideos
+					.Add(Instantiate(videoDisplayPrefab, lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1))
+					.GetComponent<VideoDisplay>()
+					.Init(path, fileName, settings));
 
-				if(displayedVideos.Count == 1)
-					onFoundOneVideo.Invoke();
+				if (displayedVideos.Count == 1) onFoundOneVideo.Invoke();
 
-			} else {
-				//Not a guide. ignore it.
 			}
-		} catch(Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			//could silently ignore, probably
 			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
 		}
 	}
 
-	public void SaveVideoSettings(string videoPath, string videoName, VideoSettings settings) {
+	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO why do we need path AND name? 
+		
 #if UNITY_ANDROID && !UNITY_EDITOR
-		//save directory is persistent data path
-		string directory = Application.persistentDataPath;
+		//TODO make global directory variable, set it with the #preprocessor directive
+		var directory = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent" //save directory is Movies folder
 #else
-		//hack for fixing path in editor
-		string[] split = videoPath.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-		string directory = "";
-		for(int i = 0; i<split.Length-1; ++i)
-			directory += split[i] + "/";
-		//directory = "/" + directory;
+		var directory = Application.persistentDataPath;
 #endif
-
-		//Save settings to json file
-		string json = JsonUtility.ToJson(settings);
-		//File.WriteAllText(directory + videoName + "_Settings.json", json);
-		FileWriter.WriteFile(directory, videoName + "_Settings.json", json);
+		string json = JsonUtility.ToJson(settings); 
+		videoName = videoName.Substring(0, videoName.IndexOf("guide", StringComparison.OrdinalIgnoreCase)); //extract videoname from filename
+		File.WriteAllText(Path.Combine(directory, videoName + "_Settings.json"), json); //Save settings to json file
 	}
 
 	public void OnPairConnection(TCPConnection connection) {
