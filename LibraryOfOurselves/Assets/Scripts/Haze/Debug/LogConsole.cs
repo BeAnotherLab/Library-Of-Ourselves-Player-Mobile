@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class LogConsole : MonoBehaviour
+public class LogConsole : MonoBehaviour //TODO REMOVE THIS CRAPPY LOGGING AND REPLACE BY LUNAR CONSOLE 
 {
 
     static LogConsole instance = null;
@@ -79,7 +79,7 @@ public class LogConsole : MonoBehaviour
 		rf.Replace("\n", "\r\n");
 
 		//File.WriteAllText(fullPath, rf);
-		FileWriter.WriteFile(fullPath, path, rf);
+		//FileWriter.WriteFile(fullPath, path, rf);
 
 		if(copyToClipboard) {
 			GUIUtility.systemCopyBuffer = rf;

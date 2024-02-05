@@ -159,7 +159,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: sco.Haze.LibraryOfOurselvesGuidefile
+    Android: sco.Haze.LibraryOfOurselvesGuide
     Standalone: com.oculus.UnitySample
   buildNumber:
     Standalone: 0

@@ -151,7 +151,7 @@ public class GuideAdapter : MonoBehaviour{
 			string rf = "Logs for device " + connection.ToString() + " at " + DateTime.Now.ToString() + ":\n" + log;
 			rf.Replace("\n", "\r\n");
 			//File.WriteAllText(fullPath, rf);
-			FileWriter.WriteFile(fullPath, path, rf);
+			//FileWriter.WriteFile(fullPath, path, rf);
 
 			Haze.Logger.Log("Wrote log to file " + path);
 			Haze.Logger.Log("(Full path: " + fullPath + ")");
