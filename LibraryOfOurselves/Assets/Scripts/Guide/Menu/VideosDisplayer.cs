@@ -38,8 +38,48 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	public List<VideoDisplay> Displays { get { return displayedVideos; } }
 
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
-	GameObject lastVideoShelf = null;
+	GameObject lastVideoShelf;
 
+	
+	private void Start() {
+		Instance = this; //TODO remove singleton antipattern
+	}
+
+	private void OnDestroy() {
+		Instance = null; //TODO remove singleton antipattern
+	}
+
+	private void Update() {
+		//check whether we have all the videos on each device connected to us
+		foreach (VideoDisplay videoDisplay in displayedVideos) {
+			string videoName = videoDisplay.VideoName;
+			ConnectionsDisplayer cd = ConnectionsDisplayer.Instance;
+			bool allConnectedDevicesHaveIt = true;
+			int numberOfConnectedDevices = 0;
+			if (cd != null) {
+				foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in cd.Handles) {
+					if(handle.connection.paired) {
+						++numberOfConnectedDevices;
+						if(!handle.display.VideosAvailable.Contains(videoName)) {
+							allConnectedDevicesHaveIt = false;
+							break;
+						}
+					}
+				}
+			}
+
+			bool previouslyAvailable = videoDisplay.Available;
+			videoDisplay.Available = allConnectedDevicesHaveIt;
+
+			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Count > 0) {
+				videoDisplay.Available = false;//Cannot display a video with choices if there's more than one device connected yet!
+			}
+
+			if(VideoDisplay.expandedDisplay == videoDisplay && previouslyAvailable != videoDisplay.Available)//only update if its availability changed this frame
+				videoDisplay.expand();
+		}
+	}
+	
 	public void AddVideo(string path) {
 		Haze.Logger.Log("Adding video file: " + path + "...");
 		try {
@@ -137,52 +177,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				return v;
 		}
 		return null;
-	}
-
-	private void Start() {
-		Instance = this;
-	}
-
-	private void OnDestroy() {
-		Instance = null;
-	}
-
-	private void Update() {
-		//check whether we have all the videos on each device connected to us
-		foreach(VideoDisplay videoDisplay in displayedVideos) {
-			string videoName = videoDisplay.VideoName;
-			ConnectionsDisplayer cd = ConnectionsDisplayer.Instance;
-			bool allConnectedDevicesHaveIt = true;
-			int numberOfConnectedDevices = 0;
-			if(cd != null) {
-				foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in cd.Handles) {
-					if(handle.connection.paired) {
-						++numberOfConnectedDevices;
-						if(!handle.display.VideosAvailable.Contains(videoName)) {
-							allConnectedDevicesHaveIt = false;
-							//if(videoDisplay == VideoDisplay.expandedDisplay)
-							//	videoDisplay.contract();//no longer available. //<- we do not need to do this anymore. Simply greying out the "Choose" button is enough.
-							break;
-						}
-					}
-				}
-			}
-
-			bool previouslyAvailable = videoDisplay.Available;
-			videoDisplay.Available = allConnectedDevicesHaveIt;
-
-			if(videoDisplay.Available && numberOfConnectedDevices > 1 && videoDisplay.Settings.choices.Count > 0) {
-				videoDisplay.Available = false;//Cannot display a video with choices if there's more than one device connected yet!
-			}
-
-			//Close the expanded display if its no longer available...
-			/*if(VideoDisplay.expandedDisplay == videoDisplay && !videoDisplay.Available) {
-				videoDisplay.contract();
-			}*/
-			//Nope - instead simply update it
-			if(VideoDisplay.expandedDisplay == videoDisplay && previouslyAvailable != videoDisplay.Available)//only update if its availability changed this frame
-				videoDisplay.expand();
-		}
 	}
 
 }
