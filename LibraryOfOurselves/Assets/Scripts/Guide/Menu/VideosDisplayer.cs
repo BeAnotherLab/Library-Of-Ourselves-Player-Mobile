@@ -17,9 +17,11 @@ public class VideoChoice { //TODO rename to option?
 public class DataFolder //TODO make it a scriptable object?
 {
 #if !UNITY_EDITOR && UNITY_ANDROID
-	public string Path = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent";
+	public static string Path = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent";
 #endif
+#if UNITY_EDITOR
 	public static string Path = Application.persistentDataPath;
+#endif
 }
 
 [Serializable]
