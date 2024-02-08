@@ -58,7 +58,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	bool hasVideoPlaying = false;
 
 	bool __binauralAudio = false;
-	bool BinauralAudio {
+	bool BinauralAudio { 
 		get { return __binauralAudio; }
 		set {
 			__binauralAudio = value;
@@ -242,13 +242,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		//in the editor, load from persistent data path
-		player.OpenMedia(new MediaPath(GetPath(videoName), MediaPathType.RelativeToPersistentDataFolder), autoPlay:false);
-#if !UNITY_EDITOR && UNITY_ANDROID
-		//on Android, load from Library of Ourselves content folder 
-		player.OpenMedia(new MediaPath(Path.Combine("/storage/emulated/0/Movies/LibraryOfOUrselvesContent", videoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
-#endif
-
+		player.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
 		
 		PlaybackSpeed = 1;
 		lastReadyFrame = -1; //TODO delete, value never used

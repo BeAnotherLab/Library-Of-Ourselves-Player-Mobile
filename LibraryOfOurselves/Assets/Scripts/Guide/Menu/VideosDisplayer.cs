@@ -20,8 +20,6 @@ public class DataFolder //TODO make it a scriptable object?
 	public static string Path = "/storage/emulated/0/Movies/LibraryOfOUrselvesContent";
 #endif
 	public static string Path = Application.persistentDataPath;
-	
-	
 }
 
 [Serializable]
