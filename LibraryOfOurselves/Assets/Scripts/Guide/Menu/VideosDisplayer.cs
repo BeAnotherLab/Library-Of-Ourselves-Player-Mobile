@@ -127,7 +127,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				displayedVideos
 					.Add(Instantiate(videoDisplayPrefab, lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1))
 					.GetComponent<VideoDisplay>()
-					.Init(path, fileName, settings));
+					.Init(path, videoName, settings));
 
 				if (displayedVideos.Count == 1) onFoundOneVideo.Invoke();
 

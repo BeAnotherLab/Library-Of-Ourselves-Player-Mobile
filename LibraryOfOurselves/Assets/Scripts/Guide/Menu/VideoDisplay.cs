@@ -15,7 +15,7 @@ public class VideoDisplay : MonoBehaviour{
 	[SerializeField] bool UseFullscreenVideoShelf = true;
 
 	public string FullPath { get; private set; }//path to guide video
-	public string VideoName { get; private set; }
+	public string VideoName { get; private set; } //TODO move file reference stuff to its own scriptable object instead of using UI scripts
 	public VideoSettings Settings { get; set; }
 
 	public static VideoDisplay expandedDisplay = null; //TODO use scriptable objects instead of singletons!

@@ -115,7 +115,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		currentVideo = videoDisplay;
 
 		if (GuideAdapter.Instance) {
-			Haze.Logger.Log("Loading video: " + videoDisplay.VideoName);
+			Haze.Logger.Log("Loading video: " + videoDisplay.VideoName); 
 
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
 			displaying = true;
@@ -123,7 +123,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			startedPlayback = false;
 			lastTimeShown = 0;
 
-			videoPlayer.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoDisplay.VideoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+			videoPlayer.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoDisplay.VideoName + "Guide.mp4"), MediaPathType.AbsolutePathOrURL), autoPlay:false);
 			
 			timeSlider.SetValueWithoutNotify(0);
 
