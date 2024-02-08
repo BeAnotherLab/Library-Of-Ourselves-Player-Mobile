@@ -53,7 +53,6 @@ public class GuideMessageDispatcher : MonoBehaviour
 			selectOption.Invoke(connection, option);
 		}
 		else if (channel == "choice-position") choicePositionMessage.Invoke(connection, data.ReadString());    
-		else if (!ignoreIncorrectChannels) Haze.Logger.LogWarning("Received message on illegal channel: " + channel);
 	}
 
 }
