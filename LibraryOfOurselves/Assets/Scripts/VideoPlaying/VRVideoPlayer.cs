@@ -238,7 +238,7 @@ public class VRVideoPlayer : MonoBehaviour{
 		}
 		
 		//Prepare video player
-		player.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+		player.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoName + ".mp4"), MediaPathType.AbsolutePathOrURL), autoPlay:false);
 		
 		PlaybackSpeed = 1;
 		lastReadyFrame = -1; //TODO delete, value never used
