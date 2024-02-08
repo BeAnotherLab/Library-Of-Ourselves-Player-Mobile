@@ -128,10 +128,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		Instance = null;
 	}
 
-	private static string GetPath(string videoName) {
-		return videoName + ".mp4";
-	}
-
 	static string getAudioPath(string videoName, bool left) {
 		return Application.persistentDataPath + videoName + "-" + (left ? "l" : "r"); //extension will be assumed .wav unless the wave file doesn't exist in which case .mp3 will be selected
 	}
@@ -163,7 +159,7 @@ public class VRVideoPlayer : MonoBehaviour{
 	}
 	
 	public static bool IsVideoAvailable(string videoName) {
-		string path = Application.persistentDataPath + "/" + GetPath(videoName);
+		string path = Path.Combine(DataFolder.Path, videoName + ".mp4"); 
 		Haze.Logger.Log("Checking if we have " + path);
 		return File.Exists( path);
 	}
