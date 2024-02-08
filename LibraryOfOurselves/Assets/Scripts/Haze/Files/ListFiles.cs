@@ -11,12 +11,11 @@ public class ListFiles : MonoBehaviour {
 	
 	void Start()
 	{
-		string dir = Application.persistentDataPath;
-
 		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + DataFolder.Path);
 			
-		foreach (string file in Directory.GetFiles(dir))
+		foreach (string file in Directory.GetFiles(DataFolder.Path))
 		{
+			Debug.Log("in this folder there is " + file);
 			//check if extension is <extension>
 			string[] parts = file.Split('.');
 			string ext = parts[parts.Length-1];

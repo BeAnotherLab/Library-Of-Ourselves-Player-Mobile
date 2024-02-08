@@ -17,7 +17,7 @@ public class VideoChoice { //TODO rename to option?
 public class DataFolder //TODO make it a scriptable object?
 {
 #if !UNITY_EDITOR && UNITY_ANDROID
-	public static string Path = "/storage/emulated/0/Movies/LibraryOfOurselvesContent";
+	public static string Path = "/storage/emulated/0/Movies/LibraryOfOurselvesContent"; //TODO add filebrowser to be able to set that folder manually
 #endif
 #if UNITY_EDITOR	
 	public static string Path = Application.persistentDataPath;

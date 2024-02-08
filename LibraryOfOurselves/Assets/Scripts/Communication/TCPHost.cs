@@ -124,12 +124,12 @@ public class TCPHost : MonoBehaviour{
     }
 
 	private void Update() {
-		foreach (TCPConnection conn in users) { //check responsiveness of connection
+		foreach (TCPConnection conn in users) { //check responsiveness of connection 
 			if (conn.active) {
 				if (conn.responsive && TimeSinceLastConnection(conn.lastCommunication) > _unresponsiveThreshold)
 				{
 					_onConnectionEnd.Invoke(conn);
-					users.Remove(conn);
+					users.Remove(conn); //TODO fix error where it	 destroying while iterating
 					Destroy(conn);
 				}
 			}
