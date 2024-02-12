@@ -25,7 +25,7 @@ To use these guidelines, replace any "XXX" within filenames with the video's nam
 #### Guide app:
 * Use pin 000101 to unlock app initially and to access advanced admin features (pin can be modified in Settings).
 
-* Guide videos should be named "XXXGuide.mp4", "XXXguide.mp4" or "XXXGUIDE.mp4" and placed in the `Application.PersistentDataPath `folder (that folder will be */Android/data/sco.Haze.LibraryOfOurselvesGuide/files/* on Android)
+* Guide videos should be named "XXXGuide.mp4", "XXXguide.mp4" or "XXXGUIDE.mp4" and placed in the `Application.PersistentDataPath` folder for *development in the editor* (that folder will be */storage/emulated/0/Movies/LibraryOfOurselvesContent* on Android)
 
 * Video settings will be saved as "XXX_Settings.json" and placed in the win64 folder on desktop, in the application directory on Android (although these can be copied and read from the same folder as the videos, they can't be written there)
 
@@ -35,13 +35,8 @@ To use these guidelines, replace any "XXX" within filenames with the video's nam
 	- Allowed error is how much time difference there can be before the playback speed starts changing (for example if set to 0.5s, as long as the time difference doesn't go above half a second the playback speed will remain at 1).
 	- Maximum error is how much time difference there can be before the playback time automatically jumps to catch up to the other device (for example if set to 1s, whenever the time difference goes above that, playback speed will go back to 1 and instead the time will jump to whichever time the user device is currently on).
 	- Max time dilation is the maximum allowed playback speed when the guide app needs to catch up (for example if set to x2, the playback speed will increase from x1 when the time difference == Allowed error and approach x2 as the time difference gets closer to Maximum error; the minimum playback speed is calculated as 1/(max playback speed), so in this case it would be 0.5).
-	
-* Log files for the app will be generated at runtime in the application directory (*/Android/data/sco.Haze.LibraryOfOurselvesGuide/files/loo_log.txt*).
-
 
 #### VR app:
-* Videos should be saved as "XXX.mp4", with an optional left and right audio tracks saved as "XXX-l.mp3" and "XXX-r.mp3". These files must reside in the `Application.PersistentDataPath `folder (that folder will be */Android/data/sco.Haze.LibraryOfOurselvesGuide/files/* on Android)
+* Videos should be saved as "XXX.mp4", with an optional left and right audio tracks saved as "XXX-l.mp3" and "XXX-r.mp3". These files must reside in the `Application.PersistentDataPath` folder for *development in the editor* (that folder will be */storage/emulated/0/Movies/LibraryOfOurselvesContent* on Android)
 
 * The background colour displayed in the VR app is unique to each device, and can be used to identify which device is which on the guide - these devices can also be renamed later on each guide device (with admin features access).
-
-* Log files for the app will be generated at runtime in the application directory (*/Android/data/sco.Haze.LibraryOfOurselves/files/loo_old_log.txt*).
