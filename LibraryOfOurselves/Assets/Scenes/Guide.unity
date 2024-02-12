@@ -12250,9 +12250,9 @@ MonoBehaviour:
   translations:
   - language: 1
     font: {fileID: 0}
-    contents: No guide videos found. Guide videos should be placed in the root folder
-      of the SD card on tablet, or alongside the executable file on PC. The file
-      name should end in "Guide."
+    contents: No guide videos found. Guide videos should be placed in the folder
+      /storage/emulated/0/Movies/LibraryOfOurselvesContent. The file name should
+      end in "Guide."
   - language: 16
     font: {fileID: 0}
     contents: "Aucune vid\xE9o de guide trouv\xE9e."
@@ -12301,9 +12301,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: No guide videos found. Guide videos should be placed in the root folder
-    of the SD card on tablet, or alongside the executable file on PC. The file name
-    should end in "Guide."
+  m_Text: No guide videos found. Guide videos should be placed in the folder /storage/emulated/0/Movies/LibraryOfOurselvesContent.
+    The file name should end in "Guide."
 --- !u!222 &1009327440
 CanvasRenderer:
   m_ObjectHideFlags: 0
