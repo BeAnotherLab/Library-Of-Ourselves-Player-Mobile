@@ -1451,7 +1451,7 @@ MonoBehaviour:
     alphaPacking: 0
     stereoPacking: 0
   _autoOpen: 0
-  _autoPlayOnStart: 1
+  _autoPlayOnStart: 0
   _loop: 0
   _audioVolume: 1
   _audioBalance: 0
@@ -5442,9 +5442,9 @@ MonoBehaviour:
   _uvRect:
     serializedVersion: 2
     x: 0
-    y: 0
+    y: 1
     width: 1
-    height: 1
+    height: -1
   _setNativeSize: 0
   _scaleMode: 2
   _noDefaultDisplay: 1
