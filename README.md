@@ -1,7 +1,7 @@
 # Library-Of-Ourselves-Player-Mobile
 Mobile version of Library of ourselves app
 
-### Current version: 0.3.0
+### Current version: 0.3.2-beta
 
 ## Video codec and export settings
 For smooth playback of the videos, the following export settings from Adobe Premiere Pro are recommended:
