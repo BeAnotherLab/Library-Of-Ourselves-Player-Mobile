@@ -35,11 +35,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	[SerializeField] private Transform _optionFieldsParent;
 	[SerializeField] private GameObject _choiceUIPrefab;
 	
-	[Header("Orientation editor")]
-	[SerializeField] private Text _editOrientation;
-	[SerializeField] private GameObject _orientationEditionPanel;
-	[SerializeField] private OrientationEditor _orientationEditor;
-
 	VideoDisplay current;
 
 	bool __editMode = true;
@@ -73,9 +68,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 						//Change the displayed text to "Add Choice" if there's no choices available yet
 						if (current.Settings.choices.Count == 0) _editChoice.text = _addChoiceTranslation.name;
 					}
-
-					if (_editOrientation != null) _editOrientation.gameObject.SetActive(true);
-
+					
 				} 
 				else //save and quit Edit Mode 
 				{
@@ -89,7 +82,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 					if (_is360Display != null) _is360Display.gameObject.SetActive(current.Settings.is360);
 
 					if (_editChoice != null) _editChoice.gameObject.SetActive(false);
-					if (_editOrientation != null) _editOrientation.gameObject.SetActive(false);
 
 					if (enableSave) 
 					{
@@ -188,33 +180,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	public void OnClickAddChoice()
 	{
 		AddChoice(new VideoChoice()); 
-	}
-	
-	public void OnClickEditOrientation() {
-		_orientationEditionPanel.SetActive(true);
-
-		Vector4[] deltas = VideoDisplay.expandedDisplay.Settings.deltaAngles;
-		if(deltas.Length == 0)
-			_orientationEditor.ResetOrientations(true);
-		else {
-			_orientationEditor.ResetOrientations(false);
-			foreach(Vector4 delta in deltas) {
-				_orientationEditor.AddOrientation(delta);
-			}
-		}
-	}
-
-	public void OnClickSaveOrientation() {
-		_orientationEditionPanel.SetActive(false);
-
-		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-
-		settings.deltaAngles = _orientationEditor.GetValues().ToArray();
-
-		VideoDisplay.expandedDisplay.Settings = settings;
-
-		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
 	}
 	
 	private GameObject AddChoice(VideoChoice choice)
