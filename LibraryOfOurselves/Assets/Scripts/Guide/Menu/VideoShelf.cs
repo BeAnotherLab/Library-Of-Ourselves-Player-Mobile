@@ -40,11 +40,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	[SerializeField] private GameObject _orientationEditionPanel;
 	[SerializeField] private OrientationEditor _orientationEditor;
 
-	[Header("Old-style orientation editor")]
-	[SerializeField] InputField pitchInputField;
-	[SerializeField] InputField yawInputField;
-	[SerializeField] InputField rollInputField;
-
 	VideoDisplay current;
 
 	bool __editMode = true;
@@ -72,14 +67,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 					}
 					
 					if (_is360Display != null) _is360Display.gameObject.SetActive(false);
-
-					//Old style orientation settings:
-					if (current.Settings.deltaAngles.Length > 0) {
-						Vector4 deltas = current.Settings.deltaAngles[0];
-						if(pitchInputField) pitchInputField.SetTextWithoutNotify(""+deltas.x);
-						if(yawInputField) yawInputField.SetTextWithoutNotify("" + deltas.y);
-						if(rollInputField) rollInputField.SetTextWithoutNotify("" + deltas.z);
-					}
 
 					if (_editChoice != null) {
 						_editChoice.gameObject.SetActive(true);
@@ -109,15 +96,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 						current.Settings.description = _descriptionInputField.text;
 						current.Settings.objectsNeeded = _objectsInputField.text;
 						current.Settings.is360 = _is360Toggle.isOn;
-
-						//Old-style orientation save
-						if(pitchInputField && yawInputField && rollInputField) {
-							Vector4 deltas = Vector4.zero;
-							float.TryParse(pitchInputField.text, out deltas.x);
-							float.TryParse(yawInputField.text, out deltas.y);
-							float.TryParse(rollInputField.text, out deltas.z);
-							current.Settings.deltaAngles = new Vector4[] { deltas };
-						}
 
 						VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
 
