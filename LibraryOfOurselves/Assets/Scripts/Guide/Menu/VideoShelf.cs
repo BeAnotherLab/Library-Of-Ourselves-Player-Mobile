@@ -126,7 +126,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		int currentlyPaired = 0;
 		if (ConnectionsDisplayer.Instance != null) 
 		{
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) 
+			foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) 
 				if (handle.connection.active && handle.connection.paired)
 					++currentlyPaired;
 		}
@@ -172,7 +172,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		AddChoice(new VideoChoice()); 
 	}
 	
-	private GameObject AddChoice(VideoChoice choice)
+	private void AddChoice(VideoChoice choice)
 	{
 		var instance = Instantiate(_choiceUIPrefab, _optionFieldsParent);
 		instance.GetComponentInChildren<InputField>().text = choice.description;
@@ -181,7 +181,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		var dataPresent = (choice.position.x != 0 || choice.position.y != 0 || choice.position.z != 0);
 		instance.GetComponent<ChoiceOption>().SetEditButtonColor(dataPresent);	
 		
-		return instance;
 	}
 	
 	private void OnClickSaveChoice() {
@@ -209,15 +208,8 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 	private void OnClickDeleteChoice() {
 		_choiceEditionPanel.SetActive(false);
-
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
-/*
-		if(settings.choices.Count > 0) {
-			settings.choices = new VideosDisplayer.VideoChoice[0];
-		}
-*/
 		VideoDisplay.expandedDisplay.Settings = settings;
-
 		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
 		VideoDisplay.expandedDisplay.expand();
 	}
