@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
 
-public class VideoDisplay : MonoBehaviour{
-
+public class VideoDisplay : MonoBehaviour
+{
 	[SerializeField] Text videoNameDisplay;
 	[SerializeField] Image videoThumbnail;
 	[SerializeField] UnityEvent onBecomesAvailable;
@@ -19,13 +19,13 @@ public class VideoDisplay : MonoBehaviour{
 	public static VideoDisplay expandedDisplay = null; //TODO use scriptable objects instead of singletons!
 
 	bool __available = true;
-	public bool Available {
+	public bool Available { //TODO why are we setting a global state variable on a UI script?
 		get { return __available; }
 		set {
 			if(__available != value) {
 				__available = value;
 
-				if(value) onBecomesAvailable.Invoke();
+				if (value) onBecomesAvailable.Invoke();
 				else onBecomesUnavailable.Invoke();
 			}
 		}
@@ -56,18 +56,18 @@ public class VideoDisplay : MonoBehaviour{
 		string thumbnailPath = "";
 		for(int i = 0; i < split.Length - 1; ++i) thumbnailPath += split[i] + "/";
 		thumbnailPath += videoName;
-		//try several known extensions:
+
 		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath + ".png"); //TODO put in a foreach loop
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".PNG");
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpg");
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPG");
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpeg");
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPEG");
-		if(thumbnail == null) {
-			//none of the extensions have worked, keep the default in that case.
-		} else {
-			videoThumbnail.sprite = thumbnail;
-		}
+		
+		//string[] x = {".png", ".PNG", ".jpg", ".JPG", ".jpeg", ".JPEG"};
+		// foreach (string fileExtension in x) thumbnail = PngToSprite.LoadSprite(thumbnailPath + fileExtension);
+		
+		if (thumbnail != null) videoThumbnail.sprite = thumbnail;
 
 		return this;
 	}
@@ -75,18 +75,15 @@ public class VideoDisplay : MonoBehaviour{
 	public void OnClickChoose() {
 		//Load this video.
 		GuideVideoPlayer player = GuideVideoPlayer.Instance;
-		if(player != null) player.LoadVideo(this);
+		if (player != null) player.LoadVideo(this); //TODO is nullcheck necessary?
 		else Haze.Logger.LogError("Error: no GuideVideoPlayer instance!"); //TODO remove?
 	}
 
 	public void OnClickSelectVideo() {
-		//if we're already expanded, contract. otherwise expand.
-		StopAllCoroutines();
 		if (expandedDisplay == this) Contract(); 
 		else Expand();
 	}
 
-	//Display this video's settings and such.
 	public void Expand() {
 		expandedDisplay = this;
 

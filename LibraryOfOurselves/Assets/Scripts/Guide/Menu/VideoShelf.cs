@@ -8,12 +8,13 @@ using UnityEngineInternal.Input;
 
 public class VideoShelf : MonoBehaviour { //displays a single video, along with choice and orientation editors
 
+	//TODO use gameobject when sufficient
 	[SerializeField] private Text _titleDisplay;
 	[SerializeField] private Image _thumbnailDisplay;
 	[SerializeField] private Text _descriptionDisplay;
 	[SerializeField] private Text _objectsDisplay;
 	[SerializeField] private GameObject _is360Display;
-	[SerializeField] private Text _editDisplay;
+	[SerializeField] private Text _editDisplay; 
 	[SerializeField] private Text _saveDisplay;
 	[SerializeField] private InputField _descriptionInputField;
 	[SerializeField] private InputField _objectsInputField;
@@ -35,71 +36,52 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	VideoDisplay current;
 
 	bool __editMode = true;
-	bool enableSave ;
 	
-	bool EditMode {
+	private bool EditMode {
 		get { return __editMode; }
 		set {
 			if (__editMode != value) {
 				__editMode = value;
+				
+				_editDisplay.gameObject.SetActive(!value); //hide edit button if ¿not null?
+				_saveDisplay.gameObject.SetActive(value); //show save button
+
+				_descriptionInputField.gameObject.SetActive(value); //allow edition of video description
+				_objectsInputField.gameObject.SetActive(value); //allow edition of objects to be used
+				
+				_is360Toggle.gameObject.SetActive(value);
+				_editChoice.gameObject.SetActive(value);
 
 				if (value) //go into Edit Mode 
 				{
-					if (_editDisplay != null) _editDisplay.gameObject.SetActive(false); //hide edit button if ¿not null?
-					if (_saveDisplay != null) _saveDisplay.gameObject.SetActive(true); //show save button
-
-					_descriptionInputField.gameObject.SetActive(true); //allow edition of video description
-					_objectsInputField.gameObject.SetActive(true); //allow edition of objects to be used
 					_descriptionInputField.text = current.Settings.description;
 					_objectsInputField.text = current.Settings.objectsNeeded;
 
-					if(_is360Toggle != null) {
-						_is360Toggle.gameObject.SetActive(true);
-						_is360Toggle.isOn = current.Settings.is360;
-					}
+					_is360Toggle.isOn = current.Settings.is360;
 					
-					if (_is360Display != null) _is360Display.gameObject.SetActive(false);
-
-					if (_editChoice != null) {
-						_editChoice.gameObject.SetActive(true);
-						//Change the displayed text to "Add Choice" if there's no choices available yet
-						if (current.Settings.choices.Count == 0) _editChoice.text = _addChoiceTranslation.name;
-					}
+					_is360Display.gameObject.SetActive(!value);
 					
+					//Change the displayed text to "Add Choice" if there's no choices available yet
+					if (current.Settings.choices.Count == 0) _editChoice.text = _addChoiceTranslation.name;
 				} 
 				else //save and quit Edit Mode 
 				{
-					if (_editDisplay != null) _editDisplay.gameObject.SetActive(true);
-					if (_saveDisplay != null) _saveDisplay.gameObject.SetActive(false);
-					
-					_descriptionInputField.gameObject.SetActive(false);
-					_objectsInputField.gameObject.SetActive(false);
-					
-					if (_is360Toggle != null) _is360Toggle.gameObject.SetActive(false);
-					if (_is360Display != null) _is360Display.gameObject.SetActive(current.Settings.is360);
+					_is360Display.gameObject.SetActive(current.Settings.is360);
 
-					if (_editChoice != null) _editChoice.gameObject.SetActive(false);
+					current.Settings.description = _descriptionInputField.text;
+					current.Settings.objectsNeeded = _objectsInputField.text;
+					current.Settings.is360 = _is360Toggle.isOn;
 
-					if (enableSave) 
-					{
-						current.Settings.description = _descriptionInputField.text;
-						current.Settings.objectsNeeded = _objectsInputField.text;
-						current.Settings.is360 = _is360Toggle.isOn;
+					VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
 
-						VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
-
-						//update display...
-						DisplayCurrentVideo();
-					}
+					DisplayCurrentVideo(); //update display...
 				}
 			}
 		}
 	}
 
 	private void OnDisable() {
-		if (VideoDisplay.expandedDisplay != null) {
-			VideoDisplay.expandedDisplay.Contract();
-		}
+		if (VideoDisplay.expandedDisplay != null) VideoDisplay.expandedDisplay.Contract();
 	}
 
 	public void DisplayCurrentVideo() {
@@ -117,10 +99,8 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 			
 		if (_is360Display != null) _is360Display.SetActive(current.Settings.is360);
 
-		enableSave = false;
 		EditMode = false;
-		enableSave = true;
-
+		
 		_editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
 
 		int currentlyPaired = 0;
