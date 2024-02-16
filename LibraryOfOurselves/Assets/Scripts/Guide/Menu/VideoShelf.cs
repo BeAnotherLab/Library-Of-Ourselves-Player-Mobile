@@ -24,9 +24,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	[SerializeField] private Button _chooseButton;
 	[SerializeField] private string _appendToObjects = "";
 	[SerializeField] private bool _saveAsOldSettings = false;
-	[SerializeField] private UnityEvent _onClickChoose;
-	[SerializeField] private UnityEvent _onClickEdit;
-	[SerializeField] private UnityEvent _onClickSave;
 
 	[Header("Choice editor")]
 	[SerializeField] private Text _editChoice;
@@ -147,18 +144,11 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	}
 
 	public void OnClickChoose() {
-		if(current) {
-			current.OnClickChoose();
-			_onClickChoose.Invoke();
-		}
+		if (current) current.OnClickChoose();
 	}
 
 	public void OnClickEdit() {
 		EditMode = !EditMode;
-		if(EditMode)
-			_onClickEdit.Invoke();
-		else
-			_onClickSave.Invoke();
 	}
 
 	public void OnClickEditChoice() 
