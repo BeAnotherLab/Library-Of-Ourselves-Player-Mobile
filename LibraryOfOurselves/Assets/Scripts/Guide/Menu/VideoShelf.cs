@@ -3,42 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngineInternal.Input;
 
 public class VideoShelf : MonoBehaviour { //displays a single video, along with choice and orientation editors
 
-	[SerializeField] Text titleDisplay;
-	[SerializeField] Image thumbnailDisplay;
-	[SerializeField] Text descriptionDisplay;
-	[SerializeField] Text objectsDisplay;
-	[SerializeField] GameObject is360Display;
-	[SerializeField] Text editDisplay;
-	[SerializeField] Text saveDisplay;
-	[SerializeField] InputField descriptionInputField;
-	[SerializeField] InputField objectsInputField;
-	[SerializeField] Toggle is360Toggle;
-	[SerializeField] GameObject noDescriptionTranslation;
-	[SerializeField] GameObject noObjectNeededTranslation;
-	[SerializeField] Button editButton;
-	[SerializeField] Button chooseButton;
-	[SerializeField] string appendToObjects = "";
-	[SerializeField] bool saveAsOldSettings = false;
-	[SerializeField] UnityEvent onClickChoose;
-	[SerializeField] UnityEvent onClickEdit;
-	[SerializeField] UnityEvent onClickSave;
+	[SerializeField] private Text _titleDisplay;
+	[SerializeField] private Image _thumbnailDisplay;
+	[SerializeField] private Text _descriptionDisplay;
+	[SerializeField] private Text _objectsDisplay;
+	[SerializeField] private GameObject _is360Display;
+	[SerializeField] private Text _editDisplay;
+	[SerializeField] private Text _saveDisplay;
+	[SerializeField] private InputField _descriptionInputField;
+	[SerializeField] private InputField _objectsInputField;
+	[SerializeField] private Toggle _is360Toggle;
+	[SerializeField] private GameObject _noDescriptionTranslation;
+	[SerializeField] private GameObject _noObjectNeededTranslation;
+	[SerializeField] private Button _editButton;
+	[SerializeField] private Button _chooseButton;
+	[SerializeField] private string _appendToObjects = "";
+	[SerializeField] private bool _saveAsOldSettings = false;
+	[SerializeField] private UnityEvent _onClickChoose;
+	[SerializeField] private UnityEvent _onClickEdit;
+	[SerializeField] private UnityEvent _onClickSave;
 
 	[Header("Choice editor")]
-	[SerializeField] Text editChoice;
-	[SerializeField] GameObject addChoiceTranslation;
-	[SerializeField] GameObject choiceEditionPanel;
-	[SerializeField] Transform optionFieldsParent;
-	
-	[SerializeField] private GameObject choiceUIPrefab;
+	[SerializeField] private Text _editChoice;
+	[SerializeField] private GameObject _addChoiceTranslation;
+	[SerializeField] private GameObject _choiceEditionPanel;
+	[SerializeField] private Transform _optionFieldsParent;
+	[SerializeField] private GameObject _choiceUIPrefab;
 	
 	[Header("Orientation editor")]
-	[SerializeField] Text editOrientation;
-	[SerializeField] GameObject orientationEditionPanel;
-	[SerializeField] OrientationEditor orientationEditor;
+	[SerializeField] private Text _editOrientation;
+	[SerializeField] private GameObject _orientationEditionPanel;
+	[SerializeField] private OrientationEditor _orientationEditor;
 
 	[Header("Old-style orientation editor")]
 	[SerializeField] InputField pitchInputField;
@@ -58,20 +58,20 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 				if (value) //go into Edit Mode 
 				{
-					if (editDisplay != null) editDisplay.gameObject.SetActive(false); //hide edit button if ¿not null?
-					if (saveDisplay != null) saveDisplay.gameObject.SetActive(true); //show save button
+					if (_editDisplay != null) _editDisplay.gameObject.SetActive(false); //hide edit button if ¿not null?
+					if (_saveDisplay != null) _saveDisplay.gameObject.SetActive(true); //show save button
 
-					descriptionInputField.gameObject.SetActive(true); //allow edition of video description
-					objectsInputField.gameObject.SetActive(true); //allow edition of objects to be used
-					descriptionInputField.text = current.Settings.description;
-					objectsInputField.text = current.Settings.objectsNeeded;
+					_descriptionInputField.gameObject.SetActive(true); //allow edition of video description
+					_objectsInputField.gameObject.SetActive(true); //allow edition of objects to be used
+					_descriptionInputField.text = current.Settings.description;
+					_objectsInputField.text = current.Settings.objectsNeeded;
 
-					if(is360Toggle != null) {
-						is360Toggle.gameObject.SetActive(true);
-						is360Toggle.isOn = current.Settings.is360;
+					if(_is360Toggle != null) {
+						_is360Toggle.gameObject.SetActive(true);
+						_is360Toggle.isOn = current.Settings.is360;
 					}
 					
-					if (is360Display != null) is360Display.gameObject.SetActive(false);
+					if (_is360Display != null) _is360Display.gameObject.SetActive(false);
 
 					//Old style orientation settings:
 					if (current.Settings.deltaAngles.Length > 0) {
@@ -81,34 +81,34 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 						if(rollInputField) rollInputField.SetTextWithoutNotify("" + deltas.z);
 					}
 
-					if (editChoice != null) {
-						editChoice.gameObject.SetActive(true);
+					if (_editChoice != null) {
+						_editChoice.gameObject.SetActive(true);
 						//Change the displayed text to "Add Choice" if there's no choices available yet
-						if (current.Settings.choices.Count == 0) editChoice.text = addChoiceTranslation.name;
+						if (current.Settings.choices.Count == 0) _editChoice.text = _addChoiceTranslation.name;
 					}
 
-					if (editOrientation != null) editOrientation.gameObject.SetActive(true);
+					if (_editOrientation != null) _editOrientation.gameObject.SetActive(true);
 
 				} 
 				else //save and quit Edit Mode 
 				{
-					if (editDisplay != null) editDisplay.gameObject.SetActive(true);
-					if (saveDisplay != null) saveDisplay.gameObject.SetActive(false);
+					if (_editDisplay != null) _editDisplay.gameObject.SetActive(true);
+					if (_saveDisplay != null) _saveDisplay.gameObject.SetActive(false);
 					
-					descriptionInputField.gameObject.SetActive(false);
-					objectsInputField.gameObject.SetActive(false);
+					_descriptionInputField.gameObject.SetActive(false);
+					_objectsInputField.gameObject.SetActive(false);
 					
-					if (is360Toggle != null) is360Toggle.gameObject.SetActive(false);
-					if (is360Display != null) is360Display.gameObject.SetActive(current.Settings.is360);
+					if (_is360Toggle != null) _is360Toggle.gameObject.SetActive(false);
+					if (_is360Display != null) _is360Display.gameObject.SetActive(current.Settings.is360);
 
-					if (editChoice != null) editChoice.gameObject.SetActive(false);
-					if (editOrientation != null) editOrientation.gameObject.SetActive(false);
+					if (_editChoice != null) _editChoice.gameObject.SetActive(false);
+					if (_editOrientation != null) _editOrientation.gameObject.SetActive(false);
 
 					if (enableSave) 
 					{
-						current.Settings.description = descriptionInputField.text;
-						current.Settings.objectsNeeded = objectsInputField.text;
-						current.Settings.is360 = is360Toggle.isOn;
+						current.Settings.description = _descriptionInputField.text;
+						current.Settings.objectsNeeded = _objectsInputField.text;
+						current.Settings.is360 = _is360Toggle.isOn;
 
 						//Old-style orientation save
 						if(pitchInputField && yawInputField && rollInputField) {
@@ -139,22 +139,22 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 		current = VideoDisplay.expandedDisplay;
 
-		titleDisplay.text = current.VideoName;
-		thumbnailDisplay.sprite = current.Thumbnail;
+		_titleDisplay.text = current.VideoName;
+		_thumbnailDisplay.sprite = current.Thumbnail;
 		
-		if (current.Settings.description != "") descriptionDisplay.text = current.Settings.description;
-		else descriptionDisplay.text = noDescriptionTranslation.name;
+		if (current.Settings.description != "") _descriptionDisplay.text = current.Settings.description;
+		else _descriptionDisplay.text = _noDescriptionTranslation.name;
 		
-		if (current.Settings.objectsNeeded != "") objectsDisplay.text = appendToObjects + current.Settings.objectsNeeded;
-		else objectsDisplay.text = noObjectNeededTranslation.name;
+		if (current.Settings.objectsNeeded != "") _objectsDisplay.text = _appendToObjects + current.Settings.objectsNeeded;
+		else _objectsDisplay.text = _noObjectNeededTranslation.name;
 			
-		if (is360Display != null) is360Display.SetActive(current.Settings.is360);
+		if (_is360Display != null) _is360Display.SetActive(current.Settings.is360);
 
 		enableSave = false;
 		EditMode = false;
 		enableSave = true;
 
-		editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
+		_editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
 
 		int currentlyPaired = 0;
 		if (ConnectionsDisplayer.Instance != null) 
@@ -167,11 +167,11 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		
 		if (currentlyPaired > 0 && current.Available) //if there's no connections (or some of them don't have the video), cannot play any videos. 
 		{
-			chooseButton.gameObject.SetActive(true);
+			_chooseButton.gameObject.SetActive(true);
 		} 
 		else 
 		{
-			chooseButton.gameObject.SetActive(false);
+			_chooseButton.gameObject.SetActive(false);
 			Haze.Logger.Log("Hiding choose button (currentlyPaired = " + currentlyPaired + "; current.Available = " + current.Available + ")");
 		}
 	}
@@ -179,21 +179,21 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	public void OnClickChoose() {
 		if(current) {
 			current.OnClickChoose();
-			onClickChoose.Invoke();
+			_onClickChoose.Invoke();
 		}
 	}
 
 	public void OnClickEdit() {
 		EditMode = !EditMode;
 		if(EditMode)
-			onClickEdit.Invoke();
+			_onClickEdit.Invoke();
 		else
-			onClickSave.Invoke();
+			_onClickSave.Invoke();
 	}
 
 	public void OnClickEditChoice() 
 	{
-		choiceEditionPanel.SetActive(true);
+		_choiceEditionPanel.SetActive(true);
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 		if (settings.choices.Count > 0) //if there are options
 		{
@@ -204,7 +204,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 	public void ClearOptions()
 	{
-		while (optionFieldsParent.childCount > 0) DestroyImmediate(optionFieldsParent.GetChild(0).gameObject);
+		while (_optionFieldsParent.childCount > 0) DestroyImmediate(_optionFieldsParent.GetChild(0).gameObject);
 	}
 	
 	public void OnClickAddChoice()
@@ -213,25 +213,25 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	}
 	
 	public void OnClickEditOrientation() {
-		orientationEditionPanel.SetActive(true);
+		_orientationEditionPanel.SetActive(true);
 
 		Vector4[] deltas = VideoDisplay.expandedDisplay.Settings.deltaAngles;
 		if(deltas.Length == 0)
-			orientationEditor.ResetOrientations(true);
+			_orientationEditor.ResetOrientations(true);
 		else {
-			orientationEditor.ResetOrientations(false);
+			_orientationEditor.ResetOrientations(false);
 			foreach(Vector4 delta in deltas) {
-				orientationEditor.AddOrientation(delta);
+				_orientationEditor.AddOrientation(delta);
 			}
 		}
 	}
 
 	public void OnClickSaveOrientation() {
-		orientationEditionPanel.SetActive(false);
+		_orientationEditionPanel.SetActive(false);
 
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 
-		settings.deltaAngles = orientationEditor.GetValues().ToArray();
+		settings.deltaAngles = _orientationEditor.GetValues().ToArray();
 
 		VideoDisplay.expandedDisplay.Settings = settings;
 
@@ -241,7 +241,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	
 	private GameObject AddChoice(VideoChoice choice)
 	{
-		var instance = Instantiate(choiceUIPrefab, optionFieldsParent);
+		var instance = Instantiate(_choiceUIPrefab, _optionFieldsParent);
 		instance.GetComponentInChildren<InputField>().text = choice.description;
 		instance.GetComponentInChildren<VideoNamesDropdown>().Selected = choice.video;
 		instance.GetComponent<ChoiceOption>().eulerAngles = choice.position;
@@ -252,13 +252,13 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	}
 	
 	private void OnClickSaveChoice() {
-		choiceEditionPanel.SetActive(false);
+		_choiceEditionPanel.SetActive(false);
 
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 
 		settings.choices = new List<VideoChoice>();
 		
-		foreach (ChoiceOption choiceOption in optionFieldsParent.GetComponentsInChildren<ChoiceOption>())
+		foreach (ChoiceOption choiceOption in _optionFieldsParent.GetComponentsInChildren<ChoiceOption>())
 		{
 			Debug.Log("under choiceTransform " + choiceOption.gameObject.name);
 			var videoChoice = new VideoChoice();
@@ -275,7 +275,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	}
 
 	private void OnClickDeleteChoice() {
-		choiceEditionPanel.SetActive(false);
+		_choiceEditionPanel.SetActive(false);
 
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 /*
