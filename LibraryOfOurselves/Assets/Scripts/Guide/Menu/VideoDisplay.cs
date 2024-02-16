@@ -11,8 +11,6 @@ public class VideoDisplay : MonoBehaviour{
 	[SerializeField] Image videoThumbnail;
 	[SerializeField] UnityEvent onBecomesAvailable;
 	[SerializeField] UnityEvent onBecomesUnavailable;
-	[Header("Set to false to use the video shelf underneath each video")]
-	[SerializeField] bool UseFullscreenVideoShelf = true;
 
 	public string FullPath { get; private set; }//path to guide video
 	public string VideoName { get; private set; } //TODO move file reference stuff to its own scriptable object instead of using UI scripts
@@ -59,7 +57,7 @@ public class VideoDisplay : MonoBehaviour{
 		for(int i = 0; i < split.Length - 1; ++i) thumbnailPath += split[i] + "/";
 		thumbnailPath += videoName;
 		//try several known extensions:
-		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath + ".png");
+		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath + ".png"); //TODO put in a foreach loop
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".PNG");
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpg");
 		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPG");
@@ -77,78 +75,29 @@ public class VideoDisplay : MonoBehaviour{
 	public void OnClickChoose() {
 		//Load this video.
 		GuideVideoPlayer player = GuideVideoPlayer.Instance;
-		if(player != null) {
-			player.LoadVideo(this);
-		} else {
-			Haze.Logger.LogError("Error: no GuideVideoPlayer instance!");
-		}
+		if(player != null) player.LoadVideo(this);
+		else Haze.Logger.LogError("Error: no GuideVideoPlayer instance!"); //TODO remove?
 	}
 
 	public void OnClickSelectVideo() {
 		//if we're already expanded, contract. otherwise expand.
 		StopAllCoroutines();
-		if(expandedDisplay == this) {
-			Contract();
-		} else {
-			Expand();
-		}
+		if (expandedDisplay == this) Contract(); 
+		else Expand();
 	}
 
 	//Display this video's settings and such.
 	public void Expand() {
-		VideoDisplay previouslyExpanded = expandedDisplay;
 		expandedDisplay = this;
 
-		if (UseFullscreenVideoShelf) {
-			Singleton videoShelf = Singleton.GetInstance("videoshelf");
-			videoShelf.gameObject.SetActive(true);
-			videoShelf.GetComponentInChildren<VideoShelf>().DisplayCurrentVideo();
-			Haze.Logger.Log("Expanding.");
-
-		} else {
-
-			if(previouslyExpanded == this) {
-				//we're already expanded; just update the display then.
-				VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
-				if(shelf != null) shelf.DisplayCurrentVideo();
-			} else {
-
-				if(previouslyExpanded != null) {
-					previouslyExpanded.Contract();
-				}
-
-				VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
-				if(shelf != null) shelf.DisplayCurrentVideo();
-				Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
-				if(expanding != null) expanding.Interpolate();
-
-				StartCoroutine(scrollDown());
-			}
-		}
-
+		Singleton videoShelf = Singleton.GetInstance("videoshelf");
+		videoShelf.gameObject.SetActive(true);
+		videoShelf.GetComponentInChildren<VideoShelf>().DisplayCurrentVideo();
+		Haze.Logger.Log("Expanding.");
 	}
 
 	public void Contract() {
 		expandedDisplay = null;
-		if (!UseFullscreenVideoShelf) 
-		{
-			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
-			expanding.InterpolateBackward();
-		}
-	}
-
-	IEnumerator scrollDown() {
-		ScrollRect scrollRect = GetComponentInParent<ScrollRect>();
-
-		float normalScreenY = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position).y / Screen.height;
-		while(normalScreenY < 0.6f) {
-			normalScreenY = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position).y / Screen.height;
-			//scroll down a bit
-			float scrollY = scrollRect.verticalNormalizedPosition * scrollRect.content.rect.height;
-			scrollY -= Time.deltaTime * 2000;
-			scrollRect.verticalNormalizedPosition = scrollY / scrollRect.content.rect.height;
-			yield return null;
-		}
 	}
 
 }
