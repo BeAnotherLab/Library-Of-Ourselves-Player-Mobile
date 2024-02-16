@@ -142,7 +142,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO why do we need path AND name? 
 		string json = JsonUtility.ToJson(settings); 
-		videoName = videoName.Substring(0, videoName.IndexOf("guide", StringComparison.OrdinalIgnoreCase)); //extract videoname from filename
 		File.WriteAllText(Path.Combine(DataFolder.Path, videoName + "_Settings.json"), json); //Save settings to json file
 	}
 

@@ -3641,6 +3641,12 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &310219033 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3280701908342725990, guid: af19f8a9ac72a4bd894bad0d2d1fa5b2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6743646997448771348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &321473169
 GameObject:
   m_ObjectHideFlags: 0
@@ -25574,8 +25580,9 @@ MonoBehaviour:
   _editChoice: {fileID: 6136847446885272103}
   _addChoiceTranslation: {fileID: 4276102330096519214}
   _choiceEditionPanel: {fileID: 8492134947831186782}
-  _optionFieldsParent: {fileID: 0}
-  _choiceUIPrefab: {fileID: 0}
+  _optionFieldsParent: {fileID: 310219033}
+  _choiceUIPrefab: {fileID: 2997394712337894248, guid: c9bda8ee9405846c9a7013d210dd7e9c,
+    type: 3}
   _editOrientation: {fileID: 9174622024124898515}
   _orientationEditionPanel: {fileID: 2247911302242692393}
   _orientationEditor: {fileID: 7858004513132330297}
