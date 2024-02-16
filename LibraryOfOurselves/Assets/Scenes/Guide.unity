@@ -3641,12 +3641,6 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &310219033 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3280701908342725990, guid: af19f8a9ac72a4bd894bad0d2d1fa5b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 6743646997448771348}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &321473169
 GameObject:
   m_ObjectHideFlags: 0
@@ -25552,43 +25546,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b608ec979e3ac04a837e938898923d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleDisplay: {fileID: 2440801223702554860}
-  thumbnailDisplay: {fileID: 3828838368254511212}
-  descriptionDisplay: {fileID: 7707480561878401542}
-  objectsDisplay: {fileID: 5491493241664719223}
-  is360Display: {fileID: 3175427499944391261}
-  editDisplay: {fileID: 4793868087567113109}
-  saveDisplay: {fileID: 6772162091735488974}
-  descriptionInputField: {fileID: 897146627601469731}
-  objectsInputField: {fileID: 3308499532080427762}
-  is360Toggle: {fileID: 1363352698962131831}
-  noDescriptionTranslation: {fileID: 4185321925792874779}
-  noObjectNeededTranslation: {fileID: 8921296433547704477}
-  editButton: {fileID: 813569766676221039}
-  chooseButton: {fileID: 4118497569909204954}
-  appendToObjects: 
-  saveAsOldSettings: 0
-  onClickChoose:
+  _titleDisplay: {fileID: 2440801223702554860}
+  _thumbnailDisplay: {fileID: 3828838368254511212}
+  _descriptionDisplay: {fileID: 7707480561878401542}
+  _objectsDisplay: {fileID: 5491493241664719223}
+  _is360Display: {fileID: 3175427499944391261}
+  _editDisplay: {fileID: 4793868087567113109}
+  _saveDisplay: {fileID: 6772162091735488974}
+  _descriptionInputField: {fileID: 897146627601469731}
+  _objectsInputField: {fileID: 3308499532080427762}
+  _is360Toggle: {fileID: 1363352698962131831}
+  _noDescriptionTranslation: {fileID: 4185321925792874779}
+  _noObjectNeededTranslation: {fileID: 8921296433547704477}
+  _editButton: {fileID: 813569766676221039}
+  _chooseButton: {fileID: 4118497569909204954}
+  _appendToObjects: 
+  _saveAsOldSettings: 0
+  _onClickChoose:
     m_PersistentCalls:
       m_Calls: []
-  onClickEdit:
+  _onClickEdit:
     m_PersistentCalls:
       m_Calls: []
-  onClickSave:
+  _onClickSave:
     m_PersistentCalls:
       m_Calls: []
-  editChoice: {fileID: 6136847446885272103}
-  addChoiceTranslation: {fileID: 4276102330096519214}
-  choiceEditionPanel: {fileID: 8492134947831186782}
-  optionFieldsParent: {fileID: 310219033}
-  choiceUIPrefab: {fileID: 2997394712337894248, guid: c9bda8ee9405846c9a7013d210dd7e9c,
-    type: 3}
-  editOrientation: {fileID: 9174622024124898515}
-  orientationEditionPanel: {fileID: 2247911302242692393}
-  orientationEditor: {fileID: 7858004513132330297}
-  pitchInputField: {fileID: 0}
-  yawInputField: {fileID: 0}
-  rollInputField: {fileID: 0}
+  _editChoice: {fileID: 6136847446885272103}
+  _addChoiceTranslation: {fileID: 4276102330096519214}
+  _choiceEditionPanel: {fileID: 8492134947831186782}
+  _optionFieldsParent: {fileID: 0}
+  _choiceUIPrefab: {fileID: 0}
+  _editOrientation: {fileID: 9174622024124898515}
+  _orientationEditionPanel: {fileID: 2247911302242692393}
+  _orientationEditor: {fileID: 7858004513132330297}
 --- !u!114 &3371778694688082096
 MonoBehaviour:
   m_ObjectHideFlags: 0
