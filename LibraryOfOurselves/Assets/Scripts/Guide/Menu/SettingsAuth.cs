@@ -73,7 +73,7 @@ public class SettingsAuth : MonoBehaviour{
 			CloseAuthPanel();
 			ConnectionsDisplayer.UpdateAllDisplays();
 			if(VideoDisplay.expandedDisplay != null) {
-				VideoDisplay.expandedDisplay.expand();//update that display.
+				VideoDisplay.expandedDisplay.Expand();//update that display.
 			}
 		}
 	}

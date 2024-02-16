@@ -42,7 +42,7 @@ public class Settings : MonoBehaviour {
 
 	public void OnChangeLanguage() {
 		if(VideoDisplay.expandedDisplay != null)
-			VideoDisplay.expandedDisplay.expand();
+			VideoDisplay.expandedDisplay.Expand();
 	}
 
 	public void DisableAdminAccess() {

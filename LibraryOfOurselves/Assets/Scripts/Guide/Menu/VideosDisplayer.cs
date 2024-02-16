@@ -87,7 +87,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			}
 
 			if(VideoDisplay.expandedDisplay == videoDisplay && previouslyAvailable != videoDisplay.Available)//only update if its availability changed this frame
-				videoDisplay.expand();
+				videoDisplay.Expand();
 		}
 	}
 

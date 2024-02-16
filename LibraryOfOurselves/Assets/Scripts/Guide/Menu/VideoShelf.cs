@@ -98,7 +98,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 
 	private void OnDisable() {
 		if (VideoDisplay.expandedDisplay != null) {
-			VideoDisplay.expandedDisplay.contract();
+			VideoDisplay.expandedDisplay.Contract();
 		}
 	}
 
@@ -203,7 +203,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		VideoDisplay.expandedDisplay.Settings = settings;
 
 		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
+		VideoDisplay.expandedDisplay.Expand();
 	}
 
 	private void OnClickDeleteChoice() {
@@ -211,7 +211,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		VideoSettings settings = VideoDisplay.expandedDisplay.Settings;
 		VideoDisplay.expandedDisplay.Settings = settings;
 		VideosDisplayer.Instance.SaveVideoSettings(VideoDisplay.expandedDisplay.VideoName, settings);
-		VideoDisplay.expandedDisplay.expand();
+		VideoDisplay.expandedDisplay.Expand();
 	}
 
 }

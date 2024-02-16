@@ -88,18 +88,18 @@ public class VideoDisplay : MonoBehaviour{
 		//if we're already expanded, contract. otherwise expand.
 		StopAllCoroutines();
 		if(expandedDisplay == this) {
-			contract();
+			Contract();
 		} else {
-			expand();
+			Expand();
 		}
 	}
 
 	//Display this video's settings and such.
-	public void expand() {
+	public void Expand() {
 		VideoDisplay previouslyExpanded = expandedDisplay;
 		expandedDisplay = this;
 
-		if(UseFullscreenVideoShelf) {
+		if (UseFullscreenVideoShelf) {
 			Singleton videoShelf = Singleton.GetInstance("videoshelf");
 			videoShelf.gameObject.SetActive(true);
 			videoShelf.GetComponentInChildren<VideoShelf>().DisplayCurrentVideo();
@@ -114,7 +114,7 @@ public class VideoDisplay : MonoBehaviour{
 			} else {
 
 				if(previouslyExpanded != null) {
-					previouslyExpanded.contract();
+					previouslyExpanded.Contract();
 				}
 
 				VideoShelf shelf = transform.parent.parent.GetComponent<VideoShelf>();
@@ -128,11 +128,10 @@ public class VideoDisplay : MonoBehaviour{
 
 	}
 
-	public void contract() {
+	public void Contract() {
 		expandedDisplay = null;
-		if (UseFullscreenVideoShelf) {
-			//nothing to do here.
-		} else {
+		if (!UseFullscreenVideoShelf) 
+		{
 			Interpolation expanding = transform.parent.parent.GetComponent<Interpolation>();
 			expanding.InterpolateBackward();
 		}
