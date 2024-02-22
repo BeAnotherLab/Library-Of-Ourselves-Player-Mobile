@@ -80,6 +80,7 @@ public class VideoDisplay : MonoBehaviour
 	}
 
 	public void OnClickSelectVideo() {
+		StopAllCoroutines();
 		if (expandedDisplay == this) Contract(); 
 		else Expand();
 	}
