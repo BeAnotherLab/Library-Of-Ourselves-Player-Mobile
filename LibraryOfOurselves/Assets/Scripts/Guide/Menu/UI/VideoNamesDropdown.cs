@@ -8,22 +8,22 @@ public class VideoNamesDropdown : MonoBehaviour{
 
 	[SerializeField] private bool _ignoredCurrentlyExpandedDisplay = true;
 
-	Dropdown dropdown;
+	private Dropdown _dropdown;
 
 	private void OnEnable() { //TODO shouldn't it be in Awake() ?
-		dropdown = GetComponent<Dropdown>();
+		_dropdown = GetComponent<Dropdown>();
 
-		dropdown.options = new List<Dropdown.OptionData>();
+		_dropdown.options = new List<Dropdown.OptionData>();
 		foreach (VideoDisplay vd in VideosDisplayer.Instance.Displays) {
 			if (vd != VideoDisplay.expandedDisplay || !_ignoredCurrentlyExpandedDisplay) {
-				dropdown.options.Add(new Dropdown.OptionData(vd.VideoName));
+				_dropdown.options.Add(new Dropdown.OptionData(vd.VideoName));
 			}
 		}
 	}
 
 	public string Selected {
 		get {
-			return dropdown.options[dropdown.value].text;
+			return _dropdown.options[_dropdown.value].text;
 		}
 		set {
 			SetSelected(value);
@@ -31,15 +31,15 @@ public class VideoNamesDropdown : MonoBehaviour{
 	}
 	
 	private void SetSelected(string videoName) {
-		for (int index = 0; index < dropdown.options.Count; ++index) {
-			if (dropdown.options[index].text == videoName) {
-				dropdown.value = index;
-				dropdown.captionText.text = videoName;
+		for (int index = 0; index < _dropdown.options.Count; ++index) {
+			if (_dropdown.options[index].text == videoName) {
+				_dropdown.value = index;
+				_dropdown.captionText.text = videoName;
 				return;
 			}
 		}
-		dropdown.value = 0;
-		if (dropdown.options.Count <= 0) dropdown.captionText.text = "[???]";
-		else dropdown.captionText.text = dropdown.options[0].text;
+		_dropdown.value = 0;
+		if (_dropdown.options.Count <= 0) _dropdown.captionText.text = "[???]";
+		else _dropdown.captionText.text = _dropdown.options[0].text;
 	}
 }
