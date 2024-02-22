@@ -9,11 +9,13 @@ using UnityEngineInternal.Input;
 public class VideoShelf : MonoBehaviour { //displays a single video, along with choice and orientation editors
 
 	//TODO use gameobject when sufficient
+	//TODO reorder variables in accordance with display order
 	[SerializeField] private Text _titleDisplay;
 	[SerializeField] private Image _thumbnailDisplay;
 	[SerializeField] private Text _descriptionDisplay;
 	[SerializeField] private Text _objectsDisplay;
 	[SerializeField] private GameObject _is360Display;
+	[SerializeField] private DifficultyDropdown _difficultyDropdown;
 	[SerializeField] private Text _editDisplay; 
 	[SerializeField] private Text _saveDisplay;
 	[SerializeField] private InputField _descriptionInputField;
@@ -26,7 +28,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	[SerializeField] private string _appendToObjects = "";
 	[SerializeField] private bool _saveAsOldSettings = false;
 
-	[Header("Choice editor")]
+	[Header("Choice editor")] //TODO move to own script
 	[SerializeField] private Text _editChoice;
 	[SerializeField] private GameObject _addChoiceTranslation;
 	[SerializeField] private GameObject _choiceEditionPanel;
@@ -52,6 +54,8 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 				_is360Toggle.gameObject.SetActive(value);
 				_editChoice.gameObject.SetActive(value);
 
+				_difficultyDropdown.EditMode(value);
+				
 				if (value) //go into Edit Mode 
 				{
 					_descriptionInputField.text = current.Settings.description;
