@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton : MonoBehaviour {
+public class Singleton : MonoBehaviour { //TODO remove
 	
 	[SerializeField] string id = "default";
 	
