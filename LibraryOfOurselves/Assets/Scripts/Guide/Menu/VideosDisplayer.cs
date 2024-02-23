@@ -141,23 +141,23 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		}
 	}
 
-	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO why do we need path AND name? 
+	public void SaveVideoSettings(string videoName, VideoSettings settings) { 
 		string json = JsonUtility.ToJson(settings); 
 		File.WriteAllText(Path.Combine(DataFolder.Path, videoName + "_Settings.json"), json); //Save settings to json file
 	}
 
 	public void OnPairConnection(TCPConnection connection) {
-		foreach(VideoDisplay videoDisplay in displayedVideos) {
+		foreach (VideoDisplay videoDisplay in displayedVideos) {
 			GuideAdapter adapter = GuideAdapter.Instance;
-			if(adapter) {
+			if (adapter) {
 				adapter.SendHasVideo(connection, videoDisplay.VideoName);
 			}
 		}
 	}
 
 	public VideoDisplay FindVideo(string videoName) {
-		foreach(VideoDisplay v in displayedVideos) {
-			if(v.VideoName == videoName)
+		foreach (VideoDisplay v in displayedVideos) {
+			if (v.VideoName == videoName)
 				return v;
 		}
 		return null;
