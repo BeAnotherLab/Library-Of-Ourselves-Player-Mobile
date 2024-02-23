@@ -129,7 +129,7 @@ public class TCPHost : MonoBehaviour{
 				if (conn.responsive && TimeSinceLastConnection(conn.lastCommunication) > _unresponsiveThreshold)
 				{
 					_onConnectionEnd.Invoke(conn);
-					users.Remove(conn); //TODO fix error where it	 destroying while iterating
+					users.Remove(conn); //TODO fix error where it is destroying while iterating
 					Destroy(conn);
 				}
 			}

@@ -29,7 +29,7 @@ public class VideoSettings {
 	public string description = "";
 	public string objectsNeeded = "";
 	public bool is360 = false;
-	public string difficulty = "Easy";
+	public string difficulty = "";
 	public Vector4[] deltaAngles = new Vector4[0];// x-y-z: euler angles; w: timestamp
 	//public VideoChoice[] choices = new VideoChoice[0];//can only have 0 or 1 element.
 	public List<VideoChoice> choices = new List<VideoChoice>();
@@ -115,7 +115,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				{
 					settings = new VideoSettings();
 					Haze.Logger.Log("Saving settings...");
-					SaveVideoSettings(fileName, settings);
+					SaveVideoSettings(videoName, settings);
 				}
 
 				Haze.Logger.Log("Displaying video: " + fileName);
@@ -131,7 +131,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 					.Init(path, videoName, settings));
 
 				if (displayedVideos.Count == 1) onFoundOneVideo.Invoke();
-
 			}
 		} 
 		catch (Exception e) 
