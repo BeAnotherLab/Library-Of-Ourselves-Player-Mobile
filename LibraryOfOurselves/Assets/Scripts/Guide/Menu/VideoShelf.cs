@@ -37,60 +37,15 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 	
 	VideoDisplay current;
 
-	bool __editMode = true;
+	private bool _editMode;
 	
-	private bool EditMode {
-		get { return __editMode; }
-		set {
-			if (__editMode != value) {
-				__editMode = value;
-				
-				_editDisplay.gameObject.SetActive(!value); //hide edit button if ¿not null?
-				_saveDisplay.gameObject.SetActive(value); //show save button
-
-				_descriptionInputField.gameObject.SetActive(value); //allow edition of video description
-				_objectsInputField.gameObject.SetActive(value); //allow edition of objects to be used
-				
-				_is360Toggle.gameObject.SetActive(value);
-				_editChoice.gameObject.SetActive(value);
-
-				_difficultyDropdown.EditMode(value);
-				
-				if (value) //go into Edit Mode 
-				{
-					_descriptionInputField.text = current.Settings.description;
-					_objectsInputField.text = current.Settings.objectsNeeded;
-
-					_is360Toggle.isOn = current.Settings.is360;
-					
-					_is360Display.gameObject.SetActive(!value);
-					
-					//Change the displayed text to "Add Choice" if there's no choices available yet
-					if (current.Settings.choices.Count == 0) _editChoice.text = _addChoiceTranslation.name;
-				} 
-				else //save and quit Edit Mode 
-				{
-					_is360Display.gameObject.SetActive(current.Settings.is360);
-
-					current.Settings.description = _descriptionInputField.text;
-					current.Settings.objectsNeeded = _objectsInputField.text;
-					current.Settings.is360 = _is360Toggle.isOn;
-					current.Settings.difficulty = _difficultyDropdown.selectedDifficulty;
-					
-					VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
-
-					DisplayCurrentVideo(); //update display...
-				}
-			}
-		}
-	}
-
-	private void OnDisable() {
+	private void OnDisable() 
+	{
 		if (VideoDisplay.expandedDisplay != null) VideoDisplay.expandedDisplay.Contract();
 	}
 
-	public void DisplayCurrentVideo() {
-
+	public void DisplayCurrentVideo() 
+	{
 		current = VideoDisplay.expandedDisplay;
 
 		_titleDisplay.text = current.VideoName;
@@ -104,7 +59,10 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 			
 		if (_is360Display != null) _is360Display.SetActive(current.Settings.is360);
 
-		EditMode = false;
+		if (current.Settings.difficulty == "Easy") _difficultyDropdown.SetDifficultyValue(0);
+		else if (current.Settings.difficulty == "Normal") _difficultyDropdown.SetDifficultyValue(1);
+		else if (current.Settings.difficulty == "Hard") _difficultyDropdown.SetDifficultyValue(2);
+		else _difficultyDropdown.SetDifficultyValue(1);
 		
 		_editButton.gameObject.SetActive(SettingsAuth.TemporalUnlock);
 
@@ -112,28 +70,22 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		if (ConnectionsDisplayer.Instance != null) 
 		{
 			foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) 
-				if (handle.connection.active && handle.connection.paired)
-					++currentlyPaired;
+				if (handle.connection.active && handle.connection.paired) ++currentlyPaired;
 		}
-		else currentlyPaired = 1;//Assume one connection when there are no display. 
+		else currentlyPaired = 1;//Assume one connection when there are no display. //TODO uh?
 		
-		if (currentlyPaired > 0 && current.Available) //if there's no connections (or some of them don't have the video), cannot play any videos. 
-		{
-			_chooseButton.gameObject.SetActive(true);
-		} 
-		else 
-		{
-			_chooseButton.gameObject.SetActive(false);
-			Haze.Logger.Log("Hiding choose button (currentlyPaired = " + currentlyPaired + "; current.Available = " + current.Available + ")");
-		}
+		if (currentlyPaired > 0 && current.Available) _chooseButton.gameObject.SetActive(true); //if there's no connections (or some of them don't have the video), cannot play any videos. 
+		else _chooseButton.gameObject.SetActive(false);
 	}
 
-	public void OnClickChoose() {
+	public void OnClickChoose() 
+	{
 		if (current) current.OnClickChoose();
 	}
 
-	public void OnClickEdit() {
-		EditMode = !EditMode;
+	public void ToggleEdit() 
+	{
+		SetEditMode(!_editMode);
 	}
 
 	public void OnClickEditChoice() 
@@ -157,6 +109,49 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		AddChoice(new VideoChoice()); 
 	}
 	
+	private void SetEditMode(bool edit)
+	{
+		_editMode = edit;
+		
+		_editDisplay.gameObject.SetActive(!edit); //hide edit button if ¿not null?
+		Debug.Log("setting save display visible to " + edit);
+		_saveDisplay.gameObject.SetActive(edit); //show save button
+
+		_descriptionInputField.gameObject.SetActive(edit); //allow edition of video description
+		_objectsInputField.gameObject.SetActive(edit); //allow edition of objects to be used
+		
+		_is360Toggle.gameObject.SetActive(edit);
+		_editChoice.gameObject.SetActive(edit);
+
+		_difficultyDropdown.EditMode(edit);
+		
+		if (edit) //go into Edit Mode 
+		{
+			_descriptionInputField.text = current.Settings.description;
+			_objectsInputField.text = current.Settings.objectsNeeded;
+
+			_is360Toggle.isOn = current.Settings.is360;
+			
+			_is360Display.gameObject.SetActive(!edit);
+			
+			if (current.Settings.choices.Count == 0) _editChoice.text = _addChoiceTranslation.name; //Change the displayed text to "Add Choice" if there's no choices available yet
+		} 
+		else //save and quit Edit Mode 
+		{
+			_is360Display.gameObject.SetActive(current.Settings.is360);
+
+			current.Settings.description = _descriptionInputField.text;
+			current.Settings.objectsNeeded = _objectsInputField.text;
+			current.Settings.is360 = _is360Toggle.isOn;
+			current.Settings.difficulty = _difficultyDropdown.selectedDifficulty.ToString();
+			
+			VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
+
+			Debug.Log("exit edit mode");
+			///DisplayCurrentVideo(); //update display... //TODO is it necessary?
+		}
+	}
+    
 	private void AddChoice(VideoChoice choice)
 	{
 		var instance = Instantiate(_choiceUIPrefab, _optionFieldsParent);

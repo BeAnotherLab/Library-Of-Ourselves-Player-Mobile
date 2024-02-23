@@ -22426,7 +22426,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3345655177236305495}
         m_TargetAssemblyTypeName: 
-        m_MethodName: OnClickEdit
+        m_MethodName: ToggleEdit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
