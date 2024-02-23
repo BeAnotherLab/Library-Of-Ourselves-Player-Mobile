@@ -22157,7 +22157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &361587437952874648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22165,7 +22165,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3055874337058742649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
   m_Name: 
@@ -22204,14 +22204,14 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 5235713058670601541}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 1
   m_Options:
     m_Options:
-    - m_Text: Hard
+    - m_Text: Easy
       m_Image: {fileID: 0}
     - m_Text: Normal
       m_Image: {fileID: 0}
-    - m_Text: Easy
+    - m_Text: Hard
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -22319,7 +22319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &711244878011064960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22625,7 +22625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &1065064178576636419
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22927,7 +22927,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hard
+  m_Text: Normal
 --- !u!224 &1527780707817556548
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23352,7 +23352,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 380, y: -14.5}
-  m_SizeDelta: {x: 0, y: 19}
+  m_SizeDelta: {x: 53.333332, y: 19}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2668934273751804247
 MonoBehaviour:
@@ -24753,7 +24753,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3055874337058742649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
@@ -24776,7 +24776,7 @@ MonoBehaviour:
   _arrow: {fileID: 8120922491792699054}
   _outline: {fileID: 4935611652800985518}
   _dropdown: {fileID: 361587437952874648}
-  selectedDifficulty: 
+  selectedDifficulty: 1
 --- !u!222 &5021721572879444938
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24845,7 +24845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &5235713058670601541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26229,7 +26229,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6208557456494596914}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
