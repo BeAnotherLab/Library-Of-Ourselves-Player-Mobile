@@ -75,7 +75,8 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 					current.Settings.description = _descriptionInputField.text;
 					current.Settings.objectsNeeded = _objectsInputField.text;
 					current.Settings.is360 = _is360Toggle.isOn;
-
+					current.Settings.difficulty = _difficultyDropdown.selectedDifficulty;
+					
 					VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
 
 					DisplayCurrentVideo(); //update display...
@@ -164,7 +165,6 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		instance.GetComponent<ChoiceOption>().eulerAngles = choice.position;
 		var dataPresent = (choice.position.x != 0 || choice.position.y != 0 || choice.position.z != 0);
 		instance.GetComponent<ChoiceOption>().SetEditButtonColor(dataPresent);	
-		
 	}
 	
 	private void OnClickSaveChoice() {
