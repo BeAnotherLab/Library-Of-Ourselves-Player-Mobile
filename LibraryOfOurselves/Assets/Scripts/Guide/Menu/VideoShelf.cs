@@ -142,12 +142,10 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 			current.Settings.objectsNeeded = _objectsInputField.text;
 			current.Settings.is360 = _is360Toggle.isOn;
 			current.Settings.difficulty = _difficultyDropdown.selectedDifficulty.ToString();
-			_is360Display.gameObject.SetActive(current.Settings.is360);
 	
 			VideosDisplayer.Instance.SaveVideoSettings(current.VideoName, current.Settings);
 
-			Debug.Log("exit edit mode");
-			///DisplayCurrentVideo(); //update display... //TODO is it necessary?
+			DisplayCurrentVideo(); 
 		}
 	}
     
