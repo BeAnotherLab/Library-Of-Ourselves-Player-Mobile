@@ -26,9 +26,6 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     translate: 1
-  - language: 24
-    font: {fileID: 0}
-    translate: 1
-  - language: 8
+  - language: 7
     font: {fileID: 0}
     translate: 1
