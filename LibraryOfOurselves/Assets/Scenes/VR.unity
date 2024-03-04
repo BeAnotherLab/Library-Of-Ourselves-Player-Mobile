@@ -847,6 +847,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4049648053720967777, guid: f632b5c49c65062488c9ce72c71be48f,
+        type: 3}
+      propertyPath: _autoOpen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049648053720967777, guid: f632b5c49c65062488c9ce72c71be48f,
+        type: 3}
+      propertyPath: _autoPlayOnStart
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4454619926307582121, guid: f632b5c49c65062488c9ce72c71be48f,
         type: 3}
       propertyPath: m_Enabled
