@@ -122,6 +122,70 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &402119319877012785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1183326358651950492}
+  - component: {fileID: 2130344307029616794}
+  m_Layer: 5
+  m_Name: Easy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1183326358651950492
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402119319877012785}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2063734248068369488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2130344307029616794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402119319877012785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e4691929faf334b92085e612e3ac25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translations:
+  - language: 1
+    font: {fileID: 0}
+    contents: Easy
+  - language: 16
+    font: {fileID: 0}
+    contents: Facile
+  - language: 36
+    font: {fileID: 0}
+    contents: "F\xE1cil"
+  - language: 30
+    font: {fileID: 0}
+    contents: "F\xE1cil"
+  - language: 7
+    font: {fileID: 0}
+    contents: "F\xE0cil"
 --- !u!1 &416808792600109753
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +1007,7 @@ GameObject:
   - component: {fileID: 7511578645724768001}
   - component: {fileID: 9196187080788867080}
   m_Layer: 5
-  m_Name: You will need
+  m_Name: YouWillNeedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1031,16 +1095,13 @@ MonoBehaviour:
     contents: 'Vous aurez besoin des objets suivants :'
   - language: 36
     font: {fileID: 0}
-    contents: "Necesitar\xE1 los siguientes objetos:"
+    contents: "Necesitar\xE1s los siguientes objetos:"
   - language: 30
     font: {fileID: 0}
-    contents: 
-  - language: 24
+    contents: "Voc\xEA precisar\xE1 dos seguintes objetos:"
+  - language: 7
     font: {fileID: 0}
-    contents: 
-  - language: 8
-    font: {fileID: 0}
-    contents: 
+    contents: "Necessitareu els seg\xFCents objectes:"
 --- !u!1 &1537964039672671602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,16 +1203,13 @@ MonoBehaviour:
     contents: sauvegarder
   - language: 36
     font: {fileID: 0}
-    contents: Salvar
+    contents: Guardar
   - language: 30
     font: {fileID: 0}
     contents: "Salve \uE051"
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u4FDD\u5B58\u3059\u308B"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u4FDD\u5B58"
+    contents: Desa
 --- !u!1 &1843796356942012599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,12 +1642,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Digite objetos ...
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044..."
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u8F93\u5165\u5BF9\u8C61......"
+    contents: "Introdu\xEFu objectes..."
 --- !u!1 &2170763008024488014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,12 +1750,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Editar
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u7DE8\u96C6\u3059\u308B"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u7F16\u8F91"
+    contents: Edita
 --- !u!1 &2437865098655792035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,6 +1964,70 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &2710457797891032591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4248928714167579426}
+  - component: {fileID: 1540598506557499760}
+  m_Layer: 5
+  m_Name: Hard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4248928714167579426
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2710457797891032591}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2063734248068369488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1540598506557499760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2710457797891032591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e4691929faf334b92085e612e3ac25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translations:
+  - language: 1
+    font: {fileID: 0}
+    contents: Hard
+  - language: 16
+    font: {fileID: 0}
+    contents: Dur
+  - language: 36
+    font: {fileID: 0}
+    contents: "Dif\xEDcil"
+  - language: 30
+    font: {fileID: 0}
+    contents: Duro
+  - language: 7
+    font: {fileID: 0}
+    contents: "Dif\xEDcil"
 --- !u!1 &2754694306619702152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,12 +2151,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Editar escolha
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u9078\u629E\u3092\u7DE8\u96C6"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u7F16\u8F91\u9009\u62E9"
+    contents: "Edita l'opci\xF3"
 --- !u!114 &4821224882883549157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2397,7 +2510,7 @@ GameObject:
   - component: {fileID: 6097129026631856854}
   - component: {fileID: 357503941850356835}
   m_Layer: 5
-  m_Name: No objects needed
+  m_Name: No objects Needed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2433,7 +2546,7 @@ MonoBehaviour:
   translations:
   - language: 1
     font: {fileID: 0}
-    contents: No objects needed
+    contents: No objects Needed
   - language: 16
     font: {fileID: 0}
     contents: "Aucun objet n\xE9cessaire"
@@ -2443,12 +2556,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: "Nenhum objeto necess\xE1rio"
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306F\u5FC5\u8981\u3042\u308A\u307E\u305B\u3093"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u4E0D\u9700\u8981\u4EFB\u4F55\u7269\u54C1"
+    contents: No es necessiten objectes
 --- !u!114 &357503941850356835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2692,6 +2802,44 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Normal
+--- !u!1 &3490144034946665651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2063734248068369488}
+  m_Layer: 5
+  m_Name: DifficultyTranslations
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2063734248068369488
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490144034946665651}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1183326358651950492}
+  - {fileID: 1320046181422942122}
+  - {fileID: 4248928714167579426}
+  m_Father: {fileID: 7260590853037042286}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3538022843847607669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2876,12 +3024,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: "Nenhuma descri\xE7\xE3o"
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u8AAC\u660E\u306A\u3057"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u6CA1\u6709\u8BF4\u660E"
+    contents: "Sense descripci\xF3"
 --- !u!1 &3834402288710376600
 GameObject:
   m_ObjectHideFlags: 0
@@ -2989,12 +3134,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: "Nenhum objeto necess\xE1rio"
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306F\u5FC5\u8981\u3042\u308A\u307E\u305B\u3093"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u4E0D\u9700\u8981\u4EFB\u4F55\u7269\u54C1"
+    contents: No es necessiten objectes
 --- !u!1 &3838282099815527648
 GameObject:
   m_ObjectHideFlags: 0
@@ -3336,12 +3478,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Cancelar
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30AD\u30E3\u30F3\u30BB\u30EB"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u53D6\u6D88"
+    contents: "Cancel\xB7lar"
 --- !u!1 &3926054960844486008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3403,12 +3542,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Adicionar escolha
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u9078\u629E\u80A2\u3092\u8FFD\u52A0"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u6DFB\u52A0\u9009\u62E9"
+    contents: "Afegeix una opci\xF3"
 --- !u!1 &4071311204867876693
 GameObject:
   m_ObjectHideFlags: 0
@@ -4226,6 +4362,70 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   verbose: 0
+--- !u!1 &5004210853698750661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1320046181422942122}
+  - component: {fileID: 4884886232672987897}
+  m_Layer: 5
+  m_Name: Normal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1320046181422942122
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004210853698750661}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2063734248068369488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4884886232672987897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5004210853698750661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e4691929faf334b92085e612e3ac25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translations:
+  - language: 1
+    font: {fileID: 0}
+    contents: Normal
+  - language: 16
+    font: {fileID: 0}
+    contents: Normale
+  - language: 36
+    font: {fileID: 0}
+    contents: Normal
+  - language: 30
+    font: {fileID: 0}
+    contents: Normal
+  - language: 7
+    font: {fileID: 0}
+    contents: Normal
 --- !u!1 &5051632660537626281
 GameObject:
   m_ObjectHideFlags: 0
@@ -4331,12 +4531,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Salvar escolha
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u9078\u629E\u80A2\u3092\u4FDD\u5B58"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u4FDD\u5B58\u9009\u62E9"
+    contents: Guarda les opcions
 --- !u!1 &5369615969492991828
 GameObject:
   m_ObjectHideFlags: 0
@@ -4794,12 +4991,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Excluir escolha
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u9078\u629E\u80A2\u3092\u524A\u9664"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u5220\u9664\u9009\u62E9"
+    contents: Suprimeix totes les opcions
 --- !u!1 &5813625663657679943
 GameObject:
   m_ObjectHideFlags: 0
@@ -5362,6 +5556,7 @@ GameObject:
   - component: {fileID: 3397404299994209105}
   - component: {fileID: 6537629008481343776}
   - component: {fileID: 2045021010474471304}
+  - component: {fileID: 789178054014281593}
   m_Layer: 5
   m_Name: DifficultyLabel
   m_TagString: Untagged
@@ -5430,6 +5625,34 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Difficulty: '
+--- !u!114 &789178054014281593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6515984666244618919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e4691929faf334b92085e612e3ac25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translations:
+  - language: 1
+    font: {fileID: 0}
+    contents: 'Difficulty: '
+  - language: 16
+    font: {fileID: 0}
+    contents: "Difficult\xE9:"
+  - language: 36
+    font: {fileID: 0}
+    contents: 'Dificultad:'
+  - language: 30
+    font: {fileID: 0}
+    contents: 'Dificuldade:'
+  - language: 7
+    font: {fileID: 0}
+    contents: 'Dificultat:'
 --- !u!1 &6670400385473054855
 GameObject:
   m_ObjectHideFlags: 0
@@ -5534,13 +5757,10 @@ MonoBehaviour:
     contents: Escoger
   - language: 30
     font: {fileID: 0}
-    contents: 
-  - language: 24
+    contents: Escolher
+  - language: 7
     font: {fileID: 0}
-    contents: 
-  - language: 8
-    font: {fileID: 0}
-    contents: 
+    contents: Tria
 --- !u!1 &6754708481756617008
 GameObject:
   m_ObjectHideFlags: 0
@@ -5796,12 +6016,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: "Digite a descri\xE7\xE3o ..."
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u8AAC\u660E\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044..."
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u8F93\u5165\u8BF4\u660E..."
+    contents: "Introdueix una descripci\xF3..."
 --- !u!1 &7111823182898885899
 GameObject:
   m_ObjectHideFlags: 0
@@ -6004,6 +6221,7 @@ RectTransform:
   - {fileID: 3761425616217733994}
   - {fileID: 4428101790475416369}
   - {fileID: 7796205455484461212}
+  - {fileID: 2063734248068369488}
   m_Father: {fileID: 3209869117182033777}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -6493,13 +6711,10 @@ MonoBehaviour:
     contents: "A\xF1adir opci\xF3n"
   - language: 30
     font: {fileID: 0}
-    contents: NO_TRANSLATION
-  - language: 24
+    contents: Adicionar escolha
+  - language: 7
     font: {fileID: 0}
-    contents: NO_TRANSLATION
-  - language: 8
-    font: {fileID: 0}
-    contents: NO_TRANSLATION
+    contents: "Afegeix una opci\xF3"
 --- !u!1 &8177928709922136294
 GameObject:
   m_ObjectHideFlags: 0
@@ -6558,12 +6773,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: "Nenhuma descri\xE7\xE3o"
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u8AAC\u660E\u306A\u3057"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u6CA1\u6709\u8BF4\u660E"
+    contents: "Sense descripci\xF3"
 --- !u!114 &3365709294142532017
 MonoBehaviour:
   m_ObjectHideFlags: 0
