@@ -172,12 +172,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Digite o alias do dispositivo ...
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30C7\u30D0\u30A4\u30B9\u30A8\u30A4\u30EA\u30A2\u30B9\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044..."
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u8F93\u5165\u8BBE\u5907\u522B\u540D..."
+    contents: "Introdu\xEFu l'\xE0lies del dispositiu..."
 --- !u!1 &958330900016390933
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,16 +793,13 @@ MonoBehaviour:
     contents: Paire
   - language: 36
     font: {fileID: 0}
-    contents: Par
+    contents: Emparejar
   - language: 30
     font: {fileID: 0}
     contents: Par
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30DA\u30A2"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u5BF9"
+    contents: Aparellar
 --- !u!1 &3015545630028289819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,12 +1737,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Bloqueio
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30ED\u30C3\u30AF"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u9501"
+    contents: Bloquejar
 --- !u!1 &4248551344730898724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1854,12 +1845,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Desemparelhar
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30DA\u30A2\u89E3\u9664"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u53D6\u6D88\u914D\u5BF9"
+    contents: Desvincular
 --- !u!1 &5052766458264152957
 GameObject:
   m_ObjectHideFlags: 0
@@ -3219,12 +3207,9 @@ MonoBehaviour:
   - language: 30
     font: {fileID: 0}
     contents: Desbloquear
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u30ED\u30C3\u30AF\u89E3\u9664"
-  - language: 8
-    font: {fileID: 0}
-    contents: "\u5F00\u9501"
+    contents: Descobrir
 --- !u!1 &8631750876664783393
 GameObject:
   m_ObjectHideFlags: 0
