@@ -234,9 +234,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 							break;
 						}
 					}
-				} else {
-
-				}
+				} 
 
 				//if it's still true it means they're all ready now :)
 				if(allDevicesReady) {
@@ -317,6 +315,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			StopCoroutine(__slowStartRoutine);
 		__slowStartRoutine = StartCoroutine(__slowStart());
 	}
+	
 	IEnumerator __slowStart() {
 		if(onlyOneDevice) yield break;
 		float speed = 0.1f;
