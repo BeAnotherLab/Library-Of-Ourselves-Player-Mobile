@@ -5,7 +5,7 @@ using System.IO;
 using RenderHeads.Media.AVProVideo;
 using SimpleFileBrowser;
 
-public class FileBrowser : MonoBehaviour
+public class FileBrowserTest : MonoBehaviour
 {
 	public delegate void OnRootFolderPicked();
 	public static OnRootFolderPicked RootFolderPicked;

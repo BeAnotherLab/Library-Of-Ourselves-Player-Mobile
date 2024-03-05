@@ -13,12 +13,12 @@ public class ListFiles : MonoBehaviour {
 
 	private void OnEnable()
 	{
-		FileBrowser.RootFolderPicked += ListDataFolderFiles;
+		FileBrowserTest.RootFolderPicked += ListDataFolderFiles;
 	}
 
 	private void OnDisable()
 	{
-		FileBrowser.RootFolderPicked -= ListDataFolderFiles;
+		FileBrowserTest.RootFolderPicked -= ListDataFolderFiles;
 	}
 
 	private void ListDataFolderFiles()
