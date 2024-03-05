@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 using System.Threading.Tasks;
+using SimpleFileBrowser;
 using UnityEngine.Events;
 
 public class VRAdapter : MonoBehaviour{
@@ -170,11 +172,12 @@ public class VRAdapter : MonoBehaviour{
 		}
 	}
 
-	public void OnReceiveHasVideo(TCPConnection connection, string videoName) {
-		if(connection != null && connection == currentlyPaired) {
-			if(VRVideoPlayer.IsVideoAvailable(videoName)) {
-				SendHasVideoResponse(videoName);
-			}
+	public void OnReceiveHasVideo(TCPConnection connection, string videoName) 
+	{
+		if (connection != null && connection == currentlyPaired) 
+		{
+			Haze.Logger.Log("Checking if we have " + videoName);
+			if (FileBrowserHelpers.FileExists(Path.Combine(DataFolder.UserPath, videoName + ".mp4"))) SendHasVideoResponse(videoName);
 		}
 	}
 

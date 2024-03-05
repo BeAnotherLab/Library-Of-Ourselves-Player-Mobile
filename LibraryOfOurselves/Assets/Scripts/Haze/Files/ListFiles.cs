@@ -11,9 +11,9 @@ public class ListFiles : MonoBehaviour {
 	
 	void Start()
 	{
-		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + DataFolder.Path);
+		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + DataFolder.GuidePath);
 			
-		foreach (string file in Directory.GetFiles(DataFolder.Path))
+		foreach (string file in Directory.GetFiles(DataFolder.GuidePath))
 		{
 			Debug.Log("in this folder there is " + file);
 			//check if extension is <extension>

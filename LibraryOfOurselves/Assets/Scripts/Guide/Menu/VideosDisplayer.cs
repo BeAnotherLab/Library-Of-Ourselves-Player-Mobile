@@ -14,16 +14,6 @@ public class VideoChoice { //TODO rename to option?
 	public Vector3 position = new Vector3();
 } //TODO move to own file
 
-public class DataFolder //TODO make it a scriptable object?
-{
-#if !UNITY_EDITOR && UNITY_ANDROID
-	public static string Path = "/storage/emulated/0/Movies/LibraryOfOurselvesContent"; //TODO add filebrowser to be able to set that folder manually
-#endif
-#if UNITY_EDITOR	
-	public static string Path = Application.persistentDataPath;
-#endif
-}
-
 [Serializable]
 public class VideoSettings {
 	public string description = "";
@@ -103,7 +93,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			{
 				//ok! this is a guide video. Try to find the associated settings file
 				var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
-				string settingsPath = Path.Combine(DataFolder.Path, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
+				string settingsPath = Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
 
 				VideoSettings settings;
 				if (File.Exists(settingsPath)) 
@@ -142,7 +132,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 	public void SaveVideoSettings(string videoName, VideoSettings settings) { 
 		string json = JsonUtility.ToJson(settings); 
-		File.WriteAllText(Path.Combine(DataFolder.Path, videoName + "_Settings.json"), json); //Save settings to json file
+		File.WriteAllText(Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"), json); //Save settings to json file
 	}
 
 	public void OnPairConnection(TCPConnection connection) {
