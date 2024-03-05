@@ -96,9 +96,11 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				string settingsPath = Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
 
 				VideoSettings settings;
-				if (File.Exists(settingsPath)) 
+				Debug.Log("Does settings exist ? " + settingsPath);
+				
+				if (FileBrowserHelpers.FileExists(settingsPath))
 				{
-					string json = File.ReadAllText(settingsPath);
+					string json = FileBrowserHelpers.ReadTextFromFile(settingsPath);
 					settings = JsonUtility.FromJson<VideoSettings>(json);
 				}
 				else //no settings for this video yet.
@@ -132,7 +134,8 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 	public void SaveVideoSettings(string videoName, VideoSettings settings) { 
 		string json = JsonUtility.ToJson(settings); 
-		File.WriteAllText(Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"), json); //Save settings to json file
+		//File.WriteAllText(Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"), json); //Save settings to json file
+		FileBrowserHelpers.WriteTextToFile(Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"), json);
 	}
 
 	public void OnPairConnection(TCPConnection connection) {
