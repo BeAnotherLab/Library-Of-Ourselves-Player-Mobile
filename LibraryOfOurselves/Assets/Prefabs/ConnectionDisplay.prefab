@@ -1949,16 +1949,13 @@ MonoBehaviour:
     contents: "R\xE9cent"
   - language: 36
     font: {fileID: 0}
-    contents: "M\xE1s reciente"
+    contents: Calibrar
   - language: 30
     font: {fileID: 0}
     contents: Recente
-  - language: 24
+  - language: 7
     font: {fileID: 0}
-    contents: "\u518D\u4E2D\u5FC3"
-  - language: 8
-    font: {fileID: 0}
-    contents: Recenter
+    contents: Calibrar
 --- !u!1 &5831731688146499260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3203,13 +3200,13 @@ MonoBehaviour:
     contents: Ouvrir
   - language: 36
     font: {fileID: 0}
-    contents: desbloquear
+    contents: Desbloquear
   - language: 30
     font: {fileID: 0}
     contents: Desbloquear
   - language: 7
     font: {fileID: 0}
-    contents: Descobrir
+    contents: Desbloquejar
 --- !u!1 &8631750876664783393
 GameObject:
   m_ObjectHideFlags: 0
