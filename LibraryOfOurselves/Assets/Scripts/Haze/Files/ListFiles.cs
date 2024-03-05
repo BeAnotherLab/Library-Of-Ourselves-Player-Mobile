@@ -1,28 +1,37 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using SimpleFileBrowser;
 
 public class ListFiles : MonoBehaviour {
 	
-	[SerializeField] string extension = "txt";
+	[SerializeField] string extension;
 	[SerializeField] StringEvent onFileFound;
 	[SerializeField] bool verbose;
-	
-	void Start()
+
+	private void OnEnable()
+	{
+		FileBrowserTest.RootFolderPicked += ListDataFolderFiles;
+	}
+
+	private void OnDisable()
+	{
+		FileBrowserTest.RootFolderPicked -= ListDataFolderFiles;
+	}
+
+	private void ListDataFolderFiles()
 	{
 		if (verbose) Haze.Logger.Log("Checking for " + extension + " files in " + DataFolder.GuidePath);
 			
-		foreach (string file in Directory.GetFiles(DataFolder.GuidePath))
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
 		{
-			Debug.Log("in this folder there is " + file);
-			//check if extension is <extension>
-			string[] parts = file.Split('.');
-			string ext = parts[parts.Length-1];
-			if (ext == extension)
+			Debug.Log("in this folder there is " + file.Path);
+			if (file.Extension == extension)
 			{
-				onFileFound.Invoke(file);
-				if (verbose) Haze.Logger.Log("Found " + file);
+				onFileFound.Invoke(file.Path);
+				if (verbose) Haze.Logger.Log("Found " + file.Path);
 			}
 		}
 	}

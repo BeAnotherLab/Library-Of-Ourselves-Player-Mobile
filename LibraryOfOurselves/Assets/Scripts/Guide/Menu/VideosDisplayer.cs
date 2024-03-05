@@ -96,9 +96,9 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				string settingsPath = Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
 
 				VideoSettings settings;
-				if (File.Exists(settingsPath)) 
+				if (FileBrowserHelpers.FileExists(settingsPath))
 				{
-					string json = File.ReadAllText(settingsPath);
+					string json = FileBrowserHelpers.ReadTextFromFile(settingsPath);
 					settings = JsonUtility.FromJson<VideoSettings>(json);
 				}
 				else //no settings for this video yet.
