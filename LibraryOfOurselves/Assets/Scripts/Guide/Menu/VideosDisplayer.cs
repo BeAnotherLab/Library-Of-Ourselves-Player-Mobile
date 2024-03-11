@@ -134,8 +134,13 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 	public void SaveVideoSettings(string videoName, VideoSettings settings) { 
 		string json = JsonUtility.ToJson(settings); 
-		//File.WriteAllText(Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"), json); //Save settings to json file
-		FileBrowserHelpers.WriteTextToFile(Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"), json);
+		
+		var parentDirectory = FileBrowserHelpers.GetDirectoryName(DataFolder.GuidePath);
+		var newFile = FileBrowserHelpers.CreateFileInDirectory(parentDirectory, videoName + "_Settings.json");
+		var path = Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"); 
+		
+		Debug.Log("Writing file : " + path);
+		FileBrowserHelpers.WriteTextToFile(newFile, json);
 	}
 
 	public void OnPairConnection(TCPConnection connection) {
