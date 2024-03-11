@@ -6252,6 +6252,11 @@ MonoBehaviour:
   _arrow: {fileID: 7092114447254564996}
   _outline: {fileID: 1081426814852451744}
   _dropdown: {fileID: 7486168417804672212}
+  _translatedGameObjectsNames:
+  - {fileID: 402119319877012785}
+  - {fileID: 5004210853698750661}
+  - {fileID: 2710457797891032591}
+  _difficultyText: {fileID: 5375158761759521144}
   selectedDifficulty: 1
 --- !u!114 &3193758832093029529
 MonoBehaviour:
