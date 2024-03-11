@@ -5,23 +5,13 @@ using System.IO;
 using RenderHeads.Media.AVProVideo;
 using SimpleFileBrowser;
 
-public class FileBrowserTest : MonoBehaviour  
+public class FileBrowserTest : MonoBehaviour
 {
 	public delegate void OnRootFolderPicked();
 	public static OnRootFolderPicked RootFolderPicked;
 	
 	void Start()
 	{
-		// Example 1: Show a save file dialog using callback approach
-		// onSuccess event: not registered (which means this dialog is pretty useless)
-		// onCancel event: not registered
-		// Save file/folder: file, Allow multiple selection: false
-		// Initial path: "C:\", Initial filename: "Screenshot.png"
-		// Title: "Save As", Submit button text: "Save"
-		FileBrowser.ShowSaveDialog( OnSave, null, FileBrowser.PickMode.Files, false, "C:\\", "Screenshot.png", "Save As", "Save" );
-/*
-
-		
 		// Add a new quick link to the browser (optional) (returns true if quick link is added successfully)
 		// It is sufficient to add a quick link just once
 		// Name: Users
@@ -29,7 +19,7 @@ public class FileBrowserTest : MonoBehaviour
 		// Icon: default (folder icon)
 		SimpleFileBrowser.FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
 		
-		 StartCoroutine( ShowLoadDialogCoroutine() );*/
+		 StartCoroutine( ShowLoadDialogCoroutine() );
 	}
 
 	IEnumerator ShowLoadDialogCoroutine()
@@ -52,10 +42,5 @@ public class FileBrowserTest : MonoBehaviour
 	{
 		DataFolder.GuidePath = filePaths[0];
 		RootFolderPicked();
-	}
-
-	private void OnSave(string[] paths)
-	{
-		FileBrowserHelpers.WriteTextToFile(paths[0], "hola mundis");
 	}
 }
