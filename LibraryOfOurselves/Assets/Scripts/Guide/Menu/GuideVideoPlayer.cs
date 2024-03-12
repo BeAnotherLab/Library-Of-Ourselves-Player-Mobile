@@ -140,17 +140,6 @@ public class GuideVideoPlayer : MonoBehaviour{
 			Haze.Logger.LogError("Error: No GuideAdapter instance!");
 		}
 	}
-
-	
-	private string GetVideoPath(string videoName) //returns a path compatible with scoped storage
-	{
-		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
-			//TODO this will cause problem if same string is found in different videos?
-			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
-				if (file.Extension == ".mp4") return file.Path;
-
-		return "";
-	}
 	
 	public void Play() {//the correct command is Play only when we start playback, afterwards it's Pause (which toggles between the two)
 		if(startedPlayback) {
@@ -389,5 +378,16 @@ public class GuideVideoPlayer : MonoBehaviour{
 			}
 		}
 	}
+	
+	private string GetVideoPath(string videoName) //returns a path compatible with scoped storage
+	{
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+			//TODO this will cause problem if same string is found in different videos?
+			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
+				if (file.Extension == ".mp4") return file.Path;
+
+		return "";
+	}
+
 	
 }

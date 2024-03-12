@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using System.Linq;
+using SimpleFileBrowser;
 
 public class VideoDisplay : MonoBehaviour
 {
@@ -45,31 +47,35 @@ public class VideoDisplay : MonoBehaviour
 			return null;
 		}
 
-		FullPath =  //TODO remove this field, unnecessary;
+		FullPath =  //TODO remove this field, unnecessarye;
 		VideoName = videoName;
 		Settings = settings;
 		Available = false; 
 
 		videoNameDisplay.text = VideoName;
 
-		string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-		string thumbnailPath = "";
-		for(int i = 0; i < split.Length - 1; ++i) thumbnailPath += split[i] + "/";
-		thumbnailPath += videoName;
+		var thumbnailPath = GetThumbnailPath(videoName);
 
-		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath + ".png"); //TODO put in a foreach loop
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".PNG");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpg");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPG");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpeg");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPEG");
+		if (thumbnailPath != "")
+		{
+			Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
+			if (thumbnail != null) videoThumbnail.sprite = thumbnail;
+		}
 		
-		//string[] x = {".png", ".PNG", ".jpg", ".JPG", ".jpeg", ".JPEG"};
-		// foreach (string fileExtension in x) thumbnail = PngToSprite.LoadSprite(thumbnailPath + fileExtension);
-		
-		if (thumbnail != null) videoThumbnail.sprite = thumbnail;
-
 		return this;
+	}
+
+	private string GetThumbnailPath(string videoName)
+	{
+		//TODO check if case senstiive. see how to do case insensitive comparison
+		var extensions = new string[] { ".PNG", ".png", ".jpg", ".JPG", ".jpeg", ".JPEG", ".Jpeg" };
+		
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+			//TODO this will cause problem if same string is found in different videos?
+			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
+				if (extensions.Contains(file.Extension)) return file.Path;
+
+		return "";
 	}
 
 	public void OnClickChoose() {
