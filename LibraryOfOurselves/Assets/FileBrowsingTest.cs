@@ -41,8 +41,6 @@ public class FileBrowserTest : MonoBehaviour
 	void OnFilesSelected( string[] filePaths )
 	{
 		DataFolder.GuidePath = filePaths[0];
-		Debug.Log("test write ");
-		FileBrowserHelpers.CreateFileInDirectory(filePaths[0], "hola mundis");
 		RootFolderPicked();
 	}
 }
