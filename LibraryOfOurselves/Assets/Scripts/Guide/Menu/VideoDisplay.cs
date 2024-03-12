@@ -58,7 +58,13 @@ public class VideoDisplay : MonoBehaviour
 
 		if (thumbnailPath != "")
 		{
-			Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
+			Texture2D texture = NativeGallery.LoadImageAtPath(thumbnailPath);
+			Sprite thumbnail = Sprite.Create(texture,
+				new Rect(0, 0, texture.width, texture.height),
+				new Vector2(texture.width/2, texture.height/2));
+			;
+			//Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
+			
 			if (thumbnail != null) videoThumbnail.sprite = thumbnail;
 		}
 		
