@@ -112,16 +112,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		blackScreen.SetActive(false);
 
 		BinauralAudio = false;
-
-		/*
-		player.errorReceived += delegate (VideoPlayer player, string message) {
-			Haze.Logger.LogError("VideoPlayer error: " + message);
-			errorWhileLoading = true;
-			endOfVideo();
-		};
-		*/
-
-		
 	}
 
 	private void OnDestroy() {
@@ -223,7 +213,7 @@ public class VRVideoPlayer : MonoBehaviour{
 			Haze.Logger.Log("Loading binaural audio files: " + leftAudioFile + " and " + rightAudioFile);
 		}
 		
-		//Prepare video player
+		//Prepare video player TODO this shouldn't be working but it is.
 		player.OpenMedia(new MediaPath(Path.Combine(DataFolder.UserPath, videoName + ".mp4"), MediaPathType.AbsolutePathOrURL), autoPlay:false);
 		
 		PlaybackSpeed = 1;

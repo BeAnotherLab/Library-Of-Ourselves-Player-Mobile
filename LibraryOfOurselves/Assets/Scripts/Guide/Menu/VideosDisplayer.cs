@@ -42,7 +42,16 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
 	GameObject lastVideoShelf;
 
-	
+	private void OnEnable()
+	{
+		FileBrowserTest.RootFolderPicked += AddVideos;
+	}
+
+	private void OnDisable()
+	{
+		FileBrowserTest.RootFolderPicked += AddVideos;
+	}
+
 	private void Start() {
 		Instance = this; //TODO remove singleton antipattern
 	}
@@ -82,31 +91,42 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		}
 	}
 
-	public void AddVideo(string path) {
-		Haze.Logger.Log("Adding video file: " + path + "...");
-		try
+	public void AddVideos()
+	{
+		Debug.Log("Checking for files in " + DataFolder.GuidePath);
+			
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
 		{
-			string fileName = FileBrowserHelpers.GetFilename(path);
+			Debug.Log("in this folder there is " + file.Path);
+			if (file.Extension == ".mp4") Haze.Logger.Log("Found " + file.Path);
+		
+			Haze.Logger.Log("Adding video file: " + DataFolder.GuidePath + "...");
+		
+			string fileName = FileBrowserHelpers.GetFilename(DataFolder.GuidePath);
 			
 			//Is it a guide?
-			if (path.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1) //tests if we can find case independent "guide" string in filename
+			if (DataFolder.GuidePath.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1) //tests if we can find case independent "guide" string in filename
 			{
 				//ok! this is a guide video. Try to find the associated settings file
 				var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
-				string settingsPath = Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
+				string parentDirectory = FileBrowserHelpers.GetDirectoryName(DataFolder.GuidePath);
+				Debug.Log("we want to check if we can write in the following directory" + parentDirectory);
+				string settingsPath = FileBrowserHelpers.CreateFileInDirectory(parentDirectory, videoName + "_Settings.json");
 
 				VideoSettings settings;
 				Debug.Log("Does settings exist ? " + settingsPath);
 				
-				if (FileBrowserHelpers.FileExists(settingsPath))
+				if (FileBrowserHelpers.FileExists(DataFolder.GuidePath))
 				{
+					Debug.Log("yes, file exists");
 					string json = FileBrowserHelpers.ReadTextFromFile(settingsPath);
 					settings = JsonUtility.FromJson<VideoSettings>(json);
+					Debug.Log("read from settings file : " + settings);
 				}
 				else //no settings for this video yet.
 				{
 					settings = new VideoSettings();
-					Haze.Logger.Log("Saving settings...");
+					Haze.Logger.Log("No file found, saving settings...");
 					SaveVideoSettings(videoName, settings);
 				}
 
@@ -120,26 +140,22 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				displayedVideos
 					.Add(Instantiate(videoDisplayPrefab, lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1))
 					.GetComponent<VideoDisplay>()
-					.Init(path, videoName, settings));
+					.Init(DataFolder.GuidePath, videoName, settings));
 
 				if (displayedVideos.Count == 1) onFoundOneVideo.Invoke();
 			}
-		} 
-		catch (Exception e) 
-		{
-			//could silently ignore, probably
-			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
 		}
 	}
 
-	public void SaveVideoSettings(string videoName, VideoSettings settings) { 
+	//public void AddSettings(string path)
+	
+	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO move to own class
 		string json = JsonUtility.ToJson(settings); 
-		
+		Debug.Log("will write to " + videoName);
 		var parentDirectory = FileBrowserHelpers.GetDirectoryName(DataFolder.GuidePath);
 		var newFile = FileBrowserHelpers.CreateFileInDirectory(parentDirectory, videoName + "_Settings.json");
-		var path = Path.Combine(DataFolder.GuidePath, videoName + "_Settings.json"); 
 		
-		Debug.Log("Writing file : " + path);
+		Debug.Log("Writing file : " + newFile);
 		FileBrowserHelpers.WriteTextToFile(newFile, json);
 	}
 

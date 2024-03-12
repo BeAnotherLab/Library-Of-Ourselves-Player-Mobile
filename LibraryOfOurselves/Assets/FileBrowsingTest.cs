@@ -28,11 +28,11 @@ public class FileBrowserTest : MonoBehaviour
 		// Load file/folder: file, Allow multiple selection: true
 		// Initial path: default (Documents), Initial filename: empty
 		// Title: "Load File", Submit button text: "Load"
-		yield return SimpleFileBrowser.FileBrowser.WaitForLoadDialog( SimpleFileBrowser.FileBrowser.PickMode.Folders, true, null, null, "Select Files", "Load" );
+		yield return FileBrowser.WaitForLoadDialog( SimpleFileBrowser.FileBrowser.PickMode.Folders, true, null, null, "Select Files", "Load" );
 
 		// Dialog is closed
 		// Print whether the user has selected some files or cancelled the operation (FileBrowser.Success)
-		Debug.Log( SimpleFileBrowser.FileBrowser.Success );
+		Debug.Log( FileBrowser.Success );
 
 		if( SimpleFileBrowser.FileBrowser.Success )
 			OnFilesSelected( SimpleFileBrowser.FileBrowser.Result ); // FileBrowser.Result is null, if FileBrowser.Success is false
@@ -41,6 +41,8 @@ public class FileBrowserTest : MonoBehaviour
 	void OnFilesSelected( string[] filePaths )
 	{
 		DataFolder.GuidePath = filePaths[0];
+		Debug.Log("test write ");
+		FileBrowserHelpers.CreateFileInDirectory(filePaths[0], "hola mundis");
 		RootFolderPicked();
 	}
 }
