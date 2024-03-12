@@ -173,7 +173,8 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
 			if (file.Name.IndexOf("_Settings", 0, StringComparison.Ordinal) != -1) //tests if we can find "settings" string in filename
-				if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find videonName string in filename
+				//TODO this will cause problem if same string is found in different videos?
+				if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find videonName string in filename 
 					return file.Path;
 
 		return "";

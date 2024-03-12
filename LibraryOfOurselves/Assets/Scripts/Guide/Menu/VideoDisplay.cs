@@ -39,13 +39,13 @@ public class VideoDisplay : MonoBehaviour
 
 	bool initialized = false;
 	
-	public VideoDisplay Init(string path, string videoName, VideoSettings settings) {
+	public VideoDisplay Init(string path, string videoName, VideoSettings settings) { //TODO separate model and view 
 		if (initialized) {
 			Haze.Logger.LogError("Cannot initialize a VideoDisplay twice!!");
 			return null;
 		}
 
-		FullPath = path;
+		FullPath =  //TODO remove this field, unnecessary;
 		VideoName = videoName;
 		Settings = settings;
 		Available = false; 

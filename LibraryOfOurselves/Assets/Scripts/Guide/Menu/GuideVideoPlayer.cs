@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using RenderHeads.Media.AVProVideo;
+using SimpleFileBrowser;
 using UnityEngine.Events;
 using UnityEngine.Video;
 using UnityEngine.UI;
@@ -115,7 +116,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		currentVideo = videoDisplay;
 
 		if (GuideAdapter.Instance) {
-			Haze.Logger.Log("Loading video: " + videoDisplay.VideoName); 
+			Haze.Logger.Log("Loading video: " + GetVideoPath(videoDisplay.VideoName)); 
 
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
 			displaying = true;
@@ -123,7 +124,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			startedPlayback = false;
 			lastTimeShown = 0;
 
-			videoPlayer.OpenMedia(new MediaPath(Path.Combine(DataFolder.GuidePath, videoDisplay.VideoName + "Guide.mp4"), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+			videoPlayer.OpenMedia(new MediaPath( GetVideoPath(videoDisplay.VideoName), MediaPathType.AbsolutePathOrURL), autoPlay:false);
 			
 			timeSlider.SetValueWithoutNotify(0);
 
@@ -140,6 +141,17 @@ public class GuideVideoPlayer : MonoBehaviour{
 		}
 	}
 
+	
+	private string GetVideoPath(string videoName) //returns a path compatible with scoped storage
+	{
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+			//TODO this will cause problem if same string is found in different videos?
+			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
+				if (file.Extension == ".mp4") return file.Path;
+
+		return "";
+	}
+	
 	public void Play() {//the correct command is Play only when we start playback, afterwards it's Pause (which toggles between the two)
 		if(startedPlayback) {
 			Pause();
@@ -377,5 +389,5 @@ public class GuideVideoPlayer : MonoBehaviour{
 			}
 		}
 	}
-
+	
 }
