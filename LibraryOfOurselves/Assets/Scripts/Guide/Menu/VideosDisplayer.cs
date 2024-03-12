@@ -97,26 +97,19 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			
 		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
 		{
-			Debug.Log("in this folder there is " + file.Path);
-			if (file.Extension == ".mp4") Haze.Logger.Log("Found " + file.Path);
-		
-			Haze.Logger.Log("Adding video file: " + DataFolder.GuidePath + "...");
-		
-			string fileName = FileBrowserHelpers.GetFilename(DataFolder.GuidePath);
 			
 			//Is it a guide?
-			if (DataFolder.GuidePath.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1) //tests if we can find case independent "guide" string in filename
+			if (DataFolder.GuidePath.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1 && file.Extension == ".mp4") //tests if we can find case independent "guide" string in filename
 			{
+				string fileName = FileBrowserHelpers.GetFilename(file.Path);
+				Debug.Log("Found " + file.Path);
+				
 				//ok! this is a guide video. Try to find the associated settings file
 				var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
-				string parentDirectory = FileBrowserHelpers.GetDirectoryName(DataFolder.GuidePath);
-				Debug.Log("we want to check if we can write in the following directory" + parentDirectory);
-				string settingsPath = FileBrowserHelpers.CreateFileInDirectory(parentDirectory, videoName + "_Settings.json");
 
 				VideoSettings settings;
-				Debug.Log("Does settings exist ? " + settingsPath);
-				
-				if (FileBrowserHelpers.FileExists(DataFolder.GuidePath))
+				var settingsPath = SettingsFileExists(file.Path);
+				if (settingsPath != "")
 				{
 					Debug.Log("yes, file exists");
 					string json = FileBrowserHelpers.ReadTextFromFile(settingsPath);
@@ -146,8 +139,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			}
 		}
 	}
-
-	//public void AddSettings(string path)
 	
 	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO move to own class
 		string json = JsonUtility.ToJson(settings); 
@@ -176,4 +167,17 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		return null;
 	}
 
+	private string SettingsFileExists(string videoPath)
+	{
+		string fileName = FileBrowserHelpers.GetFilename(videoPath);
+		var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
+
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+			if (file.Name.IndexOf("_Settings", 0, StringComparison.Ordinal) != -1) //tests if we can find "settings" string in filename
+				if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find videonName string in filename
+					return file.Path;
+
+		return "";
+	}
+	
 }
