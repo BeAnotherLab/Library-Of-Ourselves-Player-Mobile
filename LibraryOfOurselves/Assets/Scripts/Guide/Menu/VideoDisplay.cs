@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using System.IO;
 using System.Linq;
 using SimpleFileBrowser;
+using File = UnityEngine.Windows.File;
 
 public class VideoDisplay : MonoBehaviour
 {
@@ -41,47 +43,70 @@ public class VideoDisplay : MonoBehaviour
 
 	bool initialized = false;
 	
-	public VideoDisplay Init(string path, string videoName, VideoSettings settings) { //TODO separate model and view 
+	public VideoDisplay Init(string path, string videoName, VideoSettings settings) { //TODO separate model and view. Remove unused path param 
 		if (initialized) {
 			Haze.Logger.LogError("Cannot initialize a VideoDisplay twice!!");
 			return null;
 		}
 
-		FullPath =  //TODO remove this field, unnecessarye;
+		FullPath =  //TODO remove this field, unnecessary;
 		VideoName = videoName;
 		Settings = settings;
 		Available = false; 
 
 		videoNameDisplay.text = VideoName;
-
-		var thumbnailPath = GetThumbnailPath(videoName);
-
-		if (thumbnailPath != "")
-		{
-			Texture2D texture = NativeGallery.LoadImageAtPath(thumbnailPath);
-			Sprite thumbnail = Sprite.Create(texture,
-				new Rect(0, 0, texture.width, texture.height),
-				new Vector2(texture.width/2, texture.height/2));
-			;
-			//Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
-			
-			if (thumbnail != null) videoThumbnail.sprite = thumbnail;
-		}
 		
+		var thumbnailFileSystemEntry = GetThumbnailPath(videoName);
+
+		//Debug.Log("looking for thumbnail at " + thumbnailPath);
+
+		FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, Application.temporaryCachePath);
+
+		var tempImagePath = Path.Combine(Application.temporaryCachePath, thumbnailFileSystemEntry.Name);
+
+		if (File.Exists(tempImagePath))
+		{
+			if (thumbnailFileSystemEntry.Path != "")
+			{
+				Texture2D texture = NativeGallery.LoadImageAtPath(tempImagePath, markTextureNonReadable: false); //TODO FileNotFound!!
+			
+				if( texture == null ) Debug.Log( "Couldn't load texture from " + tempImagePath );
+            
+				Sprite thumbnail = Sprite.Create(texture,
+					new Rect(0, 0, texture.width, texture.height),
+					new Vector2(texture.width/2, texture.height/2));
+				
+				//Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
+			
+				if (thumbnail != null) videoThumbnail.sprite = thumbnail;
+			}
+		}
+				
 		return this;
 	}
 
-	private string GetThumbnailPath(string videoName)
+	private FileSystemEntry GetThumbnailPath(string videoName)
 	{
 		//TODO check if case senstiive. see how to do case insensitive comparison
-		var extensions = new string[] { ".PNG", ".png", ".jpg", ".JPG", ".jpeg", ".JPEG", ".Jpeg" };
-		
-		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
-			//TODO this will cause problem if same string is found in different videos?
-			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
-				if (extensions.Contains(file.Extension)) return file.Path;
+		var extensions = new [] { ".PNG", ".png", ".jpg", ".JPG", ".jpeg", ".JPEG", ".Jpeg" };
 
-		return "";
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+		{
+			//TODO this will cause problem if same string is found in different videos?
+			Debug.Log("checking filesystem entry " + file.Path);
+			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
+			{
+				Debug.Log(file.Name + " contains " + videoName);
+				if (extensions.Contains(file.Extension))
+				{
+					Debug.Log("found thumbnail with extension " + file.Extension);
+					return file;
+				}	
+			}
+		}
+
+		Debug.Log("no thumbnail found for " + videoName);
+		return new FileSystemEntry();
 	}
 
 	public void OnClickChoose() {
