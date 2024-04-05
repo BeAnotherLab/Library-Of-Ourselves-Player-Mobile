@@ -17,11 +17,14 @@ public class FileBrowserTest : MonoBehaviour
 		// Name: Users
 		// Path: C:\Users
 		// Icon: default (folder icon)
-		SimpleFileBrowser.FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
-		
-		 StartCoroutine( ShowLoadDialogCoroutine() );
+		FileBrowser.AddQuickLink( "Users", "C:\\Users", null );
 	}
 
+	public void ShowFileBrowsingDialog()
+	{
+		StartCoroutine( ShowLoadDialogCoroutine() );
+	}
+	
 	IEnumerator ShowLoadDialogCoroutine()
 	{
 		// Show a load file dialog and wait for a response from user
@@ -32,10 +35,9 @@ public class FileBrowserTest : MonoBehaviour
 
 		// Dialog is closed
 		// Print whether the user has selected some files or cancelled the operation (FileBrowser.Success)
-		Debug.Log( FileBrowser.Success );
+		Debug.Log(FileBrowser.Success);
 
-		if( SimpleFileBrowser.FileBrowser.Success )
-			OnFilesSelected( SimpleFileBrowser.FileBrowser.Result ); // FileBrowser.Result is null, if FileBrowser.Success is false
+		if (FileBrowser.Success) OnFilesSelected(FileBrowser.Result); // FileBrowser.Result is null, if FileBrowser.Success is false
 	}
 	
 	void OnFilesSelected( string[] filePaths )
