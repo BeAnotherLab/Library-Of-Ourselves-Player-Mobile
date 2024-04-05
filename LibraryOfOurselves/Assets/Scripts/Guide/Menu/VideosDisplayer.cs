@@ -44,16 +44,22 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 	private void OnEnable()
 	{
-		FileBrowserTest.RootFolderPicked += AddVideos;
+		FileBrowsing.RootFolderPicked += AddVideos;
 	}
 
 	private void OnDisable()
 	{
-		FileBrowserTest.RootFolderPicked += AddVideos;
+		FileBrowsing.RootFolderPicked += AddVideos;
 	}
 
 	private void Start() {
 		Instance = this; //TODO remove singleton antipattern
+		var guidePath = PlayerPrefs.GetString("GuidePath", "");
+		if (PlayerPrefs.GetString("GuidePath", "") != "")
+		{
+			DataFolder.GuidePath = guidePath;		
+			AddVideos();			
+		}
 	}
 
 	private void OnDestroy() {
