@@ -57,13 +57,11 @@ public class VideoDisplay : MonoBehaviour
 		videoNameDisplay.text = VideoName;
 		
 		var thumbnailFileSystemEntry = GetThumbnailPath(videoName);
-
-		//Debug.Log("looking for thumbnail at " + thumbnailPath);
-
 		FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, Application.temporaryCachePath);
 
 		var tempImagePath = Path.Combine(Application.temporaryCachePath, thumbnailFileSystemEntry.Name);
-
+		Debug.Log("looking for thumbnail after copying at " + tempImagePath);
+		
 		if (File.Exists(tempImagePath))
 		{
 			if (thumbnailFileSystemEntry.Path != "")
@@ -80,6 +78,10 @@ public class VideoDisplay : MonoBehaviour
 			
 				if (thumbnail != null) videoThumbnail.sprite = thumbnail;
 			}
+		}
+		else
+		{
+			Debug.Log("couldn't find file at : " + tempImagePath);
 		}
 				
 		return this;
