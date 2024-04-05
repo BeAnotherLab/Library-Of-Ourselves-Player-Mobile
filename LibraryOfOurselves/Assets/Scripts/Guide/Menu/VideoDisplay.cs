@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using System.IO;
+using System.Linq;
+using SimpleFileBrowser;
 
 public class VideoDisplay : MonoBehaviour
 {
@@ -39,37 +42,75 @@ public class VideoDisplay : MonoBehaviour
 
 	bool initialized = false;
 	
-	public VideoDisplay Init(string path, string videoName, VideoSettings settings) {
+	public VideoDisplay Init(string path, string videoName, VideoSettings settings) { //TODO separate model and view. Remove unused path param 
 		if (initialized) {
 			Haze.Logger.LogError("Cannot initialize a VideoDisplay twice!!");
 			return null;
 		}
 
-		FullPath = path;
+		FullPath =  //TODO remove this field, unnecessary;
 		VideoName = videoName;
 		Settings = settings;
 		Available = false; 
 
 		videoNameDisplay.text = VideoName;
-
-		string[] split = path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-		string thumbnailPath = "";
-		for(int i = 0; i < split.Length - 1; ++i) thumbnailPath += split[i] + "/";
-		thumbnailPath += videoName;
-
-		Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath + ".png"); //TODO put in a foreach loop
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".PNG");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpg");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPG");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".jpeg");
-		thumbnail = thumbnail ?? PngToSprite.LoadSprite(thumbnailPath + ".JPEG");
 		
-		//string[] x = {".png", ".PNG", ".jpg", ".JPG", ".jpeg", ".JPEG"};
-		// foreach (string fileExtension in x) thumbnail = PngToSprite.LoadSprite(thumbnailPath + fileExtension);
+		var thumbnailFileSystemEntry = GetThumbnailPath(videoName);
+		var tempFolder = Application.temporaryCachePath;
+		var filePath = Path.Combine(tempFolder, thumbnailFileSystemEntry.Name);
 		
-		if (thumbnail != null) videoThumbnail.sprite = thumbnail;
+		Debug.Log("copying file " + thumbnailFileSystemEntry.Path + " to " + filePath);
+		FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, filePath);
 
+		Debug.Log("looking for thumbnail after copying at " + filePath);
+		
+		if (File.Exists(filePath))
+		{
+			if (thumbnailFileSystemEntry.Path != "")
+			{
+				Texture2D texture = NativeGallery.LoadImageAtPath(filePath, markTextureNonReadable: false); //TODO FileNotFound!!
+			
+				if( texture == null ) Debug.Log( "Couldn't load texture from " + filePath );
+            
+				Sprite thumbnail = Sprite.Create(texture,
+					new Rect(0, 0, texture.width, texture.height),
+					new Vector2(texture.width/2, texture.height/2));
+				
+				//Sprite thumbnail = PngToSprite.LoadSprite(thumbnailPath);
+			
+				if (thumbnail != null) videoThumbnail.sprite = thumbnail;
+			}
+		}
+		else
+		{
+			Debug.Log("couldn't find file at : " + filePath);
+		}
+				
 		return this;
+	}
+
+	private FileSystemEntry GetThumbnailPath(string videoName)
+	{
+		//TODO check if case senstiive. see how to do case insensitive comparison
+		var extensions = new [] { ".PNG", ".png", ".jpg", ".JPG", ".jpeg", ".JPEG", ".Jpeg" };
+
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+		{
+			//TODO this will cause problem if same string is found in different videos?
+			Debug.Log("checking filesystem entry " + file.Path);
+			if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find video name string in filename
+			{
+				Debug.Log(file.Name + " contains " + videoName);
+				if (extensions.Contains(file.Extension))
+				{
+					Debug.Log("found thumbnail with extension " + file.Extension);
+					return file;
+				}	
+			}
+		}
+
+		Debug.Log("no thumbnail found for " + videoName);
+		return new FileSystemEntry();
 	}
 
 	public void OnClickChoose() {

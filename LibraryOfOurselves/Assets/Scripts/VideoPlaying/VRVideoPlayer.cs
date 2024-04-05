@@ -112,16 +112,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		blackScreen.SetActive(false);
 
 		BinauralAudio = false;
-
-		/*
-		player.errorReceived += delegate (VideoPlayer player, string message) {
-			Haze.Logger.LogError("VideoPlayer error: " + message);
-			errorWhileLoading = true;
-			endOfVideo();
-		};
-		*/
-
-		
 	}
 
 	private void OnDestroy() {
@@ -157,12 +147,6 @@ public class VRVideoPlayer : MonoBehaviour{
 		Debug.Log("first fram ready, seeking to end");
 		player.Control.Seek(player.Info.GetDuration() - _frameBeforeEndInSeconds);
 	}
-	
-	public static bool IsVideoAvailable(string videoName) {
-		string path = Path.Combine(DataFolder.Path, videoName + ".mp4"); 
-		Haze.Logger.Log("Checking if we have " + path);
-		return File.Exists( path);
-	}
 
 	public async Task<VideoLoadingResponse> LoadVideo(string videoName, string mode) { //TODO async not actually necessary?
 		VideoLoadingResponse response = new VideoLoadingResponse();
@@ -171,14 +155,6 @@ public class VRVideoPlayer : MonoBehaviour{
 
 		Haze.Logger.Log("Loading video " + videoName + "...");
 		errorWhileLoading = false;
-
-		if (!IsVideoAvailable(videoName)) 
-		{
-			response.errorMessage = "Video unavailable.";
-			response.ok = false;
-			Haze.Logger.LogError("Video " + videoName + " could not be found.");
-			return response;
-		}
 
 		is360 = false;
 		if (mode.Length >= 3 && mode[0] == '3' && mode[1] == '6' && mode[2] == '0') 
@@ -237,8 +213,8 @@ public class VRVideoPlayer : MonoBehaviour{
 			Haze.Logger.Log("Loading binaural audio files: " + leftAudioFile + " and " + rightAudioFile);
 		}
 		
-		//Prepare video player
-		player.OpenMedia(new MediaPath(Path.Combine(DataFolder.Path, videoName + ".mp4"), MediaPathType.AbsolutePathOrURL), autoPlay:false);
+		//Prepare video player TODO this shouldn't be working but it is.
+		player.OpenMedia(new MediaPath(Path.Combine(DataFolder.UserPath, videoName + ".mp4"), MediaPathType.AbsolutePathOrURL), autoPlay:false);
 		
 		PlaybackSpeed = 1;
 		lastReadyFrame = -1; //TODO delete, value never used

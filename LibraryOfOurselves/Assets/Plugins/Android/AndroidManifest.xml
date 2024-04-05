@@ -14,4 +14,5 @@
         </activity>
     </application>
     <uses-feature android:name="oculus.software.overlay_keyboard" android:required="false"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:node="replace"/> 
 </manifest>

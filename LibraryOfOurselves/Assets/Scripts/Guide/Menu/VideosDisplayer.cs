@@ -14,16 +14,6 @@ public class VideoChoice { //TODO rename to option?
 	public Vector3 position = new Vector3();
 } //TODO move to own file
 
-public class DataFolder //TODO make it a scriptable object?
-{
-#if !UNITY_EDITOR && UNITY_ANDROID
-	public static string Path = "/storage/emulated/0/Movies/LibraryOfOurselvesContent"; //TODO add filebrowser to be able to set that folder manually
-#endif
-#if UNITY_EDITOR	
-	public static string Path = Application.persistentDataPath;
-#endif
-}
-
 [Serializable]
 public class VideoSettings {
 	public string description = "";
@@ -52,7 +42,16 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
 	GameObject lastVideoShelf;
 
-	
+	private void OnEnable()
+	{
+		FileBrowserTest.RootFolderPicked += AddVideos;
+	}
+
+	private void OnDisable()
+	{
+		FileBrowserTest.RootFolderPicked += AddVideos;
+	}
+
 	private void Start() {
 		Instance = this; //TODO remove singleton antipattern
 	}
@@ -92,29 +91,34 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		}
 	}
 
-	public void AddVideo(string path) {
-		Haze.Logger.Log("Adding video file: " + path + "...");
-		try
+	public void AddVideos()
+	{
+		Debug.Log("Checking for files in " + DataFolder.GuidePath);
+	
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
 		{
-			string fileName = FileBrowserHelpers.GetFilename(path);
-			
+			string fileName = FileBrowserHelpers.GetFilename(file.Path);
+			Debug.Log("Found " + file.Path);
+				
 			//Is it a guide?
-			if (path.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1) //tests if we can find case independent "guide" string in filename
+			if (fileName.IndexOf("guide", 0, StringComparison.OrdinalIgnoreCase) != -1 && file.Extension == ".mp4") //tests if we can find case independent "guide" string in filename
 			{
-				//ok! this is a guide video. Try to find the associated settings file
+				Debug.Log("found a guide video");
 				var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
-				string settingsPath = Path.Combine(DataFolder.Path, videoName + "_Settings.json"); //use the persistent data path folder when testing on the editor
 
 				VideoSettings settings;
-				if (File.Exists(settingsPath)) 
+				var settingsPath = SettingsFileExists(file.Path);
+				if (settingsPath != "")
 				{
-					string json = File.ReadAllText(settingsPath);
+					Debug.Log("yes, file exists");
+					string json = FileBrowserHelpers.ReadTextFromFile(settingsPath);
 					settings = JsonUtility.FromJson<VideoSettings>(json);
+					Debug.Log("read from settings file : " + settings);
 				}
 				else //no settings for this video yet.
 				{
 					settings = new VideoSettings();
-					Haze.Logger.Log("Saving settings...");
+					Haze.Logger.Log("No file found, saving settings...");
 					SaveVideoSettings(videoName, settings);
 				}
 
@@ -128,21 +132,21 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				displayedVideos
 					.Add(Instantiate(videoDisplayPrefab, lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1))
 					.GetComponent<VideoDisplay>()
-					.Init(path, videoName, settings));
+					.Init(DataFolder.GuidePath, videoName, settings));
 
 				if (displayedVideos.Count == 1) onFoundOneVideo.Invoke();
 			}
-		} 
-		catch (Exception e) 
-		{
-			//could silently ignore, probably
-			Haze.Logger.LogWarning("Video " + path + " cannot be added: " + e);
 		}
 	}
-
-	public void SaveVideoSettings(string videoName, VideoSettings settings) { 
+	
+	public void SaveVideoSettings(string videoName, VideoSettings settings) { //TODO move to own class
 		string json = JsonUtility.ToJson(settings); 
-		File.WriteAllText(Path.Combine(DataFolder.Path, videoName + "_Settings.json"), json); //Save settings to json file
+		Debug.Log("will write settings for " + videoName);
+		
+		var newFile = FileBrowserHelpers.CreateFileInDirectory(DataFolder.GuidePath, videoName + "_Settings.json");
+		
+		Debug.Log("Writing file : " + newFile);
+		FileBrowserHelpers.WriteTextToFile(newFile, json);
 	}
 
 	public void OnPairConnection(TCPConnection connection) {
@@ -162,4 +166,18 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 		return null;
 	}
 
+	private string SettingsFileExists(string videoPath)
+	{
+		string fileName = FileBrowserHelpers.GetFilename(videoPath);
+		var videoName = fileName.Substring(0, fileName.IndexOf("guide", StringComparison.OrdinalIgnoreCase));
+
+		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
+			if (file.Name.IndexOf("_Settings", 0, StringComparison.Ordinal) != -1) //tests if we can find "settings" string in filename
+				//TODO this will cause problem if same string is found in different videos?
+				if (file.Name.IndexOf(videoName, 0, StringComparison.Ordinal) != -1) //tests if we can find videonName string in filename 
+					return file.Path;
+
+		return "";
+	}
+	
 }
