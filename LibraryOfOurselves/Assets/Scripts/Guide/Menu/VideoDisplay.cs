@@ -7,7 +7,6 @@ using System;
 using System.IO;
 using System.Linq;
 using SimpleFileBrowser;
-using File = UnityEngine.Windows.File;
 
 public class VideoDisplay : MonoBehaviour
 {
@@ -57,18 +56,21 @@ public class VideoDisplay : MonoBehaviour
 		videoNameDisplay.text = VideoName;
 		
 		var thumbnailFileSystemEntry = GetThumbnailPath(videoName);
-		FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, Application.temporaryCachePath);
-
-		var tempImagePath = Path.Combine(Application.temporaryCachePath, thumbnailFileSystemEntry.Name);
-		Debug.Log("looking for thumbnail after copying at " + tempImagePath);
+		var tempFolder = Application.temporaryCachePath;
+		var filePath = Path.Combine(tempFolder, thumbnailFileSystemEntry.Name);
 		
-		if (File.Exists(tempImagePath))
+		Debug.Log("copying file " + thumbnailFileSystemEntry.Path + " to " + filePath);
+		FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, filePath);
+
+		Debug.Log("looking for thumbnail after copying at " + filePath);
+		
+		if (File.Exists(filePath))
 		{
 			if (thumbnailFileSystemEntry.Path != "")
 			{
-				Texture2D texture = NativeGallery.LoadImageAtPath(tempImagePath, markTextureNonReadable: false); //TODO FileNotFound!!
+				Texture2D texture = NativeGallery.LoadImageAtPath(filePath, markTextureNonReadable: false); //TODO FileNotFound!!
 			
-				if( texture == null ) Debug.Log( "Couldn't load texture from " + tempImagePath );
+				if( texture == null ) Debug.Log( "Couldn't load texture from " + filePath );
             
 				Sprite thumbnail = Sprite.Create(texture,
 					new Rect(0, 0, texture.width, texture.height),
@@ -81,7 +83,7 @@ public class VideoDisplay : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("couldn't find file at : " + tempImagePath);
+			Debug.Log("couldn't find file at : " + filePath);
 		}
 				
 		return this;
