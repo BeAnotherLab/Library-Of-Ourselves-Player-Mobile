@@ -9,7 +9,17 @@ public class FileBrowsing : MonoBehaviour
 {
 	public delegate void OnRootFolderPicked();
 	public static OnRootFolderPicked RootFolderPicked;
-	
+
+	private void OnEnable()
+	{
+		Settings.PickFolderButtonPresed += ShowFileBrowsingDialog;
+	}
+
+	private void OnDisable()
+	{
+		Settings.PickFolderButtonPresed -= ShowFileBrowsingDialog;
+	}
+
 	void Start()
 	{
 		FileBrowser.AddQuickLink( "Users", "C:\\Users", null ); //TODO remove?
@@ -18,7 +28,7 @@ public class FileBrowsing : MonoBehaviour
 		if (PlayerPrefs.GetString("GuidePath", "") == "") StartCoroutine( ShowLoadDialogCoroutine());
 	}
 
-	public void ShowFileBrowsingDialog()
+	private void ShowFileBrowsingDialog()
 	{
 		StartCoroutine( ShowLoadDialogCoroutine() );
 	}

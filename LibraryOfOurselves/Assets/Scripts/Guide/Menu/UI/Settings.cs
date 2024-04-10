@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,10 +28,13 @@ public class Settings : MonoBehaviour {
 	[SerializeField] Text syncedUsersText;
 	[SerializeField] Toggle forceMultiUsersToggle;
 
+	public delegate void OnPickFolderButtonPresed();
+	public static OnPickFolderButtonPresed PickFolderButtonPresed; 
+	
 	public static Settings Instance { get; private set; }
 
 	public static bool SendSyncMessages { get; private set; } = true;
-
+	
 	public void OnToggleSyncPackets(bool toggle) {
 		SendSyncMessages = toggle;
 	}
@@ -176,6 +180,11 @@ public class Settings : MonoBehaviour {
 		OnEnable();
 	}
 
+	public void NotifyFileBrowser()
+	{
+		PickFolderButtonPresed();
+	}
+	
 	private void OnEnable() {
 		allowedErrorSlider.SetValueWithoutNotify(AllowedErrorForSyncedPlayback);
 		maximumErrorSlider.SetValueWithoutNotify(MaximumErrorForSyncedPlayback);
