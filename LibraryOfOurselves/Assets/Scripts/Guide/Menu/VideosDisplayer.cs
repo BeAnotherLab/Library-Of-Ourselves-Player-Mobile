@@ -33,6 +33,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 
 	[SerializeField] GameObject videoShelfPrefab;
 	[SerializeField] GameObject videoDisplayPrefab;
+	[SerializeField] private GameObject lastVideoShelf;
 	[SerializeField] UnityEvent onFoundOneVideo;
 
 	public static VideosDisplayer Instance { get; private set; }
@@ -40,7 +41,6 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	public List<VideoDisplay> Displays { get { return displayedVideos; } }
 
 	List<VideoDisplay> displayedVideos = new List<VideoDisplay>();
-	GameObject lastVideoShelf;
 
 	private void OnEnable()
 	{
@@ -101,6 +101,9 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 	{
 		Debug.Log("Checking for files in " + DataFolder.GuidePath);
 	
+		displayedVideos.Clear();
+		foreach(Transform child in transform) Destroy(child.gameObject);
+		
 		foreach (FileSystemEntry file in FileBrowserHelpers.GetEntriesInDirectory(DataFolder.GuidePath, true))
 		{
 			string fileName = FileBrowserHelpers.GetFilename(file.Path);
