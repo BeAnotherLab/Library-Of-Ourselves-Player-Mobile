@@ -25,25 +25,25 @@ public class FileBrowsing : MonoBehaviour
 		FileBrowser.AddQuickLink( "Users", "C:\\Users", null ); //TODO remove?
 		
 		//show file browse on startup if no path has been picked yet
-		if (PlayerPrefs.GetString("GuidePath", "") == "") StartCoroutine( ShowLoadDialogCoroutine());
+		if (PlayerPrefs.GetString("GuidePath", "") == "") ShowFileBrowsingDialog(); // TODO show a dialog before opening browser?
 	}
 
 	private void ShowFileBrowsingDialog()
 	{
-		StartCoroutine( ShowLoadDialogCoroutine() );
+#if !UNITY_EDITOR && UNITY_ANDROID
+		FileBrowserHelpers.AJC.CallStatic( "PickSAFFolder", FileBrowserHelpers.Context, new FBDirectoryReceiveCallbackAndroid( OnSAFDirectoryPicked ) );
+#endif
 	}
 	
-	IEnumerator ShowLoadDialogCoroutine()
+	private void OnFilesSelected(string filePath)
 	{
-		yield return FileBrowser.WaitForLoadDialog( FileBrowser.PickMode.Folders, true, null, null, "Select Files", "Load" );
-
-		if (FileBrowser.Success) OnFilesSelected(FileBrowser.Result); // FileBrowser.Result is null, if FileBrowser.Success is false
-	}
-	
-	private void OnFilesSelected(string[] filePaths)
-	{
-		PlayerPrefs.SetString("GuidePath", filePaths[0]);
-		DataFolder.GuidePath = filePaths[0];
+		PlayerPrefs.SetString("GuidePath", filePath);
+		DataFolder.GuidePath = filePath;
 		RootFolderPicked();
+	}
+	
+	private void OnSAFDirectoryPicked(string rawUri, string name)
+	{
+       if (rawUri != "") OnFilesSelected(rawUri); // FileBrowser.Result is null, if FileBrowser.Success is false
 	}
 }
