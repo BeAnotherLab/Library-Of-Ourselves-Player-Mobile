@@ -1,7 +1,7 @@
 # Library-Of-Ourselves-Player-Mobile
 Mobile version of Library of ourselves app
 
-### Current version: 0.3.3-beta
+### Current version: 0.3.4-beta
 
 ## Video codec and export settings
 For smooth playback of the videos, the following export settings from Adobe Premiere Pro are recommended:
@@ -25,7 +25,7 @@ To use these guidelines, replace any "XXX" within filenames with the video's nam
 #### Guide app:
 * Use pin 000101 to unlock app initially and to access advanced admin features (pin can be modified in Settings).
 
-* Guide videos should be named "XXXGuide.mp4", "XXXguide.mp4" or "XXXGUIDE.mp4" and placed in the `Application.PersistentDataPath` folder for *development in the editor* (that folder will be */storage/emulated/0/Movies/LibraryOfOurselvesContent* on Android)
+* Guide videos should be named "XXXGuide.mp4", "XXXguide.mp4" or "XXXGUIDE.mp4" and placed *in any folder you like*. Upon opening the app for the first time, a dialog will appear asking you to set the content folder. The folder can be changed later in the settings menu.
 
 * Video settings will be saved as "XXX_Settings.json" and placed in the win64 folder on desktop, in the application directory on Android (although these can be copied and read from the same folder as the videos, they can't be written there)
 
