@@ -57,31 +57,34 @@ public class VideoDisplay : MonoBehaviour
 		
 		var thumbnailFileSystemEntry = GetThumbnailPath(videoName);
 		var tempFolder = Application.temporaryCachePath;
-		var filePath = Path.Combine(tempFolder, thumbnailFileSystemEntry.Name);
 		
-		Debug.Log("copying file " + thumbnailFileSystemEntry.Path + " to " + filePath);
-		FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, filePath);
+		if (thumbnailFileSystemEntry.Name != null)
+		{
+			var filePath = Path.Combine(tempFolder, thumbnailFileSystemEntry.Name);
+			Debug.Log("copying file " + thumbnailFileSystemEntry.Path + " to " + filePath);
+			FileBrowserHelpers.CopyFile(thumbnailFileSystemEntry.Path, filePath);
 
-		Debug.Log("looking for thumbnail after copying at " + filePath);
+			Debug.Log("looking for thumbnail after copying at " + filePath);
 		
-		if (File.Exists(filePath))
-		{
-			if (thumbnailFileSystemEntry.Path != "")
+			if (File.Exists(filePath))
 			{
-				Texture2D texture = NativeGallery.LoadImageAtPath(filePath, markTextureNonReadable: false); //TODO FileNotFound!!
+				if (thumbnailFileSystemEntry.Path != "")
+				{
+					Texture2D texture = NativeGallery.LoadImageAtPath(filePath, markTextureNonReadable: false); //TODO FileNotFound!!
 			
-				if( texture == null ) Debug.Log( "Couldn't load texture from " + filePath );
+					if( texture == null ) Debug.Log( "Couldn't load texture from " + filePath );
             
-				Sprite thumbnail = Sprite.Create(texture,
-					new Rect(0, 0, texture.width, texture.height),
-					new Vector2(texture.width/2, texture.height/2));
+					Sprite thumbnail = Sprite.Create(texture,
+						new Rect(0, 0, texture.width, texture.height),
+						new Vector2(texture.width/2, texture.height/2));
 				
-				if (thumbnail != null) videoThumbnail.sprite = thumbnail;
+					if (thumbnail != null) videoThumbnail.sprite = thumbnail;
+				}
 			}
-		}
-		else
-		{
-			Debug.Log("couldn't find file at : " + filePath);
+			else
+			{
+				Debug.Log("couldn't find file at : " + filePath);
+			}
 		}
 				
 		return this;
