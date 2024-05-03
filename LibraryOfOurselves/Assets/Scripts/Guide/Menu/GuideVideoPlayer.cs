@@ -93,7 +93,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				if (currentVideo != null && currentVideo.Settings.choices.Count > 0) {
 					List<VideoChoice> choice = currentVideo.Settings.choices;
 					//TODO display choices here
-					//Haze.Logger.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
+					//Debug.Log("Displaying choice [" + choice.question + "]: " + choice.option1 + " / " + choice.option2);
 					GuideAdapter.Instance.SendStartChoice("where to next?", choice);
 					Playing = false;
 				} else Stop();
@@ -116,7 +116,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		currentVideo = videoDisplay;
 
 		if (GuideAdapter.Instance) {
-			Haze.Logger.Log("Loading video: " + GetVideoPath(videoDisplay.VideoName)); 
+			Debug.Log("Loading video: " + GetVideoPath(videoDisplay.VideoName)); 
 
 			GuideAdapter.Instance.SendLoadVideo(videoDisplay.VideoName, videoDisplay.Settings.is360 ? "360" : "235");
 			displaying = true;
@@ -128,7 +128,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 			
 			timeSlider.SetValueWithoutNotify(0);
 
-			Haze.Logger.Log("Loading...");
+			Debug.Log("Loading...");
 			onLoad.Invoke();
 			onPause.Invoke();
 
@@ -137,7 +137,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		} 
 		else 
 		{
-			Haze.Logger.LogError("Error: No GuideAdapter instance!");
+			Debug.LogError("Error: No GuideAdapter instance!");
 		}
 	}
 	
@@ -276,7 +276,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				playImmediately = true;
 				LoadVideo(nextVideoDisplay);
 			} else {
-				Haze.Logger.LogError("Doesn't have video: " + nextVideo);
+				Debug.LogError("Doesn't have video: " + nextVideo);
 				onNextVideoIsUnavailable.Invoke();
 				Stop();
 			}
@@ -334,11 +334,11 @@ public class GuideVideoPlayer : MonoBehaviour{
 	public void Sync(DateTime unused, double targetTimeD) {
 
 		if(!videoPlayer.Control.IsPlaying()) {
-			Haze.Logger.LogWarning("Player was stopped when we received Sync message for " + targetTimeD);
+			Debug.LogWarning("Player was stopped when we received Sync message for " + targetTimeD);
 			return;
 		}
 
-		//Haze.Logger.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
+		//Debug.Log("Received sync for: " + targetTimeD + " (at: " + VideoTime + ")");
 		//Assume at timestamp it was at videoTime; if it would've been later, slow down time slightly; if it would've been earlier, speed up time slightly
 		float targetTime = (float)targetTimeD;
 		float actualTime = (float)VideoTime;
@@ -349,7 +349,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 		if(Mathf.Abs(delta) < allowedErrorForSyncedPlayback) {
 			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(Mathf.Abs(delta) > maximumAllowedErrorBeforeResync) {//too much difference, let's just pop back to the right point
-			Haze.Logger.Log(delta + " ==> Too much difference, jumping to " + targetTime);
+			Debug.Log(delta + " ==> Too much difference, jumping to " + targetTime);
 			videoPlayer.Control.SeekFast(targetTime + Settings.JumpAheadTime);//jump forward 
 			videoPlayer.Control.SetPlaybackRate(1);
 		} else if(delta < 0) {// actualTime < targetTime -> go faster

@@ -40,9 +40,9 @@ public class UDPBroadcaster : MonoBehaviour{
 			try {
 				server.Send(requestData, requestData.Length, broadcastEndpoint);
 			} catch(SocketException se) {
-				Haze.Logger.LogWarning("Socket error (" + se.ErrorCode + "), could not broadcast: " + se.ToString());
+				Debug.LogWarning("Socket error (" + se.ErrorCode + "), could not broadcast: " + se.ToString());
 			} catch(Exception e) {
-				Haze.Logger.LogWarning("Error, could not broadcast: " + e.ToString());
+				Debug.LogWarning("Error, could not broadcast: " + e.ToString());
 			}
 
 			yield return new WaitForSeconds(1);
@@ -55,9 +55,9 @@ public class UDPBroadcaster : MonoBehaviour{
 			try {
 				await server.SendAsync(data, data.Length, remote);
 			} catch(SocketException se) {
-				Haze.Logger.LogWarning("[UDPBrodcaster] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
+				Debug.LogWarning("[UDPBrodcaster] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
 			} catch(Exception e) {
-				Haze.Logger.LogWarning("[UDPBroadcaster] Error, cannot send UDP packet: " + e.ToString());
+				Debug.LogWarning("[UDPBroadcaster] Error, cannot send UDP packet: " + e.ToString());
 			}
 		}
 	}
@@ -81,9 +81,9 @@ public class UDPBroadcaster : MonoBehaviour{
 					host.ReceiveUDPPacket(result.RemoteEndPoint, data);
 				}
 			}catch(SocketException se) {
-				Haze.Logger.LogWarning("[UDPBroadcaster] Socket error " + se.ErrorCode + ", cannot receive UDP packet: " + se.ToString());
+				Debug.LogWarning("[UDPBroadcaster] Socket error " + se.ErrorCode + ", cannot receive UDP packet: " + se.ToString());
 			}catch(Exception e) {
-				Haze.Logger.LogWarning("[UDPBroadcaster] Error, cannot receive UDP packet: " + e.ToString());
+				Debug.LogWarning("[UDPBroadcaster] Error, cannot receive UDP packet: " + e.ToString());
 			}
 		}
 	}

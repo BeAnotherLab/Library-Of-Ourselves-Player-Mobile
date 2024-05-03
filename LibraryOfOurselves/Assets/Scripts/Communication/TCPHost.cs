@@ -49,7 +49,7 @@ public class TCPHost : MonoBehaviour{
 				if (thisOne.AddressFamily != AddressFamily.InterNetwork && thisOne.IsIPv4MappedToIPv6) {
 					thisOne = thisOne.MapToIPv4();
 				}
-				Haze.Logger.Log("Address " + i + " = " + thisOne);
+				Debug.Log("Address " + i + " = " + thisOne);
 				if (thisOne.GetAddressBytes()[0] == (byte)192 && thisOne.GetAddressBytes()[1] == (byte)168) {
 					ipIndex = i;
 					break;
@@ -65,24 +65,24 @@ public class TCPHost : MonoBehaviour{
 				ip = ip.MapToIPv4();
 			}
 			
-			Haze.Logger.Log("Ip: " + ip);
+			Debug.Log("Ip: " + ip);
 
 			_listener = new TcpListener(ip, 0);
 			_listener.Start();
 			IPEndPoint listenerLocalEndpoint = (IPEndPoint)_listener.LocalEndpoint;
 
 			_broadcaster.StartBroadcasting(listenerLocalEndpoint.Address.ToString(), listenerLocalEndpoint.Port);
-			Haze.Logger.Log("Broadcasting ip " + ip + " and port " + listenerLocalEndpoint.Port);
+			Debug.Log("Broadcasting ip " + ip + " and port " + listenerLocalEndpoint.Port);
 
 			while (!_stop) { //running always... 
 				try {
-					Haze.Logger.Log("Awaiting a connection request...");
+					Debug.Log("Awaiting a connection request...");
 					TcpClient client = await _listener.AcceptTcpClientAsync();
 					client.NoDelay = true;
 					//TODO use client.Connected to detect if connectionn was severed 
 					IPEndPoint localEndpoint = (IPEndPoint) client.Client.LocalEndPoint;
 					IPEndPoint remoteEndpoint = (IPEndPoint) client.Client.RemoteEndPoint;
-					Haze.Logger.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
+					Debug.Log("Accepted connection from " + remoteEndpoint.Address + " (port " + remoteEndpoint.Port + "), from address " + localEndpoint.Address + " (port " + localEndpoint.Port + ")");
 					TCPConnection connection = ScriptableObject.CreateInstance<TCPConnection>();
 					connection.client = client;
 					
@@ -91,7 +91,7 @@ public class TCPHost : MonoBehaviour{
 					string channel = data.ReadString();
 					
 					if (channel != "identification") {
-						Haze.Logger.LogWarning("Device at " + remoteEndpoint.Address + " has responded with an illegal channel: " + channel);
+						Debug.LogWarning("Device at " + remoteEndpoint.Address + " has responded with an illegal channel: " + channel);
 					} else {
 						connection.deviceType = (TCPConnection.DeviceType)data.ReadByte();
 						connection.uniqueId = data.ReadString();
@@ -106,20 +106,20 @@ public class TCPHost : MonoBehaviour{
 					}
 
 				} catch (SocketException se) {
-					Haze.Logger.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se);
-					Haze.Logger.LogWarning("Attempting to restart TCPHost::Start()");
+					Debug.LogWarning("Socket error (" + se.ErrorCode + "), could not accept connection: " + se);
+					Debug.LogWarning("Attempting to restart TCPHost::Start()");
 					_listener.Stop();
 					_listener = null;
 					Start(); //retry
 					return;
 				} catch (Exception e) {
 					if (_listener != null)
-						Haze.Logger.LogWarning("Error, could not accept connection: " + e);
+						Debug.LogWarning("Error, could not accept connection: " + e);
 					//else just means that we're exiting Unity.
 				}
 			}
 		} else {
-			Haze.Logger.LogError("No broadcaster...");
+			Debug.LogError("No broadcaster...");
 		}
     }
 
@@ -147,7 +147,7 @@ public class TCPHost : MonoBehaviour{
 		//wait for identification message:
 		string channel = data.ReadString();
 		if(channel == "identification") {
-			Haze.Logger.Log("Accepted [UDP] connection from " + remote.Address + " (port " + remote.Port + ")");
+			Debug.Log("Accepted [UDP] connection from " + remote.Address + " (port " + remote.Port + ")");
 
 			TCPConnection connection = ScriptableObject.CreateInstance<TCPConnection>();
 			connection.udpEndpoint = remote;//set it up as UDP
@@ -179,7 +179,7 @@ public class TCPHost : MonoBehaviour{
 					_onMessageReception.Invoke(connection, channel, data);
 				}
 			} else {
-				Haze.Logger.LogWarning("Received data with length == 0 from connection " + connection);
+				Debug.LogWarning("Received data with length == 0 from connection " + connection);
 				connection.active = false;
 				users.Remove(connection);
 				Destroy(connection);

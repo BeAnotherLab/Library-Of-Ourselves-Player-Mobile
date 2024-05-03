@@ -34,7 +34,7 @@ public class VRGazeChoice : MonoBehaviour {
 
 	void turnGazeOn() {
 		if(!gazing) {
-			if(verbose) Haze.Logger.Log("Gazing at: " + name);
+			if(verbose) Debug.Log("Gazing at: " + name);
 			onStartGazing.Invoke();
 			gazing = true;
 		}
@@ -42,7 +42,7 @@ public class VRGazeChoice : MonoBehaviour {
 
 	void turnGazeOff() {
 		if(gazing) {
-			if(verbose) Haze.Logger.Log("No longer gazing at " + name);
+			if(verbose) Debug.Log("No longer gazing at " + name);
 			onStopGazing.Invoke();
 			gazing = false;
 		}

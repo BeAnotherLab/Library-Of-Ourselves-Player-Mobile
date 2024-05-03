@@ -61,7 +61,7 @@ public class VRMessageDispatcher : MonoBehaviour
 		else if (channel == "save-choice") ParseChoiceMessage(connection, saveChoice, data);
 		else if (channel == "reorient") reorient.Invoke(connection, data.ReadVector3());
 		else if (channel == "goto") gotoTime.Invoke(connection, data.ReadDouble());
-		else if (channel == "disconnection") Haze.Logger.Log("Guide disconnected");
+		else if (channel == "disconnection") Debug.Log("Guide disconnected");
 	}
 
 	private void ParseChoiceMessage(TCPConnection connection, UnityEvent<TCPConnection, string, string, string> myEvent, List<byte> data)

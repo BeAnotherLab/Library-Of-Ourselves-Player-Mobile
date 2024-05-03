@@ -127,11 +127,11 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 				else //no settings for this video yet.
 				{
 					settings = new VideoSettings();
-					Haze.Logger.Log("No file found, saving settings...");
+					Debug.Log("No file found, saving settings...");
 					SaveVideoSettings(videoName, settings);
 				}
 
-				Haze.Logger.Log("Displaying video: " + fileName);
+				Debug.Log("Displaying video: " + fileName);
 
 				if (lastVideoShelf == null || lastVideoShelf.transform.GetChild(lastVideoShelf.transform.childCount - 1).childCount >= 3) {
 					lastVideoShelf = Instantiate(videoShelfPrefab, transform);//add a shelf //TODO use rectangular layout so that we can ignore this
