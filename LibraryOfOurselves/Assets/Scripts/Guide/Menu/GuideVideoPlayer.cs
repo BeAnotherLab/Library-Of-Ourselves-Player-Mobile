@@ -229,7 +229,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				allDevicesReady = true;
 				if(ConnectionsDisplayer.Instance) {
 					foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
-						if(handle.connection.paired && !handle.display.IsVideoReady) {
+						if(handle.connection.paired && !handle.display.isVideoReady) {
 							//this one's not ready yet...
 							allDevicesReady = false;
 							break;

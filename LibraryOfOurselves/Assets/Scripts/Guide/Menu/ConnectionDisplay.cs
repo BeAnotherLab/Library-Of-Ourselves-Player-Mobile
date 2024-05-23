@@ -30,34 +30,20 @@ public class ConnectionDisplay : MonoBehaviour
 
 	public TCPConnection Connection { get; private set; }
 
-	public int Battery {
-		set {
-			_batteryDisplay.text = value + "%";
-		}
+	public void SetBatteryLevel(int value) 
+	{
+		_batteryDisplay.text = value + "%";
 	}
 
-	public float FPS {
-		set {
-			_fpsDisplay.text = value + " FPS";
-		}
+	public void SetFPSValue(float value) {
+		_fpsDisplay.text = value + " FPS";
 	}
 
-	public bool IsVideoReady { get; set; }
+	public bool isVideoReady;
+
+	public bool available;
 	
-	public bool Available {//True when it's possible for us to connect to this device
-		get {
-			if (Connection == null || Connection.active == false)
-				return false; //this device is not responding anymore... (this means we'll be getting rid of this display soon anyways)
-			if (Connection.paired)
-				return true; //in any case we're connected so...
-			return __available && (Connection.lockedId == SystemInfo.deviceUniqueIdentifier || Connection.lockedId == "free");
-		}
-		set {
-			__available = value;
-		}
-	}
-
-	public List<string> VideosAvailable { get { return __videosAvailable; } }
+	public List<string> videosAvailable;
 
 	private string DeviceAlias {
 		get {
@@ -65,10 +51,11 @@ public class ConnectionDisplay : MonoBehaviour
 			if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) {
 				alias = HazePrefs.GetString("alias-" + Connection.uniqueId);
 			}
+			
 			if (alias == "")
 				return Connection.xrDeviceModel;
-			else
-				return alias;
+			
+			return alias;
 		}
 		set {
 			if (value == "" || value == Connection.xrDeviceModel) {
@@ -84,8 +71,6 @@ public class ConnectionDisplay : MonoBehaviour
 	private List<string> __videosAvailable = new List<string>();
 
 	private bool _hasClosedLock;
-
-	private bool __available = true;
 
 	private bool _initialized;
 	
@@ -107,7 +92,7 @@ public class ConnectionDisplay : MonoBehaviour
 
 	public void AddAvailableVideo(string videoName) {
 		Debug.Log("Adding video " + videoName + " to device " + Connection);
-		VideosAvailable.Add(videoName);
+		videosAvailable.Add(videoName);
 	}
 
 	public void OnClickCalibrate() { //recenter
@@ -157,7 +142,7 @@ public class ConnectionDisplay : MonoBehaviour
 			_lockButton.gameObject.SetActive(true);
 			_recenterButton.gameObject.SetActive(true);
 		} 
-		else if (Available) {
+		else if (isAvailable()) {
 			_statusDisplay.color = _availableColour;
 			_textPair.gameObject.SetActive(true);
 			_textUnpair.gameObject.SetActive(false);
@@ -238,4 +223,16 @@ public class ConnectionDisplay : MonoBehaviour
 		yield return new WaitForSeconds(3);
 		if (Connection.lockedId != "free && !Connection.paired")  _lockButton.gameObject.SetActive(true); //are we allowed to show the unlock button?
 	}
+	
+	private bool isAvailable() //TODO clean up. No method needed 
+	{
+		if (Connection == null || Connection.active == false) 
+			return false; //this device is not responding anymore... (this means we'll be getting rid of this display soon anyways)
+		if (Connection.paired) 
+			return true; //in any case we're connected so...
+		
+		//TODO WTF? do swimlane flowchart
+		return available && (Connection.lockedId == SystemInfo.deviceUniqueIdentifier || Connection.lockedId == "free");		
+	}
+
 }

@@ -95,7 +95,7 @@ public class GuideAdapter : MonoBehaviour{
 		if (pairedId == SystemInfo.deviceUniqueIdentifier) { //check if this is a device we were paired to
 			Debug.Log("Paired to " + connection);
 			connection.paired = true;
-			if(handle != null) handle.display.Available = true;
+			if(handle != null) handle.display.available = true;
 			//Give an update to the VideosDisplayer
 			if(VideosDisplayer.Instance) {
 				VideosDisplayer.Instance.OnPairConnection(connection);
@@ -106,7 +106,7 @@ public class GuideAdapter : MonoBehaviour{
 				Debug.Log("Unpaired from " + connection);
 			}
 			Debug.LogWarning("Setting available to " + !paired + " for connection " + connection);
-			if (handle != null) handle.display.Available = !paired;
+			if (handle != null) handle.display.available = !paired;
 		}
 		
 		connection.lockedId = lockedId;
@@ -196,7 +196,7 @@ public class GuideAdapter : MonoBehaviour{
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 		if(ConnectionsDisplayer.Instance) {
 			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
-				handle.display.IsVideoReady = false;
+				handle.display.isVideoReady = false;
 			}
 		}
 	}
@@ -208,7 +208,7 @@ public class GuideAdapter : MonoBehaviour{
 			if(ConnectionsDisplayer.Instance) {
 				handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
 				if(handle != null)
-					handle.display.IsVideoReady = true;
+					handle.display.isVideoReady = true;
 			}
 		} else {
 			Debug.LogWarning("Error: " + connection + " could not load video: " + errorMessage);
@@ -366,8 +366,8 @@ public class GuideAdapter : MonoBehaviour{
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.DisplayedConnectionHandle handle = ConnectionsDisplayer.Instance.GetConnectionHandle(connection);
 			if(handle != null) {
-				handle.display.Battery = battery;
-				handle.display.FPS = fps;
+				handle.display.SetBatteryLevel(battery);
+				handle.display.SetFPSValue(fps);
 			} else {
 				Debug.LogWarning("Received status from a non-existent connection, apparently...");
 			}
