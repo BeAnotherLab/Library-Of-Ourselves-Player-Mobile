@@ -5,40 +5,40 @@ using UnityEngine.UI;
 
 public class ConnectionDisplay : MonoBehaviour
 {
-	[SerializeField] private Text modelNameDisplay;
-	[SerializeField] private Text batteryDisplay;
-	[SerializeField] private Text fpsDisplay;
-	[SerializeField] private Image uniqueIdColourDisplay;
-	[SerializeField] private Image statusDisplay;
-	[SerializeField] private Color pairedColour;
-	[SerializeField] private Color availableColour;
-	[SerializeField] private Color unavailableColour;
-	[SerializeField] private Interpolation lockDisplay;
-	[SerializeField] private Text textPair;
-	[SerializeField] private Text textUnpair;
-	[SerializeField] private Button pairButton;
-	[SerializeField] private Text textLock;
-	[SerializeField] private Text textUnlock;
-	[SerializeField] private Button lockButton;
-	[SerializeField] private ColorDynamicModifier lockColourModifier;
-	[SerializeField] private Color lockAvailableColour;
-	[SerializeField] private Color lockUnavailableColour;
-	[SerializeField] private Button recenterButton;
-	[SerializeField] private Button editDeviceNameButton;
-	[SerializeField] private InputField editDeviceNameField;
-	[SerializeField] private GameObject udpDisplay;
+	[SerializeField] private Text _modelNameDisplay;
+	[SerializeField] private Text _batteryDisplay;
+	[SerializeField] private Text _fpsDisplay;
+	[SerializeField] private Image _uniqueIdColourDisplay;
+	[SerializeField] private Image _statusDisplay;
+	[SerializeField] private Color _pairedColour;
+	[SerializeField] private Color _availableColour;
+	[SerializeField] private Color _unavailableColour;
+	[SerializeField] private Interpolation _lockDisplay;
+	[SerializeField] private Text _textPair;
+	[SerializeField] private Text _textUnpair;
+	[SerializeField] private Button _pairButton;
+	[SerializeField] private Text _textLock;
+	[SerializeField] private Text _textUnlock;
+	[SerializeField] private Button _lockButton;
+	[SerializeField] private ColorDynamicModifier _lockColourModifier;
+	[SerializeField] private Color _lockAvailableColour;
+	[SerializeField] private Color _lockUnavailableColour;
+	[SerializeField] private Button _recenterButton;
+	[SerializeField] private Button _editDeviceNameButton;
+	[SerializeField] private InputField _editDeviceNameField;
+	[SerializeField] private GameObject _udpDisplay;
 
 	public TCPConnection Connection { get; private set; }
 
 	public int Battery {
 		set {
-			batteryDisplay.text = value + "%";
+			_batteryDisplay.text = value + "%";
 		}
 	}
 
 	public float FPS {
 		set {
-			fpsDisplay.text = value + " FPS";
+			_fpsDisplay.text = value + " FPS";
 		}
 	}
 
@@ -97,12 +97,12 @@ public class ConnectionDisplay : MonoBehaviour
 		_initialized = true;
 		Connection = connection;
 		UpdateDisplay();
-		uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
-		modelNameDisplay.text = DeviceAlias;
+		_uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
+		_modelNameDisplay.text = DeviceAlias;
 
-		udpDisplay.SetActive(connection.UDP);
+		_udpDisplay.SetActive(connection.UDP);
 
-		editDeviceNameField.gameObject.SetActive(false);
+		_editDeviceNameField.gameObject.SetActive(false);
 	}
 
 	public void AddAvailableVideo(string videoName) {
@@ -150,27 +150,27 @@ public class ConnectionDisplay : MonoBehaviour
 	public void UpdateDisplay() {
 
 		if (Connection.paired) {
-			statusDisplay.color = pairedColour;
-			textPair.gameObject.SetActive(false);
-			textUnpair.gameObject.SetActive(true);
-			pairButton.gameObject.SetActive(true);
-			lockButton.gameObject.SetActive(true);
-			recenterButton.gameObject.SetActive(true);
+			_statusDisplay.color = _pairedColour;
+			_textPair.gameObject.SetActive(false);
+			_textUnpair.gameObject.SetActive(true);
+			_pairButton.gameObject.SetActive(true);
+			_lockButton.gameObject.SetActive(true);
+			_recenterButton.gameObject.SetActive(true);
 		} 
 		else if (Available) {
-			statusDisplay.color = availableColour;
-			textPair.gameObject.SetActive(true);
-			textUnpair.gameObject.SetActive(false);
-			lockButton.gameObject.SetActive(false);
-			recenterButton.gameObject.SetActive(false);
+			_statusDisplay.color = _availableColour;
+			_textPair.gameObject.SetActive(true);
+			_textUnpair.gameObject.SetActive(false);
+			_lockButton.gameObject.SetActive(false);
+			_recenterButton.gameObject.SetActive(false);
 			
 			//TODO what do we do when losing connection during playback
 			if (GuideVideoPlayer.Instance.HasVideoLoaded) {//can't pair with a device while a video is loaded up. 
-				pairButton.gameObject.SetActive(false);
+				_pairButton.gameObject.SetActive(false);
 			}
 			else {
 				if (SettingsAuth.TemporalUnlock) {
-					pairButton.gameObject.SetActive(true);
+					_pairButton.gameObject.SetActive(true);
 					Debug.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
 				}
 				else {
@@ -178,56 +178,56 @@ public class ConnectionDisplay : MonoBehaviour
 					foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
 						if (handle.connection.paired) ++pairedDevices;
 					}
-					pairButton.gameObject.SetActive(pairedDevices <= 0); //Only show if we're not connected to a device yet
+					_pairButton.gameObject.SetActive(pairedDevices <= 0); //Only show if we're not connected to a device yet
 				}
 			}
 			StartCoroutine(EnableUnlockButtonAfterABit());
 		} 
 		else {
 			Debug.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
-			statusDisplay.color = unavailableColour;
-			pairButton.gameObject.SetActive(false);
-			lockButton.gameObject.SetActive(false);
-			recenterButton.gameObject.SetActive(false);
+			_statusDisplay.color = _unavailableColour;
+			_pairButton.gameObject.SetActive(false);
+			_lockButton.gameObject.SetActive(false);
+			_recenterButton.gameObject.SetActive(false);
 			StartCoroutine(EnableUnlockButtonAfterABit());
 		}
 
 		//the lock is closed and the device is unlocked:
 		if (_hasClosedLock && Connection.lockedId == "free") {
 			_hasClosedLock = false;
-			textLock.gameObject.SetActive(true);
-			textUnlock.gameObject.SetActive(false);
-			lockDisplay.InterpolateBackward();//open lock
-			lockColourModifier.DefaultColor = lockUnavailableColour;
+			_textLock.gameObject.SetActive(true);
+			_textUnlock.gameObject.SetActive(false);
+			_lockDisplay.InterpolateBackward();//open lock
+			_lockColourModifier.DefaultColor = _lockUnavailableColour;
 		} 
 		else if (!_hasClosedLock && Connection.lockedId != "free") {
 			_hasClosedLock = true;
-			textLock.gameObject.SetActive(false);
-			textUnlock.gameObject.SetActive(true);
-			lockDisplay.Interpolate(); //close lock
+			_textLock.gameObject.SetActive(false);
+			_textUnlock.gameObject.SetActive(true);
+			_lockDisplay.Interpolate(); //close lock
 			if (Connection.lockedId == SystemInfo.deviceUniqueIdentifier) { //lock color
-				lockColourModifier.DefaultColor = lockAvailableColour; //green
+				_lockColourModifier.DefaultColor = _lockAvailableColour; //green
 			} else {
-				lockColourModifier.DefaultColor = lockUnavailableColour; //grey
+				_lockColourModifier.DefaultColor = _lockUnavailableColour; //grey
 			}
 		}
 
 		if (!SettingsAuth.TemporalUnlock) { //If we don't have Admin Access, disable lock button and edit device name abilities.
-			editDeviceNameButton.enabled = false;
-			lockButton.gameObject.SetActive(false);
-			editDeviceNameButton.enabled = true;
+			_editDeviceNameButton.enabled = false;
+			_lockButton.gameObject.SetActive(false);
+			_editDeviceNameButton.enabled = true;
 		}
 	}
 	
 	public void OnClickEditDeviceName() {
-		editDeviceNameField.gameObject.SetActive(true);
-		editDeviceNameField.text = DeviceAlias;
+		_editDeviceNameField.gameObject.SetActive(true);
+		_editDeviceNameField.text = DeviceAlias;
 	}
 
 	public void OnSubmitNewDeviceName() {
-		editDeviceNameField.gameObject.SetActive(false);
-		DeviceAlias = editDeviceNameField.text;
-		modelNameDisplay.text = DeviceAlias;
+		_editDeviceNameField.gameObject.SetActive(false);
+		DeviceAlias = _editDeviceNameField.text;
+		_modelNameDisplay.text = DeviceAlias;
 	}
 
 	public void OnClickCloseButton() {
@@ -236,6 +236,6 @@ public class ConnectionDisplay : MonoBehaviour
 
 	private IEnumerator EnableUnlockButtonAfterABit() { //TODO why do we have to wait before showing unlock button?
 		yield return new WaitForSeconds(3);
-		if (Connection.lockedId != "free && !Connection.paired")  lockButton.gameObject.SetActive(true); //are we allowed to show the unlock button?
+		if (Connection.lockedId != "free && !Connection.paired")  _lockButton.gameObject.SetActive(true); //are we allowed to show the unlock button?
 	}
 }

@@ -2265,28 +2265,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6cc4df15d3dde4996e28cb2fd5de4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelNameDisplay: {fileID: 3518098044743438019}
-  batteryDisplay: {fileID: 5831731688146499261}
-  fpsDisplay: {fileID: 5831731688208947102}
-  uniqueIdColourDisplay: {fileID: 2633565962104566373}
-  statusDisplay: {fileID: 1259691463933791203}
-  pairedColour: {r: 0, g: 0.9150943, b: 0.18992525, a: 1}
-  availableColour: {r: 0.6556604, g: 1, b: 0.9746344, a: 1}
-  unavailableColour: {r: 0.5471698, g: 0.42070132, b: 0.42070132, a: 1}
-  lockDisplay: {fileID: 8278704385248134260}
-  textPair: {fileID: 2538526222265503365}
-  textUnpair: {fileID: 7228899766728982811}
-  pairButton: {fileID: 2240673135111104589}
-  textLock: {fileID: 2560351298687658208}
-  textUnlock: {fileID: 4975917523544745873}
-  lockButton: {fileID: 3595335828255367596}
-  lockColourModifier: {fileID: 7984156523470536849}
-  lockAvailableColour: {r: 0, g: 0.91372555, b: 0.18823531, a: 1}
-  lockUnavailableColour: {r: 0.608, g: 0.608, b: 0.608, a: 1}
-  recenterButton: {fileID: 5022128441344794796}
-  editDeviceNameButton: {fileID: 5878630936654123482}
-  editDeviceNameField: {fileID: 6846060617659227737}
-  udpDisplay: {fileID: 1027194593562497170}
+  _modelNameDisplay: {fileID: 3518098044743438019}
+  _batteryDisplay: {fileID: 5831731688146499261}
+  _fpsDisplay: {fileID: 5831731688208947102}
+  _uniqueIdColourDisplay: {fileID: 2633565962104566373}
+  _statusDisplay: {fileID: 1259691463933791203}
+  _pairedColour: {r: 0, g: 0.9137255, b: 0.1882353, a: 1}
+  _availableColour: {r: 0.654902, g: 1, b: 0.9764706, a: 1}
+  _unavailableColour: {r: 0.54901963, g: 0.41960785, b: 0.41960785, a: 1}
+  _lockDisplay: {fileID: 8278704385248134260}
+  _textPair: {fileID: 2538526222265503365}
+  _textUnpair: {fileID: 7228899766728982811}
+  _pairButton: {fileID: 2240673135111104589}
+  _textLock: {fileID: 2560351298687658208}
+  _textUnlock: {fileID: 4975917523544745873}
+  _lockButton: {fileID: 3595335828255367596}
+  _lockColourModifier: {fileID: 7984156523470536849}
+  _lockAvailableColour: {r: 0, g: 0.9137255, b: 0.1882353, a: 1}
+  _lockUnavailableColour: {r: 0.60784316, g: 0.60784316, b: 0.60784316, a: 1}
+  _recenterButton: {fileID: 5022128441344794796}
+  _editDeviceNameButton: {fileID: 5878630936654123482}
+  _editDeviceNameField: {fileID: 6846060617659227737}
+  _udpDisplay: {fileID: 1027194593562497170}
 --- !u!222 &5831731688708824488
 CanvasRenderer:
   m_ObjectHideFlags: 0
