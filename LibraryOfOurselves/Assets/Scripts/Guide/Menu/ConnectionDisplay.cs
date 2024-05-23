@@ -45,27 +45,12 @@ public class ConnectionDisplay : MonoBehaviour
 	
 	public List<string> videosAvailable;
 
-	private string DeviceAlias {
-		get {
-			string alias = "";
-			if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) {
-				alias = HazePrefs.GetString("alias-" + Connection.uniqueId);
-			}
-			
-			if (alias == "")
-				return Connection.xrDeviceModel;
-			
-			return alias;
-		}
-		set {
-			if (value == "" || value == Connection.xrDeviceModel) {
-				if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) {
-					HazePrefs.DeleteKey("alias-" + Connection.uniqueId);
-				}
-			} else {
-				HazePrefs.SetString("alias-" + Connection.uniqueId, value);
-			}
-		}
+	private string GetDeviceAlias()
+	{
+		if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) 
+			return HazePrefs.GetString("alias-" + Connection.uniqueId);
+		
+		return Connection.xrDeviceModel;
 	}
 	
 	private List<string> __videosAvailable = new List<string>();
@@ -83,7 +68,7 @@ public class ConnectionDisplay : MonoBehaviour
 		Connection = connection;
 		UpdateDisplay();
 		_uniqueIdColourDisplay.color = DeviceColour.getDeviceColor(connection.uniqueId);
-		_modelNameDisplay.text = DeviceAlias;
+		_modelNameDisplay.text = GetDeviceAlias();
 
 		_udpDisplay.SetActive(connection.UDP);
 
@@ -206,13 +191,18 @@ public class ConnectionDisplay : MonoBehaviour
 	
 	public void OnClickEditDeviceName() {
 		_editDeviceNameField.gameObject.SetActive(true);
-		_editDeviceNameField.text = DeviceAlias;
+		_editDeviceNameField.text = GetDeviceAlias();
 	}
 
 	public void OnSubmitNewDeviceName() {
 		_editDeviceNameField.gameObject.SetActive(false);
-		DeviceAlias = _editDeviceNameField.text;
-		_modelNameDisplay.text = DeviceAlias;
+		
+		if (_editDeviceNameField.text == "" || _editDeviceNameField.text == Connection.xrDeviceModel) {
+			if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) HazePrefs.DeleteKey("alias-" + Connection.uniqueId);
+			
+		} else HazePrefs.SetString("alias-" + Connection.uniqueId, _editDeviceNameField.text);
+		
+		_modelNameDisplay.text = GetDeviceAlias();
 	}
 
 	public void OnClickCloseButton() {
