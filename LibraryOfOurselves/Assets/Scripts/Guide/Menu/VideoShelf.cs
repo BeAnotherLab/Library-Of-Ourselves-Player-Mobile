@@ -69,7 +69,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		int currentlyPaired = 0;
 		if (ConnectionsDisplayer.Instance != null) 
 		{
-			foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) 
+			foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) 
 				if (handle.connection.active && handle.connection.paired) ++currentlyPaired;
 		}
 		else currentlyPaired = 1;//Assume one connection when there are no display. //TODO uh?

@@ -74,7 +74,7 @@ public class VideosDisplayer : MonoBehaviour { //displays list of videos in a gr
 			bool allConnectedDevicesHaveIt = true;
 			int numberOfConnectedDevices = 0;
 			if (cd != null) {
-				foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in cd.Handles) {
+				foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in cd.handles) {
 					if(handle.connection.paired) {
 						++numberOfConnectedDevices;
 						if(!handle.display.videosAvailable.Contains(videoName)) {

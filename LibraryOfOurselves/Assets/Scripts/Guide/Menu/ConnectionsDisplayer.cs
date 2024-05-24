@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConnectionsDisplayer : MonoBehaviour{
+public class ConnectionsDisplayer : MonoBehaviour 
+{
 
 	[SerializeField] GameObject connectionDisplayPrefab;
 
@@ -13,8 +14,7 @@ public class ConnectionsDisplayer : MonoBehaviour{
 		public ConnectionDisplay display;
 	}
 
-	List<DisplayedConnectionHandle> handles = new List<DisplayedConnectionHandle>();
-	public List<DisplayedConnectionHandle> Handles { get { return handles; } }
+	public List<DisplayedConnectionHandle> handles = new List<DisplayedConnectionHandle>();s
 
 	private void Start() {
 		Instance = this;
@@ -34,23 +34,23 @@ public class ConnectionsDisplayer : MonoBehaviour{
 
 	public void RemoveConnection(TCPConnection connection) {
 		DisplayedConnectionHandle handle = GetConnectionHandle(connection);
-		if(handle != null) {
+		if (handle != null) {
 			Destroy(handle.display.gameObject);
 			handles.Remove(handle);
 		}
 	}
 
 	public DisplayedConnectionHandle GetConnectionHandle(TCPConnection connection) {
-		foreach(DisplayedConnectionHandle handle in handles) {
-			if(handle.connection == connection)
+		foreach (DisplayedConnectionHandle handle in handles) {
+			if (handle.connection == connection)
 				return handle;
 		}
 		return null;
 	}
 
 	public static void UpdateAllDisplays() {
-		if(Instance != null) {
-			foreach(DisplayedConnectionHandle handle in Instance.Handles) {
+		if (Instance != null) {
+			foreach (DisplayedConnectionHandle handle in Instance.handles) {
 				handle.display.UpdateDisplay();
 			}
 		}

@@ -126,7 +126,7 @@ public class ConnectionDisplay : MonoBehaviour
 				}
 				else {
 					int pairedDevices = 0;
-					foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+					foreach (ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) {
 						if (handle.connection.paired) ++pairedDevices;
 					}
 					_pairButton.gameObject.SetActive(pairedDevices <= 0); //Only show if we're not connected to a device yet

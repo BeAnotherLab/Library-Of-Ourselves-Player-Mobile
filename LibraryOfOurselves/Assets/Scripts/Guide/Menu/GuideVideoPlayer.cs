@@ -202,7 +202,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 
 	async void SendSyncMessages() {
 		int pairedDevices = 0;
-		foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+		foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) {
 			if(handle.connection.active && handle.connection.paired) {
 				++pairedDevices;
 			}
@@ -228,7 +228,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 				//Waiting for the devices to become ready...
 				allDevicesReady = true;
 				if(ConnectionsDisplayer.Instance) {
-					foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+					foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) {
 						if(handle.connection.paired && !handle.display.isVideoReady) {
 							//this one's not ready yet...
 							allDevicesReady = false;
@@ -372,7 +372,7 @@ public class GuideVideoPlayer : MonoBehaviour{
 	}
 
 	public void RecenterAll() {
-		foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+		foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) {
 			if(handle.connection.active && handle.connection.paired) {
 				GuideAdapter.Instance.SendCalibrate(handle.connection);
 			}

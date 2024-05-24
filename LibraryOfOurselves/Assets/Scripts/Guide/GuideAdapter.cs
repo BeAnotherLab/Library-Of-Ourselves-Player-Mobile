@@ -37,7 +37,7 @@ public class GuideAdapter : MonoBehaviour{
 		Debug.Log(connection + " has been added as an option");
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.Instance.AddConnection(connection);
-			if(ConnectionsDisplayer.Instance.Handles.Count == 1)
+			if(ConnectionsDisplayer.Instance.handles.Count == 1)
 				onFirstConnection.Invoke();
 		}
 	}
@@ -48,7 +48,7 @@ public class GuideAdapter : MonoBehaviour{
 		Debug.Log(connection + " is no longer available");
 		if(ConnectionsDisplayer.Instance) {
 			ConnectionsDisplayer.Instance.RemoveConnection(connection);
-			if(ConnectionsDisplayer.Instance.Handles.Count <= 0) {
+			if(ConnectionsDisplayer.Instance.handles.Count <= 0) {
 				onZeroConnections.Invoke();
 			}
 		}
@@ -113,7 +113,7 @@ public class GuideAdapter : MonoBehaviour{
 
 		//Update all device displays
 		if (ConnectionsDisplayer.Instance) {
-			foreach (ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
+			foreach (ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.handles) {
 				h.display.UpdateDisplay();
 			}
 		}
@@ -195,7 +195,7 @@ public class GuideAdapter : MonoBehaviour{
 		if(TCPHost.Instance)
 			TCPHost.Instance.BroadcastToPairedDevices(data);
 		if(ConnectionsDisplayer.Instance) {
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+			foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) {
 				handle.display.isVideoReady = false;
 			}
 		}
@@ -262,7 +262,7 @@ public class GuideAdapter : MonoBehaviour{
 		if(connection != null && connection.paired) {
 			int pairedDevices = 0;
 			if(ConnectionsDisplayer.Instance) {
-				foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.Handles) {
+				foreach(ConnectionsDisplayer.DisplayedConnectionHandle handle in ConnectionsDisplayer.Instance.handles) {
 					if(handle.connection.active && handle.connection.paired) {
 						++pairedDevices;
 					}
