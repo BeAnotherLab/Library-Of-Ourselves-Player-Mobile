@@ -9593,7 +9593,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0.3}
   m_AnchoredPosition: {x: 10, y: 10}
-  m_SizeDelta: {x: 25.710873, y: -20}
+  m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &873125114
 MonoBehaviour:
@@ -11920,7 +11920,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 807175057}
   m_HandleRect: {fileID: 807175056}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -15164,7 +15164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1427399634
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17861,12 +17861,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094fb49363de1504d8821815648c2a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pinInput: {fileID: 2064386107}
-  openSettingsPanel:
+  _pinInput: {fileID: 2064386107}
+  _openSettingsPanel:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 683209776}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -17878,7 +17878,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1089962744}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -17890,7 +17890,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 16862611}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: Do, Assembly-CSharp
         m_MethodName: Go
         m_Mode: 1
         m_Arguments:
@@ -17901,6 +17901,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _shouldOpenSettings: 0
 --- !u!1 &1724778153
 GameObject:
   m_ObjectHideFlags: 0

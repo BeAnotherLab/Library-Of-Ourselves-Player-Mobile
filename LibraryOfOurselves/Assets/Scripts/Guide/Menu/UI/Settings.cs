@@ -49,8 +49,9 @@ public class Settings : MonoBehaviour {
 			VideoDisplay.expandedDisplay.Expand();
 	}
 
-	public void DisableAdminAccess() {
-		SettingsAuth.ShutoffAdminAccess();
+	public void DisableAdminAccess()
+	{
+		SettingsAuth.temporalUnlock = false;
 	}
 	
 	public static float AllowedErrorForSyncedPlayback {

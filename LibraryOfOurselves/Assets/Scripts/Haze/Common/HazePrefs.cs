@@ -20,7 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HazePrefs {
+public class HazePrefs { //TODO remove
 	
 	/** Deletes all key-value pairs */
 	public static void DeleteAll(){

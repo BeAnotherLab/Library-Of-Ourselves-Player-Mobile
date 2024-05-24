@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ConnectionDisplay : MonoBehaviour
 {
+	[SerializeField] private TCPConnection Connection;
 	[SerializeField] private Text _modelNameDisplay;
 	[SerializeField] private Text _batteryDisplay;
 	[SerializeField] private Text _fpsDisplay;
@@ -28,8 +29,12 @@ public class ConnectionDisplay : MonoBehaviour
 	[SerializeField] private InputField _editDeviceNameField;
 	[SerializeField] private GameObject _udpDisplay;
 
-	public TCPConnection Connection { get; private set; }
-
+	public bool isVideoReady;
+	public bool available;
+	public List<string> videosAvailable;
+	private bool _hasClosedLock;
+	private bool _initialized;
+	
 	public void SetBatteryLevel(int value) 
 	{
 		_batteryDisplay.text = value + "%";
@@ -38,26 +43,6 @@ public class ConnectionDisplay : MonoBehaviour
 	public void SetFPSValue(float value) {
 		_fpsDisplay.text = value + " FPS";
 	}
-
-	public bool isVideoReady;
-
-	public bool available;
-	
-	public List<string> videosAvailable;
-
-	private string GetDeviceAlias()
-	{
-		if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) 
-			return HazePrefs.GetString("alias-" + Connection.uniqueId);
-		
-		return Connection.xrDeviceModel;
-	}
-	
-	private List<string> __videosAvailable = new List<string>();
-
-	private bool _hasClosedLock;
-
-	private bool _initialized;
 	
 	public void Init(TCPConnection connection) {
 		if (_initialized) {
@@ -81,8 +66,7 @@ public class ConnectionDisplay : MonoBehaviour
 	}
 
 	public void OnClickCalibrate() { //recenter
-		if (GuideAdapter.Instance)
-			GuideAdapter.Instance.SendCalibrate(Connection);
+		if (GuideAdapter.Instance) GuideAdapter.Instance.SendCalibrate(Connection);
 	}
 
 	public void OnClickLock() {
@@ -92,12 +76,10 @@ public class ConnectionDisplay : MonoBehaviour
 			{
 				GuideAdapter.Instance.SendGuideLock(Connection); //lock it to us
 			} 
-			else 
+			else //unlock it
 			{
-				//unlock it
-				if (Connection.lockedId != SystemInfo.deviceUniqueIdentifier) {
-					GuideAdapter.Instance.SendGuideUnpair(Connection); //if the connection was locked with another guide, first request that it unpairs. This is quite unsafe actually and will result in a warning device-side :) Just to keep in mind.
-				}
+				//if the connection was locked with another guide, first request that it unpairs. This is quite unsafe actually and will result in a warning device-side :) Just to keep in mind.
+				if (Connection.lockedId != SystemInfo.deviceUniqueIdentifier) GuideAdapter.Instance.SendGuideUnpair(Connection); 
 				GuideAdapter.Instance.SendGuideUnlock(Connection);
 			}
 		}
@@ -118,7 +100,6 @@ public class ConnectionDisplay : MonoBehaviour
 	}
 
 	public void UpdateDisplay() {
-
 		if (Connection.paired) {
 			_statusDisplay.color = _pairedColour;
 			_textPair.gameObject.SetActive(false);
@@ -139,7 +120,7 @@ public class ConnectionDisplay : MonoBehaviour
 				_pairButton.gameObject.SetActive(false);
 			}
 			else {
-				if (SettingsAuth.TemporalUnlock) {
+				if (SettingsAuth.temporalUnlock) {
 					_pairButton.gameObject.SetActive(true);
 					Debug.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
 				}
@@ -175,14 +156,11 @@ public class ConnectionDisplay : MonoBehaviour
 			_textLock.gameObject.SetActive(false);
 			_textUnlock.gameObject.SetActive(true);
 			_lockDisplay.Interpolate(); //close lock
-			if (Connection.lockedId == SystemInfo.deviceUniqueIdentifier) { //lock color
-				_lockColourModifier.DefaultColor = _lockAvailableColour; //green
-			} else {
-				_lockColourModifier.DefaultColor = _lockUnavailableColour; //grey
-			}
+			if (Connection.lockedId == SystemInfo.deviceUniqueIdentifier) _lockColourModifier.DefaultColor = _lockAvailableColour;
+			else _lockColourModifier.DefaultColor = _lockUnavailableColour; 
 		}
 
-		if (!SettingsAuth.TemporalUnlock) { //If we don't have Admin Access, disable lock button and edit device name abilities.
+		if (!SettingsAuth.temporalUnlock) { //If we don't have Admin Access, disable lock button and edit device name abilities.
 			_editDeviceNameButton.enabled = false;
 			_lockButton.gameObject.SetActive(false);
 			_editDeviceNameButton.enabled = true;
@@ -211,6 +189,7 @@ public class ConnectionDisplay : MonoBehaviour
 
 	private IEnumerator EnableUnlockButtonAfterABit() { //TODO why do we have to wait before showing unlock button?
 		yield return new WaitForSeconds(3);
+		//TODO why is the locked id some boolean gibberish?
 		if (Connection.lockedId != "free && !Connection.paired")  _lockButton.gameObject.SetActive(true); //are we allowed to show the unlock button?
 	}
 	
@@ -224,5 +203,14 @@ public class ConnectionDisplay : MonoBehaviour
 		//TODO WTF? do swimlane flowchart
 		return available && (Connection.lockedId == SystemInfo.deviceUniqueIdentifier || Connection.lockedId == "free");		
 	}
+	
+	private string GetDeviceAlias()
+	{
+		if (HazePrefs.HasKey("alias-" + Connection.uniqueId)) 
+			return HazePrefs.GetString("alias-" + Connection.uniqueId);
+		
+		return Connection.xrDeviceModel;
+	}
+
 
 }

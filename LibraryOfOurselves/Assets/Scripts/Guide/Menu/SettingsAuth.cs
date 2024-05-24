@@ -4,27 +4,19 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SettingsAuth : MonoBehaviour{
+public class SettingsAuth : MonoBehaviour
+{
+	public static bool temporalUnlock; //only true until closing the app
 
-	[SerializeField] InputField pinInput;
-	[SerializeField] UnityEvent openSettingsPanel;
+	[SerializeField] private InputField _pinInput;
+	[SerializeField] private UnityEvent _openSettingsPanel;
+	[SerializeField] private bool _shouldOpenSettings;
 
-	bool shouldOpenSettings;
-    
-	public bool IsAppUnlocked {
-		get {
-			return true; // App is always unlocked now. Might want to revert this for production build.
-		}
-		set {
-			HazePrefs.SetInt("app-unlocked", value ? 1 : 0);
-		}
-	}
-
-	public static bool TemporalUnlock { get; private set; } //only true until closing the app
+	private bool IsAppUnlocked = true;
 
 	public static string CurrentPIN {
 		get {
-			if(HazePrefs.HasKey("settings-pin")) {
+			if (HazePrefs.HasKey("settings-pin")) {
 				return HazePrefs.GetString("settings-pin");
 			} else return "000101";
 		}
@@ -34,52 +26,36 @@ public class SettingsAuth : MonoBehaviour{
 	}
 
 	private void Start() {
-		TemporalUnlock = false;
-		if(!IsAppUnlocked) {
-			OpenAuthPanel(false);
-		} else {
-			CloseAuthPanel();
-		}
+		temporalUnlock = false;
+		if (!IsAppUnlocked) OpenAuthPanel(false);
+		else CloseAuthPanel();
 	}
 
 	public void OpenAuthPanel(bool openSettingsAfter) {
-		if(openSettingsAfter && IsAppUnlocked && TemporalUnlock) {
-			openSettingsPanel.Invoke();//we're already good
+		if (openSettingsAfter && IsAppUnlocked && temporalUnlock) {
+			_openSettingsPanel.Invoke(); //we're already good
 			return;
 		}
 		transform.GetChild(0).gameObject.SetActive(true);
-		pinInput.text = "";
-		shouldOpenSettings = openSettingsAfter;
+		_pinInput.text = "";
+		_shouldOpenSettings = openSettingsAfter;
 	}
 
 	public void CloseAuthPanel() {
-		if(IsAppUnlocked) {
-			transform.GetChild(0).gameObject.SetActive(false);
-		}
+		if (IsAppUnlocked) transform.GetChild(0).gameObject.SetActive(false);
 	}
 
 	public void Auth() {
-		if(CurrentPIN == pinInput.text) {
+		if (CurrentPIN == _pinInput.text) { 
 			IsAppUnlocked = true;
-			TemporalUnlock = true;
-			//Update all device displays
-			foreach(ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) {
-				h.display.UpdateDisplay();
-			}
-			//Ok!
-			if(shouldOpenSettings) {
-				openSettingsPanel.Invoke();
-			}
+			temporalUnlock = true;
+			
+			foreach (ConnectionsDisplayer.DisplayedConnectionHandle h in ConnectionsDisplayer.Instance.Handles) h.display.UpdateDisplay(); //Update all device displays
+			if (_shouldOpenSettings) _openSettingsPanel.Invoke();
+			
 			CloseAuthPanel();
 			ConnectionsDisplayer.UpdateAllDisplays();
-			if(VideoDisplay.expandedDisplay != null) {
-				VideoDisplay.expandedDisplay.Expand();//update that display.
-			}
+			if (VideoDisplay.expandedDisplay != null) VideoDisplay.expandedDisplay.Expand();//update that display.
 		}
 	}
-
-	public static void ShutoffAdminAccess() {
-		TemporalUnlock = false;
-	}
-
 }
