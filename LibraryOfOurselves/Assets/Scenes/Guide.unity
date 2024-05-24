@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12729266, g: 0.13414232, b: 0.12114291, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14995,7 +14995,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1708350696}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SettingsAuth, Assembly-CSharp
         m_MethodName: Auth
         m_Mode: 1
         m_Arguments:
@@ -16208,8 +16208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cefa562d55d672f438e88864d278a25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _connectionDisplayPrefab: {fileID: 5831731688708824495, guid: 7768b27dc24922344a003a15ca68b727,
-    type: 3}
+  _connectionDisplayPrefab: {fileID: 0}
 --- !u!1 &1572543093
 GameObject:
   m_ObjectHideFlags: 0
@@ -17906,6 +17905,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _authFrame: {fileID: 671695125}
 --- !u!1 &1724778153
 GameObject:
   m_ObjectHideFlags: 0
