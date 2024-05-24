@@ -10659,9 +10659,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1708350696}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SettingsAuth, Assembly-CSharp
         m_MethodName: OpenAuthPanel
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13819,6 +13819,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6774169932041696851, guid: d74d6ea6a88c947e1b4a04e8dd6f227f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 4.9999847
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17901,7 +17906,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _shouldOpenSettings: 0
 --- !u!1 &1724778153
 GameObject:
   m_ObjectHideFlags: 0
@@ -20125,9 +20129,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1708350696}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SettingsAuth, Assembly-CSharp
         m_MethodName: OpenAuthPanel
-        m_Mode: 6
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

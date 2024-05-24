@@ -120,7 +120,7 @@ public class ConnectionDisplay : MonoBehaviour
 				_pairButton.gameObject.SetActive(false);
 			}
 			else {
-				if (SettingsAuth.temporalUnlock) {
+				if (SettingsAuth.unlocked) {
 					_pairButton.gameObject.SetActive(true);
 					Debug.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
 				}
@@ -134,7 +134,7 @@ public class ConnectionDisplay : MonoBehaviour
 			}
 			StartCoroutine(EnableUnlockButtonAfterABit());
 		} 
-		else {
+		else { //if the device is already paired to another tablet
 			Debug.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
 			_statusDisplay.color = _unavailableColour;
 			_pairButton.gameObject.SetActive(false);
@@ -160,7 +160,7 @@ public class ConnectionDisplay : MonoBehaviour
 			else _lockColourModifier.DefaultColor = _lockUnavailableColour; 
 		}
 
-		if (!SettingsAuth.temporalUnlock) { //If we don't have Admin Access, disable lock button and edit device name abilities.
+		if (!SettingsAuth.unlocked) { //If we don't have Admin Access, disable lock button and edit device name abilities.
 			_editDeviceNameButton.enabled = false;
 			_lockButton.gameObject.SetActive(false);
 			_editDeviceNameButton.enabled = true;

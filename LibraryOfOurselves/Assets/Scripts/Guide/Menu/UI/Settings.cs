@@ -40,18 +40,16 @@ public class Settings : MonoBehaviour {
 	}
 
 	public void OnClickChangePin() {
-		SettingsAuth.CurrentPIN = newPinField.text.Length > 0 ? newPinField.text : "0000";
+		SettingsAuth.SetPin(newPinField.text.Length > 0 ? newPinField.text : "0000");
 		onChangePin.Invoke();
 	}
 
 	public void OnChangeLanguage() {
-		if(VideoDisplay.expandedDisplay != null)
-			VideoDisplay.expandedDisplay.Expand();
+		if(VideoDisplay.expandedDisplay != null) VideoDisplay.expandedDisplay.Expand();
 	}
 
-	public void DisableAdminAccess()
-	{
-		SettingsAuth.temporalUnlock = false;
+	public void DisableAdminAccess() {
+		SettingsAuth.unlocked = false;
 	}
 	
 	public static float AllowedErrorForSyncedPlayback {

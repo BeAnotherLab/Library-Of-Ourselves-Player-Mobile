@@ -64,7 +64,7 @@ public class VideoShelf : MonoBehaviour { //displays a single video, along with 
 		else if (current.Settings.difficulty == "Hard") _difficultyDropdown.SetDifficultyValue(2);
 		else _difficultyDropdown.SetDifficultyValue(1);
 		
-		_editButton.gameObject.SetActive(SettingsAuth.temporalUnlock);
+		_editButton.gameObject.SetActive(SettingsAuth.unlocked);
 
 		int currentlyPaired = 0;
 		if (ConnectionsDisplayer.Instance != null) 
