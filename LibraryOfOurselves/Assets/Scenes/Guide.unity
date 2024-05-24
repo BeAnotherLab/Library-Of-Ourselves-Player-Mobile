@@ -11920,7 +11920,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 807175057}
   m_HandleRect: {fileID: 807175056}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -13823,7 +13823,7 @@ PrefabInstance:
     - target: {fileID: 6774169932041696851, guid: d74d6ea6a88c947e1b4a04e8dd6f227f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 4.9999847
+      value: 4.9999695
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16208,7 +16208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cefa562d55d672f438e88864d278a25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionDisplayPrefab: {fileID: 5831731688708824495, guid: 7768b27dc24922344a003a15ca68b727,
+  _connectionDisplayPrefab: {fileID: 5831731688708824495, guid: 7768b27dc24922344a003a15ca68b727,
     type: 3}
 --- !u!1 &1572543093
 GameObject:

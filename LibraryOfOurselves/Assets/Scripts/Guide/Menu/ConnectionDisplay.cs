@@ -99,7 +99,7 @@ public class ConnectionDisplay : MonoBehaviour
 		}
 	}
 
-	public void UpdateDisplay() {
+	public void UpdateDisplay() { //TODO should be enough to just call it upon pairing no?
 		if (Connection.paired) {
 			_statusDisplay.color = _pairedColour;
 			_textPair.gameObject.SetActive(false);
