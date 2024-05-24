@@ -33,7 +33,6 @@ public class SettingsAuth : MonoBehaviour
 		if (currentPin == _pinInput.text) { 
 			unlocked = true;
 			CloseAuthPanel();
-			ConnectionsDisplayer.UpdateAllDisplays();
 			//TODO why do we need to update that display? 
 			if (VideoDisplay.expandedDisplay != null) VideoDisplay.expandedDisplay.Expand();//update that display.
 		}

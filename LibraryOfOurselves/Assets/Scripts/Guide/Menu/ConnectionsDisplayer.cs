@@ -46,12 +46,4 @@ public class ConnectionsDisplayer : MonoBehaviour //TODO this isn't doing any UI
 		return null;
 	}
 
-	public static void UpdateAllDisplays() { //TODO this is called upon video loading and auth. Is it necessary??
-		if (Instance != null) {
-			foreach (DisplayedConnectionHandle handle in Instance.handles) {
-				handle.display.UpdateDisplay();
-			}
-		}
-	}
-
 }

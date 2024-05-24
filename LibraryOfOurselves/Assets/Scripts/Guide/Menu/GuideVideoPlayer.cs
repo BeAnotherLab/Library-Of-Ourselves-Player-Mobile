@@ -133,7 +133,6 @@ public class GuideVideoPlayer : MonoBehaviour{
 			onPause.Invoke();
 
 			HasVideoLoaded = true;
-			ConnectionsDisplayer.UpdateAllDisplays();
 		} 
 		else 
 		{
