@@ -91,7 +91,7 @@ public class ConnectionDisplay : MonoBehaviour
 	
 	public void Init(TCPConnection connection) {
 		if (_initialized) {
-			Haze.Logger.LogError("Cannot reinit a ConnectionDisplay!");
+			Debug.LogError("Cannot reinit a ConnectionDisplay!");
 			return;
 		}
 		_initialized = true;
@@ -106,7 +106,7 @@ public class ConnectionDisplay : MonoBehaviour
 	}
 
 	public void AddAvailableVideo(string videoName) {
-		Haze.Logger.Log("Adding video " + videoName + " to device " + Connection);
+		Debug.Log("Adding video " + videoName + " to device " + Connection);
 		VideosAvailable.Add(videoName);
 	}
 
@@ -137,11 +137,11 @@ public class ConnectionDisplay : MonoBehaviour
 		if (GuideAdapter.Instance) 
 		{
 			if (!Connection.paired) {
-				Haze.Logger.Log("Sending pair");
+				Debug.Log("Sending pair");
 				GuideAdapter.Instance.SendGuidePair(Connection);
 			} 
 			else {
-				Haze.Logger.Log("Sending unpair");
+				Debug.Log("Sending unpair");
 				GuideAdapter.Instance.SendGuideUnpair(Connection);
 			}
 		}
@@ -171,7 +171,7 @@ public class ConnectionDisplay : MonoBehaviour
 			else {
 				if (SettingsAuth.TemporalUnlock) {
 					pairButton.gameObject.SetActive(true);
-					Haze.Logger.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
+					Debug.Log("Displaying PAIR button for connection " + Connection + " because this guide device has temporal unlock.");
 				}
 				else {
 					int pairedDevices = 0;
@@ -184,7 +184,7 @@ public class ConnectionDisplay : MonoBehaviour
 			StartCoroutine(EnableUnlockButtonAfterABit());
 		} 
 		else {
-			Haze.Logger.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
+			Debug.Log("Connection " + Connection + " is not available. Hiding LOCK and PAIR buttons.");
 			statusDisplay.color = unavailableColour;
 			pairButton.gameObject.SetActive(false);
 			lockButton.gameObject.SetActive(false);

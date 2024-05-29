@@ -31,11 +31,11 @@ public class UDPListener : MonoBehaviour{
 					if (splitMessage.Length > 3) {
 						string ip = splitMessage[1];
 						int port = int.Parse(splitMessage[2]);
-						Haze.Logger.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
+						Debug.Log("Received ip: " + ip + ", port: " + port + " from " + serverData.RemoteEndPoint);
 						string uniqueId = splitMessage[3];
 						IPEndPoint endpoint = new IPEndPoint(IPAddress.Parse(ip), port);
 						if (!encounteredIPs.Contains(endpoint)) {
-							Haze.Logger.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port + "...");
+							Debug.Log("Connecting to " + endpoint.Address + ", port " + endpoint.Port + "...");
 
 							//try within different thread to connect - we'll allow another try within 10 seconds in case it does turn out to fail
 							tcpClient.ConnectToHost(endpoint, uniqueId, serverData.RemoteEndPoint);
@@ -44,9 +44,9 @@ public class UDPListener : MonoBehaviour{
 					}
 				}
 			} catch(SocketException se) {
-				Haze.Logger.LogError("Socket Exception (" + se.ErrorCode + "), cannot receive client data from host: " + se.ToString());
+				Debug.LogError("Socket Exception (" + se.ErrorCode + "), cannot receive client data from host: " + se.ToString());
 			} catch(Exception e) {
-				Haze.Logger.Log("Error, cannot receive client data from host: " + e.ToString());
+				Debug.Log("Error, cannot receive client data from host: " + e.ToString());
 			}
 		}
     }
@@ -56,9 +56,9 @@ public class UDPListener : MonoBehaviour{
 			try {
 				await client.SendAsync(data, data.Length, remote);
 			} catch(SocketException se) {
-				Haze.Logger.LogWarning("[UDPListener] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
+				Debug.LogWarning("[UDPListener] Socket error " + se.ErrorCode + ", cannot send UDP packet: " + se.ToString());
 			} catch(Exception e) {
-				Haze.Logger.LogWarning("[UDPListener] Error, cannot send UDP packet: " + e.ToString());
+				Debug.LogWarning("[UDPListener] Error, cannot send UDP packet: " + e.ToString());
 			}
 		}
 	}

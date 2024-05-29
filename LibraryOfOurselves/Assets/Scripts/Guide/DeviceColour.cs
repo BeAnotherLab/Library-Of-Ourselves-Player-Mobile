@@ -17,10 +17,10 @@ public class DeviceColour {
 				value = value * 0.1f + 0.85f;
 				return ColorFromHSV(hue, saturation, value);
 			} catch(Exception e) {
-				Haze.Logger.LogWarning("Cannot infer colour from unique id: Error = " + e);
+				Debug.LogWarning("Cannot infer colour from unique id: Error = " + e);
 			}
 		}
-		Haze.Logger.LogWarning("Cannot infer colour from unique id: " + uniqueId);
+		Debug.LogWarning("Cannot infer colour from unique id: " + uniqueId);
 		return new Color(1, 1, 1);
 	}
 

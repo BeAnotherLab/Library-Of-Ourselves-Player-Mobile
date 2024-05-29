@@ -39,7 +39,7 @@ public class TCPConnection : ScriptableObject {
 	}
 	
 	private void OnDestroy () { //called on exiting UNITY. TODO only then!?
-		Haze.Logger.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
+		Debug.Log("Removed connection " + this + " (" + sourceEndpoint + ")");
 		if(UDPListener.Instance)
 			UDPListener.Instance.RemoveEncounteredIP(sourceEndpoint);
 	}
@@ -48,7 +48,7 @@ public class TCPConnection : ScriptableObject {
 
 	public async Task Send(List<byte> bytes) {
 		if (!active) {
-			Haze.Logger.Log("Could not send bytes. Connection failed.");
+			Debug.Log("Could not send bytes. Connection failed.");
 			return;
 		}
 		try {
@@ -56,7 +56,7 @@ public class TCPConnection : ScriptableObject {
 				await SendUDPPacket(bytes);
 			} else {//Send over TCP
 				if (bytes.Count > (int)short.MaxValue) {
-					Haze.Logger.LogWarning("Bytes count is higher than max short value - sending first " + (short.MaxValue-2) + " bytes.");
+					Debug.LogWarning("Bytes count is higher than max short value - sending first " + (short.MaxValue-2) + " bytes.");
 					bytes.RemoveRange(short.MaxValue - 2, bytes.Count - short.MaxValue - 2);
 				}
 				short length = (short)bytes.Count;
@@ -74,7 +74,7 @@ public class TCPConnection : ScriptableObject {
 				await Stream.WriteAsync(data, 0, data.Length);
 			}
 		} catch (Exception e) {
-			Haze.Logger.Log("Could not send bytes. Connection failed: " + e);
+			Debug.Log("Could not send bytes. Connection failed: " + e);
 			active = false;//this will notify client or host to disconnect from this connection.
 		}
 	}
@@ -106,7 +106,7 @@ public class TCPConnection : ScriptableObject {
 				}
 			}
 		} catch(Exception e) {
-			Haze.Logger.Log("Could not receive bytes. Connection failed.");
+			Debug.Log("Could not receive bytes. Connection failed.");
 		}
 		//if we get here, it means we've not returned yet...
 		active = false;//this will notify client or host to disconnect from this connection
