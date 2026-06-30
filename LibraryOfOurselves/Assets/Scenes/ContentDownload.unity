@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 331888939}
   - component: {fileID: 331888938}
   m_Layer: 5
-  m_Name: DownloadProgress
+  m_Name: DownloadProgressText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 460434644}
   - component: {fileID: 460434645}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: DownloadProgressSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,12 +466,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612650514}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 171.43518, y: 213.26268, z: -247.52992}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 675054445}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &675054443
 GameObject:
@@ -502,8 +502,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586224f0331624262956a57026e806d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manifestLoader: {fileID: 612650515}
-  fileDownloader: {fileID: 1610316179}
+  _manifestLoader: {fileID: 612650515}
+  _ipAdress: {fileID: 943859325}
+  _progressText: {fileID: 331888938}
+  _progressSlider: {fileID: 460434645}
 --- !u!4 &675054445
 Transform:
   m_ObjectHideFlags: 0
@@ -516,7 +518,9 @@ Transform:
   m_LocalPosition: {x: 171.43518, y: 213.26268, z: -247.52992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 612650516}
+  - {fileID: 1912590147}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &920648644
@@ -607,7 +611,7 @@ GameObject:
   - component: {fileID: 943859326}
   - component: {fileID: 943859325}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: IPInputField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -992,53 +996,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1206586325
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1206586327}
-  - component: {fileID: 1206586328}
-  m_Layer: 0
-  m_Name: DownloadController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1206586327
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206586325}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 692.99927, y: 343.07043, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1206586328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1206586325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 993fa34d09a124223973c547fe5490d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ipAdress: {fileID: 0}
-  downloadProgress: {fileID: 331888938}
-  ProgressSlider: {fileID: 460434645}
 --- !u!1 &1270118782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,50 +1176,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459717992}
   m_CullTransparentMesh: 0
---- !u!1 &1610316178
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1610316180}
-  - component: {fileID: 1610316179}
-  m_Layer: 0
-  m_Name: FileDownloader
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1610316179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610316178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e95bd0274180646f290b7be2aa2c171d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1610316180
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1610316178}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 171.43518, y: 213.26268, z: -247.52992}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1862140790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,11 +1345,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 331888940}
   - {fileID: 943859324}
   - {fileID: 1952140658}
+  - {fileID: 331888940}
   - {fileID: 460434644}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 675054445}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1526,7 +1439,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1206586328}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DownloadController, Assembly-CSharp
         m_MethodName: Download
         m_Mode: 1
@@ -1669,9 +1582,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1270118787}
-  - {fileID: 1912590147}
   - {fileID: 1195194687}
-  - {fileID: 1206586327}
   - {fileID: 675054445}
-  - {fileID: 612650516}
-  - {fileID: 1610316180}
