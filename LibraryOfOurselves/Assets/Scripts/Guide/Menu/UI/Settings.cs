@@ -29,7 +29,10 @@ public class Settings : MonoBehaviour {
 	[SerializeField] Toggle forceMultiUsersToggle;
 
 	public delegate void OnPickFolderButtonPresed();
-	public static OnPickFolderButtonPresed PickFolderButtonPresed; 
+	public static OnPickFolderButtonPresed PickFolderButtonPressed;
+
+	public delegate void OnPersistentDataStorageSelected(string path);
+	public static OnPersistentDataStorageSelected PersistentDataStorageSelected;
 	
 	public static Settings Instance { get; private set; }
 
@@ -182,7 +185,14 @@ public class Settings : MonoBehaviour {
 
 	public void NotifyFileBrowser()
 	{
-		PickFolderButtonPresed();
+		PickFolderButtonPressed();
+	}
+
+	public void UsePersistentDataPath() //TODO Test. should we also open the FileDownload scene?
+	{
+		PlayerPrefs.SetString("GuidePath", Application.persistentDataPath);
+		DataFolder.GuidePath = Application.persistentDataPath;
+		PersistentDataStorageSelected(Application.persistentDataPath);
 	}
 	
 	private void OnEnable() {

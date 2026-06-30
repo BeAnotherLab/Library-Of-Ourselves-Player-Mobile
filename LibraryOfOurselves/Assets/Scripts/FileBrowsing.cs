@@ -12,12 +12,14 @@ public class FileBrowsing : MonoBehaviour
 
 	private void OnEnable()
 	{
-		Settings.PickFolderButtonPresed += ShowFileBrowsingDialog;
+		Settings.PickFolderButtonPressed += ShowFileBrowsingDialog;
+		Settings.PersistentDataStorageSelected += OnFilesSelected;
 	}
 
 	private void OnDisable()
 	{
-		Settings.PickFolderButtonPresed -= ShowFileBrowsingDialog;
+		Settings.PickFolderButtonPressed -= ShowFileBrowsingDialog;
+		Settings.PersistentDataStorageSelected -= OnFilesSelected;
 	}
 
 	void Start()
