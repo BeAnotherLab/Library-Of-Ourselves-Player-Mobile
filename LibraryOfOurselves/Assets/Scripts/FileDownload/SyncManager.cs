@@ -11,8 +11,8 @@ public class SyncManager : MonoBehaviour
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private Manifest _manifest;
     [SerializeField] private string _baseUrl;
+    
     private int _currentFileIndex = 0;  
-  
     private FileStream _fileStream;  
     private string _tempFilePath;
 
@@ -25,6 +25,12 @@ public class SyncManager : MonoBehaviour
     public void StartDownload()
     {
         DownloadManifest(OnManifestLoaded, OnManifestError);  
+    }
+    
+    public void OnIpAddressEntered(string value) 
+    { 
+        PlayerPrefs.SetString("ipAddress", value);
+        _baseUrl = "http://" + value + "/Deploy";
     }
     
     private void OnManifestLoaded(Manifest manifest)  
@@ -179,10 +185,5 @@ public class SyncManager : MonoBehaviour
             }  
         });  
     }
-
-    public void OnIpAddressEntered(string value) //TODO save in player prefs
-    { 
-        PlayerPrefs.SetString("ipAddress", value);
-        _baseUrl = "http://" + value + "/Deploy";
-    }
+    
 }
