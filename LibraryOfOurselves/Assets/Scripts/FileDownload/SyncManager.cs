@@ -3,31 +3,30 @@ using UnityEngine;
 using CI.HttpClient;
 using TMPro;
 using UnityEngine.UI;
-public static class DeployConfig
-{
-    // Replace with your PC IP
-    public static string BaseUrl = "http://192.168.1.69:8080/Deploy";
-}
 
 public class SyncManager : MonoBehaviour  
 {  
-    [SerializeField] private ManifestLoader _manifestLoader;  
-    [SerializeField] private TMP_InputField _ipAdress;
+    [SerializeField] private TMP_InputField _IPAdressInputField;
     [SerializeField] private Text _progressText;
     [SerializeField] private Slider _progressSlider;
-
+    [SerializeField] private Manifest _manifest;
+    [SerializeField] private string _baseUrl;
     private int _currentFileIndex = 0;  
-    private Manifest _manifest;  
   
-    
     private FileStream _fileStream;  
     private string _tempFilePath;
+
+    private void Start()
+    {
+        _IPAdressInputField.text = PlayerPrefs.GetString("ipAddress", "127.0.0.1:8080");
+        OnIpAddressEntered(_IPAdressInputField.text);
+    }
     
-    private void Start()  //TODO ENTRY POINT!
-    {  
-        _manifestLoader.DownloadManifest(OnManifestLoaded, OnManifestError);  
-    }  
-  
+    public void StartDownload()
+    {
+        DownloadManifest(OnManifestLoaded, OnManifestError);  
+    }
+    
     private void OnManifestLoaded(Manifest manifest)  
     {  
         _manifest = manifest;  
@@ -59,7 +58,7 @@ public class SyncManager : MonoBehaviour
         }  
   
         Debug.Log("Downloading: " + file.path);  
-        string url = DeployConfig.BaseUrl + "/" + file.path;  
+        string url = _baseUrl + "/" + file.path;  
   
         DownloadFile(url, localPath, () =>  
         {  
@@ -81,7 +80,7 @@ public class SyncManager : MonoBehaviour
         {  
             Debug.LogError("Hash mismatch, retrying: " + file.path);  
             File.Delete(localPath);  
-            string url = DeployConfig.BaseUrl + file.path;  
+            string url = _baseUrl + file.path;  
               
             DownloadFile(url, localPath, () =>  
             {  
@@ -100,60 +99,90 @@ public class SyncManager : MonoBehaviour
         }  
     }  
     
-    private void DownloadFile(string url, string localPath, System.Action onComplete, System.Action<string> onError, System.Action<int> onProgress)  
+    private void DownloadFile(string url, string localPath, System.Action onComplete, System.Action<string> onError, System.Action<int> onProgress) 
+    {  
+        Directory.CreateDirectory(Path.GetDirectoryName(localPath));
+        
+        _tempFilePath = localPath + ".tmp"; //write to temp file first
+        
+        if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
+        HttpClient client = new HttpClient();  
+          
+        client.Get(new System.Uri(url), HttpCompletionOption.StreamResponseContent, (r) =>  
         {  
-            Directory.CreateDirectory(Path.GetDirectoryName(localPath));
-            
-            _tempFilePath = localPath + ".tmp"; //write to temp file first
-            
-            if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
-            HttpClient client = new HttpClient();  
-              
-            client.Get(new System.Uri(url), HttpCompletionOption.StreamResponseContent, (r) =>  
+            if (r.IsSuccessStatusCode && _fileStream == null)  
             {  
-                if (r.IsSuccessStatusCode && _fileStream == null)  
-                {  
-                    _fileStream = new FileStream( // OPEN TEMP FILE instead of final file
-                        _tempFilePath,
-                        FileMode.Create,
-                        FileAccess.Write
-                    );  
+                _fileStream = new FileStream( // OPEN TEMP FILE instead of final file
+                    _tempFilePath,
+                    FileMode.Create,
+                    FileAccess.Write
+                );  
+            }  
+              
+            if (r.ContentReadThisRound > 0 && _fileStream != null)  
+            {  
+                byte[] data = r.ReadAsByteArray();  
+                _fileStream.Write(data, 0, data.Length);  
+                onProgress?.Invoke(r.PercentageComplete);  
+            }  
+  
+            if (r.PercentageComplete == 100 || !r.IsSuccessStatusCode)  
+            {  
+                _fileStream?.Flush();
+                _fileStream?.Close();  
+                _fileStream = null;  
+
+                if (r.IsSuccessStatusCode)
+                {
+                    // 🔥 ATOMIC REPLACE STEP
+                    if (File.Exists(localPath)) File.Delete(localPath);
+
+                    File.Move(_tempFilePath, localPath);
+
+                    onComplete?.Invoke();  
                 }  
-                  
-                if (r.ContentReadThisRound > 0 && _fileStream != null)  
-                {  
-                    byte[] data = r.ReadAsByteArray();  
-                    _fileStream.Write(data, 0, data.Length);  
-                    onProgress?.Invoke(r.PercentageComplete);  
-                }  
-      
-                if (r.PercentageComplete == 100 || !r.IsSuccessStatusCode)  
-                {  
-                    _fileStream?.Flush();
-                    _fileStream?.Close();  
-                    _fileStream = null;  
-    
-                    if (r.IsSuccessStatusCode)
-                    {
-                        // 🔥 ATOMIC REPLACE STEP
-                        if (File.Exists(localPath)) File.Delete(localPath);
-    
-                        File.Move(_tempFilePath, localPath);
-    
-                        onComplete?.Invoke();  
-                    }  
-                    else  
-                    {
-                        if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
-    
-                        onError?.Invoke("Download failed: " + r.StatusCode);  
-                    }
+                else  
+                {
+                    if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
+
+                    onError?.Invoke("Download failed: " + r.StatusCode);  
                 }
-                
-                // Update UI  
-                _progressText.text = "Download: " + r.PercentageComplete.ToString() + "%";  
-                _progressSlider.value = 100 - r.PercentageComplete;  
-            });  
-        }  
+            }
+            
+            // Update UI  
+            _progressText.text = "Download: " + r.PercentageComplete.ToString() + "%";  
+            _progressSlider.value = 100 - r.PercentageComplete;  
+        });  
+    }  
     
+    private void DownloadManifest(System.Action<Manifest> onComplete, System.Action<string> onError)  
+    {  
+        HttpClient client = new HttpClient();  
+        string url = _baseUrl + "/manifest.json";  
+  
+        client.Get(new System.Uri(url), HttpCompletionOption.AllResponseContent, (r) =>  
+        {  
+            if (!r.IsSuccessStatusCode)  
+            {  
+                onError?.Invoke("Download failed: " + r.StatusCode);  
+                return;  
+            }  
+  
+            try  
+            {  
+                _manifest = r.ReadAsJson<Manifest>();  
+                onComplete?.Invoke(_manifest);  
+            }  
+            catch (System.Exception e)  
+            {  
+                onError?.Invoke("JSON parse error: " + e.Message);  
+            }  
+        });  
+    }
+
+    public void OnIpAddressEntered(string value) //TODO save in player prefs
+    { 
+        PlayerPrefs.SetString("ipAddress", value);
+        _baseUrl = "http://" + value + "/Deploy";
+    }
 }
