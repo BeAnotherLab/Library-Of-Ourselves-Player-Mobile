@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Guide.unity
     guid: 5b059ee5266f6c141a107668c247c5cb
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/VR.unity
     guid: 1601ec50a09d5f349893052a78c42c68
   - enabled: 0
@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/LoadFile.unity
     guid: 6cc84e68143985c4687c747fa677e25c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FileLoadTest.unity
     guid: 428e43b85d2a8ed4482f420c3f3f988e
   m_configObjects:
