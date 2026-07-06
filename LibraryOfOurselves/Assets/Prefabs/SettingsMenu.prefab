@@ -4244,16 +4244,16 @@ MonoBehaviour:
     contents: Use Persistent Data path
   - language: 16
     font: {fileID: 0}
-    contents: 'Choisir la langue:'
+    contents: Utiliser le Persistent Data path
   - language: 36
     font: {fileID: 0}
-    contents: 'Selecciona el idioma:'
+    contents: Usar Persistent Data path
   - language: 30
     font: {fileID: 0}
-    contents: 'Selecione o idioma:'
+    contents: Usar Persistent Data path
   - language: 7
     font: {fileID: 0}
-    contents: 'Trieu l''idioma:'
+    contents: Usar Persistent Data path
 --- !u!1 &3496635902019037787
 GameObject:
   m_ObjectHideFlags: 0
@@ -6136,8 +6136,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7836269398310351984}
   m_HandleRect: {fileID: 3007825708388124432}
   m_Direction: 2
-  m_Value: 1.0000032
-  m_Size: 0.9074541
+  m_Value: 1.0000012
+  m_Size: 0.7395673
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7639,16 +7639,16 @@ MonoBehaviour:
     contents: 'Content Folder : '
   - language: 16
     font: {fileID: 0}
-    contents: 'Choisir la langue:'
+    contents: Dossier de Contenu
   - language: 36
     font: {fileID: 0}
-    contents: 'Selecciona el idioma:'
+    contents: Carpeta de Contenido
   - language: 30
     font: {fileID: 0}
-    contents: 'Selecione o idioma:'
+    contents: Content Folder
   - language: 7
     font: {fileID: 0}
-    contents: 'Trieu l''idioma:'
+    contents: Carpeta de contingut
 --- !u!1 &5547356365164726659
 GameObject:
   m_ObjectHideFlags: 0
@@ -8947,16 +8947,16 @@ MonoBehaviour:
     contents: Pick
   - language: 16
     font: {fileID: 0}
-    contents: Changer la broche
+    contents: Choisir
   - language: 36
     font: {fileID: 0}
-    contents: Cambiar PIN
+    contents: Escoger
   - language: 30
     font: {fileID: 0}
-    contents: Mude o pino
+    contents: Escolher
   - language: 7
     font: {fileID: 0}
-    contents: Canvia el PIN
+    contents: Triar
 --- !u!1 &6380608738765854521
 GameObject:
   m_ObjectHideFlags: 0
@@ -9924,19 +9924,19 @@ MonoBehaviour:
   translations:
   - language: 1
     font: {fileID: 0}
-    contents: Pick
+    contents: Set
   - language: 16
     font: {fileID: 0}
-    contents: Changer la broche
+    contents: Appliquer
   - language: 36
     font: {fileID: 0}
-    contents: Cambiar PIN
+    contents: Aplicar
   - language: 30
     font: {fileID: 0}
-    contents: Mude o pino
+    contents: Aplicar
   - language: 7
     font: {fileID: 0}
-    contents: Canvia el PIN
+    contents: Aplicar
 --- !u!1 &7053235392889726797
 GameObject:
   m_ObjectHideFlags: 0
