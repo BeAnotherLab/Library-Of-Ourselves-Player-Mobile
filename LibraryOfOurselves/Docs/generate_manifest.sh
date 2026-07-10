@@ -15,9 +15,9 @@ firstUser=1
 # Temporary files for each category
 GUIDE_TMP=$(mktemp)
 USER_TMP=$(mktemp)
-
 find "$ROOT" -type f | while read -r file; do
     rel="${file#./}"
+    filename=$(basename "$file")
 
     size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file")
 
@@ -29,7 +29,7 @@ find "$ROOT" -type f | while read -r file; do
 
     entry=$(cat <<EOF
     {
-      "path": "$rel",
+      "filename": "$filename",
       "size": $size,
       "sha256": "$hash"
     }
