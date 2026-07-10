@@ -5,42 +5,64 @@ OUTPUT="manifest.json"
 
 echo "Generating manifest..."
 
-# start JSON
 echo "{" > "$OUTPUT"
 echo '  "version": 1,' >> "$OUTPUT"
-echo '  "files": [' >> "$OUTPUT"
+echo '  "guideFiles": [' >> "$OUTPUT"
 
-first=1
+firstGuide=1
+firstUser=1
+
+# Temporary files for each category
+GUIDE_TMP=$(mktemp)
+USER_TMP=$(mktemp)
 
 find "$ROOT" -type f | while read -r file; do
     rel="${file#./}"
 
     size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file")
 
-    # sha256 (mac + linux compatible)
     if command -v sha256sum >/dev/null 2>&1; then
         hash=$(sha256sum "$file" | awk '{print $1}')
     else
         hash=$(shasum -a 256 "$file" | awk '{print $1}')
     fi
 
-    if [ $first -eq 0 ]; then
-        echo "    ," >> "$OUTPUT"
-    fi
-    first=0
-
-    cat >> "$OUTPUT" <<EOF
+    entry=$(cat <<EOF
     {
       "path": "$rel",
       "size": $size,
       "sha256": "$hash"
     }
 EOF
+)
 
-done >> "$OUTPUT"
+    if [[ "$rel" == Content/Guide/* ]]; then
+        if [ -s "$GUIDE_TMP" ]; then
+            echo "," >> "$GUIDE_TMP"
+        fi
+        echo "$entry" >> "$GUIDE_TMP"
+
+    elif [[ "$rel" == Content/User/* ]]; then
+        if [ -s "$USER_TMP" ]; then
+            echo "," >> "$USER_TMP"
+        fi
+        echo "$entry" >> "$USER_TMP"
+    fi
+
+done
+
+cat "$GUIDE_TMP" >> "$OUTPUT"
+
+echo "" >> "$OUTPUT"
+echo "  ]," >> "$OUTPUT"
+echo '  "userFiles": [' >> "$OUTPUT"
+
+cat "$USER_TMP" >> "$OUTPUT"
 
 echo "" >> "$OUTPUT"
 echo "  ]" >> "$OUTPUT"
 echo "}" >> "$OUTPUT"
+
+rm "$GUIDE_TMP" "$USER_TMP"
 
 echo "Done -> $OUTPUT"
