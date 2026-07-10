@@ -37,7 +37,7 @@ public class SyncManager : MonoBehaviour
     {  
         _manifest = manifest;  
         _currentFileIndex = 0;  
-        DownloadNextFile();  
+        DownloadNextGuideFile();  
     }  
   
     private void OnManifestError(string error)  
@@ -45,26 +45,26 @@ public class SyncManager : MonoBehaviour
         Debug.LogError("Manifest error: " + error);  
     }  
   
-    private void DownloadNextFile()  
+    private void DownloadNextGuideFile()  
     {  
-        if (_currentFileIndex >= _manifest.files.Length)  
+        if (_currentFileIndex >= _manifest.guideFiles.Length)  
         {  
             Debug.Log("SYNC COMPLETE");  
             return;  
         }  
   
-        var file = _manifest.files[_currentFileIndex];  
-        string localPath = FileUtil.GetLocalPath(file.path);  
+        var file = _manifest.guideFiles[_currentFileIndex];  
+        string localPath = FileUtil.GetLocalPath(file.filename);  
   
         if (FileUtil.ExistsAndMatches(file))  //check if we already downloaded that file!
         {  
             _currentFileIndex++;  
-            DownloadNextFile();  
+            DownloadNextGuideFile();  
             return;  
         }  
   
-        Debug.Log("Downloading: " + file.path);  
-        string url = _baseUrl + "/" + file.path;  
+        Debug.Log("Downloading: " + file.filename);  
+        string url = _baseUrl + "/Content/Guide/" + file.filename;  
   
         DownloadFile(url, localPath, () =>  
         {  
@@ -84,14 +84,14 @@ public class SyncManager : MonoBehaviour
   
         if (localHash != file.sha256)  
         {  
-            Debug.LogError("Hash mismatch, retrying: " + file.path);  
+            Debug.LogError("Hash mismatch, retrying: " + file.filename);  
             File.Delete(localPath);  
-            string url = _baseUrl + file.path;  
+            string url = _baseUrl + file.filename;  
               
             DownloadFile(url, localPath, () =>  
             {  
                 _currentFileIndex++;  
-                DownloadNextFile();  
+                DownloadNextGuideFile();  
             }, (error) =>  
             {  
                 Debug.LogError("Retry failed: " + error);  
@@ -99,9 +99,9 @@ public class SyncManager : MonoBehaviour
         }  
         else  
         {  
-            Debug.Log("downloaded " + file.path );
+            Debug.Log("downloaded " + file.filename );
             _currentFileIndex++;  
-            DownloadNextFile();  
+            DownloadNextGuideFile();  
         }  
     }  
     

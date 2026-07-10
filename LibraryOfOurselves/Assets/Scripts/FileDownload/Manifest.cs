@@ -2,13 +2,14 @@
 public class Manifest
 {
     public int version;
-    public ManifestFile[] files;
+    public ManifestFile[] guideFiles;
+    public ManifestFile[] userFiles;
 }
 
 [System.Serializable]
 public class ManifestFile
 {
-    public string path;
+    public string filename;
     public long size;
     public string sha256;
 }

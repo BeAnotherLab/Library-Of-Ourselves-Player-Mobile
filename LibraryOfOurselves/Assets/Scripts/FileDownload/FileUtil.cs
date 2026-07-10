@@ -10,12 +10,12 @@ public static class FileUtil
 
     public static bool ExistsAndMatches(ManifestFile file)
     {
-        string path = GetLocalPath(file.path);
+        string filename = GetLocalPath(file.filename);
 
-        if (!File.Exists(path))
+        if (!File.Exists(filename))
             return false;
 
-        var info = new FileInfo(path);
+        var info = new FileInfo(filename);
         if (info.Length != file.size)
             return false;
 
