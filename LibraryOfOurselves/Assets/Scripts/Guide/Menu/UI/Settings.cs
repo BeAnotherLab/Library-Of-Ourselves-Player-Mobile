@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Settings : MonoBehaviour {
 
@@ -193,6 +194,11 @@ public class Settings : MonoBehaviour {
 		PlayerPrefs.SetString("GuidePath", Application.persistentDataPath);
 		DataFolder.GuidePath = Application.persistentDataPath;
 		PersistentDataStorageSelected(Application.persistentDataPath);
+	}
+
+	public void OpenContentDownloaderScene()
+	{
+		SceneManager.LoadScene("ContentDownloadGuide");
 	}
 	
 	private void OnEnable() {
