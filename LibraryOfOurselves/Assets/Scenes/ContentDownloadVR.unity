@@ -268,12 +268,12 @@ GameObject:
   m_Component:
   - component: {fileID: 270145152}
   - component: {fileID: 270145156}
+  - component: {fileID: 270145158}
   - component: {fileID: 270145155}
   - component: {fileID: 270145154}
   - component: {fileID: 270145153}
-  - component: {fileID: 270145158}
-  - component: {fileID: 270145157}
   - component: {fileID: 270145159}
+  - component: {fileID: 270145160}
   m_Layer: 5
   m_Name: DeleteButton
   m_TagString: Untagged
@@ -407,25 +407,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 270145151}
   m_CullTransparentMesh: 0
---- !u!114 &270145157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270145151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe3cda3e244f60419474164d6ba3b0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 0
-  m_CheckFor2DOcclusion: 0
-  m_CheckFor3DOcclusion: 0
-  m_MaxDistance: 1000
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!223 &270145158
 Canvas:
   m_ObjectHideFlags: 0
@@ -466,6 +447,25 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &270145160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270145151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1 &331888937
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586224f0331624262956a57026e806d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contentMode: 0
   _IPAdressInputField: {fileID: 943859325}
   _progressText: {fileID: 331888938}
   _progressSlider: {fileID: 460434645}
@@ -1036,7 +1037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0935522bf40f942903b9afd1981cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 0}
 --- !u!1 &1149322306
 GameObject:
   m_ObjectHideFlags: 0
