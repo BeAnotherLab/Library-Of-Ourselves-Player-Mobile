@@ -74,7 +74,7 @@ public class SyncManager : MonoBehaviour
             return;  
         }  
         
-        var file = _manifest.guideFiles[_currentFileIndex];  
+        var file = files[_currentFileIndex];  
         string localPath = FileUtil.GetLocalPath(file.filename);  
         
         if (FileUtil.ExistsAndMatches(file))  //check if we already downloaded that file!
