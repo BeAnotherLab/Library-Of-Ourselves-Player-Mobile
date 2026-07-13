@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongRunning : MonoBehaviour{
+public class LongRunning : MonoBehaviour //TODO it probably does nothing
+{
     void Start(){
 #if ENABLE_LONG_RUNNING
 #if UNITY_ANDROID
