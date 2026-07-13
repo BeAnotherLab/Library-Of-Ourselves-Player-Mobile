@@ -826,12 +826,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 586224f0331624262956a57026e806d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contentMode: 1
   _IPAdressInputField: {fileID: 943859325}
   _progressText: {fileID: 331888938}
   _progressSlider: {fileID: 460434645}
   _manifest:
     version: 0
-    files: []
+    guideFiles: []
+    userFiles: []
   _baseUrl: 
 --- !u!4 &675054445
 Transform:

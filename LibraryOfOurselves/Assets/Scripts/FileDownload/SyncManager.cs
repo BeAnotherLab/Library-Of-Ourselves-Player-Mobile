@@ -1,11 +1,19 @@
+using System;
 using System.IO;
 using UnityEngine;
 using CI.HttpClient;
 using TMPro;
 using UnityEngine.UI;
 
-public class SyncManager : MonoBehaviour  
-{  
+public enum ContentMode
+{
+    User,
+    Guide
+}
+
+public class SyncManager : MonoBehaviour
+{
+    [SerializeField] private ContentMode contentMode;
     [SerializeField] private TMP_InputField _IPAdressInputField;
     [SerializeField] private Text _progressText;
     [SerializeField] private Slider _progressSlider;
@@ -37,35 +45,48 @@ public class SyncManager : MonoBehaviour
     {  
         _manifest = manifest;  
         _currentFileIndex = 0;  
-        DownloadNextGuideFile();  
+        DownloadNextFile();
     }  
   
     private void OnManifestError(string error)  
     {  
         Debug.LogError("Manifest error: " + error);  
-    }  
-  
-    private void DownloadNextGuideFile()  
-    {  
-        if (_currentFileIndex >= _manifest.guideFiles.Length)  
+    }
+
+    private void DownloadNextFile()
+    {
+        ManifestFile[] files = Array.Empty<ManifestFile>(); 
+        
+        switch (contentMode)
+        {
+            case ContentMode.User:
+                files = _manifest.userFiles;  
+                break;
+            
+            case ContentMode.Guide:
+                files = _manifest.guideFiles;  
+                break;
+        }
+        
+        if (_currentFileIndex >= files.Length)  
         {  
             Debug.Log("SYNC COMPLETE");  
             return;  
         }  
-  
+        
         var file = _manifest.guideFiles[_currentFileIndex];  
         string localPath = FileUtil.GetLocalPath(file.filename);  
-  
+        
         if (FileUtil.ExistsAndMatches(file))  //check if we already downloaded that file!
         {  
             _currentFileIndex++;  
-            DownloadNextGuideFile();  
+            DownloadNextFile();  
             return;  
         }  
-  
+        
         Debug.Log("Downloading: " + file.filename);  
-        string url = _baseUrl + "/Content/Guide/" + file.filename;  
-  
+        string url = _baseUrl + "/Content/" + contentMode + "/" + file.filename;  
+        
         DownloadFile(url, localPath, () =>  
         {  
             OnFileDownloaded(file, localPath);  
@@ -76,22 +97,22 @@ public class SyncManager : MonoBehaviour
         {  
             // TODO Optional: update progress UI  
         });  
-    }  
-  
+    }
+    
     private void OnFileDownloaded(ManifestFile file, string localPath)  
     {  
         string localHash = HashUtil.Sha256(localPath);  
   
         if (localHash != file.sha256)  
         {  
-            Debug.LogError("Hash mismatch, retrying: " + file.filename);  
+            Debug.LogError("Hash mismatch, retrying: " + file.filename);  //TODO are we actually retrying
             File.Delete(localPath);  
             string url = _baseUrl + file.filename;  
               
             DownloadFile(url, localPath, () =>  
             {  
                 _currentFileIndex++;  
-                DownloadNextGuideFile();  
+                DownloadNextFile();  
             }, (error) =>  
             {  
                 Debug.LogError("Retry failed: " + error);  
@@ -101,16 +122,14 @@ public class SyncManager : MonoBehaviour
         {  
             Debug.Log("downloaded " + file.filename );
             _currentFileIndex++;  
-            DownloadNextGuideFile();  
+            DownloadNextFile();  
         }  
     }  
     
     private void DownloadFile(string url, string localPath, System.Action onComplete, System.Action<string> onError, System.Action<int> onProgress) 
     {  
         Directory.CreateDirectory(Path.GetDirectoryName(localPath));
-        
         _tempFilePath = localPath + ".tmp"; //write to temp file first
-        
         if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
         HttpClient client = new HttpClient();  
           
@@ -140,17 +159,14 @@ public class SyncManager : MonoBehaviour
 
                 if (r.IsSuccessStatusCode)
                 {
-                    // 🔥 ATOMIC REPLACE STEP
+                    // ATOMIC REPLACE STEP
                     if (File.Exists(localPath)) File.Delete(localPath);
-
                     File.Move(_tempFilePath, localPath);
-
                     onComplete?.Invoke();  
                 }  
                 else  
                 {
                     if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
-
                     onError?.Invoke("Download failed: " + r.StatusCode);  
                 }
             }
