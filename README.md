@@ -84,17 +84,13 @@ Deploy/
         └── Jonah.mp4
 ```
 
-This folder contains all content that will be served to the Quest headsets.
+This folder contains all content that will be served to the Quest headsets and tablets.
 
 ### 3. Generate the Manifest
 
 Whenever content is added, removed, or updated, regenerate the manifest.
 
-Run:
-
-```bash
-./generate_manifest.sh
-```
+Run the manifest generation script: [`generate_manifest.sh`](./Library-Of-Ourselves-Player-Mobile/LibraryOfOurselves/Utils/generate_manifest.sh)
 
 This updates `manifest.json` with the latest:
 
