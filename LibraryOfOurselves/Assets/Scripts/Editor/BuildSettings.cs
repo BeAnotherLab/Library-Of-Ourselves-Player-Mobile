@@ -23,7 +23,7 @@ public class BuildSettings
 		PlayerSettings.virtualRealitySupported = true;
 		PlayerSettings.productName = "Library of Ourselves (User)";
 		PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "sco.Haze.LibraryOfOurselves");
-		EnableScenes(new[] { 0, 1 });
+		EnableScenes(new[] { 2, 3 });
 		BuildPlayerWindow.ShowBuildPlayerWindow();
 	}
 
@@ -33,7 +33,7 @@ public class BuildSettings
 		PlayerSettings.virtualRealitySupported = false;
 		PlayerSettings.productName = "Library of Ourselves (Guide)";
 		PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, "sco.Haze.LibraryOfOurselvesGuide");
-		EnableScenes(new[] { 2, 3 });
+		EnableScenes(new[] { 0, 1 });
 
 		BuildPlayerWindow.ShowBuildPlayerWindow();
 	}
