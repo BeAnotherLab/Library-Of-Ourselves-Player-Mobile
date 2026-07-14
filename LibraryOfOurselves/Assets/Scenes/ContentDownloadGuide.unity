@@ -1918,7 +1918,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 675054444}
         m_TargetAssemblyTypeName: SyncManager, Assembly-CSharp
-        m_MethodName: StartDownload
+        m_MethodName: DownloadManifest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

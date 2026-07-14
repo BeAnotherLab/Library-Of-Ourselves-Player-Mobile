@@ -20,52 +20,51 @@ public class SyncManager : MonoBehaviour
     [SerializeField] private Manifest _manifest;
     [SerializeField] private string _baseUrl;
     
+    private HttpClient _client;  
     private ManifestFile[] _files = Array.Empty<ManifestFile>(); 
     private int _currentFileIndex;  
     private FileStream _fileStream;  
 
     private void Start()
     {
+        _client = new HttpClient();  
         _IPAdressInputField.text = PlayerPrefs.GetString("ipAddress", "127.0.0.1:8080");
         OnIpAddressEntered(_IPAdressInputField.text);
     }
     
-    public void StartDownload()
+    public void DownloadManifest()
     {
-        DownloadManifest(OnManifestLoaded, OnManifestError);  
+        string url = $"{_baseUrl}/manifest.json";
+
+        _client.Get(new Uri(url), HttpCompletionOption.AllResponseContent, r =>
+        {
+            if (!r.IsSuccessStatusCode)
+            {
+                Debug.LogError($"Download failed: {r.StatusCode}");
+                return;
+            }
+
+            try
+            {
+                _manifest = r.ReadAsJson<Manifest>();
+                _currentFileIndex = 0;
+                DownloadNextFile();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"JSON parse error: {e.Message}");
+            }
+        });
     }
-    
     public void OnIpAddressEntered(string value) 
     { 
         PlayerPrefs.SetString("ipAddress", value);
         _baseUrl = "http://" + value + "/Deploy";
     }
-    
-    private void OnManifestLoaded(Manifest manifest)  
-    {  
-        _manifest = manifest;  
-        _currentFileIndex = 0;  
-        DownloadNextFile();
-    }  
-  
-    private void OnManifestError(string error)  
-    {  
-        Debug.LogError("Manifest error: " + error);  
-    }
 
     private void DownloadNextFile()
     {
-        
-        switch (contentMode)
-        {
-            case ContentMode.User:
-                _files = _manifest.userFiles;  
-                break;
-            
-            case ContentMode.Guide:
-                _files = _manifest.guideFiles;  
-                break;
-        }
+        _files = contentMode == ContentMode.User ? _manifest.userFiles : _manifest.guideFiles;
         
         if (_currentFileIndex >= _files.Length)
         {
@@ -74,29 +73,23 @@ public class SyncManager : MonoBehaviour
             return;  
         }  
         
-        var file = _files[_currentFileIndex];  
-        string localPath = FileUtil.GetLocalPath(file.filename);  
+        string localPath = FileUtil.GetLocalPath(_files[_currentFileIndex].filename);  
         
-        if (FileUtil.ExistsAndMatches(file))  //check if we already downloaded that file!
-        {  
-            _currentFileIndex++;  
-            DownloadNextFile();  
+        if (FileUtil.ExistsAndMatches(_files[_currentFileIndex]))  //check if we already downloaded that file!
+        {
+            DownloadSucceeded();
             return;  
         }  
         
-        Debug.Log("Downloading: " + file.filename);  
-        string url = _baseUrl + "/Content/" + contentMode + "/" + file.filename;  
+        Debug.Log("Downloading: " + _files[_currentFileIndex].filename);  
         
-        DownloadFile(url, localPath, () =>  
+        DownloadFile(_baseUrl + "/Content/" + contentMode + "/" + _files[_currentFileIndex].filename, localPath, () =>  
         {  
-            OnFileDownloaded(file, localPath);  
+            OnFileDownloaded(_files[_currentFileIndex], localPath);  
         }, (error) =>  
         {  
             Debug.LogError("Download error: " + error);  
-        }, (progress) =>  
-        {  
-            // TODO Optional: update progress UI  
-        });  
+        }, null);  
     }
     
     private void OnFileDownloaded(ManifestFile file, string localPath)  
@@ -105,35 +98,23 @@ public class SyncManager : MonoBehaviour
   
         if (localHash != file.sha256)  
         {  
-            Debug.LogError("Hash mismatch, retrying: " + file.filename);  //TODO are we actually retrying
+            Debug.LogError("Hash mismatch, deleting : " + file.filename);  //TODO retry logic?
             File.Delete(localPath);  
-            string url = _baseUrl + file.filename;  
-              
-            DownloadFile(url, localPath, () =>  
-            {  
-                _currentFileIndex++;  
-                DownloadNextFile();  
-            }, (error) =>  
-            {  
-                Debug.LogError("Retry failed: " + error);  
-            }, null);  
         }  
         else  
         {  
             Debug.Log("downloaded and checksumed " + file.filename );
-            _currentFileIndex++;  
-            DownloadNextFile();  
+            DownloadSucceeded();
         }  
     }  
     
-    private void DownloadFile(string url, string localPath, System.Action onComplete, System.Action<string> onError, System.Action<int> onProgress) 
+    private void DownloadFile(string url, string localPath, Action onComplete, Action<string> onError, Action<int> onProgress) 
     {  
         Directory.CreateDirectory(Path.GetDirectoryName(localPath));
         var tempFilePath = localPath + ".tmp"; //write to temp file so that a failed download never leaves a partially written file
         if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
-        HttpClient client = new HttpClient();  
           
-        client.Get(new System.Uri(url), HttpCompletionOption.StreamResponseContent, (r) =>  
+        _client.Get(new Uri(url), HttpCompletionOption.StreamResponseContent, (r) =>  
         {  
             if (r.IsSuccessStatusCode && _fileStream == null)
                 _fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);    // Create the output stream once the download begins successfully.
@@ -165,34 +146,15 @@ public class SyncManager : MonoBehaviour
                 }
             }
             
-            // Update UI  
             _progressText.text = "Downloading file " + _currentFileIndex + " of " +  _files.Length +  ": " + r.PercentageComplete + "%";  
             _progressSlider.value = r.PercentageComplete;  
         });  
     }  
     
-    private void DownloadManifest(Action<Manifest> onComplete, Action<string> onError)  
-    {  
-        HttpClient client = new HttpClient();  
-        string url = _baseUrl + "/manifest.json";  
-  
-        client.Get(new Uri(url), HttpCompletionOption.AllResponseContent, (r) =>  
-        {  
-            if (!r.IsSuccessStatusCode)  
-            {  
-                onError?.Invoke("Download failed: " + r.StatusCode);  
-                return;  
-            }  
-            try  
-            {  
-                _manifest = r.ReadAsJson<Manifest>();  
-                onComplete?.Invoke(_manifest);  
-            }  
-            catch (Exception e)  
-            {  
-                onError?.Invoke("JSON parse error: " + e.Message);  
-            }  
-        });  
+    private void DownloadSucceeded()
+    {
+        _currentFileIndex++;
+        DownloadNextFile();
     }
     
 }
