@@ -20,9 +20,9 @@ public class SyncManager : MonoBehaviour
     [SerializeField] private Manifest _manifest;
     [SerializeField] private string _baseUrl;
     
-    private int _currentFileIndex = 0;  
+    private ManifestFile[] _files = Array.Empty<ManifestFile>(); 
+    private int _currentFileIndex;  
     private FileStream _fileStream;  
-    private string _tempFilePath;
 
     private void Start()
     {
@@ -55,26 +55,26 @@ public class SyncManager : MonoBehaviour
 
     private void DownloadNextFile()
     {
-        ManifestFile[] files = Array.Empty<ManifestFile>(); 
         
         switch (contentMode)
         {
             case ContentMode.User:
-                files = _manifest.userFiles;  
+                _files = _manifest.userFiles;  
                 break;
             
             case ContentMode.Guide:
-                files = _manifest.guideFiles;  
+                _files = _manifest.guideFiles;  
                 break;
         }
         
-        if (_currentFileIndex >= files.Length)  
-        {  
+        if (_currentFileIndex >= _files.Length)
+        {
+            _progressText.text = "Sync complete";
             Debug.Log("SYNC COMPLETE");  
             return;  
         }  
         
-        var file = files[_currentFileIndex];  
+        var file = _files[_currentFileIndex];  
         string localPath = FileUtil.GetLocalPath(file.filename);  
         
         if (FileUtil.ExistsAndMatches(file))  //check if we already downloaded that file!
@@ -120,7 +120,7 @@ public class SyncManager : MonoBehaviour
         }  
         else  
         {  
-            Debug.Log("downloaded " + file.filename );
+            Debug.Log("downloaded and checksumed " + file.filename );
             _currentFileIndex++;  
             DownloadNextFile();  
         }  
@@ -129,22 +129,16 @@ public class SyncManager : MonoBehaviour
     private void DownloadFile(string url, string localPath, System.Action onComplete, System.Action<string> onError, System.Action<int> onProgress) 
     {  
         Directory.CreateDirectory(Path.GetDirectoryName(localPath));
-        _tempFilePath = localPath + ".tmp"; //write to temp file first
-        if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
+        var tempFilePath = localPath + ".tmp"; //write to temp file so that a failed download never leaves a partially written file
+        if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
         HttpClient client = new HttpClient();  
           
         client.Get(new System.Uri(url), HttpCompletionOption.StreamResponseContent, (r) =>  
         {  
-            if (r.IsSuccessStatusCode && _fileStream == null)  
-            {  
-                _fileStream = new FileStream( // OPEN TEMP FILE instead of final file
-                    _tempFilePath,
-                    FileMode.Create,
-                    FileAccess.Write
-                );  
-            }  
+            if (r.IsSuccessStatusCode && _fileStream == null)
+                _fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);    // Create the output stream once the download begins successfully.
               
-            if (r.ContentReadThisRound > 0 && _fileStream != null)  
+            if (r.ContentReadThisRound > 0 && _fileStream != null)  // Write any received chunk to disk.
             {  
                 byte[] data = r.ReadAsByteArray();  
                 _fileStream.Write(data, 0, data.Length);  
@@ -159,43 +153,42 @@ public class SyncManager : MonoBehaviour
 
                 if (r.IsSuccessStatusCode)
                 {
-                    // ATOMIC REPLACE STEP
-                    if (File.Exists(localPath)) File.Delete(localPath);
-                    File.Move(_tempFilePath, localPath);
+                    if (File.Exists(localPath)) File.Delete(localPath); // ATOMIC REPLACE STEP
+                    File.Move(tempFilePath, localPath);
                     onComplete?.Invoke();  
                 }  
                 else  
                 {
-                    if (File.Exists(_tempFilePath)) File.Delete(_tempFilePath);
+                    if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
+                    _progressText.text = "Error downloading file " + tempFilePath;
                     onError?.Invoke("Download failed: " + r.StatusCode);  
                 }
             }
             
             // Update UI  
-            _progressText.text = "Download: " + r.PercentageComplete.ToString() + "%";  
-            _progressSlider.value = 100 - r.PercentageComplete;  
+            _progressText.text = "Downloading file " + _currentFileIndex + " of " +  _files.Length +  ": " + r.PercentageComplete + "%";  
+            _progressSlider.value = r.PercentageComplete;  
         });  
     }  
     
-    private void DownloadManifest(System.Action<Manifest> onComplete, System.Action<string> onError)  
+    private void DownloadManifest(Action<Manifest> onComplete, Action<string> onError)  
     {  
         HttpClient client = new HttpClient();  
         string url = _baseUrl + "/manifest.json";  
   
-        client.Get(new System.Uri(url), HttpCompletionOption.AllResponseContent, (r) =>  
+        client.Get(new Uri(url), HttpCompletionOption.AllResponseContent, (r) =>  
         {  
             if (!r.IsSuccessStatusCode)  
             {  
                 onError?.Invoke("Download failed: " + r.StatusCode);  
                 return;  
             }  
-  
             try  
             {  
                 _manifest = r.ReadAsJson<Manifest>();  
                 onComplete?.Invoke(_manifest);  
             }  
-            catch (System.Exception e)  
+            catch (Exception e)  
             {  
                 onError?.Invoke("JSON parse error: " + e.Message);  
             }  
