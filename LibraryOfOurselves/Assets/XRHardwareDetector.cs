@@ -6,10 +6,10 @@ using UnityEngine.XR;
 
 public class XRHardwareDetector : MonoBehaviour
 {
-    private bool _allowSceneLoad;
+    [SerializeField] bool _allowSceneLoad ;
     
     private void Start()
-    {
+    { 
         StartCoroutine(WaitAndDisableSceneLoad());
     }
 
@@ -37,7 +37,8 @@ public class XRHardwareDetector : MonoBehaviour
 
     private IEnumerator WaitAndDisableSceneLoad()
     {
-        yield return new WaitForSeconds(3);
+        _allowSceneLoad = true;
+        yield return new WaitForSeconds(10);
         _allowSceneLoad = false;
         ;
     }
