@@ -32,7 +32,7 @@ public class SyncManager : MonoBehaviour
         OnIpAddressEntered(_IPAdressInputField.text);
     }
     
-    public void DownloadManifest()
+    public void DownloadManifest() //download the manifest and then download the files corresponding to our setup
     {
         string url = $"{_baseUrl}/manifest.json";
 
