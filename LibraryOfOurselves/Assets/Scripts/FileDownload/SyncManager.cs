@@ -84,13 +84,7 @@ public class SyncManager : MonoBehaviour
         
         Debug.Log("Downloading: " + _files[_currentFileIndex].filename);  
         
-        DownloadFile(_baseUrl + "/Content/" + contentMode + "/" + _files[_currentFileIndex].filename, localPath, () =>  
-        {  
-            OnFileDownloaded(_files[_currentFileIndex], localPath);  
-        }, (error) =>  
-        {  
-            Debug.LogError("Download error: " + error);  
-        }, null);  
+        DownloadFile(url, localPath);
     }
     
     private void OnFileDownloaded(ManifestFile file, string localPath)  
@@ -112,7 +106,7 @@ public class SyncManager : MonoBehaviour
         }  
     }  
     
-    private void DownloadFile(string url, string localPath, Action onComplete, Action<string> onError, Action<int> onProgress) 
+    private void DownloadFile(string url, string localPath) 
     {  
         Directory.CreateDirectory(Path.GetDirectoryName(localPath));
         var tempFilePath = localPath + ".tmp"; //write to temp file so that a failed download never leaves a partially written file
@@ -127,7 +121,6 @@ public class SyncManager : MonoBehaviour
             {  
                 byte[] data = r.ReadAsByteArray();  
                 _fileStream.Write(data, 0, data.Length);  
-                onProgress?.Invoke(r.PercentageComplete);  
             }  
   
             if (r.PercentageComplete == 100 || !r.IsSuccessStatusCode)  
@@ -140,13 +133,13 @@ public class SyncManager : MonoBehaviour
                 {
                     if (File.Exists(localPath)) File.Delete(localPath); // ATOMIC REPLACE STEP
                     File.Move(tempFilePath, localPath);
-                    onComplete?.Invoke();  
+                    OnFileDownloaded(file, localPath);
                 }  
                 else  
                 {
                     if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
                     _progressText.text = "Error downloading file " + tempFilePath;
-                    onError?.Invoke("Download failed: " + r.StatusCode);  
+                    Debug.Log("Error downloading file");
                 }
             }
             
