@@ -89,10 +89,8 @@ public class SyncManager : MonoBehaviour
         
         Debug.Log("Downloading: " + file);
         
-        string localPath = FileUtil.GetLocalPath(file);  
-        
-        Directory.CreateDirectory(Path.GetDirectoryName(localPath));
-        var tempFilePath = localPath + ".tmp"; //write to temp file so that a failed download never leaves a partially written file
+        Directory.CreateDirectory(Path.GetDirectoryName(FileUtil.GetLocalPath(file)));
+        var tempFilePath = FileUtil.GetLocalPath(file) + ".tmp"; //write to temp file so that a failed download never leaves a partially written file
         
         if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
           
@@ -114,13 +112,13 @@ public class SyncManager : MonoBehaviour
 
                 if (r.IsSuccessStatusCode)
                 {
-                    File.Move(tempFilePath, localPath);
-                    string localHash = HashUtil.Sha256(localPath);  
+                    File.Move(tempFilePath, FileUtil.GetLocalPath(file));
+                    string localHash = HashUtil.Sha256(FileUtil.GetLocalPath(file));  
   
                     if (localHash != _files[_currentFileIndex].sha256)  
                     {  
                         Debug.LogError($"Hash mismatch for {file}, retrying download");
-                        File.Delete(localPath);
+                        File.Delete(FileUtil.GetLocalPath(file));
                         DownloadNextFile();
                     }  
                     else  
