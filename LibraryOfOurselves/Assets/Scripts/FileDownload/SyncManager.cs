@@ -66,55 +66,34 @@ public class SyncManager : MonoBehaviour
     private void DownloadNextFile()
     {
         _files = contentMode == ContentMode.User ? _manifest.userFiles : _manifest.guideFiles;
+        var file = _files[_currentFileIndex].filename;
         
-        if (_currentFileIndex >= _files.Length)
+        if (_currentFileIndex >= _files.Length) //check if we reached the last file
         {
             _progressText.text = "Sync complete";
             Debug.Log("SYNC COMPLETE");  
             return;  
         }  
         
-        string localPath = FileUtil.GetLocalPath(_files[_currentFileIndex].filename);  
-        
-        if (FileUtil.ExistsAndMatches(_files[_currentFileIndex]))  //check if we already downloaded that file!
+        if (FileUtil.ExistsAndMatches(_files[_currentFileIndex])) //if the file is already there, go to the next
         {
             DownloadSucceeded();
             return;  
         }  
         
-        Debug.Log("Downloading: " + _files[_currentFileIndex].filename);
-        var url = _baseUrl + "/Content/" + contentMode + "/" + _files[_currentFileIndex].filename;
-        DownloadFile(url, localPath);
-    }
-    
-    private void OnFileDownloaded(ManifestFile file, string localPath)  
-    {  
-        string localHash = HashUtil.Sha256(localPath);  
-  
-        if (localHash != file.sha256)  
-        {  
-            Debug.LogError($"Hash mismatch for {file.filename}, retrying download");
-            File.Delete(localPath);
-            DownloadNextFile();
-        }  
-        else  
-        {  
-            Debug.Log("downloaded and checksumed " + file.filename);
-            DownloadSucceeded();
-        }  
-    }  
-    
-    private void DownloadFile(string url, string localPath) 
-    {  
+        Debug.Log("Downloading: " + file);
+        
+        string localPath = FileUtil.GetLocalPath(file);  
+        
         Directory.CreateDirectory(Path.GetDirectoryName(localPath));
         var tempFilePath = localPath + ".tmp"; //write to temp file so that a failed download never leaves a partially written file
+        
         if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
           
-        _client.Get(new Uri(url), HttpCompletionOption.StreamResponseContent, (r) =>  
+        _client.Get(new Uri(_baseUrl + "/Content/" + contentMode + "/" + file), HttpCompletionOption.StreamResponseContent, (r) =>  
         {  
-            if (r.IsSuccessStatusCode && _fileStream == null)
-                _fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);    // Create the output stream once the download begins successfully.
-              
+            if (r.IsSuccessStatusCode && _fileStream == null)  _fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write);    // Create the output stream once the download begins successfully.
+               
             if (r.ContentReadThisRound > 0 && _fileStream != null)  // Write any received chunk to disk.
             {  
                 byte[] data = r.ReadAsByteArray();  
@@ -129,9 +108,20 @@ public class SyncManager : MonoBehaviour
 
                 if (r.IsSuccessStatusCode)
                 {
-                    if (File.Exists(localPath)) File.Delete(localPath); 
                     File.Move(tempFilePath, localPath);
-                    OnFileDownloaded(_files[_currentFileIndex], localPath);
+                    string localHash = HashUtil.Sha256(localPath);  
+  
+                    if (localHash != _files[_currentFileIndex].sha256)  
+                    {  
+                        Debug.LogError($"Hash mismatch for {file}, retrying download");
+                        File.Delete(localPath);
+                        DownloadNextFile();
+                    }  
+                    else  
+                    {  
+                        Debug.Log("downloaded and checksumed " + file);
+                        DownloadSucceeded();
+                    }  
                 }  
                 else  
                 {
@@ -144,7 +134,7 @@ public class SyncManager : MonoBehaviour
             _progressText.text = "Downloading file " + _currentFileIndex + " of " +  _files.Length +  ": " + r.PercentageComplete + "%";  
             _progressSlider.value = r.PercentageComplete;  
         });  
-    }  
+    }
     
     private void DownloadSucceeded()
     {
