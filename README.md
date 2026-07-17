@@ -59,7 +59,7 @@ https://github.com/caddyserver/caddy/releases
 Download the following release:
 
 ```
-caddy_2.11.4_windows_arm64.zip
+caddy_2.11.4_windows_amd64.zip
 ```
 
 Extract the executable somewhere convenient, for example:
