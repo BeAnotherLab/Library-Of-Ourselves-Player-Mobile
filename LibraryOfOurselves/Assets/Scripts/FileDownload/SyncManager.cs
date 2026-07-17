@@ -23,7 +23,8 @@ public class SyncManager : MonoBehaviour
     private HttpClient _client;  
     private ManifestFile[] _files = Array.Empty<ManifestFile>(); 
     private int _currentFileIndex;  
-    private FileStream _fileStream;  
+    private FileStream _fileStream;
+    private bool _isDownloading;
     
     private void Start()
     {
@@ -33,28 +34,32 @@ public class SyncManager : MonoBehaviour
     }
     
     public void DownloadManifest() //download the manifest and then download the files corresponding to our setup
-    { //TODO prevent multiple download clicks
-        string url = $"{_baseUrl}/manifest.json";
-
-        _client.Get(new Uri(url), HttpCompletionOption.AllResponseContent, r =>
+    {
+        if (!_isDownloading)
         {
-            if (!r.IsSuccessStatusCode)
-            {
-                Debug.LogError($"Download failed: {r.StatusCode}");
-                return;
-            }
+            _isDownloading = true;
+            string url = $"{_baseUrl}/manifest.json";
 
-            try
+            _client.Get(new Uri(url), HttpCompletionOption.AllResponseContent, r =>
             {
-                _manifest = r.ReadAsJson<Manifest>();
-                _currentFileIndex = 0;
-                DownloadNextFile();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"JSON parse error: {e.Message}");
-            }
-        });
+                if (!r.IsSuccessStatusCode)
+                {
+                    Debug.LogError($"Download failed: {r.StatusCode}");
+                    return;
+                }
+
+                try
+                {
+                    _manifest = r.ReadAsJson<Manifest>();
+                    _currentFileIndex = 0;
+                    DownloadNextFile();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"JSON parse error: {e.Message}");
+                }
+            });
+        }
     }
     
     public void OnIpAddressEntered(string value) 
@@ -72,6 +77,7 @@ public class SyncManager : MonoBehaviour
         {
             _progressText.text = "Sync complete";
             Debug.Log("SYNC COMPLETE");  
+            _isDownloading = false;
             return;  
         }  
         
