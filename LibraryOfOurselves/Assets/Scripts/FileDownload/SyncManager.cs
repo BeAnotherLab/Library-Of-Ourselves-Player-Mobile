@@ -24,7 +24,7 @@ public class SyncManager : MonoBehaviour
     private ManifestFile[] _files = Array.Empty<ManifestFile>(); 
     private int _currentFileIndex;  
     private FileStream _fileStream;  
-
+    
     private void Start()
     {
         _client = new HttpClient();  
@@ -56,6 +56,7 @@ public class SyncManager : MonoBehaviour
             }
         });
     }
+    
     public void OnIpAddressEntered(string value) 
     { 
         PlayerPrefs.SetString("ipAddress", value);
@@ -98,12 +99,15 @@ public class SyncManager : MonoBehaviour
   
         if (localHash != file.sha256)  
         {  
-            Debug.LogError("Hash mismatch, deleting : " + file.filename);  //TODO retry logic?
-            File.Delete(localPath);  
+            Debug.LogError($"Hash mismatch for {file.filename}");
+            File.Delete(localPath);
+            
+            Debug.Log($"Retrying download for {file.filename}...");
+            DownloadNextFile();
         }  
         else  
         {  
-            Debug.Log("downloaded and checksumed " + file.filename );
+            Debug.Log("downloaded and checksumed " + file.filename);
             DownloadSucceeded();
         }  
     }  
