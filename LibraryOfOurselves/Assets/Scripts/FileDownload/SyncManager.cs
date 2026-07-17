@@ -82,8 +82,8 @@ public class SyncManager : MonoBehaviour
             return;  
         }  
         
-        Debug.Log("Downloading: " + _files[_currentFileIndex].filename);  
-        
+        Debug.Log("Downloading: " + _files[_currentFileIndex].filename);
+        var url = _baseUrl + "/Content/" + contentMode + "/" + _files[_currentFileIndex].filename;
         DownloadFile(url, localPath);
     }
     
@@ -93,10 +93,8 @@ public class SyncManager : MonoBehaviour
   
         if (localHash != file.sha256)  
         {  
-            Debug.LogError($"Hash mismatch for {file.filename}");
+            Debug.LogError($"Hash mismatch for {file.filename}, retrying download");
             File.Delete(localPath);
-            
-            Debug.Log($"Retrying download for {file.filename}...");
             DownloadNextFile();
         }  
         else  
@@ -131,9 +129,9 @@ public class SyncManager : MonoBehaviour
 
                 if (r.IsSuccessStatusCode)
                 {
-                    if (File.Exists(localPath)) File.Delete(localPath); // ATOMIC REPLACE STEP
+                    if (File.Exists(localPath)) File.Delete(localPath); 
                     File.Move(tempFilePath, localPath);
-                    OnFileDownloaded(file, localPath);
+                    OnFileDownloaded(_files[_currentFileIndex], localPath);
                 }  
                 else  
                 {
