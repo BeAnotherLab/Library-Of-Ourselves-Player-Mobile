@@ -33,7 +33,7 @@ public class SyncManager : MonoBehaviour
     }
     
     public void DownloadManifest() //download the manifest and then download the files corresponding to our setup
-    {
+    { //TODO prevent multiple download clicks
         string url = $"{_baseUrl}/manifest.json";
 
         _client.Get(new Uri(url), HttpCompletionOption.AllResponseContent, r =>
@@ -159,6 +159,12 @@ public class SyncManager : MonoBehaviour
     {
         _currentFileIndex++;
         DownloadNextFile();
+    }
+    
+    private void OnDestroy()
+    {
+        _fileStream?.Close();
+        _fileStream?.Dispose();
     }
     
 }
