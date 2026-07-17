@@ -15,7 +15,6 @@ public class SyncManager : MonoBehaviour
 {
     [SerializeField] private ContentMode contentMode;
     [SerializeField] private TMP_InputField _IPAdressInputField;
-    [SerializeField] private Text _progressText;
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private Manifest _manifest;
     [SerializeField] private string _baseUrl;
@@ -25,6 +24,9 @@ public class SyncManager : MonoBehaviour
     private int _currentFileIndex;  
     private FileStream _fileStream;
     private bool _isDownloading;
+    
+    public delegate void OnUpdateDownloadProgressText(string text);
+    public static OnUpdateDownloadProgressText UpdateDownloadProgressText;
     
     private void Start()
     {
@@ -75,7 +77,7 @@ public class SyncManager : MonoBehaviour
         
         if (_currentFileIndex >= _files.Length) //check if we reached the last file
         {
-            _progressText.text = "Sync complete";
+            UpdateDownloadProgressText("Sync complete");
             Debug.Log("SYNC COMPLETE");  
             _isDownloading = false;
             return;  
@@ -130,12 +132,12 @@ public class SyncManager : MonoBehaviour
                 else  
                 {
                     if (File.Exists(tempFilePath)) File.Delete(tempFilePath);
-                    _progressText.text = "Error downloading file " + tempFilePath;
+                    UpdateDownloadProgressText("Error downloading file " + tempFilePath);
                     Debug.Log("Error downloading file");
                 }
             }
             
-            _progressText.text = "Downloading file " + _currentFileIndex + " of " +  _files.Length +  ": " + r.PercentageComplete + "%";  
+            UpdateDownloadProgressText("Downloading file " + _currentFileIndex + " of " +  _files.Length +  ": " + r.PercentageComplete + "%");  
             _progressSlider.value = r.PercentageComplete;  
         });  
     }

@@ -561,6 +561,7 @@ GameObject:
   - component: {fileID: 331888940}
   - component: {fileID: 331888939}
   - component: {fileID: 331888938}
+  - component: {fileID: 331888941}
   m_Layer: 5
   m_Name: DownloadProgressText
   m_TagString: Untagged
@@ -629,6 +630,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 90}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &331888941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331888937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e5dc1379ab84104f98d8949e9e6e6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _progressText: {fileID: 331888938}
 --- !u!1 &460434643
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,7 +842,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contentMode: 1
   _IPAdressInputField: {fileID: 943859325}
-  _progressText: {fileID: 331888938}
   _progressSlider: {fileID: 460434645}
   _manifest:
     version: 0
