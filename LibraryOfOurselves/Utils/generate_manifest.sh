@@ -3,28 +3,38 @@
 ROOT="Content"
 OUTPUT="manifest.json"
 
+# Size of chunk in bytes (10MB)
+CHUNK_SIZE=10485760
+
 echo "Generating manifest..."
 
 echo "{" > "$OUTPUT"
 echo '  "version": 1,' >> "$OUTPUT"
 echo '  "guideFiles": [' >> "$OUTPUT"
 
-firstGuide=1
-firstUser=1
-
-# Temporary files for each category
 GUIDE_TMP=$(mktemp)
 USER_TMP=$(mktemp)
+
 find "$ROOT" -type f | while read -r file; do
     rel="${file#./}"
     filename=$(basename "$file")
 
+    # Get file size safely on Linux or macOS
     size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file")
 
-    if command -v sha256sum >/dev/null 2>&1; then
-        hash=$(sha256sum "$file" | awk '{print $1}')
+    echo "Checksumming: $file"
+
+    if [ "$size" -le $((CHUNK_SIZE * 2)) ]; then
+        # File is small, hash the whole thing directly
+        if command -v sha256sum >/dev/null 2>&1; then
+            hash=$(sha256sum "$file" | awk '{print $1}')
+        else
+            hash=$(shasum -a 256 "$file" | awk '{print $1}')
+        fi
     else
-        hash=$(shasum -a 256 "$file" | awk '{print $1}')
+        # File is large: extract the first 10MB and last 10MB into a fast stream, then hash it
+        hash=$( (head -c "$CHUNK_SIZE" "$file"; tail -c "$CHUNK_SIZE" "$file") | \
+                (sha256sum 2>/dev/null || shasum -a 256) | awk '{print $1}' )
     fi
 
     entry=$(cat <<EOF

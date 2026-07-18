@@ -5,11 +5,7 @@ using CI.HttpClient;
 using TMPro;
 using UnityEngine.UI;
 
-public enum ContentMode
-{
-    User,
-    Guide
-}
+public enum ContentMode { User, Guide }
 
 public class SyncManager : MonoBehaviour
 {
@@ -115,8 +111,9 @@ public class SyncManager : MonoBehaviour
                 if (r.IsSuccessStatusCode)
                 {
                     File.Move(tempFilePath, FileUtil.GetLocalPath(file));
-                    string localHash = HashUtil.Sha256(FileUtil.GetLocalPath(file));  
-  
+                    //string localHash = HashUtil.Sha256(FileUtil.GetLocalPath(file));  
+                    string localHash = FastVideoHash.ComputeHeadTailSha256(FileUtil.GetLocalPath(file)); //TODO test. should run much faster on big files 
+
                     if (localHash != _files[_currentFileIndex].sha256)  
                     {  
                         Debug.LogError($"Hash mismatch for {file}, retrying download");
